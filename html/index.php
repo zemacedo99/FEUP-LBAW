@@ -5,6 +5,9 @@
     <title>Title of the document</title>
   </head>
   <body>
-    Content of the document...
+    <p>Content from HTML.</p>
+  <?php
+    echo '<p>content from PHP.</p>';
+  ?>
   </body>
-</html> 
+</html>
