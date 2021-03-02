@@ -1,41 +1,71 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+  <!-- material icons-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link href="sytle.css" rel="stylesheet">
+  <title>MyGarden</title>
+</head>
 
 
-    <title>Title of the document</title>
-  </head>
-  <body>
-    <!-- Optional JavaScript; choose one of the two! -->
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+<body>
+  <!-- Optional JavaScript; choose one of the two! -->
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+    crossorigin="anonymous"></script>
+    
+  <header>
 
-    <p>Content from HTML.</p>
-    <?php
-      echo '<p>content from PHP.</p>';
-    ?>
-    <form>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+  <nav class="navbar navbar-expand-sm navbar-light">
+
+    <a href="index.php"> <img alt="Logo" src="logo.png" width="100" height="25"> </a>
+    <div class="navbar-nav ms-auto">
+      <div class="col align-items-end">
+      <button type="button" id = "headericon">account_circle</button>
+      <button type="button" id = "headericon">shopping_cart</button>
+    </div>
+    </div>
+  </nav>
+
+</header>
+
+<footer>
+
+  <div id="navfooter">
+    <img src="logo.png" class="img-fluid" alt="Logo">
+    <div class="d-flex flex-row-reverse">
+      <div class="row">
+        <button type="button" id = "footericon">thumb_up</button>
+        <button type="button" id = "footericon">check_circle_outline</button>
+        <button type="button"  id = "footericon">star_rate</button>
+        <button type="button"  id = "footericon">mdi-bell</button>
+        <button type="button"  id = "footericon">favorite</button>
       </div>
-      <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
-      </div>
-      <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+   </div>
+  </div>
   
-  </body>
+</footer>
+
+
+
+
+
+
+
+
+</body>
+
+
+
 </html>
