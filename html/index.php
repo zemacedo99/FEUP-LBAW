@@ -1,5 +1,6 @@
-<?php
-include './common/head.php'
+<?php 
+include './common/head.php';
+include './common/navbar.php';
 ?>
 
 <div class="container">
@@ -11,19 +12,19 @@ include './common/head.php'
 
       <div class="form-floating mb-3">
         <input type="text" class="form-control" id="floatingName" placeholder="John Doe">
-        <label for="floatingName">Name</label>
+        <label class="text-black-50" for="floatingName">Name</label>
       </div>
       <div class="form-floating mb-3">
         <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com">
-        <label for="floatingEmail">Email address</label>
+        <label class="text-black-50" for="floatingEmail">Email address</label>
       </div>
       <div class="form-floating mb-3">
         <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-        <label for="floatingPassword">Password</label>
+        <label class="text-black-50" for="floatingPassword">Password</label>
       </div>
       <div class="form-floating">
         <input type="password" class="form-control" id="floatingConfirmPassword" placeholder="Confirm Password">
-        <label for="floatingConfirmPassword">Confirm Password</label>
+        <label class="text-black-50" for="floatingConfirmPassword">Confirm Password</label>
       </div>
 
       <div class="row mt-3 mb-3">
@@ -45,7 +46,6 @@ include './common/head.php'
         </div>
       </div>
 
-
       <div class="d-grid gap-2 col-6 col-sm-5 col-md-7 mx-auto">
         <button type="submit" class="btn btn-primary">Sign up</button>
         <p class="text-muted mb-0 d-flex justify-content-center"> Already have an account? </p>
@@ -56,6 +56,4 @@ include './common/head.php'
   </div>
 </div>
 
-<?php
-include './common/end.php'
-?>
+<?php include './common/end.php' ?>
