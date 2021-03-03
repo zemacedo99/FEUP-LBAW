@@ -31,3 +31,19 @@
 #navfooter{
     background-color: 15734731;
 }
+
+#navbarPage{
+    background-color: #198754;
+    color: burlywood;
+    border: 0px solid transparent;
+    font-size: 1.25rem;
+    border-radius: 1.5rem;
+}
+
+#navLinks
+{
+    color: burlywood;
+}
+/* .profilePhoto{
+    border-radius: 50%;
+} */
