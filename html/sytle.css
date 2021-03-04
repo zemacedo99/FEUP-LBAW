@@ -44,6 +44,17 @@
 {
     color: burlywood;
 }
+
+#mainbtt
+{
+    background-color: #198754;
+    color: burlywood;
+    border: 0px solid transparent;
+    font-size: 1.25rem;
+    border-radius: 1.5rem;
+}
+
+
 /* .profilePhoto{
     border-radius: 50%;
 } */
