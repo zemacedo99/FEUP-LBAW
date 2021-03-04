@@ -1,3 +1,3 @@
 <?php
-header("Location: credentials/register.php");
+header("Location: credentials/login.php");
 ?>
