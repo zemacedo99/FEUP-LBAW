@@ -13,7 +13,9 @@
   <!-- material icons-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+  <!--  css links -->
   <link href="sytle.css" rel="stylesheet">
+
   <title>MyGarden</title>
 </head>
 
@@ -27,6 +29,7 @@
       
   <header>
 
+    <!-- navbar global -->
     <nav class="navbar navbar-expand-md navbar-light">
       <div class="container-fluid">
       <a class = "navbar-brand" href="index.php"> <img alt="Logo" src="logo.png" width="100" height="25"> </a>
@@ -56,6 +59,32 @@
         </form>
       </div>
 
+
+      <!-- navbar only for mobile -->
+      <!-- 
+        <div class="expand navbar-expand-lg" id="navbarSupportedContent">
+
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link"  href="#">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link"  href="#">Stores</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link"  href="#">About Us</a>
+              </li>
+          </ul>
+
+        </div> 
+      -->
+
+
+
+      <!-- navbar profile and cart buttons -->
       <div class="navbar-nav ms-auto">
         <div class="col align-items-end">
         <button type="button" id = "headericon">account_circle</button>
@@ -66,6 +95,7 @@
     </nav>
 
 
+    <!-- profile info -->
     <div class="d-flex flex-row bd-highlight mb-3">
       <div class="p-2 bd-highlight"> <img src="quinta_do_bil.png" alt="QuintaDoBill" class="img-thumbnail" width="100" height="25"> </div>
       <div class="p-2 bd-highlight">Quinta do Bill</div>
@@ -74,6 +104,8 @@
     
     <h3> All Products </h3>
 
+
+    <!-- List of all products store have -->
     <div class="row row-cols-1 row-cols-md-3 g-4">
       <div class="col">
         <div class="card h-100">
