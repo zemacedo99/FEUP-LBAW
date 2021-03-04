@@ -42,10 +42,10 @@
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li> -->
             <li class="nav-item">
-              <a class="nav-link" id = "navLinks" href="supplier_all_prod.php">Products</a>
+              <a class="nav-link" id = "navLinks" href="#">Products</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id  = "navLinks" href="#">Stores</a>
+              <a class="nav-link" id = "navLinks" href="#">Stores</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id = "navLinks" href="#">About Us</a>
@@ -94,57 +94,72 @@
       </div>
     </nav>
 
+    <div class= "container">
 
-    <!-- profile info -->
-    <div class="d-flex flex-row bd-highlight mb-3">
-      <div class="p-2 bd-highlight"> <img src="quinta_do_bil.png" alt="QuintaDoBill" class="img-thumbnail" width="100" height="25"> </div>
-      <div class="p-2 bd-highlight">Quinta do Bill</div>
+      <!-- profile info -->
+      <div class="container">
+        <div class="row justify-content-md-center">
+          <div class="d-flex flex-row bd-highlight mb-5">
+            <div class="p-2 bd-highlight"> <img src="quinta_do_bil.png" alt="QuintaDoBill" class="img-thumbnail"> </div>
+            <div class="align-self-md-center"> <h2>Quinta do Bill<h2> </div>
+          </div>
+        </div>
+      </div>
+    
+     <h3> All Products </h3> 
+
+      <!-- Produtc display ex: -->
+      <!-- <div class="card h-100">
+          <img src="bananas.jpg" class="img-thumbnail" alt="bananas" width="200" height="200" >
+          <div class="card-body">
+            <h5 class="card-title">Bananas</h5>
+            <p class="card-text">Na Quinta do Bill tens bananas que te fazem voar, voar, voar.</p>
+          </div>
+      </div> -->
+
+      <!-- List of all products that a store have -->
+      <div class="row row-cols-1 row-cols-sm-2 g-4">
+        <div class="col-sm">
+          <div class="card h-100">
+            <img src="bananas.jpg" class="card-img-top" alt="bananas" >
+            <div class="card-body">
+              <h5 class="card-title">Bananas</h5>
+              <p class="card-text">Na Quinta do Bill tens bananas que te fazem voar, voar, voar.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card h-100">
+          <img src="batata_vermelha.jpg" class="card-img-top" alt="batata vermelha" >
+            <div class="card-body">
+              <h5 class="card-title">Batatas Vermelhas</h5>
+              <p class="card-text">Na Quinta do Bill tens batatas que te fazem voar, voar, voar.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card h-100">
+          <img src="batata-amarela.jpg" class="card-img-top" alt="batata amarela" >
+            <div class="card-body">
+              <h5 class="card-title">Batatas Amarelas</h5>
+              <p class="card-text">Na Quinta do Bill tens batatas que te fazem voar, voar, voar.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card h-100">
+            <img src="tomate.jpg" class="card-img-top" alt="tomates" >
+            <div class="card-body">
+              <h5 class="card-title">Tomates</h5>
+              <p class="card-text">Na Quinta do Bill tens tomates que te fazem voar, voar, voar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    
-    <h3> All Products </h3>
 
 
-    <!-- List of all products store have -->
-    
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-      <div class="col">
-        <div class="card h-100">
-          <img src="bananas.jpg" class="card-img-top" alt="bananas" >
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100">
-        <img src="bananas.jpg" class="card-img-top" alt="bananas">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a short card.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100">
-        <img src="bananas.jpg" class="card-img-top" alt="bananas">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100">
-          <img src="bananas.jpg" class="card-img-top" alt="bananas">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-        </div>
-      </div>
-    </div>
   </header>
 
   <!-- <footer>
