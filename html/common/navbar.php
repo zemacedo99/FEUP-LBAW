@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
-      <img src="./images/favicon.ico" alt="" width="30" height="24" class="d-inline-block align-top">
+      <img src="../images/favicon.ico" alt="" width="30" height="24" class="d-inline-block align-top">
       MyGarden
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
