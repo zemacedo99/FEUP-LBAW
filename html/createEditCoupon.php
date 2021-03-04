@@ -31,7 +31,7 @@
       <div id="imagesContainer" class="col-sm-8">
         <div class="image-upload">
           <label for="file-input">
-            <img src="genericAddImage"/>
+            <img src="genericAddImage" class="img-fluid"/>
           </label>
           <input id="file-input" type="file" class="invisible"/>
         </div>
