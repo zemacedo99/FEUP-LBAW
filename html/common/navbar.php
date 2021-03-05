@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="../index.php">
       <img src="../images/favicon.ico" alt="" width="30" height="24" class="d-inline-block align-top">
       MyGarden
     </a>
