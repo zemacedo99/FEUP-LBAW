@@ -24,7 +24,7 @@
   <div class="container">
 
     <div class="pt-4 my-md-5 pt-md-5 border-bottom">
-      <P> Create Product</P>
+      <P> Create Coupon</P>
     </div>
 
     <div class="row">
@@ -84,7 +84,7 @@
 
   <div class="row">
     <div id="deleteProductContainer" class="float-end">
-      <p>Delete Product <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+      <p>Delete Coupon <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
           class="bi bi-trash" viewBox="0 0 16 16">
           <path
             d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
