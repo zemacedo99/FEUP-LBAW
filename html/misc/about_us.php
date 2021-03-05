@@ -7,9 +7,9 @@ include '../common/navbar.php';
 
 <div class="container">
     <div class="row mt-3 justify-content-center">
-        <div class="col-2 mx-1"><a class="btn btn-primary" href="#FAQ" role="button">FAQ</a></div>
-        <div class="col-2 ms-1 me-4"><a class="btn btn-primary" href="#contactUs" role="button">Contact Us</a></div>
-        <div class="col-2 mx-1 mb-4"><a class="btn btn-primary" href="#findUs" role="button">Find Us</a></div>
+        <div class="col-2 mx-1"><a class="btn btn-primary" style="background-color: #d3bba9; border-color: #d3bba9" href="#FAQ" role="button">FAQ</a></div>
+        <div class="col-2 ms-1 me-4"><a class="btn btn-primary" style="background-color: #d3bba9; border-color: #d3bba9" href="#contactUs" role="button">Contact Us</a></div>
+        <div class="col-2 mx-1 mb-4"><a class="btn btn-primary" style="background-color: #d3bba9; border-color: #d3bba9" href="#findUs" role="button">Find Us</a></div>
     </div>
     <div class="row mt-5 justify-content-center">
         <div class="col-2 justify-content-center"><img width="200" height="200" src="../images/icon.png" class="img-fluid" alt="Company Logotype"></div>
