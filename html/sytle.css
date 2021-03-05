@@ -45,13 +45,40 @@
     color: burlywood;
 }
 
-#mainbtt
+.mainbtt
 {
+    text-align: center;
     background-color: #198754;
     color: burlywood;
     border: 0px solid transparent;
     font-size: 1.25rem;
-    border-radius: 1.5rem;
+}
+
+.mainbtt:hover {
+    background-color: #157347;
+}
+
+#mainbtticon
+{
+    font-family: 'Material Icons';
+    background-color: #198754;
+    color: burlywood;
+    border: 0px solid transparent;
+    font-size: 1.25rem;
+}
+
+#mainbtticon:hover {
+    background-color: #157347;
+}
+
+
+
+
+#vertical_line
+{
+    width: 2px;
+    height: 700px;
+    background-color: #198754;
 }
 
 

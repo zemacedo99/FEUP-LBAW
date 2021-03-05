@@ -100,13 +100,17 @@
       <div class="container">
         <div class="row justify-content-md-center">
           <div class="d-flex flex-row bd-highlight mb-5">
-            <div class="p-2 bd-highlight"> <img src="quinta_do_bil.png" alt="QuintaDoBill" class="img-thumbnail"> </div>
+            <div class="p-2 bd-highlight " > <img src="quinta_do_bil.png" alt="QuintaDoBill" class="img-thumbnail"> </div>
             <div class="align-self-md-center"> <h2>Quinta do Bill<h2> </div>
           </div>
         </div>
       </div>
     
      <h3> All Products </h3> 
+     <div class="row mt-3"></div>
+     <div class="row mt-3"></div>
+     <div class="row mt-3"></div>
+
 
       <!-- Produtc display ex: -->
       <!-- <div class="card h-100">
@@ -117,43 +121,95 @@
           </div>
       </div> -->
 
-      <!-- List of all products that a store have -->
-      <div class="row row-cols-1 row-cols-sm-2 g-4">
-        <div class="col-sm">
-          <div class="card h-100">
-            <img src="bananas.jpg" class="card-img-top" alt="bananas" >
+      <!-- Produtc display ex: -->
+      <!-- <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+           <img src="bananas.jpg" class="card-img-top" alt="bananas" >
+          </div>
+          <div class="col-md-8">
             <div class="card-body">
               <h5 class="card-title">Bananas</h5>
+              <p class="card-text"><small class="text-muted">7.80€/kg</small></p>
               <p class="card-text">Na Quinta do Bill tens bananas que te fazem voar, voar, voar.</p>
             </div>
           </div>
         </div>
+      </div> -->
+
+      <!-- List of all products that a store have -->
+      <div class="row row-cols-1 row-cols-sm-2 g-4">
         <div class="col-sm">
-          <div class="card h-100">
-          <img src="batata_vermelha.jpg" class="card-img-top" alt="batata vermelha" >
-            <div class="card-body">
-              <h5 class="card-title">Batatas Vermelhas</h5>
-              <p class="card-text">Na Quinta do Bill tens batatas que te fazem voar, voar, voar.</p>
+          
+        <div class="card h-100" style="width: 540px; height: 200px; max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-md-4">
+            <img src="bananas.jpg" class="card-img-top" alt="bananas" >
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Bananas</h5>
+                <p class="card-text"><small class="text-muted">7.80€/kg</small></p>
+                <p class="card-text">Na Quinta do Bill tens bananas que te fazem voar, voar, voar.</p>
+              </div>
             </div>
           </div>
         </div>
+
+        </div>
         <div class="col-sm">
-          <div class="card h-100">
-          <img src="batata-amarela.jpg" class="card-img-top" alt="batata amarela" >
-            <div class="card-body">
-              <h5 class="card-title">Batatas Amarelas</h5>
-              <p class="card-text">Na Quinta do Bill tens batatas que te fazem voar, voar, voar.</p>
+
+        <div class="card h-100" style="width: 540px; height: 200px; max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-md-4">
+            <img src="batata_vermelha.jpg" class="card-img-top" alt="batatas vermelhas" >
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Batatas vermelhas</h5>
+                <p class="card-text"><small class="text-muted">7.80€/kg</small></p>
+                <p class="card-text">Na Quinta do Bill tens bananas que te fazem voar, voar, voar.</p>
+              </div>
             </div>
           </div>
         </div>
+
+        </div>
         <div class="col-sm">
-          <div class="card h-100">
-            <img src="tomate.jpg" class="card-img-top" alt="tomates" >
-            <div class="card-body">
-              <h5 class="card-title">Tomates</h5>
-              <p class="card-text">Na Quinta do Bill tens tomates que te fazem voar, voar, voar.</p>
+
+        <div class="card h-100" style="width: 540px; height: 200px; max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-md-4">
+            <img src="batata-amarela.jpg" class="card-img-top" alt="batatas amarelas" >
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Batatas amarela</h5>
+                <p class="card-text"><small class="text-muted">7.80€/kg</small></p>
+                <p class="card-text">Na Quinta do Bill tens bananas que te fazem voar, voar, voar.</p>
+              </div>
             </div>
           </div>
+        </div>
+
+        </div>
+        <div class="col-sm">
+
+        <div class="card h-100" style="width: 540px; height: 200px; max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-md-4">
+            <img src="tomate.jpg" class="card-img-top" alt="Tomate" >
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Tomate</h5>
+                <p class="card-text"><small class="text-muted">7.80€/kg</small></p>
+                <p class="card-text">Na Quinta do Bill tens bananas que te fazem voar, voar, voar.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         </div>
       </div>
     </div>
