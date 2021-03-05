@@ -1,9 +1,0 @@
-div.col-3.mx-3 {
-    display: inline-block;
-    vertical-align: middle;
-    float: none;
-}
-
-div.col-3.mx-3 {
-    border-right: 1px solid gray;
-}
