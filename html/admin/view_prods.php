@@ -2,6 +2,8 @@
 include '../common/head.php';
 ?>
 
+<script src="admin_modal.js" defer></script>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-2 d-none d-md-block" style="border-right: 1px solid gray; height: 750px">
@@ -60,8 +62,7 @@ include '../common/head.php';
                                     <div class="col-7">Zé das bananas</div>
                                     <div class="col-5">
                                         <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-check"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-x"></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#deleteProdModal" data-bs-whatever="1"><i class="bi bi-trash"></i></button>
                                         <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
                                     </div>
                                 </div>
@@ -77,8 +78,8 @@ include '../common/head.php';
                                     <div class="col-7">Luís das beterrabas</div>
                                     <div class="col-5">
                                         <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-check"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-x"></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#deleteProdModal" data-bs-whatever="2"><i class="bi bi-trash"></i></button>
+
                                         <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
                                     </div>
                                 </div>
@@ -93,8 +94,7 @@ include '../common/head.php';
                                     <div class="col-7">André dos pêssegos</div>
                                     <div class="col-5">
                                         <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-check"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-x"></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#deleteProdModal" data-bs-whatever="3"><i class="bi bi-trash"></i></button>
                                         <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
                                     </div>
                                 </div>
@@ -109,9 +109,8 @@ include '../common/head.php';
                                     <div class="col-7">Ricardo das ananonas</div>
                                     <div class="col-5">
                                         <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-check"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-x"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#deleteProdModal" data-bs-whatever="4"><i class="bi bi-trash"></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline" ><i class="bi bi-info-circle"></i></button>
                                     </div>
                                 </div>
                             </td>
@@ -126,6 +125,26 @@ include '../common/head.php';
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteProdModal" tabindex="-1" aria-labelledby="deleteProdModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteProdModalLabel">Confirming supplier request</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure that you want to delete this product?</p>
+        <p id="prod_id" class="fw-bold text-center"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary">Yes</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 
