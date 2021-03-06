@@ -69,7 +69,6 @@
 
 
 
-    <!-- Bundle and Cupon buttons -->
     <div class="container">
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -81,8 +80,8 @@
                 <div class="d-flex justify-content-center">
                     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item active" aria-current="page">Information</li>
-                            <li class="breadcrumb-item"><a id="navLinks" href="#">Shipping / Payment</a></li>
+                            <li class="breadcrumb-item active" id="selectedLink" aria-current="page">Information</li>
+                            <li class="breadcrumb-item"><a id="navLinks" href="shipping_payment.php">Shipping / Payment</a></li>
                         </ol>
                     </nav>
                 </div>
@@ -243,7 +242,7 @@
             <div class="row">
 
                 <div class="d-flex justify-content-center">
-                    <button type="button" class="mainbtt"> <a id="navLinks" href="#">Continue</a></button>
+                    <button type="button" class="mainbtt"> <a id="navLinks" href="shipping_payment.php">Continue</a></button>
                 </div>
             </div>
         </div>

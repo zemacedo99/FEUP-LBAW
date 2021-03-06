@@ -46,6 +46,14 @@
     text-decoration: none;
 }
 
+#selectedLink
+{
+
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
 .mainbtt
 {
     text-align: center;

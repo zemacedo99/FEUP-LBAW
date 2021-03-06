@@ -101,23 +101,23 @@
 
 
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-              <img src="bananas.jpg" alt="bananas" style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
+              <img src="bananas.jpg" alt="bananas"  class="img-fluid"  style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
             </div>
 
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-              <img src="batata_vermelha.jpg" alt="bananas" style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
+              <img src="batata_vermelha.jpg" alt="bananas"  class="img-fluid"  style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
             </div>
 
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-              <img src="tomate.jpg" alt="bananas" style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
+              <img src="tomate.jpg" alt="bananas"  class="img-fluid"  style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
             </div>
 
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-              <img src="batata_vermelha.jpg" alt="bananas" style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
+              <img src="batata_vermelha.jpg" alt="bananas"  class="img-fluid"  style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
             </div>
 
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-              <img src="bananas.jpg" alt="bananas" style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
+              <img src="bananas.jpg" alt="bananas"  class="img-fluid" style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
             </div>
 
           </div>
@@ -142,23 +142,23 @@
           <div class="row">
 
           <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-              <img src="bananas.jpg" alt="bananas" style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
+              <img src="bananas.jpg" alt="bananas"  class="img-fluid"  style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
             </div>
 
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-              <img src="batata_vermelha.jpg" alt="bananas" style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
+              <img src="batata_vermelha.jpg" alt="bananas"  class="img-fluid"  style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
             </div>
 
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-              <img src="tomate.jpg" alt="bananas" style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
+              <img src="tomate.jpg" alt="bananas"  class="img-fluid"  style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
             </div>
 
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-              <img src="batata_vermelha.jpg" alt="bananas" style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
+              <img src="batata_vermelha.jpg" alt="bananas"  class="img-fluid"  style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
             </div>
 
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-              <img src="bananas.jpg" alt="bananas" style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
+              <img src="bananas.jpg" alt="bananas"   class="img-fluid"  style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
             </div>
 
 
@@ -196,7 +196,9 @@
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <div class="p-3">
               <div class="card">
-                <img src="cupon.jpg" class="card-img" alt="cupon">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <img src="cupon.jpg" class="img-fluid" alt="cupon" style=" margin-left:auto; margin-right:auto;width:40em;height:10em;">
+                            </div>
                 <div class="card-img-overlay">
                   <div class="text-center">
                     <br><br>
@@ -214,7 +216,9 @@
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <div class="p-3">
               <div class="card">
-                <img src="cupon_done.jpg" class="card-img" alt="cupon">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <img src="cupon_done.jpg" class="img-fluid" alt="cupon" style=" margin-left:auto; margin-right:auto;width:40em;height:10em;">
+                            </div>
                 <div class="card-img-overlay">
                   <div class="text-center">
                     <br><br>
@@ -231,7 +235,9 @@
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <div class="p-3">
               <div class="card">
-                <img src="cupon_done.jpg" class="card-img" alt="cupon">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <img src="cupon_done.jpg" class="img-fluid" alt="cupon" style=" margin-left:auto; margin-right:auto;width:40em;height:10em;">
+                            </div>
                 <div class="card-img-overlay">
                   <div class="text-center">
                     <br><br>
@@ -248,7 +254,9 @@
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <div class="p-3">
               <div class="card">
-                <img src="cupon_done.jpg" class="card-img" alt="cupon">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <img src="cupon_done.jpg" class="img-fluid" alt="cupon" style=" margin-left:auto; margin-right:auto;width:40em;height:10em;">
+                            </div>
                 <div class="card-img-overlay">
                   <div class="text-center">
                     <br><br>
