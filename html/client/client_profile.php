@@ -5,12 +5,16 @@ include '../common/navbar.php';
 
 <div class="container">
 
-    <div class="row row-cols-1 row-cols-lg-3 mt-3 d-flex justify-content-center align-items-center" style="height: 200px;">
-        <div class="col col-sm-1" style="width: 200px;">
-            <img src="../images/img_avatar.png" class="rounded-circle img-fluid">
+    <div class="collapse show" id="profileHeader">
+        <div class="row row-cols-1 row-cols-lg-3 mt-3 d-flex justify-content-center align-items-center" style="height: 200px;">
+            <div class="col col-sm-1" style="width: 200px;">
+                <img src="../images/img_avatar.png" class="rounded-circle img-fluid">
+            </div>
+            <div class="col col-sm-3 col-md-8 col-lg-9 col-xl-9 col-xxl-10 d-flex justify-content-center justify-content-sm-start ps-3 fs-2">André Gomes</div>
         </div>
-        <div class="col col-sm-3 col-md-8 col-lg-9 col-xl-9 col-xxl-10 d-flex justify-content-center justify-content-sm-start ps-3 fs-2">André Gomes</div>
     </div>
+
+    <button class="btn btn-primary d-none" id="HideProfileButton" type="button" data-bs-toggle="collapse" data-bs-target="#profileHeader" aria-expanded="true" aria-controls="profileHeader"></button>
 
     <div class="row mt-4 ps-0 ps-sm-4">
         <ul class="nav nav-pills mb-3 d-flex justify-content-center justify-content-sm-start" id="pills-tab" role="tablist">
@@ -24,7 +28,7 @@ include '../common/navbar.php';
                 <button class="nav-link" id="pills-periodic-buys-tab" data-bs-toggle="pill" data-bs-target="#pills-periodic-buys" type="button" role="tab" aria-controls="pills-periodic-buys" aria-selected="false">Periodic Buys</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile1 pills-profile2" aria-selected="false">Profile</button>
+                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</button>
             </li>
         </ul>
     </div>
