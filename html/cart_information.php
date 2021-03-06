@@ -150,10 +150,13 @@
 
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="card">
-                            <img src="cupon.jpg" class="card-img" alt="cupon" style=" margin-left:auto; margin-right:auto;width:500px;height:200px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <img src="cupon.jpg" class="img-fluid" alt="cupon" style=" margin-left:auto; margin-right:auto;width:40em;height:10em;">
+                            </div>
+                            
                             <div class="card-img-overlay">
                                 <div class="text-center">
-                                    <br><br>
+                                    <br>
                                     <h5 class="card-title">SUMMER 2021</h5>
                                     <p class="card-text">10%</p>
                                     <div class="mx-auto" id="horizontal_line"></div>
