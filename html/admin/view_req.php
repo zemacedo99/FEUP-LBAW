@@ -4,7 +4,7 @@ include '../common/head.php';
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2" style="border-right: 1px solid gray; height: 750px">
+        <div class="col-2 d-none d-md-block" style="border-right: 1px solid gray; height: 750px">
 
             <div class="row py-5"></div>
             <div class="row pb-5"></div>
@@ -29,14 +29,14 @@ include '../common/head.php';
                 </div>
             </div>
         </div>
-        <div class="col-7 ms-5 my-5">
+        <div class="col-9 ms-5 my-5">
             <div class="row my-5"></div>
             <div class="row mb-5">
                 <h2 class="text-center">Suppliers Requests</h2>
             </div>
             <div class="row">
                 <form action="">
-                    <div class="col-4">
+                    <div class="col-8 col-md-4">
                         <input class="form-control" placeholder="Search">
                     </div>
                 </form>
@@ -58,9 +58,10 @@ include '../common/head.php';
                                 <div class="row">
                                     <div class="col-7">Zé das bananas</div>
                                     <div class="col-5">
-                                        <button class="btn btn-primary"><i class="bi bi-check"></i></button>
-                                        <button class="btn btn-primary"><i class="bi bi-x"></i></button>
-                                        <button class="btn btn-primary"><i class="bi bi-info-circle"></i></button>
+                                        <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-check"></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-x"></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
                                     </div>
                                 </div>
                             </td>
@@ -73,9 +74,10 @@ include '../common/head.php';
                                 <div class="row">
                                     <div class="col-7">Luís das beterrabas</div>
                                     <div class="col-5">
-                                        <button class="btn btn-primary"><i class="bi bi-check"></i></button>
-                                        <button class="btn btn-primary"><i class="bi bi-x"></i></button>
-                                        <button class="btn btn-primary"><i class="bi bi-info-circle"></i></button>
+                                    <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-check"></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-x"></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
                                     </div>
                                 </div>
                             </td>
@@ -87,9 +89,10 @@ include '../common/head.php';
                                 <div class="row">
                                     <div class="col-7">André dos pêssegos</div>
                                     <div class="col-5">
-                                        <button class="btn btn-primary"><i class="bi bi-check"></i></button>
-                                        <button class="btn btn-primary"><i class="bi bi-x"></i></button>
-                                        <button class="btn btn-primary"><i class="bi bi-info-circle"></i></button>
+                                    <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-check"></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-x"></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
                                     </div>
                                 </div>
                             </td>
@@ -101,9 +104,10 @@ include '../common/head.php';
                                 <div class="row">
                                     <div class="col-7">Ricardo das ananonas</div>
                                     <div class="col-5">
-                                        <button class="btn btn-primary"><i class="bi bi-check"></i></button>
-                                        <button class="btn btn-primary"><i class="bi bi-x"></i></button>
-                                        <button class="btn btn-primary"><i class="bi bi-info-circle"></i></button>
+                                    <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-check"></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-x"></i></button>
+                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
                                     </div>
                                 </div>
                             </td>

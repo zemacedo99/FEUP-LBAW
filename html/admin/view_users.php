@@ -36,7 +36,7 @@ include '../common/head.php';
             </div>
             <div class="row">
                 <form action="">
-                    <div class="col-4">
+                    <div class="col-8 col-md-4">
                         <input class="form-control" placeholder="Search">
                     </div>
                 </form>
@@ -57,8 +57,8 @@ include '../common/head.php';
                                 <div class="row">
                                     <div class="col-7">Zé das bananas</div>
                                     <div class="col-5">
-                                        <button class="btn btn-primary"><i class="bi bi-trash"></i></button>
-                                        <button class="btn btn-primary"><i class="bi bi-info-circle"></i></button>
+                                        <button class="btn btn-primary btn-sm"><i class="bi bi-trash"></i></button>
+                                        <button class="btn btn-primary btn-sm"><i class="bi bi-info-circle"></i></button>
                                     </div>
                                 </div>
                             </td>
@@ -71,8 +71,8 @@ include '../common/head.php';
                                 <div class="row">
                                     <div class="col-7">Luís das beterrabas</div>
                                     <div class="col-5">
-                                        <button class="btn btn-primary"><i class="bi bi-trash"></i></button>
-                                        <button class="btn btn-primary"><i class="bi bi-info-circle"></i></button>
+                                        <button class="btn btn-primary btn-sm"><i class="bi bi-trash"></i></button>
+                                        <button class="btn btn-primary btn-sm"><i class="bi bi-info-circle"></i></button>
                                     </div>
                                 </div>
                             </td>
@@ -84,8 +84,8 @@ include '../common/head.php';
                                 <div class="row">
                                     <div class="col-7">André dos pêssegos</div>
                                     <div class="col-5">
-                                        <button class="btn btn-primary"><i class="bi bi-trash"></i></button>
-                                        <button class="btn btn-primary"><i class="bi bi-info-circle"></i></button>
+                                        <button class="btn btn-primary btn-sm"><i class="bi bi-trash"></i></button>
+                                        <button class="btn btn-primary btn-sm"><i class="bi bi-info-circle"></i></button>
                                     </div>
                                 </div>
                             </td>
@@ -97,8 +97,8 @@ include '../common/head.php';
                                 <div class="row">
                                     <div class="col-7">Ricardo das ananonas</div>
                                     <div class="col-5">                                   
-                                        <button class="btn btn-primary"><i class="bi bi-trash"></i></button>
-                                        <button class="btn btn-primary"><i class="bi bi-info-circle"></i></button>
+                                        <button class="btn btn-primary btn-sm"><i class="bi bi-trash"></i></button>
+                                        <button class="btn btn-primary btn-sm"><i class="bi bi-info-circle"></i></button>
                                     </div>
                                 </div>
                             </td>
