@@ -37,7 +37,7 @@ include '../common/head.php';
                 <h2 class="text-center">Products</h2>
             </div>
             <div class="row ">
-                <form action="" class="mt-5">
+                <form action="">
                     <div class="col-8 col-md-4">
                         <input class="form-control" placeholder="Search">
                     </div>

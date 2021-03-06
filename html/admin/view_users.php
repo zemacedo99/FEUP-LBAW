@@ -33,7 +33,7 @@ include '../common/head.php';
         </div>
         <div class="col-9 ms-5 my-5">
             <div class="row my-5"></div>
-            <div class="row mb-4">
+            <div class="row mb-5">
                 <h2 class="text-center">Users</h2>
             </div>
             <div class="row">
