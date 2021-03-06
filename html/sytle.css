@@ -43,6 +43,7 @@
 #navLinks
 {
     color: burlywood;
+    text-decoration: none;
 }
 
 .mainbtt
@@ -73,12 +74,29 @@
 
 
 
+#simpleicon
+{
+    font-family: 'Material Icons';
+    background-color: white;
+    color: black;
+    border: 0px solid transparent;
+    font-size: 1.75rem;
+}
+
+
 
 #vertical_line
 {
     width: 2px;
     height: 700px;
     background-color: #198754;
+}
+
+#horizontal_line
+{
+    width: 200px;
+    height: 1.5px;
+    background-color: black;
 }
 
 
