@@ -174,14 +174,20 @@ include '../common/navbar.php';
                             <div class="col-8 col-md-9">
                                 <div class="card-body">
                                     <h6 class="card-title">Card Holder</h6>
-                                    <p class="card-text">Visa car Ending in **69</p>
+                                    <p class="card-text">Visa car Ending in **69 </p>
                                 </div>
+                            </div>
+                            <div class="col-2 col-md-1">
+                                <a href="payment_edit_card.php"> <button type="button" id="simpleicon">edit</button></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="card mb-3 d-flex justify-content-center align-items-center" style="height: 60px;">
-                        <p class="card-text">Add new Card <i class="bi bi-plus"></i></p>
+                        <a class="nav-link" id="navLinks" href="payment_add_card.php">
+                            <p class="card-text">Add new Card <i class="bi bi-plus"></i></p>
+                        </a>
+
                     </div>
 
                 </div>
