@@ -1,3 +1,3 @@
 <?php
-header("Location: credentials/register.php");
+header("Location: supplier/supplier_profile.php");
 ?>

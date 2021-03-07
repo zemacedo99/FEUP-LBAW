@@ -13,8 +13,11 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
   
   <!-- FavIcon -->
-  <link rel="shortcut icon" href="./images/favicon.ico" type="image/png">
-  <link rel="icon" href="./images/favicon.ico" type="image/png">
+  <link rel="shortcut icon" href="../images/favicon.ico" type="image/png">
+  <link rel="icon" href="../images/favicon.ico" type="image/png">
+
+  <script src="../client_profile.js" defer></script>
+
   <title>MyGarden</title>
 </head>
 
