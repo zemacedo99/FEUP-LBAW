@@ -9,6 +9,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
 
     <link rel="stylesheet" href="starStyle.css">
 
@@ -170,10 +171,10 @@
                                         <div class="rating justify-content-md-end"> <input type="radio" name="ratinga"
                                                 value="5" id="5a"><label for="5a">☆</label> <input type="radio"
                                                 name="ratinga" value="4" id="4a"><label for="4a">☆</label> <input
-                                                type="radio" name="ratinga" value="3" id="3a"><label
-                                                for="3a">☆</label> <input type="radio" name="ratinga" value="2"
-                                                id="2a"><label for="2a">☆</label> <input type="radio"
-                                                name="ratinga" value="1" id="1a"><label for="1a">☆</label>
+                                                type="radio" name="ratinga" value="3" id="3a"><label for="3a">☆</label>
+                                            <input type="radio" name="ratinga" value="2" id="2a"><label
+                                                for="2a">☆</label> <input type="radio" name="ratinga" value="1"
+                                                id="1a"><label for="1a">☆</label>
                                         </div>
                                     </div>
                                     <div class="text-center order-md-2 col-md-3 col-lg-3">
@@ -181,14 +182,14 @@
                                             California, USA</i>
                                     </div>
                                 </div>
-                                
-                                    <p class="card-text text-truncate d-none d-md-block order-md-1 col-md-9 col-lg-9">
-                                        Este é outro texto mega interessante sobre maças vermelhas, boas para comer
-                                        cruas ou
-                                        assadas,
-                                        possuem tamanhos variados, mas parece que a descrição não cabe aqui então v..
-                                    </p>
-                                
+
+                                <p class="card-text text-truncate d-none d-md-block order-md-1 col-md-9 col-lg-9">
+                                    Este é outro texto mega interessante sobre maças vermelhas, boas para comer
+                                    cruas ou
+                                    assadas,
+                                    possuem tamanhos variados, mas parece que a descrição não cabe aqui então v..
+                                </p>
+
 
                             </div>
                         </div>
@@ -212,10 +213,10 @@
                                         <div class="rating justify-content-md-end"> <input type="radio" name="ratingb"
                                                 value="5" id="5b"><label for="5b">☆</label> <input type="radio"
                                                 name="ratingb" value="4" id="4b"><label for="4b">☆</label> <input
-                                                type="radio" name="ratingb" value="3" id="3b"><label
-                                                for="3b">☆</label> <input type="radio" name="ratingb" value="2"
-                                                id="2b"><label for="2b">☆</label> <input type="radio"
-                                                name="ratingb" value="1" id="1b"><label for="1b">☆</label>
+                                                type="radio" name="ratingb" value="3" id="3b"><label for="3b">☆</label>
+                                            <input type="radio" name="ratingb" value="2" id="2b"><label
+                                                for="2b">☆</label> <input type="radio" name="ratingb" value="1"
+                                                id="1b"><label for="1b">☆</label>
                                         </div>
                                     </div>
                                     <div class="text-center order-md-2 col-md-3 col-lg-3">
@@ -223,11 +224,12 @@
                                             California, USA</i>
                                     </div>
                                 </div>
-                                
-                                    <p class="card-text text-truncate d-none d-md-block order-md-1 col-md-9 col-lg-9">
-                                        Mesmo interessante este texto sobre maças que o fornecedor for generoso o suficiente de disponiblizar a dar alguma informação sobre o produto
-                                    </p>
-                                
+
+                                <p class="card-text text-truncate d-none d-md-block order-md-1 col-md-9 col-lg-9">
+                                    Mesmo interessante este texto sobre maças que o fornecedor for generoso o suficiente
+                                    de disponiblizar a dar alguma informação sobre o produto
+                                </p>
+
 
                             </div>
                         </div>
@@ -251,23 +253,24 @@
                                         <div class="rating justify-content-md-end"> <input type="radio" name="ratingc"
                                                 value="5" id="5c"><label for="5c">☆</label> <input type="radio"
                                                 name="ratingc" value="4" id="4c"><label for="4c">☆</label> <input
-                                                type="radio" name="ratingc" value="3" id="3c"><label
-                                                for="3c">☆</label> <input type="radio" name="ratingc" value="2"
-                                                id="2c"><label for="2c">☆</label> <input type="radio"
-                                                name="ratingc" value="1" id="1c"><label for="1c">☆</label>
+                                                type="radio" name="ratingc" value="3" id="3c"><label for="3c">☆</label>
+                                            <input type="radio" name="ratingc" value="2" id="2c"><label
+                                                for="2c">☆</label> <input type="radio" name="ratingc" value="1"
+                                                id="1c"><label for="1c">☆</label>
                                         </div>
                                     </div>
                                     <div class="text-center order-md-2 col-md-3 col-lg-3">
                                         <i class=text-muted>AppleNotInc.
-                                            Felgueiras,                                            
+                                            Felgueiras,
                                             Portugal</i>
                                     </div>
                                 </div>
-                                
-                                    <p class="card-text text-truncate d-none d-md-block order-md-1 col-md-9 col-lg-9">
-                                        Maças azuis? Sim caro cliente, maças azuis. Após um tratamento químico altamente tóxico as nossas maças ficam com uma bela cor azul fluorescente.
-                                    </p>
-                                
+
+                                <p class="card-text text-truncate d-none d-md-block order-md-1 col-md-9 col-lg-9">
+                                    Maças azuis? Sim caro cliente, maças azuis. Após um tratamento químico altamente
+                                    tóxico as nossas maças ficam com uma bela cor azul fluorescente.
+                                </p>
+
 
                             </div>
                         </div>
@@ -291,23 +294,23 @@
                                         <div class="rating justify-content-md-end"> <input type="radio" name="ratingd"
                                                 value="5" id="5d"><label for="5d">☆</label> <input type="radio"
                                                 name="ratingd" value="4" id="4d"><label for="4d">☆</label> <input
-                                                type="radio" name="ratingd" value="3" id="3d"><label
-                                                for="3d">☆</label> <input type="radio" name="ratingd" value="2"
-                                                id="2d"><label for="2d">☆</label> <input type="radio"
-                                                name="ratingd" value="1" id="1d"><label for="1d">☆</label>
+                                                type="radio" name="ratingd" value="3" id="3d"><label for="3d">☆</label>
+                                            <input type="radio" name="ratingd" value="2" id="2d"><label
+                                                for="2d">☆</label> <input type="radio" name="ratingd" value="1"
+                                                id="1d"><label for="1d">☆</label>
                                         </div>
                                     </div>
                                     <div class="text-center order-md-2 col-md-3 col-lg-3">
                                         <i class=text-muted>Martelos Machado
                                             Vila Nova de Famalicão,
-                                             Portugal</i>
+                                            Portugal</i>
                                     </div>
                                 </div>
-                                
-                                    <p class="card-text text-truncate d-none d-md-block order-md-1 col-md-9 col-lg-9">
-                                        Martelo/maço de madeira com cabo em madeira de pinho e resistência a vibrações
-                                    </p>
-                                
+
+                                <p class="card-text text-truncate d-none d-md-block order-md-1 col-md-9 col-lg-9">
+                                    Martelo/maço de madeira com cabo em madeira de pinho e resistência a vibrações
+                                </p>
+
 
                             </div>
                         </div>
@@ -331,23 +334,24 @@
                                         <div class="rating justify-content-md-end"> <input type="radio" name="ratinge"
                                                 value="5" id="5e"><label for="5e">☆</label> <input type="radio"
                                                 name="ratinge" value="4" id="4e"><label for="4e">☆</label> <input
-                                                type="radio" name="ratinge" value="3" id="3e"><label
-                                                for="3e">☆</label> <input type="radio" name="ratinge" value="2"
-                                                id="2e"><label for="2e">☆</label> <input type="radio"
-                                                name="ratinge" value="1" id="1e"><label for="1e">☆</label>
+                                                type="radio" name="ratinge" value="3" id="3e"><label for="3e">☆</label>
+                                            <input type="radio" name="ratinge" value="2" id="2e"><label
+                                                for="2e">☆</label> <input type="radio" name="ratinge" value="1"
+                                                id="1e"><label for="1e">☆</label>
                                         </div>
                                     </div>
                                     <div class="text-center order-md-2 col-md-3 col-lg-3">
                                         <i class=text-muted>MilhoGalinheiro
-                                            Ponta Delgada,                                            
+                                            Ponta Delgada,
                                             Portugal</i>
                                     </div>
                                 </div>
-                                
-                                    <p class="card-text text-truncate d-none d-md-block order-md-1 col-md-9 col-lg-9">
-                                        Maças azuis? Sim caro cliente, maças azuis. Após um tratamento químico altamente tóxico as nossas maças ficam com uma bela cor azul fluorescente.
-                                    </p>
-                                
+
+                                <p class="card-text text-truncate d-none d-md-block order-md-1 col-md-9 col-lg-9">
+                                    Maças azuis? Sim caro cliente, maças azuis. Após um tratamento químico altamente
+                                    tóxico as nossas maças ficam com uma bela cor azul fluorescente.
+                                </p>
+
 
                             </div>
                         </div>
@@ -361,7 +365,7 @@
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
-                  </select>
+                </select>
             </div>
         </div>
     </div>

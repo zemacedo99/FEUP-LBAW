@@ -9,6 +9,8 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <link rel="stylesheet" href="starStyle.css">
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
 
   <title>Title of the document</title>
@@ -22,10 +24,6 @@
     crossorigin="anonymous"></script>
 
   <div class="container">
-
-    <div class="pt-4 my-md-5 pt-md-5 border-bottom">
-      <P> Create Product</P>
-    </div>
 
     <div class="row">
       <div id="mainContainer" class="col-sm-8">
@@ -70,47 +68,76 @@
         </div>
       </div>
       <div id="DataContainer" class="col-md-4">
-        <P>Product Name</P>
-        <p>Unit</p>
-        <p>€</p>
-        <p>KG</p>
-        <div class="col-auto my-1">
-          <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-            <option selected>Choose...</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
+        <h2>Maçãs Verdes E Boas</h2>
+        <h6 class="text-muted">Only 2 left!</h6>
+        <br>
+        <p>
+        <h4><b>4,50€/kg</b></h4>
+        </p>
+        <br>
+        <p>Quantity</p>
+        <input type="number" class="col-auto" id="quantity" placeholder="2"> <b>KG</b>
+        <div class="text-muted">Total: 9,00€</div>
+        <br>
+        <br>
+        <div id="confirmContainer" class="text-center">
+          <button type="button" class="btn btn-light">Confirmar</button>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div id="DescriptionContainer" class="col-sm-6">
+    <div class="row mt-5">
+      <div id="DescriptionContainer" class="container-fluid">
         <div class="form-group">
           <label for="Description">Description</label>
-          <textarea class="form-control" id="Description" rows="5"></textarea>
+          <textarea class="form-control" id="Description" rows="5" readonly>Fresh and green letuce from the renowned fields of Póvoa do Varzim in Portugal. This lettuce is freshly picked every morning to preserve the essence of its flavour until it reaches your table. Biological food means sustainable food! Eat healthier.
+          </textarea>
         </div>
       </div>
-      <div id="TagsContainer" class="col-sm-6">
+      <div id="TagsContainer" class="container-fluid mt-5">
         <div class="form-group">
           <label for="tags">Tags</label>
-          <textarea class="form-control" id="tags" rows="5" disabled>
-          <h1>Example heading <span class="badge badge-secondary">New</span></h1>
-        </textarea>
+          <div class="container" id="tags" style="border: 1px solid">
+            <span class="badge bg-secondary">Organic</span>
+            <span class="badge bg-secondary">Food</span>
+            <span class="badge bg-secondary">Fresh</span>
+            <span class="badge bg-secondary">Vegetable</span>
+          </div>
         </div>
       </div>
     </div>
 
 
     <div class="row">
-      <div id="deleteProductContainer" class="float-end">
-        <p>Delete Product <i class="bi bi-trash"></i></p>
+      <div id="Reviews" class="row mt-5">
+        <h2>What other costumers say:</h2>
+        <br>
+        <div class="container mt-3" style="border:solid">
+          <h3>Alice </h3>
+          <div class="rating justify-content-md-end"> <input type="radio" name="ratingalice" value="5"
+              id="5alice"><label for="5alice">☆</label> <input type="radio" name="ratingalice" value="4"
+              id="4alice"><label for="4alice">☆</label> <input type="radio" name="ratingalice" value="3"
+              id="3alice"><label for="3alice">☆</label> <input type="radio" name="ratingalice" value="2"
+              id="2alice"><label for="2alice">☆</label> <input type="radio" name="ratingalice" value="1"
+              id="1alice"><label for="1alice">☆</label>
+          </div>
+          <div class="text-muted">The lettuce was flavourful, supermarket's lettuce isn't nearly as tasteful</div>
+        </div>
+
+        <div class="container mt-2" style="border:solid">
+          <h3>João </h3>
+          <div class="rating justify-content-md-end"> <input type="radio" name="ratingjoao" value="5" id="5joao"><label
+              for="5joao">☆</label> <input type="radio" name="ratingjoao" value="4" id="4joao"><label
+              for="4joao">☆</label> <input type="radio" name="ratingjoao" value="3" id="3joao"><label
+              for="3joao">☆</label> <input type="radio" name="ratingjoao" value="2" id="2joao"><label
+              for="2joao">☆</label> <input type="radio" name="ratingjoao" value="1" id="1joao"><label
+              for="1joao">☆</label>
+          </div>
+          <div class="text-muted">They call it biological but seeing snails in the lettuce makes me think only in lack
+            of hygiene.</div>
+        </div>
       </div>
 
-      <div id="confirmContainer" class="text-center">
-        <button type="button" class="btn btn-light">Confirmar</button>
-      </div>
+
     </div>
   </div>
   </div>
