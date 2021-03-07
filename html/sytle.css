@@ -92,6 +92,31 @@
 }
 
 
+#simple-btt
+{
+    background-color: transparent;
+    color: black;
+    border: 0px solid transparent;
+    font-size: 1.75rem;
+}
+
+#simple-btt:active
+{
+    font-weight: bold;
+    background-color: transparent;
+    color: black;
+    border: 0px solid transparent;
+}
+
+#simple-btt:focus
+{
+    font-weight: bold;
+    background-color: transparent;
+    color: black;
+    border: 0px solid transparent;
+}
+
+
 
 #vertical_line
 {

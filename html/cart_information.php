@@ -12,6 +12,8 @@
     <!-- material icons-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
     <!--  css links -->
     <link href="sytle.css" rel="stylesheet">
 
@@ -137,7 +139,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="row">
                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-                                <input type="text" class="form-control" placeholder="CODE">
+                                <input type="text" class="form-control" placeholder="CODE" >
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center">
                                 <button type="button" id="simpleicon">add</button>
