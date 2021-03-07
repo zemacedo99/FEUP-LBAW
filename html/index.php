@@ -1,3 +1,3 @@
 <?php
-header("Location: client/client_profile.php");
+header("Location: supplier/supplier_profile.php");
 ?>

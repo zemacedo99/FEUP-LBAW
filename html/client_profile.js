@@ -1,6 +1,26 @@
-if (window.location.pathname == '/client/client_profile.php') {
+if (window.location.pathname == '/client/client_profile.php')
     setupClientProfile()
+    
+
+if (window.location.pathname == '/supplier/supplier_profile.php') {
+    let SuppTabClasses = document.querySelector('#SupplierTab').classList
+    let lgBreakpoint = 992
+    let displayFunc = ()=>{
+        if (window.innerWidth >= lgBreakpoint) {
+            if (!SuppTabClasses.contains('d-none')) {
+                SuppTabClasses.add('d-none')
+            }
+        } else {
+            SuppTabClasses.remove('d-none')
+        }
+    }
+
+
+    window.addEventListener('resize', displayFunc)
+
+    displayFunc() // run on start
 }
+
 
 /**
  * Pode ser melhorado:

@@ -1,5 +1,5 @@
 <div class="row ">
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-5">
         <div class="col-12 mb-4">
             <h3>Personal Info</h3>
         </div>
@@ -27,7 +27,7 @@
 
     <div class="col d-none d-lg-block col-lg-1"></div>
 
-    <div class="col-12 col-lg-5">
+    <div class="col-12 col-lg-6">
         <div class="col-12 mb-4">
             <h3>Shipping Details</h3>
         </div>
