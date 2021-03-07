@@ -68,7 +68,7 @@
         </div>
       </div>
       <div id="DataContainer" class="col-md-4">
-        <h2>Maçãs Verdes E Boas</h2>
+        <h2>Green Good Apples</h2>
         <h6 class="text-muted">Only 2 left!</h6>
         <br>
         <p>
@@ -81,7 +81,7 @@
         <br>
         <br>
         <div id="confirmContainer" class="text-center">
-          <button type="button" class="btn btn-light">Confirmar</button>
+          <button type="button" class="btn btn-light"><i>Buy </i><i class="bi bi-basket"></i></button>
         </div>
       </div>
     </div>
