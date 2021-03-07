@@ -234,7 +234,11 @@ include '../common/navbar.php';
 
                     <div class="col-6">
                         <div class="d-flex justify-content-center">
-                            <button type="button" class="mainbtt"> <a id="navLinks" href="#">Finish</a></button>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="mainbtt" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                Finish
+                            </button>
+                            <!-- <button type="button" class="mainbtt"> <a id="navLinks" href="#">Finish</a></button> -->
                         </div>
                     </div>
 
@@ -242,6 +246,30 @@ include '../common/navbar.php';
                 </div>
             </div>
 
+
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="d-flex justify-content-center">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">THANKS!</h5>
+                            </div>
+                        </div>
+                        <div class="modal-body text-center">
+                            Success <br>
+                            Your order is completed
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="modal-footer">
+                                <button type="button" class="mainbtt"><a id="navLinks" href="../home.php">Keep Shopping</a></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
         </div>
