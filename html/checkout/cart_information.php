@@ -39,16 +39,52 @@ include '../common/navbar.php';
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="row">
                         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-                            <p> Once </p>
+                            <!-- <p> Once </p> -->
+                            <button type="button" id="simple-btt">Once</button>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-                            <p> Daily </p>
+                            <button type="button" id="simple-btt">Daily</button>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-                            <p> Weekly </p>
+                            <!-- <label for="example-week-input" class="col-2 col-form-label">Weekly</label> -->
+                            <!-- <input class="form-control" type="week" id="example-week-input"> -->
+                            <!-- <button type="button" id="simple-btt">Weekly</button> -->
+
+                            <!-- Button trigger modal -->
+                            <button type="button" id="simple-btt" data-bs-toggle="modal" data-bs-target="#WeeklyModal">
+                                Weekly
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="WeeklyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        
+                                        <div class="modal-body">
+                                        <a href="#" role="button" id="simple-btt" title="Popover title" data-bs-content="Popover body content is set in this attribute.">Monday</a> <br>
+                                        <a href="#" role="button" id="simple-btt" title="Popover title" data-bs-content="Popover body content is set in this attribute.">Thuesday</a><br>
+                                        <a href="#" role="button" id="simple-btt" title="Popover title" data-bs-content="Popover body content is set in this attribute.">Wednesday</a><br>
+                                        <a href="#" role="button" id="simple-btt" title="Popover title" data-bs-content="Popover body content is set in this attribute.">Thursday</a><br>
+                                        <a href="#" role="button" id="simple-btt" title="Popover title" data-bs-content="Popover body content is set in this attribute.">Friday</a><br>
+                                        <a href="#" role="button" id="simple-btt" title="Popover title" data-bs-content="Popover body content is set in this attribute.">Saturday</a><br>
+                                        <a href="#" role="button" id="simple-btt" title="Popover title" data-bs-content="Popover body content is set in this attribute.">Sunday</a><br>
+
+                                        </div>
+                                        
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-                            <p> Monthly </p>
+                            <!-- <label for="example-date-input" class="col-2 col-form-label">Monthly</label> -->
+                            <button type="button" id="simple-btt">Monthly</button>
+                            <input class="form-control" type="date" id="example-date-input">
+
                         </div>
                     </div>
                 </div>
