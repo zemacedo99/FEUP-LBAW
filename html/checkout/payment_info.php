@@ -39,7 +39,8 @@
         <div class="row mb-3">
           <div class="col">
             <div class="form-floating">
-              <input type="month" class="form-control" id="floatingFirstName" placeholder="Valid until">
+              <input data-datepicker="" class="form-control" id="birthday" type="text" placeholder="mm/yy" required>       
+              <!-- <input type="month" class="form-control" id="floatingFirstName" placeholder="Valid until"> -->
               <label for="floatingFirstName">Valid until</label>
             </div>
           </div>
