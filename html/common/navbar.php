@@ -16,7 +16,7 @@
         <a class="nav-link d-block d-md-none" href="#">Cart</a>
       </div>
     </div>
-    <a href="#" class="d-none d-md-inline-block"><i class="bi bi-person fs-2"></i></a>
+    <a href="../client/client_profile.php" class="d-none d-md-inline-block"><i class="bi bi-person fs-2"></i></a>
     <a href="#" class="d-none d-md-inline-block"><i class="bi bi-cart3 fs-2"></i></a>
   </div>
 </nav> 

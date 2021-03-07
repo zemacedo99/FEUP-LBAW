@@ -3,7 +3,6 @@ if (window.location.pathname == '/client/client_profile.php')
 
 
 if (window.location.pathname == '/supplier/supplier_profile.php') {
-    let suppTabClasses = document.querySelector('#SupplierTab').classList
     let suppTabContentClasses = document.querySelector('#SupplierTabContent').classList
     let suppProfileClasses = document.querySelector('#supplierProfile').classList
     let suppProductsClasses = document.querySelector('#products').classList
