@@ -1,20 +1,11 @@
-<div class="modal fade" id="modalCancelOrder" tabindex="-1" aria-labelledby="modalCancelOrderLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalCancelOrderLabel">Cancelation Confirmation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to cancel this order?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
-                <button type="button" class="btn btn-primary">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
+<?php 
+include_once '../common/modal.php';
+addModal("CancelOrder", 
+        "Cancelation Confirmation", 
+        "Are you sure you want to cancel this order?",
+        "Cancel",
+        "Dismiss");
+?>
 
 <div class="card mb-3">
     <div class="row g-0">
