@@ -16,7 +16,7 @@
   <link rel="shortcut icon" href="../images/favicon.ico" type="image/png">
   <link rel="icon" href="../images/favicon.ico" type="image/png">
 
-  <!-- <link rel="stylesheet" type="text/css" href="../style.css"> -->
+  <link rel="stylesheet" type="text/css" href="../style.css">
   <script src="../client_profile.js" defer></script>
 
   <title>MyGarden</title>
