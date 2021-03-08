@@ -49,7 +49,7 @@ include '../common/navbar.php';
     <!-- Almost sold out Row -->
     <div class="row">
         <div class="col-8 col-sm-6 col-md-4 col-lg-3">
-            <div class="card bg-white text-dark">
+            <div class="card customcardbg-white text-dark">
                 <img src="../images/banana.jpg" class="card-img" alt="A banana">
                 <div class="card-img-overlay">
 
@@ -77,7 +77,7 @@ include '../common/navbar.php';
             </div>
         </div>
         <div class="col-8 col-sm-6 col-md-4 col-lg-3">
-            <div class="card bg-white text-dark">
+            <div class="card customcardbg-white text-dark">
                 <img src="../images/anona.jpg" class="card-img" alt="A custard apple">
                 <div class="card-img-overlay">
 
@@ -104,7 +104,7 @@ include '../common/navbar.php';
             </div>
         </div>
         <div class="col-8 col-sm-6 col-md-4 col-lg-3">
-            <div class="card bg-white text-dark">
+            <div class="card customcardbg-white text-dark">
                 <img src="../images/green_apple.jpg" class="card-img" alt="A green apple">
                 <div class="card-img-overlay">
 
@@ -131,7 +131,7 @@ include '../common/navbar.php';
             </div>
         </div>
         <div class="col-8 col-sm-6 col-md-4 col-lg-3">
-            <div class="card bg-white text-dark">
+            <div class="card customcardbg-white text-dark">
                 <img src="../images/red_apple.jpg" class="card-img" alt="A red apple">
                 <div class="card-img-overlay">
 
@@ -168,7 +168,7 @@ include '../common/navbar.php';
 
     <div class="row">
         <div class="col-8 col-sm-6 col-md-4 col-lg-3">
-            <div class="card bg-white text-dark">
+            <div class="card customcardbg-white text-dark">
                 <img src="../images/banana.jpg" class="card-img" alt="A banana">
                 <div class="card-img-overlay">
 
@@ -195,7 +195,7 @@ include '../common/navbar.php';
             </div>
         </div>
         <div class="col-8 col-sm-6 col-md-4 col-lg-3">
-            <div class="card bg-white text-dark">
+            <div class="card customcardbg-white text-dark">
                 <img src="../images/anona.jpg" class="card-img" alt="A banana">
                 <div class="card-img-overlay">
 
@@ -222,7 +222,7 @@ include '../common/navbar.php';
             </div>
         </div>
         <div class="col-8 col-sm-6 col-md-4 col-lg-3">
-            <div class="card bg-white text-dark">
+            <div class="card customcardbg-white text-dark">
                 <img src="../images/green_apple.jpg" class="card-img" alt="A green apple">
                 <div class="card-img-overlay">
 
@@ -249,7 +249,7 @@ include '../common/navbar.php';
             </div>
         </div>
         <div class="col-8 col-sm-6 col-md-4 col-lg-3">
-            <div class="card bg-white text-dark">
+            <div class="card customcardbg-white text-dark">
                 <img src="../images/red_apple.jpg" class="card-img" alt="A red apple">
                 <div class="card-img-overlay">
 

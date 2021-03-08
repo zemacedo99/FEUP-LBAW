@@ -11,17 +11,18 @@
 
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
+  <!-- Material icons-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   
   <!-- FavIcon -->
   <link rel="shortcut icon" href="../images/favicon.ico" type="image/png">
   <link rel="icon" href="../images/favicon.ico" type="image/png">
 
+  <!-- Self included style and scripts -->
   <link rel="stylesheet" type="text/css" href="../style.css">
   <script src="../client_profile.js" defer></script>
 
-  <!-- Material icons-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  
   <title>MyGarden</title>
 </head>
 

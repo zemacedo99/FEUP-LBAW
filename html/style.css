@@ -87,8 +87,6 @@
     background-color: #157347;
 }
 
-
-
 #simpleicon
 {
     font-family: 'Material Icons';
@@ -178,4 +176,33 @@
 
 .rating:hover>input:checked~label:before {
     opacity: 0.4
+}
+
+.customcard img {
+    height: 230px;
+}
+
+.row .bi-suit-heart {
+    color: red;
+}
+
+.btn-outline-primary {
+    color: #53ca61;
+    border-color: #53ca61;
+}
+
+.btn-outline-primary:hover {
+    color: #fff;
+    background-color: #53ca61;
+    border-color: #53ca61;
+}
+
+.btn-primary {
+    background-color: #53ca61;
+    border-color: #53ca61;
+}
+
+.btn-primary:hover {
+    background-color: #53ca61;
+    border-color: #53ca61;
 }

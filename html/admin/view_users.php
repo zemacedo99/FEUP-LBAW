@@ -11,7 +11,7 @@
 
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="../style.css">
   <!-- FavIcon -->
   <link rel="shortcut icon" href="./images/favicon.ico" type="image/png">
   <link rel="icon" href="./images/favicon.ico" type="image/png">
