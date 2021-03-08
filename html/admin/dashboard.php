@@ -55,7 +55,7 @@
         </div>
         <div class="col-md-10">
             <div class="row mx-auto">
-                <h1 class="my-5 text-center" style="color:#53ca61">Welcome, admin!</h1>
+                <h1 class="my-5 text-center">Welcome, admin!</h1>
             </div>
 
 

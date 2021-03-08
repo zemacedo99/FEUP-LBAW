@@ -15,9 +15,16 @@ include '../common/navbar.php';
         <div class="col-2 justify-content-center"><img width="200" height="200" src="../images/icon.png" class="img-fluid" alt="Company Logotype"></div>
         <div class="col-5">
             <h2>MyGarden</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod teLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
-                Lorem ipsum dolor sit.Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
+            <p>
+                Nowadays the existence of an online front for the traditional shops is of most importance in providing their sustainability and modernization.
+            </p>
+            <p>
+                Themathics like biological and local products are on demand, therefore an application that easens the ordering of gardening and agricultural products is vital in the growth of local businesses and their expansion.
+            </p>
+            <p>
+                With MyGarden, traditional shops will have the technological capabilities to survive against major supermarkets. 
+
+            </p>
         </div>
     </div>
     <div class="row justify-content-center" id="FAQ">
@@ -28,18 +35,17 @@ include '../common/navbar.php';
 
     <div class="row justify-content-center">
         <div class="col-7 mt-3">
-            <h4>Pergunta muito fixe</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor .
-                Lorem ipsum dolor sit amet, consectetur</p>
+            <h4>Is MyGarden trustworthy?</h4>
+            <p>We proud ourselfs</p>
         </div>
         
         <div class="col-7 mt-3">
-            <h4>Pergunta muito fixe</h4>
+            <h4>How can we be sure that the products are fresh?</h4>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor .
                 Lorem ipsum dolor sit amet, consectetur</p>
         </div>
         <div class="col-7 mt-3">
-            <h4>Pergunta muito fixe</h4>
+            <h4>Is my credit card safe with MyGarden?</h4>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor .
                 Lorem ipsum dolor sit amet, consectetur</p>
         </div>
