@@ -28,7 +28,7 @@ include '../common/navbar.php';
             <a href="../checkout/shipping_payment.php" class="list-group-item list-group-item-action">CheckOut - Payment</a>
 
             <a href="../credentials/register.php" class="list-group-item list-group-item-action fw-bold">Credentials</a>
-            <a href="../credentials/login.php" class="list-group-item list-group-item-action">Credentials - Login</a>
+            <a href="../credentials/login.php" class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#loginModal">Credentials - Login</a>
             <a href="../credentials/register.php" class="list-group-item list-group-item-action">Credentials - Register</a>
             
             <a href="../misc/home_page.php" class="list-group-item list-group-item-action fw-bold">HomePage</a>

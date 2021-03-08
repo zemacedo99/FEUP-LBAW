@@ -1,3 +1,8 @@
+<?php 
+include_once '../credentials/login.php';
+addLogin();
+?>
+
 <nav class="navbar navbar-expand-md navbar-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="../index.php"> <img alt="Logo" src="../images/logo.png" width="100" height="25"> </a>
@@ -10,13 +15,13 @@
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" id="navLinks" href="#">Products</a>
+                    <a class="nav-link" id="navLinks" href="../misc/productList.php">Products</a>
                 </li>
                 <li class="nav-item"> 
-                    <a class="nav-link" id="navLinks" href="#">Stores</a>
+                    <a class="nav-link" id="navLinks" href="../misc/productList.php">Stores</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="navLinks" href="#">About Us</a>
+                    <a class="nav-link" id="navLinks" href="../misc/about_us.php">About Us</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="navLinks" href="../misc/site_map.php">SiteMap</a>
@@ -32,8 +37,8 @@
         <!-- navbar profile and cart buttons -->
         <div class="navbar-nav ms-auto">
             <div class="col align-items-end">
-                <button type="button" id="headericon">account_circle</button>
-                <button type="button" id="headericon">shopping_cart</button>
+                <button type="button" id="headericon" data-bs-toggle="modal" data-bs-target="#loginModal">account_circle</button>
+                <a href="../checkout/cart_information.php"><button type="button" id="headericon">shopping_cart</button></a>  
             </div>
         </div>
 </nav>

@@ -1,19 +1,15 @@
-<?php
-include '../common/head.php';
-include '../common/navbar.php';
+<?php 
+/**
+ * Need to add `data-bs-toggle="modal" data-bs-target="#loginModal"` to a button element
+ */
+function addLogin() {
 ?>
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Modal de Login
-</button>
-
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Welcome Back</h5>
+        <h5 class="modal-title" id="loginModalLabel">Welcome Back</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -38,12 +34,9 @@ include '../common/navbar.php';
           <a href="../credentials/register.php" class="link-secondary d-flex justify-content-center">Sign up</a>
         </div>
       </div>
-      <!-- <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div> -->
     </div>
   </div>
 </div>
-
-<?php include '../common/end.php' ?>
+<?php
+}
+?>

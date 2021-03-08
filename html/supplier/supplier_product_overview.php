@@ -1,9 +1,13 @@
 <div class="container-sm">
-    <div class="col d-flex justify-content-center d-none d-lg-flex mt-3 fs-3 mb-3">Products</div>
+    <div class="col d-flex justify-content-center d-none d-lg-flex mt-3 fs-3 mb-5">Products</div>
 
-    <div class="row mb-3">
-        <div class="col-5 d-flex justify-content-center"><button type="button" class="btn btn-primary"><i class="bi bi-plus"></i> Add a Product</button></div>
-        <div class="col-7 d-flex justify-content-center"><button type="button" class="btn btn-primary"> <i class="bi bi-bag-fill"></i> Bundles and <i class="bi bi-cash"></i> Cupons <i class="bi bi-caret-right"></i></button></div>
+    <div class="row mb-5 mt-2">
+        <div class="col-5 d-flex justify-content-center">
+            <a href="../supplier/createProduct.php"><button type="button" class="btn btn-primary"><i class="bi bi-plus"></i> Add a Product</button></a>
+        </div>
+        <div class="col-7 d-flex justify-content-center">
+            <a href="../supplier/bundles_and_cupons.php"><button type="button" class="btn btn-primary"> <i class="bi bi-bag-fill"></i> Bundles and <i class="bi bi-cash"></i> Cupons <i class="bi bi-caret-right"></i></button></a>
+        </div>
     </div>
 
     <div class="card mb-3">
