@@ -27,7 +27,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2 d-none d-md-block" style="border-right: 1px solid gray; height: 750px">
+        <div class="col-2 d-none d-md-block" style="border-right: 1px solid #53ca61; height: 750px">
 
             <div class="row py-5"></div>
             <div class="row pb-5"></div>
