@@ -28,12 +28,13 @@ include '../common/navbar.php';
   <div class="container">
 
     <div class="pt-4 my-md-5 pt-md-5 border-bottom">
-      <h2><b> Create Bundle</b><h2>
+      <h2><b> Create Bundle</b>
+        <h2>
     </div>
 
 
     <div id="ProductCardsContainer" class="container bg-secondary">
-      
+
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div class="col">
           <div class="card shadow-sm">
@@ -138,61 +139,70 @@ include '../common/navbar.php';
         <div class="col"></div>
         <div class="col"></div>
         <div class="row align-items-end">
-        <div id="Add product button" class="text-center ">
-      <button type="button" class="btn btn-light"><b>Add product +</b></button>
-    </div>
-    </div>
+          <div id="Add product button" class="text-center ">
+            <button type="button" class="btn btn-light"><b>Add product +</b></button>
+          </div>
+        </div>
       </div>
 
     </div>
 
-  
 
 
 
-  <div id="DataContainer" class="container mt-5 mb-5">
-    <ul class="col text-align:justify">
-      <li id="bundleName" class="list-inline-item"><b>Round of apples</b></li>
-      <li id="price" class="list-inline-item text-center">50</li>
-      <li id="coin" class="list-inline-item">€</li>
-      <input type="number" placeholder="stock">
-    </ul>
-  </div>
 
-
-  <div class="row">
-    <div id="DescriptionContainer" class="col-sm-6">
-      <div class="form-group">
-        <label for="Description">Description</label>
-        <textarea class="form-control" id="Description" rows="5"></textarea>
+    <div id="DataContainer" class="container mt-5 mb-5">
+      <div class="row justify-content-center">
+        <div class="col-3">
+          <input type="text" id="bundleName" placeholder="bundle title">
+        </div>
+        <div class="col-3">
+          <input type="number" id="price" placeholder="price">€
+        </div>
+          
+        <div class="col-2">
+          <input type="number" placeholder="stock">
+        </div>
       </div>
     </div>
-    <div id="TagsContainer" class="col-sm-6">
-      <div class="form-group">
-        <label for="tags">Tags</label>
-        <div class="container" id="tags" style="border: 1px solid">
+
+
+    <div class="row">
+      <div id="DescriptionContainer" class="col-sm-6">
+        <div class="form-group">
+          <label for="Description">Description</label>
+          <textarea class="form-control" id="Description" rows="5"></textarea>
+        </div>
+      </div>
+      <div id="TagsContainer" class="col-sm-6">
+        <div class="form-group">
+          <label for="tags">Tags</label>
+          <div class="container" id="tags" style="border: 1px solid">
             <span class="badge bg-secondary">Organic</span>
             <span class="badge bg-secondary">Food</span>
             <span class="badge bg-secondary">Fresh</span>
             <span class="badge bg-secondary">Vegetable</span>
           </div>
+        </div>
       </div>
     </div>
-  </div>
-
-  
 
 
 
-  <div class="row">
-    <div id="deleteProductContainer" class="float-end">
-      <p>Delete Bundle <i class="bi bi-trash"></i></p>
+
+
+    <div class="row">
+      <div id="deleteProductContainer" class="float-end">
+        <div class="col-12 col-lg-6 d-flex justify-content-center mb-4">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
+            data-bs-target="#modalDeleteAccount"><i class="bi bi-trash"></i> Delete Account</button>
+        </div>
+      </div>
+
+      <div id="confirmContainer" class="text-center">
+        <button type="button" class="btn btn-light">Confirmar</button>
+      </div>
     </div>
-
-    <div id="confirmContainer" class="text-center">
-      <button type="button" class="btn btn-light">Confirmar</button>
-    </div>
-  </div>
   </div>
   </div>
 </body>

@@ -33,21 +33,21 @@ include '../common/navbar.php';
     </div>
 
     <div class="row">
-      <div id="imagesContainer" class="col-sm-8">
+      <div id="imagesContainer" class="col-sm-6">
         <div class="image-upload">
           <label for="file-input">
-            <img src="genericAddImage" class="img-fluid" />
+            <img src="../images/genericAddImage.png" class="img-fluid" />
           </label>
           <input id="file-input" type="file" class="invisible" />
         </div>
 
       </div>
       <div id="DataContainer" class="col-md-4 mt-5">
-        <h5><b>Coupon Name</b></h5>
+        <h5><b><input type="text" placeholder="Coupon Name"></b></h5>
         <div class="row mt-5">
         <div class="col">
         <i class="text-muted">discount</i>
-        <h6 class="text-muted">50.2</h6>
+        <h6 class="text-muted"><input type="text" placeholder="Amount"></h6>
         </div>
         <div class="col">
         <div class="col-auto my-1">

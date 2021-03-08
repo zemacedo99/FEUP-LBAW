@@ -14,7 +14,7 @@ include '../common/navbar.php';
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-  <link rel="stylesheet" href="../comon/starStyle.css">
+  <link rel="stylesheet" href="../common/starStyle.css">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
 
@@ -34,7 +34,7 @@ include '../common/navbar.php';
       <div id="mainContainer" class="col-sm-8">
 
 
-        <div id="carrouselContainer" class="container">
+        <div id="carrouselContainer" class="container-fluid">
           <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
@@ -44,7 +44,7 @@ include '../common/navbar.php';
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
                 aria-label="Slide 3"></button>
             </div>
-            <div class="carousel-inner" style=" width:100%; height: 500px !important;">
+            <div class="carousel-inner" style=" width:100%; height: 450px !important;">
               <div class="carousel-item active">
                 <img src="https://www.infoescola.com/wp-content/uploads/2010/11/ma%C3%A7a-verde_312027470.jpg"
                   class="d-block w-100" alt="...">
@@ -117,25 +117,29 @@ include '../common/navbar.php';
         <h2>What other costumers say:</h2>
         <br>
         <div class="container mt-3" style="border:solid">
-          <h3>Alice </h3>
-          <div class="rating justify-content-md-end"> <input type="radio" name="ratingalice" value="5"
+        <div class="row"><h3>Alice </h3></div>
+        <div class="row text-end justify-content-right justify-content-end">
+          <div class="rating text-end"> <input type="radio" name="ratingalice" value="5"
               id="5alice"><label for="5alice">☆</label> <input type="radio" name="ratingalice" value="4"
               id="4alice"><label for="4alice">☆</label> <input type="radio" name="ratingalice" value="3"
               id="3alice"><label for="3alice">☆</label> <input type="radio" name="ratingalice" value="2"
               id="2alice"><label for="2alice">☆</label> <input type="radio" name="ratingalice" value="1"
               id="1alice"><label for="1alice">☆</label>
-          </div>
-          <div class="text-muted">The lettuce was flavourful, supermarket's lettuce isn't nearly as tasteful</div>
-        </div>
+          </div></div>
+        <div class="row"><div class="text-muted">The lettuce was flavourful, supermarket's lettuce isn't nearly as tasteful</div>
+        </div></div>
+          
+          
+          
 
         <div class="container mt-2" style="border:solid">
           <h3>João </h3>
-          <div class="rating justify-content-md-end"> <input type="radio" name="ratingjoao" value="5" id="5joao"><label
-              for="5joao">☆</label> <input type="radio" name="ratingjoao" value="4" id="4joao"><label
-              for="4joao">☆</label> <input type="radio" name="ratingjoao" value="3" id="3joao"><label
-              for="3joao">☆</label> <input type="radio" name="ratingjoao" value="2" id="2joao"><label
-              for="2joao">☆</label> <input type="radio" name="ratingjoao" value="1" id="1joao"><label
-              for="1joao">☆</label>
+          <div class="rating text-end"> <input type="radio" name="ratingalice" value="5"
+              id="5alice"><label for="5alice">☆</label> <input type="radio" name="ratingalice" value="4"
+              id="4alice"><label for="4alice">☆</label> <input type="radio" name="ratingalice" value="3"
+              id="3alice"><label for="3alice">☆</label> <input type="radio" name="ratingalice" value="2"
+              id="2alice"><label for="2alice">☆</label> <input type="radio" name="ratingalice" value="1"
+              id="1alice"><label for="1alice">☆</label>
           </div>
           <div class="text-muted">They call it biological but seeing snails in the lettuce makes me think only in lack
             of hygiene.</div>

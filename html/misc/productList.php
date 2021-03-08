@@ -16,7 +16,7 @@ include '../common/navbar.php';
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
 
-    <link rel="stylesheet" href="../comon/starStyle.css">
+    <link rel="stylesheet" href="../common/starStyle.css">
 
     <title>Title of the document</title>
 </head>
@@ -43,38 +43,38 @@ include '../common/navbar.php';
                     <div id="Category" class="container border-bottom">
                         <b>Category</b>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="" id="food">
+                            <label class="form-check-label" for="food">
                                 food
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="" id="fertilizer">
+                            <label class="form-check-label" for="fertilizer">
                                 fertilizer
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="" id="pesticides">
+                            <label class="form-check-label" for="pesticides">
                                 pesticides
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="" id="biologic">
+                            <label class="form-check-label" for="biologic">
                                 biologic
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="" id="gardening">
+                            <label class="form-check-label" for="gardening">
                                 gardening
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="" id="tools">
+                            <label class="form-check-label" for="tools">
                                 tools
                             </label>
                         </div>
