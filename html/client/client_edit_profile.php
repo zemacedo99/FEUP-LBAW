@@ -1,3 +1,12 @@
+<?php 
+include_once '../common/modal.php';
+addModal("DeleteAccount", 
+        "Confirmation", 
+        "Are you sure you want to delete your account? You will lose all of your data, including your purchase History, Favorites and current Periodic Buys.",
+        "Delete",
+        "Cancel");
+?>
+
 <div class="row ">
     <div class="col-12 col-lg-5">
         <div class="col-12 mb-4">
@@ -128,7 +137,7 @@
     </div>
 
     <div class="col-12 col-lg-6 d-flex justify-content-center mb-4">
-        <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i> Delete Account</button>
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#modalDeleteAccount"><i class="bi bi-trash"></i> Delete Account</button>
     </div>
 
 </div>
