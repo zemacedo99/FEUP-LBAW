@@ -159,7 +159,7 @@ include '../common/navbar.php';
         <div class="col-3">
           <input type="number" id="price" placeholder="price">€
         </div>
-          
+
         <div class="col-2">
           <input type="number" placeholder="stock">
         </div>
@@ -192,15 +192,14 @@ include '../common/navbar.php';
 
 
     <div class="row">
-      <div id="deleteProductContainer" class="float-end">
-        <div class="col-12 col-lg-6 d-flex justify-content-center mb-4">
-          <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
-            data-bs-target="#modalDeleteAccount"><i class="bi bi-trash"></i> Delete Account</button>
-        </div>
-      </div>
 
       <div id="confirmContainer" class="text-center">
         <button type="button" class="btn btn-light">Confirmar</button>
+      </div>
+      <div id="deleteProductContainer" class="float-end">
+        <div class="col-12 d-flex justify-content-center mb-4">
+          <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i> Delete Account</button>
+        </div>
       </div>
     </div>
   </div>

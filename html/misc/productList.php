@@ -86,15 +86,15 @@ include '../common/navbar.php';
                     </div>
                     <div id="ReviewClassification" class="container border-bottom">
                         <b>Review Classification</b>
-                        <div class="rating"> <input type="radio" name="ratingmin" value="5" id="5min"><label
+                        Min: <div class="rating"> <input type="radio" name="ratingmin" value="5" id="5min"><label
                                 for="5min">☆</label> <input type="radio" name="ratingmin" value="4" id="4min"><label
                                 for="4min">☆</label> <input type="radio" name="ratingmin" value="3" id="3min"><label
                                 for="3min">☆</label> <input type="radio" name="ratingmin" value="2" id="2min"><label
                                 for="2min">☆</label> <input type="radio" name="ratingmin" value="1" id="1min"><label
                                 for="1min">☆</label>
                         </div>
-                        -
-                        <div class="rating"> <input type="radio" name="ratingmax" value="5" id="5max"><label
+                        
+                        Max: <div class="rating"> <input type="radio" name="ratingmax" value="5" id="5max"><label
                                 for="5max">☆</label> <input type="radio" name="ratingmax" value="4" id="4max"><label
                                 for="4max">☆</label> <input type="radio" name="ratingmax" value="3" id="3max"><label
                                 for="3max">☆</label> <input type="radio" name="ratingmax" value="2" id="2max"><label

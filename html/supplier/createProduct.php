@@ -75,58 +75,60 @@ include '../common/navbar.php';
         </div>
       </div>
       <div id="DataContainer" class="col-md-4 mt-5">
-        <h4><b>Green apples</b></h4>
+        <h4><b><input type="text" placeholder="Product Name" value="Green apples"></b></h4>
         <div class="row mt-5">
-        <div class="col">
-      
-        <h5 class="text"><b>€ 50.2</b></h5>
-        </div>
-        <div class="col">
-        <div class="col-auto my-1">
+          <div class="col">
 
-          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-            <option selected>unit</option>
-            <option value="€">Kg</option>
-          </select>
-        </div>
-        
-      </div>
-      <div class="col mt-5">
-      <input type="number" placeholder="stock">
-      </div>
-      </div>
-    </div>
-    <div class="row">
-      <div id="DescriptionContainer" class="col-sm-6">
-        <div class="form-group">
-          <label for="Description">Description</label>
-          <textarea class="form-control" id="Description" rows="5"></textarea>
-        </div>
-      </div>
-      <div id="TagsContainer" class="col-sm-6">
-      <div class="form-group">
-        <label for="tags">Tags</label>
-        <div class="container" id="tags" style="border: 1px solid">
-            <span class="badge bg-secondary">Organic</span>
-            <span class="badge bg-secondary">Food</span>
-            <span class="badge bg-secondary">Fresh</span>
-            <span class="badge bg-secondary">Vegetable</span>
+            <h5 class="text"><b>€<input type="number" id="price" placeholder="price"></b></h5>
           </div>
+          <div class="col-4">
+            <div class="col-auto my-1">
+
+              <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                <option selected>unit</option>
+                <option value="€">Kg</option>
+              </select>
+            </div>
+
+          </div>
+          <div class="col mt-5">
+            <input type="number" placeholder="stock">
+          </div>
+        </div>
       </div>
-    </div>
-    </div>
+      <div class="row">
+        <div id="DescriptionContainer" class="col-sm-6">
+          <div class="form-group">
+            <label for="Description">Description</label>
+            <textarea class="form-control" id="Description" rows="5"></textarea>
+          </div>
+        </div>
+        <div id="TagsContainer" class="col-sm-6">
+          <div class="form-group">
+            <label for="tags">Tags</label>
+            <div class="container" id="tags" style="border: 1px solid">
+              <span class="badge bg-secondary">Organic</span>
+              <span class="badge bg-secondary">Food</span>
+              <span class="badge bg-secondary">Fresh</span>
+              <span class="badge bg-secondary">Vegetable</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
-    <div class="row">
-      <div id="deleteProductContainer" class="float-end">
-        <p>Delete Product <i class="bi bi-trash"></i></p>
-      </div>
+      <div class="row">
 
-      <div id="confirmContainer" class="text-center">
-        <button type="button" class="btn btn-light">Confirmar</button>
+        <div id="confirmContainer" class="text-center">
+          <button type="button" class="btn btn-light">Confirmar</button>
+        </div>
+        <div id="deleteProductContainer" class="float-end">
+          <div class="col-12 d-flex justify-content-center mb-4">
+            <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i> Delete Account</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </body>
 

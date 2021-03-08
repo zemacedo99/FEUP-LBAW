@@ -43,24 +43,24 @@ include '../common/navbar.php';
 
       </div>
       <div id="DataContainer" class="col-md-4 mt-5">
-        <h5><b><input type="text" placeholder="Coupon Name"></b></h5>
+        <h4><b><input type="text" placeholder="Coupon Name"></b></h4>
         <div class="row mt-5">
-        <div class="col">
-        <i class="text-muted">discount</i>
-        <h6 class="text-muted"><input type="text" placeholder="Amount"></h6>
-        </div>
-        <div class="col">
-        <div class="col-auto my-1">
+          <div class="col">
+            <i class="text-muted">discount</i>
+            <h6 class="text-muted"><input type="text" placeholder="Amount"></h6>
+          </div>
+          <div class="col">
+            <div class="col-auto my-1">
 
-          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-            <option selected>%</option>
-            <option value="€">€</option>
-          </select>
+              <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                <option selected>%</option>
+                <option value="€">€</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
-        </div>
-        </div>
-        
+
 
       <div class="row">
         <div id="DescriptionContainer" class="col-sm-6">
@@ -92,12 +92,14 @@ include '../common/navbar.php';
 
 
       <div class="row">
-        <div id="deleteProductContainer" class="float-end">
-          <p>Delete Coupon <i class="bi bi-trash"></i></p>
-        </div>
 
         <div id="confirmContainer" class="text-center">
           <button type="button" class="btn btn-light">Confirmar</button>
+        </div>
+        <div id="deleteProductContainer" class="float-end">
+          <div class="col-12 d-flex justify-content-center mb-4">
+            <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i> Delete Account</button>
+          </div>
         </div>
       </div>
     </div>
