@@ -34,18 +34,16 @@ include '../common/navbar.php';
     <div class="row justify-content-center">
         <div class="col-7 mt-3">
             <h4>Is MyGarden trustworthy?</h4>
-            <p>We proud ourselfs</p>
+            <p>We proud ourselfs in having the highest of standards of ethic and quality!</p>
         </div>
         
         <div class="col-7 mt-3">
             <h4>How can we be sure that the products are fresh?</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor .
-                Lorem ipsum dolor sit amet, consectetur</p>
+            <p>We apply our high standards to our suppliers. If they fall short, they are immediatly expelled from the platform.</p>
         </div>
         <div class="col-7 mt-3">
             <h4>Is my credit card safe with MyGarden?</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor .
-                Lorem ipsum dolor sit amet, consectetur</p>
+            <p>At MyGarden, we use state of the art cryptography to make all your data safe!</p>
         </div>
         
     </div>
