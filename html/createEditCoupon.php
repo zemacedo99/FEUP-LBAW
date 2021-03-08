@@ -24,7 +24,7 @@
   <div class="container">
 
     <div class="pt-4 my-md-5 pt-md-5 border-bottom">
-      <P> Create Coupon</P>
+      <h2><b> Create Coupon</b></h2>
     </div>
 
     <div class="row">
@@ -37,21 +37,25 @@
         </div>
 
       </div>
-      <div id="DataContainer" class="col-md-4">
-        <P>Coupon Name</P>
-        <p>Unit</p>
-        <p>€</p>
-        <p>KG</p>
+      <div id="DataContainer" class="col-md-4 mt-5">
+        <h5><b>Coupon Name</b></h5>
+        <div class="row mt-5">
+        <div class="col">
+        <i class="text-muted">discount</i>
+        <h6 class="text-muted">50.2</h6>
+        </div>
+        <div class="col">
         <div class="col-auto my-1">
-          <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
+
           <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-            <option selected>Choose...</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option selected>%</option>
+            <option value="€">€</option>
           </select>
         </div>
       </div>
+        </div>
+        </div>
+        
 
       <div class="row">
         <div id="DescriptionContainer" class="col-sm-6">
@@ -74,7 +78,7 @@
               <label for="Coupon Code" class="col-2 col-form-label">Code</label>
             </b>
             <div class="col-10">
-              <input class="form-control" type="text" value="Code" id="example-search-input">
+              <input class="form-control" type="text" placeholder="code" id="example-search-input">
             </div>
           </div>
         </div>

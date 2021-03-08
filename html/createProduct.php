@@ -24,7 +24,7 @@
   <div class="container">
 
     <div class="pt-4 my-md-5 pt-md-5 border-bottom">
-      <P> Create Product</P>
+      <h2><b> Create Product</b></h2>
     </div>
 
     <div class="row">
@@ -69,20 +69,26 @@
           </div>
         </div>
       </div>
-      <div id="DataContainer" class="col-md-4">
-        <P>Product Name</P>
-        <p>Unit</p>
-        <p>€</p>
-        <p>KG</p>
+      <div id="DataContainer" class="col-md-4 mt-5">
+        <h4><b>Green apples</b></h4>
+        <div class="row mt-5">
+        <div class="col">
+      
+        <h5 class="text"><b>€ 50.2</b></h5>
+        </div>
+        <div class="col">
         <div class="col-auto my-1">
-          <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
+
           <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-            <option selected>Choose...</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option selected>unit</option>
+            <option value="€">Kg</option>
           </select>
         </div>
+        
+      </div>
+      <div class="col mt-5">
+      <input type="number" placeholder="stock">
+      </div>
       </div>
     </div>
     <div class="row">
@@ -93,13 +99,16 @@
         </div>
       </div>
       <div id="TagsContainer" class="col-sm-6">
-        <div class="form-group">
-          <label for="tags">Tags</label>
-          <textarea class="form-control" id="tags" rows="5" disabled>
-          <h1>Example heading <span class="badge badge-secondary">New</span></h1>
-        </textarea>
-        </div>
+      <div class="form-group">
+        <label for="tags">Tags</label>
+        <div class="container" id="tags" style="border: 1px solid">
+            <span class="badge bg-secondary">Organic</span>
+            <span class="badge bg-secondary">Food</span>
+            <span class="badge bg-secondary">Fresh</span>
+            <span class="badge bg-secondary">Vegetable</span>
+          </div>
       </div>
+    </div>
     </div>
 
 
