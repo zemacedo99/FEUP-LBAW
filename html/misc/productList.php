@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 
+<?php
+include '../common/head.php';
+include '../common/navbar.php';
+?>
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -11,7 +16,7 @@
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
 
-    <link rel="stylesheet" href="starStyle.css">
+    <link rel="stylesheet" href="../comon/starStyle.css">
 
     <title>Title of the document</title>
 </head>
@@ -24,40 +29,133 @@
         crossorigin="anonymous"></script>
 
     <div id="mainContainer" class="container-fluid">
-<div class="container">
-<div class="row mt-3"></div>
-    <div class="row mt-3"></div>
-
-
-    <div class="row ">
-        <div class="col-12 col-lg-5">
-
-            <div class="row d-flex justify-content-center mb-3">
-                <div class="col-12 col-lg-6" style="width: 15rem;">
-                    <img src="../images/batata-amarela.jpg" class="rounded-circle img-fluid">
-                </div>
-                <div class="col-10 col-lg-12 d-flex align-items-center justify-content-center justify-content-lg-start">
-                    <p class="col-md-auto text-decoration-underline text-center">
-                    <h3>Quinta do Bill </h3>
-                    </p>
-                    <i class="bi bi-envelope text-end"></i>
-                </div>
-            </div>
-
-        </div>
-        <textarea class="form-control" rows="5" readonly>Quinta do Bill has been present in the Portuguese market since 1987. This renowned company is recognized in the national market and some restrict international markets for its high quality standards. This store helps costumers reach out to the full extent of our products.</textarea>
-    </div>
-
-    <div class="row mt-3"></div>
-    <div class="row mt-3"></div>
-
-    <h3> Products </h3>
-    <div class="row mt-3"></div>
-    <div class="row mt-3"></div>
-    <div class="row mt-3"></div>
-
-</div>
         <div class="row">
+            <nav id="filters" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="position-sticky pt-3">
+                    <div id="storeProductSwitch" class="container border-bottom">
+                        <input type="radio" class="btn-check" name="options" id="storesOption" autocomplete="off"
+                            checked>
+                        <label class="btn btn-secondary" for="storesOption">Stores</label>
+
+                        <input type="radio" class="btn-check" name="options" id="productsOption" autocomplete="off">
+                        <label class="btn btn-secondary" for="productsOption">Products</label>
+                    </div>
+                    <div id="Category" class="container border-bottom">
+                        <b>Category</b>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                food
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                fertilizer
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                pesticides
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                biologic
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                gardening
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                tools
+                            </label>
+                        </div>
+                    </div>
+                    <div id="PriceRange" class="container border-bottom">
+                        <b>Price Range</b>
+                        <input type="number" class="form-control" placeholder="min">
+                        <input type="number" class="form-control" placeholder="max">
+                    </div>
+                    <div id="ReviewClassification" class="container border-bottom">
+                        <b>Review Classification</b>
+                        <div class="rating"> <input type="radio" name="ratingmin" value="5" id="5min"><label
+                                for="5min">☆</label> <input type="radio" name="ratingmin" value="4" id="4min"><label
+                                for="4min">☆</label> <input type="radio" name="ratingmin" value="3" id="3min"><label
+                                for="3min">☆</label> <input type="radio" name="ratingmin" value="2" id="2min"><label
+                                for="2min">☆</label> <input type="radio" name="ratingmin" value="1" id="1min"><label
+                                for="1min">☆</label>
+                        </div>
+                        -
+                        <div class="rating"> <input type="radio" name="ratingmax" value="5" id="5max"><label
+                                for="5max">☆</label> <input type="radio" name="ratingmax" value="4" id="4max"><label
+                                for="4max">☆</label> <input type="radio" name="ratingmax" value="3" id="3max"><label
+                                for="3max">☆</label> <input type="radio" name="ratingmax" value="2" id="2max"><label
+                                for="2max">☆</label> <input type="radio" name="ratingmax" value="1" id="1max"><label
+                                for="1max">☆</label>
+                        </div>
+
+                    </div>
+
+                    <div id="Country" class="container border-bottom">
+                        <b>Country</b>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Poland
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Jamaica
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Portugal
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Canada
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Congo
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                China
+                            </label>
+                        </div>
+                    </div>
+                    <div id="MaxDistance" class="container border-bottom">
+                        <b>Max Distance</b>
+                        <!--https://seiyria.com/bootstrap-slider/-->
+                        <input id="distance" type="range" class="span2" value="0" data-slider-min="0"
+                            data-slider-max="1000" data-slider-step="5">
+                        <input name="MaxDistanceRepresentation" type="number" class="form-control disable"
+                            placeholder="0">
+
+                    </div>
+                </div>
+
+
+            </nav>
 
             <div class="col-md-8 ms-sm-auto col-lg-8 ">
 

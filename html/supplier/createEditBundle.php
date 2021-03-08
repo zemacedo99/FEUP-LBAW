@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html>
+<?php
+include '../common/head.php';
+include '../common/navbar.php';
+?>
 
 <head>
   <!-- Required meta tags -->
