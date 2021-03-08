@@ -3,8 +3,6 @@ include '../common/head.php';
 include '../common/navbar.php';
 ?>
 
-
-
 <div class="container">
     <div class="row mt-3 justify-content-center">
         <div class="col-2 mx-1"><a class="btn btn-primary" style="background-color: #d3bba9; border-color: #d3bba9" href="#FAQ" role="button">FAQ</a></div>

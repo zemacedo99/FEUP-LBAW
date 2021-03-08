@@ -19,6 +19,9 @@
   <link rel="stylesheet" type="text/css" href="../style.css">
   <script src="../client_profile.js" defer></script>
 
+  <!-- Material icons-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
   <title>MyGarden</title>
 </head>
 
