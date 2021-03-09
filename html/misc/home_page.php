@@ -278,10 +278,10 @@ include '../common/navbar.php';
     </div>
 
     <!-- Hot -->
-    <div class="row mt-5">
+    <div class="row my-5">
         <div class="col"></div>
         <div class="col-2 text-end">
-            <a href="#" class="link-secondary">See all products<i class="bi bi-arrow-right-short"></i></a>
+            <a href="/misc/productList.php" class="link-secondary">See all products<i class="bi bi-arrow-right-short"></i></a>
         </div>
     </div>
 
@@ -305,3 +305,8 @@ include '../common/navbar.php';
     </div>
   </div>
 </div>
+
+
+<?php
+    include_once("../common/end.php");
+?>
