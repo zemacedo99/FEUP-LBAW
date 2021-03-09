@@ -38,7 +38,7 @@
 
         <div class="row mb-3">
           <div class="col">
-            <div class="form-floating">    
+            <div class="form-floating">
               <input type="month" class="form-control" id="floatingFirstName" placeholder="Valid until">
               <label for="floatingFirstName">Valid until</label>
             </div>
@@ -62,8 +62,6 @@
       </div>
 
       <div class="col"></div>
-
-
 
     </div>
   </div>

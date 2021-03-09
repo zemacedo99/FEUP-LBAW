@@ -1,6 +1,7 @@
 <?php
-include '../common/head.php';
-include '../common/navbar.php';
+include_once '../common/extras.php';
+pageHeader("MyGarden - Site Map");
+navbar();
 ?>
 
 <div class="container">
@@ -11,9 +12,9 @@ include '../common/navbar.php';
             <a href="../client/client_profile.php" class="list-group-item list-group-item-action fw-bold">Client</a>
             <a href="../client/client_profile.php" class="list-group-item list-group-item-action">Client - Profile</a>
 
-            <a href="../supplier/supplier_profile.php" class="list-group-item list-group-item-action fw-bold">Supplier</a>
+            <a href="../supplier/supplier_detail.php" class="list-group-item list-group-item-action fw-bold">Supplier</a>
             <a href="../supplier/supplier_profile.php" class="list-group-item list-group-item-action">Supplier - Profile</a>
-            <a href="../supplier/all_products.php" class="list-group-item list-group-item-action">Supplier - All Products</a>
+            <a href="../supplier/supplier_all_products.php" class="list-group-item list-group-item-action">Supplier - All Products</a>
             <a href="../supplier/createProduct.php" class="list-group-item list-group-item-action">Supplier - Create Product</a>
             <a href="../supplier/bundles_and_cupons.php" class="list-group-item list-group-item-action">Supplier - Bundles and Coupons</a>
             <a href="../supplier/createEditBundle.php" class="list-group-item list-group-item-action">Supplier - Create/Edit Bundle</a>
@@ -24,8 +25,8 @@ include '../common/navbar.php';
             <a href="../admin/view_req.php" class="list-group-item list-group-item-action">Admin - Supplier Requests</a>
             <a href="../admin/view_users.php" class="list-group-item list-group-item-action">Admin - Users</a>
 
-            <a href="../checkout/cart_information.php" class="list-group-item list-group-item-action fw-bold">CheckOut</a>
-            <a href="../checkout/shipping_payment.php" class="list-group-item list-group-item-action">CheckOut - Payment</a>
+            <a href="../checkout/checkout_cart_info.php" class="list-group-item list-group-item-action fw-bold">CheckOut</a>
+            <a href="../checkout/checkout_shipping_payment.php" class="list-group-item list-group-item-action">CheckOut - Payment</a>
 
             <a href="../credentials/register.php" class="list-group-item list-group-item-action fw-bold">Credentials</a>
             <a href="../credentials/login.php" class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#loginModal">Credentials - Login</a>
@@ -41,6 +42,5 @@ include '../common/navbar.php';
     </div>
 
 </div>
-
 
 <?php include '../common/end.php' ?>
