@@ -43,4 +43,7 @@ navbar();
 
 </div>
 
-<?php include '../common/end.php' ?>
+
+<?php
+footer();
+?>
