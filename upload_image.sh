@@ -5,7 +5,7 @@ read -p "Press [Enter] key to start backup..."
 # Stop execution if a step fails
 set -e
 
-DOCKER_USERNAME=lbaw2131 # Perguntar a André Daniel Alves Gomes pela password
+DOCKER_USERNAME=lbaw2131 
 IMAGE_NAME=lbaw2131-piu
 
 # necessário dar: `docker login` na máquina
