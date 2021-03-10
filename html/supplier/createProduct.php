@@ -11,17 +11,17 @@ navbar();
   </div>
 
 
-  <div class="row mb-3">
+  <div class="row mb-4">
 
     <!-- Carrousel -->
-    <div id="mainContainer" class="col-sm-6">
+    <div id="mainContainer" class="col-12 col-lg-6">
       <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
         <div class="carousel-indicators">
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
-        <div class="carousel-inner" style=" width:100%; height: 400px !important;">
+        <div class="carousel-inner" style=" width:100%; max-height: 400px !important;">
           <div class="carousel-item active">
             <img src="https://www.infoescola.com/wp-content/uploads/2010/11/ma%C3%A7a-verde_312027470.jpg" class="d-block w-100" alt="...">
           </div>
@@ -44,12 +44,12 @@ navbar();
     </div>
 
     <div class="col-1"></div>
-    <div class="col-2">
+    <div class="col-12 col-lg-2">
       <form action="">
         <div class="input-group my-5">
           <input type="text" class="form-control" placeholder="Product Name">
         </div>
-        
+
         <div class="input-group ">
           <span class="input-group-text">€</span>
           <input type="text" class="form-control" placeholder="Price">
@@ -58,7 +58,7 @@ navbar();
             <option value="2">Unit</option>
           </select>
         </div>
-        
+
         <div class="input-group my-5">
           <input type="number" class="form-control" placeholder="Stock">
         </div>
@@ -71,52 +71,34 @@ navbar();
     <label for="Description">Description</label>
   </div>
   <div class="row">
-    <div class="col-6">
+    <div class="col-12 col-lg-6">
       <div class="form">
-        <textarea class="form-control" id="Description" rows="5"></textarea> 
+        <textarea class="form-control" id="Description" rows="5"></textarea>
       </div>
     </div>
 
-    <div id="TagsContainer" class="col-6 border">
-    
+    <div id="TagsContainer" class="col-12 col-lg-6 border" style="min-height: 50px">
+
       <span class="badge bg-secondary">Organic</span>
       <span class="badge bg-secondary">Food</span>
       <span class="badge bg-secondary">Fresh</span>
       <span class="badge bg-secondary">Vegetable</span>
-      
-      
-      <!-- <label for="tags">Tags</label>
-      <div class="container" id="tags" style="border: 1px solid">
-        <span class="badge bg-secondary">Organic</span>
-        <span class="badge bg-secondary">Food</span>
-        <span class="badge bg-secondary">Fresh</span>
-        <span class="badge bg-secondary">Vegetable</span>
-      </div> -->
-      
+
+
     </div>
   </div>
 
 
   <div class="row my-5">
-
-    
     <span class="text-center">
       <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i> Delete Product</button>
       <button type="button" class="btn btn-primary">Confirmar</button>
     </span>
-    <!-- <div class="float-end">
-      <div class="col-12 d-flex justify-content-center mb-4">
-        <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i> Delete Product</button>
-      </div>
-    </div>
-    
-    <div class="text-center">
-      <button type="button" class="btn btn-light">Confirmar</button>
-    </div>
-  </div> -->
+  </div>
+
 
 </div>
 
 <?php
-footer();
+  footer();
 ?>
