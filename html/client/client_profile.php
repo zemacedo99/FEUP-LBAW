@@ -1,6 +1,7 @@
 <?php
-include '../common/head.php';
-include '../common/navbar.php';
+include_once '../common/extras.php';
+pageHeader("MyGarden - Client Profile");
+navbar();
 ?>
 
 <div class="container">
@@ -34,12 +35,14 @@ include '../common/navbar.php';
     </div>
 
     <div class="tab-content ps-3" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-purchase-history" role="tabpanel" aria-labelledby="pills-purchase-history-tab"><?php include './client_history.php'; ?></div>
-        <div class="tab-pane fade" id="pills-favorites" role="tabpanel" aria-labelledby="pills-favorites-tab"><?php include './client_favorites.php'; ?></div>
-        <div class="tab-pane fade" id="pills-periodic-buys" role="tabpanel" aria-labelledby="pills-periodic-buys-tab"><?php include './client_periodic.php'; ?></div>
-        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"><?php include './client_edit_profile.php'; ?></div>
+        <div class="tab-pane fade show active" id="pills-purchase-history" role="tabpanel" aria-labelledby="pills-purchase-history-tab"><?php include './client_inc_history.php'; ?></div>
+        <div class="tab-pane fade" id="pills-favorites" role="tabpanel" aria-labelledby="pills-favorites-tab"><?php include './client_inc_favorites.php'; ?></div>
+        <div class="tab-pane fade" id="pills-periodic-buys" role="tabpanel" aria-labelledby="pills-periodic-buys-tab"><?php include './client_inc_periodic.php'; ?></div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"><?php include './client_inc_edit_profile.php'; ?></div>
     </div>
 
 </div>
 
-<?php include '../common/end.php' ?>
+<?php
+footer();
+?>

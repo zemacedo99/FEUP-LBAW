@@ -1,6 +1,7 @@
 <?php
-include '../common/head.php';
-include '../common/navbar.php';
+include_once '../common/extras.php';
+pageHeader("MyGarden - Create Product");
+navbar();
 ?>
 
 <div class="container">
@@ -116,7 +117,6 @@ include '../common/navbar.php';
 
 </div>
 
-
 <?php
-include_once("../common/end.php")
+footer();
 ?>

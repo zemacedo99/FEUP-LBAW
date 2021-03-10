@@ -1,5 +1,4 @@
 <?php 
-include_once '../common/modal.php';
 addModal("DeleteAccount", 
         "Confirmation", 
         "Are you sure you want to delete your account? You will lose all of your data, including your purchase History, Favorites and current Periodic Buys.",

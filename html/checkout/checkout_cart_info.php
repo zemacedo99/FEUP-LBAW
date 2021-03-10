@@ -1,6 +1,7 @@
 <?php
-include '../common/head.php';
-include '../common/navbar.php';
+include_once '../common/extras.php';
+pageHeader("MyGarden - Cart");
+navbar();
 ?>
 
 <div class="container">
@@ -15,7 +16,7 @@ include '../common/navbar.php';
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active" id="selectedLink" aria-current="page">Information</li>
-                        <li class="breadcrumb-item"><a id="navLinks" href="shipping_payment.php">Shipping / Payment</a></li>
+                        <li class="breadcrumb-item"><a id="navLinks" href="checkout_shipping_payment.php">Shipping / Payment</a></li>
                     </ol>
                 </nav>
             </div>
@@ -202,32 +203,22 @@ include '../common/navbar.php';
 
         </div>
 
-
-
     </div>
-
-
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="row">
 
             <div class="d-flex justify-content-center">
-                <button type="button" class="mainbtt"> <a id="navLinks" href="shipping_payment.php">Continue</a></button>
+                <button type="button" class="mainbtt"> <a id="navLinks" href="checkout_shipping_payment.php">Continue</a></button>
             </div>
         </div>
     </div>
 
-
     <div class="row mt-3"></div>
     <div class="row mt-3"></div>
     <div class="row mt-3"></div>
-
-
     <div class="row mt-3"></div>
     <div class="row mt-3"></div>
-
-
-
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="row">
@@ -410,5 +401,5 @@ include '../common/navbar.php';
 </div>
 
 <?php
-include '../common/end.php'
+footer();
 ?>

@@ -1,5 +1,4 @@
 <?php 
-include_once '../common/modal.php';
 addModal("DeletePeriodic", 
         "Confirmation", 
         "Are you sure you want to cancel this periodic purchase?",

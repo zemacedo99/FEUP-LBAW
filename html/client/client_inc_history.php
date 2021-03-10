@@ -1,5 +1,4 @@
 <?php
-include_once '../common/modal.php';
 addModal(
     "CancelOrder",
     "Cancelation Confirmation",

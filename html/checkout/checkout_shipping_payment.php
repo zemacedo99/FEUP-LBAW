@@ -1,6 +1,7 @@
 <?php
-include '../common/head.php';
-include '../common/navbar.php';
+include_once '../common/extras.php';
+pageHeader("MyGarden - Shipping/Payment");
+navbar();
 ?>
 
 <div class="container">
@@ -14,7 +15,7 @@ include '../common/navbar.php';
             <div class="d-flex justify-content-center">
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a id="navLinks" href="cart_information.php">Information</a></li>
+                        <li class="breadcrumb-item"><a id="navLinks" href="checkout_cart_info.php">Information</a></li>
                         <li class="breadcrumb-item active" id="selectedLink" aria-current="page">Shipping / Payment</li>
                     </ol>
                 </nav>
@@ -178,13 +179,13 @@ include '../common/navbar.php';
                                 </div>
                             </div>
                             <div class="col-2 col-md-1">
-                                <a href="payment_edit_card.php"> <button type="button" id="simpleicon">edit</button></a>
+                                <a href="checkout_edit_card.php"> <button type="button" id="simpleicon">edit</button></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="card mb-3 d-flex justify-content-center align-items-center" style="height: 60px;">
-                        <a class="nav-link" id="navLinks" href="payment_add_card.php">
+                        <a class="nav-link" id="navLinks" href="checkout_add_card.php">
                             <p class="card-text">Add new Card <i class="bi bi-plus"></i></p>
                         </a>
 
@@ -228,7 +229,7 @@ include '../common/navbar.php';
 
                     <div class="col-6">
                         <div class="d-flex justify-content-center">
-                            <button type="button" class="mainbtt"> <a id="navLinks" href="cart_information.php">Info</a></button>
+                            <button type="button" class="mainbtt"> <a id="navLinks" href="checkout_cart_info.php">Info</a></button>
                         </div>
                     </div>
 
@@ -279,5 +280,5 @@ include '../common/navbar.php';
 </div>
 
 <?php
-include '../common/end.php'
+footer();
 ?>

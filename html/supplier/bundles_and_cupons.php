@@ -1,17 +1,10 @@
 <?php
-include '../common/head.php';
-include '../common/navbar.php';
+include_once '../common/extras.php';
+pageHeader("MyGarden - Bundles & Cupons");
+navbar();
 ?>
 
-
 <div class="container">
-
-
-    <!-- vertical line -->
-    <!-- <div class="position-absolute top-50 start-50 translate-middle">
-    <div id="vertical_line"></div>
-    </div> -->
-
     <div class="row mt-3"></div>
     <div class="row mt-3"></div>
     <div class="row mt-3"></div>
@@ -214,5 +207,5 @@ include '../common/navbar.php';
 </div>
 
 <?php
-include '../common/end.php'
+footer();
 ?>
