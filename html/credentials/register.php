@@ -1,6 +1,7 @@
 <?php
-include '../common/head.php';
-include '../common/navbar.php';
+include_once '../common/extras.php';
+pageHeader("MyGarden - Register");
+navbar();
 ?>
 
 <div class="container">
@@ -49,7 +50,7 @@ include '../common/navbar.php';
             <div class="collapseOne panel-collapse collapse">
                 <div class="panel-body">
                     <div class="alert alert-primary text-center" role="alert">
-                        <i class="bi bi-exclamation-triangle"></i> 
+                        <i class="bi bi-exclamation-triangle"></i>
                         Supplier registrations are subject to confirmation
                     </div>
 
@@ -86,4 +87,6 @@ include '../common/navbar.php';
     </div>
 </div>
 
-<?php include '../common/end.php' ?>
+<?php
+footer();
+?>

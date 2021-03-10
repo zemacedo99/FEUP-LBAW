@@ -1,6 +1,7 @@
 <?php
-include '../common/head.php';
-include '../common/navbar.php';
+include_once '../common/extras.php';
+pageHeader("MyGarden - Supplier");
+navbar();
 ?>
 
 <div class="row d-flex d-lg-none mb-2 mt-2">
@@ -24,10 +25,10 @@ include '../common/navbar.php';
 </ul>
 
 <div class="tab-content" id="SupplierTabContent">
-    <div class="tab-pane fade col-lg-6 show active" id="supplierProfile" role="tabpanel" aria-labelledby="supplierProfile-tab"><?php include './supplier_edit_profile.php'; ?></div>
-    <div class="tab-pane fade col-lg-6" id="products" role="tabpanel" aria-labelledby="products-tab"><?php include './supplier_product_overview.php'; ?></div>
+    <div class="tab-pane fade col-lg-6 show active" id="supplierProfile" role="tabpanel" aria-labelledby="supplierProfile-tab"><?php include './supplier_inc_edit_profile.php'; ?></div>
+    <div class="tab-pane fade col-lg-6" id="products" role="tabpanel" aria-labelledby="products-tab"><?php include './supplier_inc_product_overview.php'; ?></div>
 </div>
 
 <?php
-include '../common/end.php'
+footer();
 ?>
