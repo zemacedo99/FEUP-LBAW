@@ -81,11 +81,13 @@ navbar();
     <div class="col"></div>
   </div>
 
+
+  <!-- Description + Tags -->
   <div class="row">
     <label for="Description">Description</label>
   </div>
   <div class="row">
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-md-4 col-lg-6">
       <div class="form">
         <textarea class="form-control" id="Description" rows="5"></textarea>
       </div>
