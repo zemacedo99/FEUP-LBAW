@@ -91,7 +91,7 @@ navbar();
       </div>
     </div>
 
-    <div class="col-12 col-lg-6 mx-0" style="min-height: 100px;">
+    <div class="col-12 col-lg-6" style="min-height: 100px;">
       <div class="d-grid gap-2 d-lg-block  ">
         
         <button class="btn btn-primary btn-sm">Add+</button>
