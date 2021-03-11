@@ -65,7 +65,7 @@ navbar();
 
         <label class="text-black" for="product_stock">Stock</label>
         <div class="input-group mb-5">
-          <input type="number" class="form-control" id="product_stock">
+          <input type="number" class="form-control" id="product_stock" min="1">
         </div>
         
         <div class="input-group my-5 justify-content-center">
@@ -91,7 +91,7 @@ navbar();
       </div>
     </div>
 
-    <div id="TagsContainer" class="col-12 col-lg-6 border" style="min-height: 100px">
+    <div class="col-12 col-lg-6 mx-0" style="min-height: 100px;">
       <div class="d-grid gap-2 d-lg-block  ">
         
         <button class="btn btn-primary btn-sm">Add+</button>
