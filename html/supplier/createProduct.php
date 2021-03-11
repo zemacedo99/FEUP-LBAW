@@ -14,7 +14,7 @@ navbar();
   <div class="row mb-4">
 
     <!-- Carrousel -->
-    <div id="mainContainer" class="col-12 col-lg-6">
+    <div id="mainContainer" class="col-12 col-lg-6 mb-5 mb-lg-0">
       <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
         <div class="carousel-indicators">
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -44,24 +44,38 @@ navbar();
     </div>
 
     <div class="col-1"></div>
-    <div class="col-12 col-lg-2">
+
+    <div class="col-12 col-lg-3">
       <form action="">
-        <div class="input-group my-5">
-          <input type="text" class="form-control" placeholder="Product Name">
+        <label class="text-black" for="product_name">Product Name</label>
+        <div class="input-group mb-5 ">
+          <input type="text" class="form-control" id=product_name>
+    
         </div>
 
-        <div class="input-group ">
+        <label class="text-black" for="product_price">Price</label>
+        <div class="input-group mb-5">
           <span class="input-group-text">€</span>
-          <input type="text" class="form-control" placeholder="Price">
+          <input type="text" class="form-control" id="product_price">
           <select class="form-select" aria-label="Select type">
             <option selected>Kg</option>
             <option value="2">Unit</option>
           </select>
         </div>
 
-        <div class="input-group my-5">
-          <input type="number" class="form-control" placeholder="Stock">
+        <label class="text-black" for="product_stock">Stock</label>
+        <div class="input-group mb-5">
+          <input type="number" class="form-control" id="product_stock">
         </div>
+        
+        <div class="input-group my-5 justify-content-center">
+          <label class="btn btn-primary" for="sup_img">
+            Add Image
+          </label>
+          <input type="file" class="form-control d-none" id="sup_img" aria-describedby="sup_img_addon" aria-label="Upload">
+          <button class="btn btn-danger" type="button" id="sup_img_addon">Clear All</button>
+        </div>
+      
       </form>
     </div>
     <div class="col"></div>
@@ -77,14 +91,20 @@ navbar();
       </div>
     </div>
 
-    <div id="TagsContainer" class="col-12 col-lg-6 border" style="min-height: 50px">
-
-      <span class="badge bg-secondary">Organic</span>
-      <span class="badge bg-secondary">Food</span>
-      <span class="badge bg-secondary">Fresh</span>
-      <span class="badge bg-secondary">Vegetable</span>
-
-
+    <div id="TagsContainer" class="col-12 col-lg-6 border" style="min-height: 100px">
+      <div class="d-grid gap-2 d-lg-block  ">
+        
+        <button class="btn btn-primary btn-sm">Add+</button>
+        
+        <button class="btn btn-secondary btn-sm">Organic X</button>
+      
+        <button class="btn btn-secondary btn-sm">Food X</button>
+      
+        <button class="btn btn-secondary btn-sm">Fresh X</button>
+      
+        <button class="btn btn-secondary btn-sm">Vegetable X</button>  
+      </div>
+      
     </div>
   </div>
 
@@ -100,5 +120,5 @@ navbar();
 </div>
 
 <?php
-  footer();
+footer();
 ?>
