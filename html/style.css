@@ -1,140 +1,126 @@
-.navbar{
-    background-color: #198754;
+.navbar {
+  background-color: #198754;
 }
 
-#headericon{
-    font-family: 'Material Icons';
-    background-color: #198754;
-    color: burlywood;
-    border: 0px solid transparent;
-    font-size: 1.25rem;
-    border-radius: 1.5rem;
+#headericon {
+  font-family: "Material Icons";
+  background-color: #198754;
+  color: burlywood;
+  border: 0px solid transparent;
+  font-size: 1.25rem;
+  border-radius: 1.5rem;
 }
 
 #headericon:hover {
-    background-color: #157347;
+  background-color: #157347;
 }
 
-
 #footericon {
-    font-family: 'Material Icons';
-    background-color:#15734731;
-    color: burlywood;
-    border: 0px solid transparent;
-    font-size: 1.25rem;
+  font-family: "Material Icons";
+  background-color: #15734731;
+  color: burlywood;
+  border: 0px solid transparent;
+  font-size: 1.25rem;
 }
 
 #footericon:hover {
-    background-color: #15734757;
+  background-color: #15734757;
 }
 
-#navfooter{
-    background-color: 15734731;
+#navfooter {
+  background-color: 15734731;
 }
 
-#navbarPage{
-    background-color: #198754;
-    color: burlywood;
-    border: 0px solid transparent;
-    font-size: 1.25rem;
-    border-radius: 1.5rem;
+#navbarPage {
+  background-color: #198754;
+  color: burlywood;
+  border: 0px solid transparent;
+  font-size: 1.25rem;
+  border-radius: 1.5rem;
 }
 
-#navLinks
-{
-    color: burlywood;
-    text-decoration: none;
+#navLinks {
+  color: burlywood;
+  text-decoration: none;
 }
 
-#blackLinks
-{
-    color: black;
-    text-decoration: none;
-    font-size: 1.15rem;
+#blackLinks {
+  color: black;
+  text-decoration: none;
+  font-size: 1.15rem;
 }
 
-#selectedLink
-{
-
-    color: black;
-    font-weight: bold;
-    text-decoration: none;
+#selectedLink {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
 }
 
-.mainbtt
-{
-    text-align: center;
-    background-color: #198754;
-    color: burlywood;
-    border: 0px solid transparent;
-    font-size: 1.25rem;
+.mainbtt {
+  text-align: center;
+  background-color: #198754;
+  color: burlywood;
+  border: 0px solid transparent;
+  font-size: 1.25rem;
 }
 
 .mainbtt:hover {
-    background-color: #157347;
+  background-color: #157347;
 }
 
-#mainbtticon
-{
-    font-family: 'Material Icons';
-    background-color: #198754;
-    color: burlywood;
-    border: 0px solid transparent;
-    font-size: 1.25rem;
+#mainbtticon {
+  font-family: "Material Icons";
+  background-color: #198754;
+  color: burlywood;
+  border: 0px solid transparent;
+  font-size: 1.25rem;
 }
 
 #mainbtticon:hover {
-    background-color: #157347;
+  background-color: #157347;
 }
 
-#simpleicon
-{
-    font-family: 'Material Icons';
-    background-color: white;
-    color: black;
-    border: 0px solid transparent;
-    font-size: 1.5rem;
+#simpleicon {
+  font-family: "Material Icons";
+  background-color: white;
+  color: black;
+  border: 0px solid transparent;
+  font-size: 1.5rem;
 }
 
-#simple-btt
-{
-    background-color: transparent;
-    color: black;
-    border: 0px solid transparent;
-    font-size: 1.15rem;
-    text-decoration: none;
+#simple-btt {
+  background-color: transparent;
+  color: black;
+  border: 0px solid transparent;
+  font-size: 1.15rem;
+  text-decoration: none;
 }
 
-#simple-btt:active
-{
-    font-weight: bold;
-    background-color: transparent;
-    color: black;
-    border: 0px solid transparent;
+#simple-btt:active {
+  font-weight: bold;
+  background-color: transparent;
+  color: black;
+  border: 0px solid transparent;
 }
 
-#simple-btt:focus
-{
-    font-weight: bold;
-    background-color: transparent;
-    color: black;
-    border: 0px solid transparent;
+#simple-btt:focus {
+  font-weight: bold;
+  background-color: transparent;
+  color: black;
+  border: 0px solid transparent;
 }
 
-#vertical_line
-{
-    width: 2px;
-    height: 700px;
-    background-color: #198754;
+#vertical_line {
+  width: 2px;
+  height: 700px;
+  background-color: #198754;
 }
 
-#horizontal_line
-{
-    width: 200px;
-    height: 1.5px;
-    background-color: black;
+#horizontal_line {
+  width: 200px;
+  height: 1.5px;
+  background-color: black;
 }
-
 
 /* .profilePhoto{
     border-radius: 50%;
@@ -142,67 +128,102 @@
 
 /* https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 .rating {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: center
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
 }
 
-.rating>input {
-    display: none
+.rating > input {
+  display: none;
 }
 
-.rating>label {
-    position: relative;
-    width: 1em;
-    font-size: 1.5rem;
-    color: #FFD600;
-    cursor: pointer
+.rating > label {
+  position: relative;
+  width: 1em;
+  font-size: 1.5rem;
+  color: #ffd600;
+  cursor: pointer;
 }
 
-.rating>label::before {
-    content: "\2605";
-    position: absolute;
-    opacity: 0
+.rating > label::before {
+  content: "\2605";
+  position: absolute;
+  opacity: 0;
 }
 
-.rating>label:hover:before,
-.rating>label:hover~label:before {
-    opacity: 1 !important
+.rating > label:hover:before,
+.rating > label:hover ~ label:before {
+  opacity: 1 !important;
 }
 
-.rating>input:checked~label:before {
-    opacity: 1
+.rating > input:checked ~ label:before {
+  opacity: 1;
 }
 
-.rating:hover>input:checked~label:before {
-    opacity: 0.4
+.rating:hover > input:checked ~ label:before {
+  opacity: 0.4;
 }
 
 .customcard img {
-    height: 230px;
+  height: 230px;
 }
 
 .row .bi-suit-heart {
-    color: red;
+  color: red;
 }
 
 .btn-outline-primary {
-    color: #53ca61;
-    border-color: #53ca61;
+  color: #53ca61;
+  border-color: #53ca61;
 }
 
 .btn-outline-primary:hover {
-    color: #fff;
-    background-color: #53ca61;
-    border-color: #53ca61;
+  color: #fff;
+  background-color: #53ca61;
+  border-color: #53ca61;
 }
 
 .btn-primary {
-    background-color: #53ca61;
-    border-color: #53ca61;
+  background-color: #53ca61;
+  border-color: #53ca61;
 }
 
 .btn-primary:hover {
-    background-color: #53ca61;
-    border-color: #53ca61;
+  background-color: #53ca61;
+  border-color: #53ca61;
+}
+
+/* Favorite Toggle */
+
+label.favorite-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.favorite-checkbox {
+  margin-left: 2em;
+  position: relative;
+  cursor: pointer;
+}
+
+.favorite-checkbox .bi {
+  color: red;
+  position: absolute;
+  left: -1.25em;
+}
+
+.favorite-checkbox .bi-heart {
+  color: gray;
+}
+
+.favorite-checkbox .bi-heart-fill {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.favorite-checkbox:hover .bi-heart-fill {
+  opacity: 0.5;
+}
+
+.favorite-checkbox input[type="checkbox"]:checked ~ .bi-heart-fill {
+  opacity: 1;
 }
