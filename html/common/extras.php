@@ -117,8 +117,9 @@ function navbar()
 /**
  * Adds a footer to the webpage, and closes the body and html tags
  */
-function footer(){ 
-?>
+function footer()
+{
+    ?>
         <footer class="footer mt-auto py-3 bg-light">
             <div class="container">
                 <span class="text-muted">MyGarden tm.</span>
@@ -160,6 +161,37 @@ function addModal($modalName, $title, $bodyText, $buttonPrimary, $buttonSecondar
             </div>
         </div>
     </div>
+<?php
+}
+?>
+
+
+<?php
+function perfilSupplier($image,$name)
+{
+?>
+    <div class="row mt-3"></div>
+    <div class="row mt-3"></div>
+
+    <div class="row ">
+        <div class="col-12 col-lg-5">
+
+            <div class="row d-flex justify-content-center mb-3">
+                <div class="col-12 col-lg-6" style="width: 15rem;">
+                    <img src="../images/<?= $image ?>" class="rounded-circle img-fluid">
+                </div>
+                <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center justify-content-lg-start">
+                    <p class="col-md-auto text-decoration-underline text-center">
+                    <h3><?= $name ?></h3>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row mt-3"></div>
+    <div class="row mt-3"></div>
 <?php
 }
 ?>
