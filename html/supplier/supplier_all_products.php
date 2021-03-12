@@ -20,7 +20,7 @@ navbar();
     <div class="row mt-3"></div>
 
     <!-- List of all products that a store have -->
-    <div class="row row-cols-1 row-cols-sm-2 g-4">
+    <div class="row  g-4">
 
         <?php
         for ($i = 0; $i < 5; $i++) {
