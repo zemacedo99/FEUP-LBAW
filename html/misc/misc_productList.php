@@ -4,136 +4,18 @@ pageHeader("MyGarden - Search");
 navbar();
 ?>
 
+
     <div id="mainContainer" class="container-fluid">
+        
         <div class="row">
-            <nav id="filters" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-                <div class="position-sticky pt-3">
-                    <div id="storeProductSwitch" class="container border-bottom">
-                        <input type="radio" class="btn-check" name="options" id="storesOption" autocomplete="off"
-                            checked>
-                        <label class="btn btn-secondary" for="storesOption">Stores</label>
 
-                        <input type="radio" class="btn-check" name="options" id="productsOption" autocomplete="off">
-                        <label class="btn btn-secondary" for="productsOption">Products</label>
-                    </div>
-                    <div id="Category" class="container border-bottom">
-                        <b>Category</b>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="food">
-                            <label class="form-check-label" for="food">
-                                food
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="fertilizer">
-                            <label class="form-check-label" for="fertilizer">
-                                fertilizer
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="pesticides">
-                            <label class="form-check-label" for="pesticides">
-                                pesticides
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="biologic">
-                            <label class="form-check-label" for="biologic">
-                                biologic
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="gardening">
-                            <label class="form-check-label" for="gardening">
-                                gardening
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="tools">
-                            <label class="form-check-label" for="tools">
-                                tools
-                            </label>
-                        </div>
-                    </div>
-                    <div id="PriceRange" class="container border-bottom">
-                        <b>Price Range</b>
-                        <input type="number" class="form-control" placeholder="min">
-                        <input type="number" class="form-control" placeholder="max">
-                    </div>
-                    <div id="ReviewClassification" class="container border-bottom">
-                        <b>Review Classification</b>
-                        Min: <div class="rating"> <input type="radio" name="ratingmin" value="5" id="5min"><label
-                                for="5min">☆</label> <input type="radio" name="ratingmin" value="4" id="4min"><label
-                                for="4min">☆</label> <input type="radio" name="ratingmin" value="3" id="3min"><label
-                                for="3min">☆</label> <input type="radio" name="ratingmin" value="2" id="2min"><label
-                                for="2min">☆</label> <input type="radio" name="ratingmin" value="1" id="1min"><label
-                                for="1min">☆</label>
-                        </div>
-                        
-                        Max: <div class="rating"> <input type="radio" name="ratingmax" value="5" id="5max"><label
-                                for="5max">☆</label> <input type="radio" name="ratingmax" value="4" id="4max"><label
-                                for="4max">☆</label> <input type="radio" name="ratingmax" value="3" id="3max"><label
-                                for="3max">☆</label> <input type="radio" name="ratingmax" value="2" id="2max"><label
-                                for="2max">☆</label> <input type="radio" name="ratingmax" value="1" id="1max"><label
-                                for="1max">☆</label>
-                        </div>
-
-                    </div>
-
-                    <div id="Country" class="container border-bottom">
-                        <b>Country</b>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                Poland
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                Jamaica
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                Portugal
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                Canada
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                Congo
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                China
-                            </label>
-                        </div>
-                    </div>
-                    <div id="MaxDistance" class="container border-bottom">
-                        <b>Max Distance</b>
-                        <!--https://seiyria.com/bootstrap-slider/-->
-                        <input id="distance" type="range" class="span2" value="0" data-slider-min="0"
-                            data-slider-max="1000" data-slider-step="5">
-                        <input name="MaxDistanceRepresentation" type="number" class="form-control disable"
-                            placeholder="0">
-
-                    </div>
-                </div>
-
-
-            </nav>
+            <?php 
+            include_once './misc_inc_filters.php'
+            ?>
 
             <div class="col-md-8 ms-sm-auto col-lg-8 ">
+
+            
 
                 <div class="card mb-3">
                     <div class="row g-0">
@@ -351,8 +233,38 @@ navbar();
                 </select>
             </div>
         </div>
-    </div>
+        <div class="row">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <!--Todo php following items-->
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                  </li>
+                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                  </li>
+                </ul>
+              </nav>
+        </div>
+    </div>  
+
 
 <?php
 footer();
 ?>
+
+
+<!-- <?php 
+    for ($i=0; $i < 10; $i++) { 
+        favProduct(
+            $i,
+            "Maças verdes",
+            "Aqui fica a descrição deste belo produto, fica um bocado mais curta ou até mesmo cortada",
+            "1,20",
+            "kg"
+        );
+    }
+    ?> -->
