@@ -1,6 +1,6 @@
 <?php
 include_once '../common/extras.php';
-include_once 'checkout_inc_cart_info.php';
+include_once 'checkout_inc_cart.php';
 pageHeader("MyGarden - Cart");
 navbar();
 ?>

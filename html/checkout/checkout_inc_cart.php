@@ -123,3 +123,27 @@ function orderTotal($n)
 <?php
 }
 ?>
+
+<?php
+function paymentCard($holder, $number)
+{
+?>
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-2 col-md-2">
+                <img src="https://via.placeholder.com/80x80" alt="...">
+            </div>
+            <div class="col-8 col-md-9">
+                <div class="card-body">
+                    <h6 class="card-title"><?= $holder ?></h6>
+                    <p class="card-text">Visa car Ending in **<?= $number ?> </p>
+                </div>
+            </div>
+            <div class="col-2 col-md-1">
+                <a href="checkout_edit_card.php"> <button type="button" id="simpleicon">edit</button></a>
+            </div>
+        </div>
+    </div>
+<?php
+}
+?>

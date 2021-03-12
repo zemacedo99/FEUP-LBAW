@@ -1,16 +1,16 @@
 <?php
 include_once '../common/extras.php';
+include_once 'checkout_inc_cart.php';
 pageHeader("MyGarden - Shipping/Payment");
 navbar();
 ?>
 
 <div class="container">
 
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="col-12">
         <div class="row">
 
-            <div class="row mt-3"></div>
-            <div class="row mt-3"></div>
+            <div class="row m-3"></div>
             <!-- Breadcrumb  -->
             <div class="d-flex justify-content-center">
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -20,8 +20,7 @@ navbar();
                     </ol>
                 </nav>
             </div>
-            <div class="row mt-3"></div>
-            <div class="row mt-3"></div>
+            <div class="row m-3"></div>
 
             <!-- ****************** Left Side ****************** -->
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style='border-right:2px solid green;'>
@@ -167,22 +166,7 @@ navbar();
                 <div class="col-12">
                     <h3 class="mb-3 " style='text-align:left;border-bottom:2px solid black;'>Payment Information</h3>
 
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col-2 col-md-2">
-                                <img src="https://via.placeholder.com/80x80" alt="...">
-                            </div>
-                            <div class="col-8 col-md-9">
-                                <div class="card-body">
-                                    <h6 class="card-title">Card Holder</h6>
-                                    <p class="card-text">Visa car Ending in **69 </p>
-                                </div>
-                            </div>
-                            <div class="col-2 col-md-1">
-                                <a href="checkout_edit_card.php"> <button type="button" id="simpleicon">edit</button></a>
-                            </div>
-                        </div>
-                    </div>
+                    <?php paymentCard("Card Holder",69) ?>
 
                     <div class="card mb-3 d-flex justify-content-center align-items-center" style="height: 60px;">
                         <a class="nav-link" id="navLinks" href="checkout_add_card.php">
@@ -203,21 +187,8 @@ navbar();
             <div class="row mt-3"></div>
 
 
-            <div class="row">
-
-                <div class="col-6">
-                    <div class="d-flex justify-content-start">
-                        <h4 style='text-align:center;'>Total </h4>
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="d-flex justify-content-end">
-                        <h4 style='text-align:center;'>8.37€ </h4>
-                    </div>
-                </div>
-
-            </div>
+ 
+            <?php orderTotal(8.37); ?>
 
             <div class="row mt-3"></div>
             <div class="row mt-3"></div>
@@ -265,7 +236,7 @@ navbar();
                         </div>
                         <div class="d-flex justify-content-center">
                             <div class="modal-footer">
-                                <button type="button" class="mainbtt"><a id="navLinks" href="../home.php">Keep Shopping</a></button>
+                                <button type="button" class="mainbtt"><a id="navLinks" href="../misc/home_page.php">Keep Shopping</a></button>
                             </div>
                         </div>
                     </div>
