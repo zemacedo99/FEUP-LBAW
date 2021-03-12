@@ -56,7 +56,7 @@ navbar();
         <label class="text-black" for="product_price">Price</label>
         <div class="input-group mb-5">
           <span class="input-group-text">€</span>
-          <input type="text" class="form-control" id="product_price">
+          <input type="number" step="0.01" class="form-control" min=0 id="product_price">
           <select class="form-select" aria-label="Select type">
             <option selected>Kg</option>
             <option value="2">Unit</option>
