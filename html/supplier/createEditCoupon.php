@@ -21,7 +21,7 @@ navbar();
 
     </div>
 
-    <div class="col-12 col-lg-3">
+    <div class="col-12 col-lg-3 ">
       <form action="">
         <label class="text-black" for="coupon_name">Coupon Name</label>
         <div class="input-group mb-5 ">
@@ -38,10 +38,7 @@ navbar();
           </select>
         </div>
 
-        <label class="text-black" for="coupon_stock">Stock</label>
-        <div class="input-group mb-5">
-          <input type="number" class="form-control" id="coupon_stock" min="1">
-        </div>
+        <br>
 
         <div class="input-group my-5 justify-content-center">
           <label class="btn btn-primary" for="sup_img">
