@@ -65,10 +65,11 @@ navbar();
     </div>
   </div>
 
+  <!-- Description and Tags -->
   <div class="row mt-5">
     <h4>Description</h4>
   </div>
-  <div class="row">
+  <div class="row justify-content-center">
     <div class="col-12 col-lg-7">
       <p class="border px-1">
         Fresh and green letuce from the renowned fields of Póvoa do Varzim in Portugal.
@@ -78,7 +79,7 @@ navbar();
 
     </div>
 
-    <div class="col-12 col-lg-5" style="min-height: 100px;">
+    <div class="col-6 col-lg-5" style="min-height: 100px;">
       <div class="d-grid gap-2 d-lg-block  ">
 
         <button class="btn btn-secondary btn-sm">Organic</button>
