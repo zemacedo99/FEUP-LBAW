@@ -27,9 +27,9 @@ function cartProduct($name, $total, $price)
                 </div>
                 <div class="col-lg-8">
                     <div class="card-body">
-                        <h4 class="card-title text-center mb-3" ><?= $name ?></h4>
+                        <h4 class="card-title text-center mb-3"><?= $name ?></h4>
 
-                        
+
                         <div class="row text-center">
                             <div class="col-xl-4">
                                 <h5 class="card-text text-muted">Total: <?= $total ?></h5>
@@ -43,7 +43,7 @@ function cartProduct($name, $total, $price)
                             <div class="col-xl-4">
                                 <h5 class="card-text"><?= $price ?>€</h5>
                             </div>
-                         
+
                         </div>
 
 
@@ -58,3 +58,68 @@ function cartProduct($name, $total, $price)
 }
 ?>
 
+<?php
+function cuponCard($name, $discount, $date)
+{
+?>
+    <!-- <div class="col-lg-12 col-10 mx-auto"> -->
+    <div class="col-lg-4 col-10 mx-auto">
+        <div class="p-3">
+            <div class="card">
+
+                <?= cuponImage("cupon") ?>
+
+                <div class="card-img-overlay">
+                    <div class="text-center">
+                        <br><br>
+                        <h5 class="card-title"><?= $name ?></h5>
+                        <p class="card-text"><?= $discount ?>%</p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Valid until <?= $date ?></small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<?php
+}
+?>
+
+
+<?php
+function cuponImage($done)
+{
+?>
+    <div class="col">
+        <img src="../images/<?= $done ?>.jpg" class="img-fluid" alt="<?= $done ?>" style="margin-left:auto; margin-right:auto;width:40em;height:10em;">
+    </div>
+<?php
+}
+?>
+
+
+<?php
+function orderTotal($n)
+{
+?>
+    <div class="row">
+
+        <div class="col-6">
+            <div class="d-flex justify-content-start">
+                <h4 style='text-align:center;'>Total </h4>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="d-flex justify-content-end">
+                <h4 style='text-align:center;'><?= $n ?>€ </h4>
+            </div>
+        </div>
+
+    </div>
+<?php
+}
+?>
