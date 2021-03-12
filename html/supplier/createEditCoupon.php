@@ -11,7 +11,7 @@ navbar();
   </div>
 
   <div class="row">
-    <div id="imagesContainer" class="col-sm-6">
+    <div id="imagesContainer" class="col-12 col-lg-6 mb-5 mb-lg-0">
       <div class="image-upload">
         <label for="file-input">
           <img src="../images/genericAddImage.png" class="img-fluid" />
@@ -20,7 +20,41 @@ navbar();
       </div>
 
     </div>
-    <div id="DataContainer" class="col-md-4 mt-5">
+
+    <div class="col-12 col-lg-3">
+      <form action="">
+        <label class="text-black" for="coupon_name">Coupon Name</label>
+        <div class="input-group mb-5 ">
+          <input type="text" class="form-control" id=coupon_name>
+
+        </div>
+
+        <label class="text-black" for="coupon_price">Discount</label>
+        <div class="input-group mb-5">
+          <input type="number" step="0.01" class="form-control" min=0 id="coupon_price">
+          <select class="form-select" aria-label="Select type">
+            <option selected>%</option>
+            <option value="2">€</option>
+          </select>
+        </div>
+
+        <label class="text-black" for="coupon_stock">Stock</label>
+        <div class="input-group mb-5">
+          <input type="number" class="form-control" id="coupon_stock" min="1">
+        </div>
+
+        <div class="input-group my-5 justify-content-center">
+          <label class="btn btn-primary" for="sup_img">
+            Add Image
+          </label>
+          <input type="file" class="form-control d-none" id="sup_img" aria-describedby="sup_img_addon"
+            aria-label="Upload">
+          <button class="btn btn-danger" type="button" id="sup_img_addon">Clear All</button>
+        </div>
+
+      </form>
+    </div>
+    <!-- <div id="DataContainer" class="col-md-4 mt-5">
       <h4><b><input type="text" placeholder="Coupon Name"></b></h4>
       <div class="row mt-5">
         <div class="col">
@@ -37,7 +71,7 @@ navbar();
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
 
     <div class="row">
@@ -66,21 +100,16 @@ navbar();
         </div>
       </div>
     </div>
-
-
-
-    <div class="row">
-
-      <div id="confirmContainer" class="text-center">
-        <button type="button" class="btn btn-light">Confirmar</button>
-      </div>
-      <div id="deleteProductContainer" class="float-end">
-        <div class="col-12 d-flex justify-content-center mb-4">
-          <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i> Delete Account</button>
-        </div>
-      </div>
-    </div>
   </div>
+
+
+    <div class="row my-5">
+      <span class="text-center">
+        <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i> Delete Coupon</button>
+        <button type="button" class="btn btn-primary">Confirmar</button>
+      </span>
+    </div>
+  
 </div>
 
 <?php
