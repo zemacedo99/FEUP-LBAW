@@ -51,25 +51,7 @@ navbar();
 
       </form>
     </div>
-    <!-- <div id="DataContainer" class="col-md-4 mt-5">
-      <h4><b><input type="text" placeholder="Coupon Name"></b></h4>
-      <div class="row mt-5">
-        <div class="col">
-          <i class="text-muted">discount</i>
-          <h6 class="text-muted"><input type="text" placeholder="Amount"></h6>
-        </div>
-        <div class="col">
-          <div class="col-auto my-1">
-
-            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-              <option selected>%</option>
-              <option value="€">€</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
+    
 
     <div class="row">
       <div id="DescriptionContainer" class="col-sm-6">
