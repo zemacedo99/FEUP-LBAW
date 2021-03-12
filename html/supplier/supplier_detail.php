@@ -25,8 +25,9 @@ navbar();
     </div>
 
     <div class="row mt-5 mb-5">
-        <textarea class="form-control" rows="5"
-            readonly>Quinta do Bill has been present in the Portuguese market since 1987. This renowned company is recognized in the national market and some restrict international markets for its high quality standards. This store helps costumers reach out to the full extent of our products.</textarea>
+        <p class="text-start rounded" style="background-color: darkgray;">
+            Quinta do Bill has been present in the Portuguese market since 1987. This renowned company is recognized in the national market and some restrict international markets for its high quality standards. This store helps costumers reach out to the full extent of our products.
+        </p>
 
 
     </div>
