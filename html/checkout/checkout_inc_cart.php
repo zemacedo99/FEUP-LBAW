@@ -105,9 +105,9 @@ function cuponImage($done)
 function orderTotal($n)
 {
 ?>
-    <div class="row">
+    <div class="col-12">
 
-        <div class="col-6">
+        <!-- <div class="col-6">
             <div class="d-flex justify-content-start">
                 <h4 style='text-align:center;'>Total </h4>
             </div>
@@ -117,7 +117,11 @@ function orderTotal($n)
             <div class="d-flex justify-content-end">
                 <h4 style='text-align:center;'><?= $n ?>€ </h4>
             </div>
-        </div>
+        </div> -->
+
+        <h4 style='text-align:center;'>Total: <?= $n ?> €</h4>
+        <div class="row mb-3"></div>
+
 
     </div>
 <?php

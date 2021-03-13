@@ -64,29 +64,53 @@ navbar();
                         <div class="row">
 
                             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-                                <button type="button" id="simple-btt">Once</button>
+                                <button type="radio" id="simple-btt">Once</button>
                             </div>
 
                             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-                                <button type="button" id="simple-btt">Daily</button>
+                                <button type="radio" id="simple-btt">Daily</button>
                             </div>
 
                             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
 
-                                <button type="button" id="simple-btt" data-bs-toggle="collapse" data-bs-target="#weekly">
+                                <button type="radio" id="simple-btt" data-bs-toggle="collapse" data-bs-target="#weekly">
                                     Weekly
                                 </button>
 
                                 <div class="collapse" id="weekly">
                                     <div class="card card-body">
                                         <div class="modal-body">
-                                            <a role="button" id="simple-btt">Monday</a> <br>
-                                            <a role="button" id="simple-btt">Thuesday</a><br>
-                                            <a role="button" id="simple-btt">Wednesday</a><br>
-                                            <a role="button" id="simple-btt">Thursday</a><br>
-                                            <a role="button" id="simple-btt">Friday</a><br>
-                                            <a role="button" id="simple-btt">Saturday</a><br>
-                                            <a role="button" id="simple-btt">Sunday</a><br>
+
+                                            <div class="row mb-1">
+                                                <input type="radio" class="btn-check" name="options" id="Monday" autocomplete="off">
+                                                <label class="btn btn-secondary" for="Monday">Monday </label>
+                                            </div>
+
+                                            <div class="row mb-1">
+                                                <input type="radio" class="btn-check" name="options" id="Thuesday" autocomplete="off">
+                                                <label class="btn btn-secondary" for="Thuesday">Thuesday </label>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <input type="radio" class="btn-check" name="options" id="Wednesday" autocomplete="off">
+                                                <label class="btn btn-secondary" for="Wednesday">Wednesday </label>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <input type="radio" class="btn-check" name="options" id="Thursday" autocomplete="off">
+                                                <label class="btn btn-secondary" for="Thursday">Thursday </label>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <input type="radio" class="btn-check" name="options" id="Friday" autocomplete="off">
+                                                <label class="btn btn-secondary" for="Friday">Friday </label>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <input type="radio" class="btn-check" name="options" id="Saturday" autocomplete="off">
+                                                <label class="btn btn-secondary" for="Saturday">Saturday </label>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <input type="radio" class="btn-check" name="options" id="Sunday" autocomplete="off">
+                                                <label class="btn btn-secondary" for="Sunday">Sunday </label>
+                                            </div>
+
                                         </div>
 
                                     </div>
@@ -175,15 +199,11 @@ navbar();
         <?php orderTotal(8.37); ?>
 
 
-
-
-        <div class="row m-3"></div>
-
         <div class="col-12">
             <div class="row">
 
                 <div class="d-flex justify-content-center">
-                    <button type="button" class="mainbtt"> <a id="navLinks" href="checkout_shipping_payment.php">Continue</a></button>
+                    <button type="button" class="btn btn-primary"> <a id="navLinks" href="checkout_shipping_payment.php">Continue</a></button>
                 </div>
             </div>
         </div>
