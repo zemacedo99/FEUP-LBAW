@@ -1,9 +1,11 @@
-<?php 
-addModal("DeleteAccount", 
-        "Confirmation", 
-        "Are you sure you want to delete your account? You will lose all of your data, including your purchase History, Favorites and current Periodic Buys.",
-        "Delete",
-        "Cancel");
+<?php
+addModal(
+    "DeleteAccount",
+    "Confirmation",
+    "Are you sure you want to delete your account? You will lose all of your data, including your purchase History, Favorites and current Periodic Buys.",
+    "Delete",
+    "Cancel"
+);
 ?>
 
 <div class="row ">
@@ -11,23 +13,26 @@ addModal("DeleteAccount",
         <div class="col-12 mb-4">
             <h3>Personal Info</h3>
         </div>
-        <div class="row d-flex justify-content-center mb-3">
-            <div class="col-12 col-lg-5" style="width: 150px;">
+        <div class="row row-cols-1 row-cols-lg-2 d-flex justify-content-center mb-3">
+            <div class="col" style="width: 150px;">
                 <img src="../images/img_avatar.png" class="rounded-circle img-fluid">
             </div>
-            <div class="col-12 col-lg-7 d-flex align-items-center justify-content-center justify-content-lg-start">
-                <p class="col-md-auto text-decoration-underline text-center">André Gomes <i class="bi bi-pencil ps-0"></i></p>
+            <div class="col mt-2 d-flex align-items-center justify-content-center justify-content-lg-start">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="ClientName" placeholder="Name" value="André Gomes">
+                    <label for="ClientName">Name</label>
+                </div>
             </div>
         </div>
         <div class="col-12">
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value="up201806224@fe.up.pt">
                 <label for="floatingInput">Email address</label>
             </div>
         </div>
         <div class="col-12 mb-5">
             <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" value="olátudobem?">
                 <label for="floatingPassword">Password</label>
             </div>
         </div>
@@ -127,7 +132,7 @@ addModal("DeleteAccount",
             </div>
 
             <div class="card mb-3 d-flex justify-content-center align-items-center" style="height: 80px;">
-            <p class="card-text">Add new Card <i class="bi bi-plus"></i></p>
+                <p class="card-text">Add new Card <i class="bi bi-plus"></i></p>
             </div>
 
         </div>
