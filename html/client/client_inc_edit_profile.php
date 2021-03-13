@@ -8,6 +8,96 @@ addModal(
 );
 ?>
 
+<div class="modal fade" id="editCard" tabindex="-1" aria-labelledby="editCardLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCardLabel">Edit Card Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="floatingInput" placeholder="**** **** **** ****">
+                        <label for="floatingInput">Card number</label>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="month" class="form-control" id="floatingFirstName" placeholder="Valid until">
+                            <label for="floatingFirstName">Valid until</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="number" class="form-control" id="floatingLastName" placeholder="CVV">
+                            <label for="floatingLastName">CVV</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="floatingInput" placeholder="Your name and surname">
+                        <label for="floatingInput">Card holder</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addCard" tabindex="-1" aria-labelledby="addCardLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCardLabel">Add Card</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="floatingInput" placeholder="**** **** **** ****">
+                        <label for="floatingInput">Card number</label>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="month" class="form-control" id="floatingFirstName" placeholder="Valid until">
+                            <label for="floatingFirstName">Valid until</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="number" class="form-control" id="floatingLastName" placeholder="CVV">
+                            <label for="floatingLastName">CVV</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="floatingInput" placeholder="Your name and surname">
+                        <label for="floatingInput">Card holder</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Add Card</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row ">
     <div class="col-12 col-lg-5">
         <div class="col-12 mb-4">
@@ -35,6 +125,13 @@ addModal(
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password" value="olátudobem?">
                 <label for="floatingPassword">Password</label>
             </div>
+        </div>
+
+        <div class="col-12 col-lg-12 d-flex justify-content-center mb-4">
+            <label class="btn btn-primary" for="sup_img">
+                Profile Pic
+            </label>
+            <input type="file" class="form-control d-none" id="sup_img" aria-describedby="sup_img_addon" aria-label="Upload">
         </div>
     </div>
 
@@ -124,6 +221,7 @@ addModal(
                     </div>
                     <div class="col-8 col-md-9">
                         <div class="card-body">
+                            <a href="#" class="stretched-link" data-bs-toggle="modal" data-bs-target="#editCard"></a>
                             <h6 class="card-title">Card Holder</h6>
                             <p class="card-text">Visa car Ending in **69</p>
                         </div>
@@ -132,6 +230,7 @@ addModal(
             </div>
 
             <div class="card mb-3 d-flex justify-content-center align-items-center" style="height: 80px;">
+                <a href="#" class="stretched-link" data-bs-toggle="modal" data-bs-target="#addCard"></a>
                 <p class="card-text">Add new Card <i class="bi bi-plus"></i></p>
             </div>
 
