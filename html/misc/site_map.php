@@ -8,16 +8,16 @@ navbar();
     <h3 class="mt-3 mb-3">Site Map</h3>
 
     <div class="row">
-        <div class="list-group col-3 mb-3">
+        <div class="list-group col col-md-6 col-lg-3 mb-3">
             <a href="../client/client_profile.php" class="list-group-item list-group-item-action fw-bold">Client</a>
             <a href="../client/client_profile.php" class="list-group-item list-group-item-action">Client - Profile</a>
 
             <a href="../supplier/supplier_detail.php" class="list-group-item list-group-item-action fw-bold">Supplier</a>
             <a href="../supplier/supplier_profile.php" class="list-group-item list-group-item-action">Supplier - Profile</a>
             <a href="../supplier/supplier_all_products.php" class="list-group-item list-group-item-action">Supplier - All Products</a>
-            <a href="../supplier/createProduct.php" class="list-group-item list-group-item-action">Supplier - Create Product</a>
-            <a href="../supplier/bundles_and_cupons.php" class="list-group-item list-group-item-action">Supplier - Bundles and Coupons</a>
-            <a href="../supplier/createEditBundle.php" class="list-group-item list-group-item-action">Supplier - Create/Edit Bundle</a>
+            <a href="../supplier/supplier_create_product.php" class="list-group-item list-group-item-action">Supplier - Create Product</a>
+            <a href="../supplier/supplier_inc_bundle_and_cupon.php" class="list-group-item list-group-item-action">Supplier - Bundles and Coupons</a>
+            <a href="../supplier/create_edit_bundle.php" class="list-group-item list-group-item-action">Supplier - Create/Edit Bundle</a>
             <a href="../supplier/createEditCoupon.php" class="list-group-item list-group-item-action">Supplier - Create/Edit Coupon</a>
 
             <a href="../admin/dashboard.php" class="list-group-item list-group-item-action fw-bold">Admin</a>

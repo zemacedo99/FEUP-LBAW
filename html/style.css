@@ -1,3 +1,7 @@
+:root{
+  --main-color: #53ca61;
+}
+
 .navbar {
   background-color: #198754;
 }
@@ -122,15 +126,10 @@
   background-color: black;
 }
 
-/* .profilePhoto{
-    border-radius: 50%;
-} */
-
 /* https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 .rating {
   display: flex;
   flex-direction: row-reverse;
-  justify-content: center;
 }
 
 .rating > input {
@@ -173,45 +172,24 @@
 }
 
 .btn-outline-primary {
-  color: #53ca61;
-  border-color: #53ca61;
+  color: var(--main-color);
+  border-color: var(--main-color);
 }
 
 .btn-outline-primary:hover {
   color: #fff;
-  background-color: #53ca61;
-  border-color: #53ca61;
+  background-color: var(--main-color);
+  border-color: var(--main-color);
 }
 
 .btn-primary {
-  background-color: #53ca61;
-  border-color: #53ca61;
+  background-color: var(--main-color);
+  border-color: var(--main-color);
 }
 
 .btn-primary:hover {
-    background-color: #53ca61;
-    border-color: #53ca61;
-}
-
-/* .card-img-top {
-    width: 100%;
-    height: 15vw;
-    object-fit: cover;
-} */
-
-
-#cardxpto{
-    border-radius: 4px;
-    background: #fff;
-    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
-      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
-  padding: 14px 80px 18px 36px;
-  cursor: pointer;
-}
-
-#cardxpto:hover{
-     transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+    background-color: var(--main-color);
+    border-color: var(--main-color);
 }
 
 /* Favorite Toggle */
@@ -247,4 +225,30 @@ label.favorite-checkbox input[type="checkbox"] {
 
 .favorite-checkbox input[type="checkbox"]:checked ~ .bi-heart-fill {
   opacity: 1;
+}
+
+label.active{
+  font-weight: bold;
+}
+
+
+#pills-weekly input[type="radio"]:checked + label {
+  font-weight: bold;
+}
+
+.card{
+  border-radius: 1px;
+  background: #fff;
+  box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+    transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+  cursor: pointer;
+}
+
+.card:hover{
+   transform: scale(1.05);
+box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+.card .overdiv {
+  z-index: 2;
 }
