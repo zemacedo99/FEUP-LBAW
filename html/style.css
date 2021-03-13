@@ -130,7 +130,6 @@
 .rating {
   display: flex;
   flex-direction: row-reverse;
-  justify-content: center;
 }
 
 .rating > input {
@@ -240,4 +239,13 @@ label.favorite-checkbox input[type="checkbox"] {
 
 .favorite-checkbox input[type="checkbox"]:checked ~ .bi-heart-fill {
   opacity: 1;
+}
+
+label.active{
+  font-weight: bold;
+}
+
+
+#pills-weekly input[type="radio"]:checked + label {
+  font-weight: bold;
 }

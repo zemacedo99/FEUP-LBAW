@@ -8,7 +8,7 @@ navbar();
     <h3 class="mt-3 mb-3">Site Map</h3>
 
     <div class="row">
-        <div class="list-group col-3 mb-3">
+        <div class="list-group col col-md-6 col-lg-3 mb-3">
             <a href="../client/client_profile.php" class="list-group-item list-group-item-action fw-bold">Client</a>
             <a href="../client/client_profile.php" class="list-group-item list-group-item-action">Client - Profile</a>
 

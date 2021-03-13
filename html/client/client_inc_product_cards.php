@@ -108,11 +108,11 @@ function periodicProduct($id, $name, $price, $unit, $description, $paying, $peri
                     <!-- Tem de se mudar o Sass para que a class btn-group-vertical possa ser ativada com breakpoints https://stackoverflow.com/questions/46808709/bootstrap-4-responsive-wrapping-button-group -->
                     <div class="col col-md-3 d-flex justify-content-center align-items-center">
                         <div class="btn-group d-inline-flex d-md-none" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-primary"><i class="bi bi-list"></i> Edit Periodic Buy</button>
+                            <button type="button" class="btn btn-primary data-bs-toggle="modal" data-bs-target="#periodicEdit""><i class="bi bi-list"></i> Edit Periodic Buy</button>
                             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalDeletePeriodic"><i class="bi bi-trash"></i> Cancel</button>
                         </div>
                         <div class="btn-group-vertical d-none d-md-inline-flex" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-primary"><i class="bi bi-list"></i> Edit Periodic Buy</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#periodicEdit"><i class="bi bi-list"></i> Edit Periodic Buy</button>
                             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalDeletePeriodic"><i class="bi bi-trash"></i> Cancel</button>
                         </div>
                     </div>
