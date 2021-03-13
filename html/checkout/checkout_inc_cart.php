@@ -36,8 +36,8 @@ function cartProduct($name, $total, $price)
                             </div>
 
                             <div class="col-xl-4">
-                                <button type="button" id="simpleicon">add_circle_outline</button>
-                                <button type="button" id="simpleicon"> remove_circle_outline</button>
+                                <button type="button" class="simpleicon" id="simpleiconwhite">add_circle_outline</button>
+                                <button type="button" class="simpleicon" id="simpleiconwhite"> remove_circle_outline</button>
                             </div>
 
                             <div class="col-xl-4">
@@ -144,7 +144,7 @@ function paymentCard($holder, $number)
                 </div>
             </div>
             <div class="col-2 col-md-1">
-                <a href="checkout_edit_card.php"> <button type="button" id="simpleicon">edit</button></a>
+                <a href="checkout_edit_card.php"> <button type="button" class="simpleicon" id="simpleiconwhite">edit</button></a>
             </div>
         </div>
     </div>

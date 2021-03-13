@@ -15,7 +15,7 @@ navbar();
             <div class="d-flex justify-content-center">
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a id="navLinks" href="checkout_cart_info.php">Information</a></li>
+                        <li class="breadcrumb-item"><a href="checkout_cart_info.php" style="text-decoration: none; color: black;">Information</a></li>
                         <li class="breadcrumb-item active" id="selectedLink" aria-current="page">Shipping / Payment</li>
                     </ol>
                 </nav>
@@ -27,7 +27,7 @@ navbar();
 
                 <!-- <div class="col"></div> -->
 
-                 <!-- ****************** Left Side ****************** -->
+                <!-- ****************** Left Side ****************** -->
                 <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
                     <div class="row mt-3"></div>
                     <div class="row mt-3"></div>
@@ -174,10 +174,8 @@ navbar();
                         <?php paymentCard("Card Holder", 69) ?>
 
                         <div class="card mb-3 d-flex justify-content-center align-items-center" style="height: 60px;">
-                            <a class="nav-link" id="navLinks" href="checkout_add_card.php">
-                                <p class="card-text">Add new Card <i class="bi bi-plus"></i></p>
-                            </a>
-
+                            <a class="stretched-link" href="../checkout/checkout_add_card.php"></a>
+                            <p class="card-text">Add new Card <i class="bi bi-plus"></i></p>
                         </div>
 
                     </div>
@@ -187,16 +185,8 @@ navbar();
                 <!-- <div class="col"></div> -->
             </div>
 
-
-
-
-
             <div class="row m-3"></div>
-
-
             <?php orderTotal(8.37); ?>
-
-
 
 
             <div class="col-12">
@@ -209,31 +199,6 @@ navbar();
                     </div>
                 </div>
             </div>
-
-
-            <!-- <div class="col-12">
-                <div class="row">
-
-                    <div class="col-6">
-                        <div class="d-flex justify-content-center">
-                            <button type="button" class="mainbtt"> <a id="navLinks" href="checkout_cart_info.php">Info</a></button>
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <div class="d-flex justify-content-center">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                Finish
-                            </button>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div> -->
-
-
-
 
             <!-- Modal -->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -250,7 +215,7 @@ navbar();
                         </div>
                         <div class="d-flex justify-content-center">
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary"><a id="navLinks" href="../misc/home_page.php">Keep Shopping</a></button>
+                            <a href="../misc/home_page.php"> <button type="button" class="btn btn-primary">Keep Shopping</button></a>
                             </div>
                         </div>
                     </div>

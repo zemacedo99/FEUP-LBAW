@@ -22,7 +22,7 @@ function supplierBundle($bundlename, $price)
         </div>
 
         <div class="col-4 d-flex justify-content-center">
-            <a  href="createEditBundle.php"> <button type="button" id="simpleicon">edit</button></a>
+            <a  href="createEditBundle.php"> <button type="button" class="simpleicon">edit</button></a>
         </div>
 
         <div class="col-4">
@@ -41,7 +41,7 @@ function bundleProductsImage($productname)
 {
 ?>
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
-        <img src="../images/<?= $productname ?>.jpg" alt="<?= $productname ?>" class="img-fluid" style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
+        <img src="../images/<?= $productname ?>.jpg" alt="<?= $productname ?>" class="img-fluid img-thumbnail" style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
     </div>
 <?php
 }

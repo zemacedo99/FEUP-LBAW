@@ -16,7 +16,7 @@ navbar();
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active" id="selectedLink" aria-current="page">Information</li>
-                        <li class="breadcrumb-item"><a id="navLinks" href="checkout_shipping_payment.php">Shipping / Payment</a></li>
+                        <li class="breadcrumb-item"><a href="checkout_shipping_payment.php" style="text-decoration: none; color: black;">Shipping / Payment</a></li>
                     </ol>
                 </nav>
             </div>
@@ -56,7 +56,7 @@ navbar();
                     <div class="col-12 col-lg-12">
 
                         <div class="row">
-                            <h3 style='text-align:left;border-bottom:2px solid black;'>Periodic Buys <button type="button" id="simpleicon">history</button></h3>
+                            <h3 style='text-align:left;border-bottom:2px solid black;'>Periodic Buys <button type="button" class="simpleicon">history</button></h3>
                         </div>
 
                         <div class="row mb-3"></div>
@@ -154,7 +154,7 @@ navbar();
                     <div class="col-12 col-lg-12">
 
                         <div class="row">
-                            <h3 style='text-align:left;border-bottom:2px solid black;'>Cupons <button type="button" id="simpleicon">redeem</button></h3>
+                            <h3 style='text-align:left;border-bottom:2px solid black;'>Cupons <button type="button" class="simpleicon">redeem</button></h3>
                         </div>
 
                         <div class="row mt-3"></div>
@@ -164,7 +164,7 @@ navbar();
                                 <input type="text" class="form-control" placeholder="CODE">
                             </div>
                             <div class="col-3 text-center">
-                                <button type="button" id="simpleicon">add</button>
+                                <button type="button" class="simpleicon">add</button>
                             </div>
                         </div>
 
@@ -201,16 +201,19 @@ navbar();
 
         <div class="col-12">
             <div class="row">
-
                 <div class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary"> <a id="navLinks" href="checkout_shipping_payment.php">Continue</a></button>
+                    <a href="../checkout/checkout_shipping_payment.php">
+                        <button type="button" class="btn btn-primary"> Continue</button>
+                    </a>
                 </div>
+
             </div>
         </div>
 
     </div>
 
+</div>
 
-    <?php
-    footer();
-    ?>
+<?php
+footer();
+?>
