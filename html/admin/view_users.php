@@ -18,6 +18,7 @@
   <title>MyGarden</title>
 </head>
 
+
 <body>
   <!-- Optional JavaScript; choose one of the two! -->
   <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -130,7 +131,10 @@
                     </tbody>
                 </table>
             </div>
-            <div class="row mt-4">
+
+            <?php include_once '../common/common_page_navigation.php';?>
+
+            <div class="row">
                 <div class="col-2">
                     <a class="btn btn-primary" href="dashboard.php"><i class="bi bi-arrow-left"></i></a>
                 </div>

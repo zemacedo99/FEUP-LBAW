@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row ">
   <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
       <!--Todo php following items-->
