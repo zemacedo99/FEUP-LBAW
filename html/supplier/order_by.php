@@ -1,4 +1,4 @@
-<div class="col-md-1 ms-sm-auto col-lg-2 px-md-1">
+<div class="col-md-3 ms-sm-auto col-lg-3 px-md-1">
             <select class="form-select" aria-label="Relevance">
                 <option selected>Order by:</option>
                 <option value="Price Up">Price Up</option>

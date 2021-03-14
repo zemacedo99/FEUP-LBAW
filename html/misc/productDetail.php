@@ -52,8 +52,8 @@ navbar();
         <div class="form">
           <label class="form-label" for="quantity">Quantity</label>
           <div class="input-group">
-            <input type="number" class="form-control" id="quantity" placeholder="2">
-            <span class="input-group-text">€</span>
+            <input type="number" class="form-control" id="quantity" min="0">
+            <span class="input-group-text">Kg</span>
           </div>
           <div class="text-muted">Total: 9,00€</div>
 
