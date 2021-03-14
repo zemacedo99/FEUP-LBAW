@@ -13,7 +13,8 @@
     z-index: 999;
   
     /* scrollbar */
-    overflow: auto;
+    overflow-x: none;
+    overflow-y: auto;
     
   }
   

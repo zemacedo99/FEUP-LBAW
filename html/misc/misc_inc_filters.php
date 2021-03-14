@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="./sidebar.css">
 
 <aside>
-    <nav id="sidebar" class="collapse order-0" style="background-color: #F3F2F4; width: max-content;">
+    <nav id="sidebar" class="collapse order-0 col-12 col-lg-3" style="background-color: #F3F2F4; "><!--tablet device measure-->
         <div class="row justify-content-end">
             <button id="sidebar-toggler" class="btn bd-sidebar-toggle col-2 " type="button" data-bs-toggle="collapse"
                 data-bs-target="#sidebar" aria-controls="filters" aria-expanded="false" aria-label="toggle-filters">
@@ -18,18 +18,19 @@
             
 
                 <div class="row ">
-                    <div class="col">
+                    <div class="col d-inline-flex justify-content-end">
 
                         <input type="radio" class="btn-check " name="options" id="storesOption"
                             autocomplete="off" checked>
-                        <label class="btn btn-secondary mb-5" for="storesOption">Stores</label>
+                        <label class="btn btn-primary mb-5" for="storesOption">Stores</label>
                     </div>
 
-                    <div class="col ">
+                    <div class="col d-inline-flex justify-content-start">
                         <input type="radio" class="btn-check " name="options" id="productsOption"
                             autocomplete="off">
-                        <label class="btn btn-secondary mb-5" for="productsOption">Products</label>
+                        <label class="btn btn-primary mb-5" for="productsOption">Products</label>
                     </div>
+
                 </div>
 
                 <!-- <div class="row align-content-center">
@@ -195,12 +196,6 @@
 
 </aside>
 
-<button id="sidebar-toggler" class="btn bd-sidebar-toggle bg-secondary" style="width: max-content;" type="button"
-    data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="filters" aria-expanded="false"
-    aria-label="toggle-filters">
-    Filters
-</button>
-</div>
 
 <!--
     <div id="MaxDistance" class="container border-bottom mt-5">
