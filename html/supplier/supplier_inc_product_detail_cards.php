@@ -12,7 +12,7 @@
                         <div class="row row-cols-md-2">
                             <div class="col-10">
                                 <h5 class="card-title ">3,50€/kg</h5>
-                                <div class="rating justify-content-end d-none d-md-inline"> <input type="radio" name="ratinga" value="5"
+                                <div class="rating justify-content-end d-md-inline"> <input type="radio" name="ratinga" value="5"
                                         id="5a"><label for="5a">☆</label> <input type="radio" name="ratinga" value="4"
                                         id="4a"><label for="4a">☆</label> <input type="radio" name="ratinga" value="3"
                                         id="3a"><label for="3a">☆</label>
@@ -53,7 +53,7 @@
                         <div class="row row-cols-1 row-cols-md-2">
                             <div>
                                 <h5 class="card-title ">4,50€/kg</h5>
-                                <div class="rating justify-content-end d-none d-md-inline"> <input type="radio" name="ratingb" value="5"
+                                <div class="rating justify-content-end d-md-inline"> <input type="radio" name="ratingb" value="5"
                                         id="5b"><label for="5b">☆</label> <input type="radio" name="ratingb" value="4"
                                         id="4b"><label for="4b">☆</label> <input type="radio" name="ratingb" value="3"
                                         id="3b"><label for="3b">☆</label>
@@ -92,7 +92,7 @@
                         <div class="row row-cols-1 row-cols-md-2">
                             <div>
                                 <h5 class="card-title ">7,80€/kg</h5>
-                                <div class="rating justify-content-end d-none d-md-inline"> <input type="radio" name="ratingc" value="5"
+                                <div class="rating justify-content-end  d-md-inline"> <input type="radio" name="ratingc" value="5"
                                         id="5c"><label for="5c">☆</label> <input type="radio" name="ratingc" value="4"
                                         id="4c"><label for="4c">☆</label> <input type="radio" name="ratingc" value="3"
                                         id="3c"><label for="3c">☆</label>
@@ -132,7 +132,7 @@
                         <div class="row row-cols-1 row-cols-md-2">
                             <div>
                                 <h5 class="card-title ">10€/un</h5>
-                                <div class="rating justify-content-end d-none d-md-inline"> <input type="radio" name="ratingd" value="5"
+                                <div class="rating justify-content-end d-md-inline"> <input type="radio" name="ratingd" value="5"
                                         id="5d"><label for="5d">☆</label> <input type="radio" name="ratingd" value="4"
                                         id="4d"><label for="4d">☆</label> <input type="radio" name="ratingd" value="3"
                                         id="3d"><label for="3d">☆</label>
@@ -171,7 +171,7 @@
                         <div class="row row-cols-1 row-cols-md-2">
                             <div>
                                 <h5 class="card-title ">2€/kg</h5>
-                                <div class="rating justify-content-end d-none d-md-inline"> <input type="radio" name="ratinge" value="5"
+                                <div class="rating justify-content-end d-md-inline"> <input type="radio" name="ratinge" value="5"
                                         id="5e"><label for="5e">☆</label> <input type="radio" name="ratinge" value="4"
                                         id="4e"><label for="4e">☆</label> <input type="radio" name="ratinge" value="3"
                                         id="3e"><label for="3e">☆</label>
