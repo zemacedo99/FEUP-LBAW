@@ -16,7 +16,7 @@ navbar();
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active" id="selectedLink" aria-current="page">Information</li>
-                        <li class="breadcrumb-item"><a id="navLinks" href="checkout_shipping_payment.php">Shipping / Payment</a></li>
+                        <li class="breadcrumb-item"><a href="checkout_shipping_payment.php" style="text-decoration: none; color: black;">Shipping / Payment</a></li>
                     </ol>
                 </nav>
             </div>
@@ -56,7 +56,7 @@ navbar();
                     <div class="col-12 col-lg-12">
 
                         <div class="row">
-                            <h3 style='text-align:left;border-bottom:2px solid black;'>Periodic Buys <button type="button" id="simpleicon">history</button></h3>
+                            <h3 style='text-align:left;border-bottom:2px solid black;'>Periodic Buys <button type="button" class="simpleicon">history</button></h3>
                         </div>
 
                         <div class="row mb-3"></div>
@@ -64,29 +64,53 @@ navbar();
                         <div class="row">
 
                             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-                                <button type="button" id="simple-btt">Once</button>
+                                <button type="radio" id="simple-btt">Once</button>
                             </div>
 
                             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-                                <button type="button" id="simple-btt">Daily</button>
+                                <button type="radio" id="simple-btt">Daily</button>
                             </div>
 
                             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
 
-                                <button type="button" id="simple-btt" data-bs-toggle="collapse" data-bs-target="#weekly">
+                                <button type="radio" id="simple-btt" data-bs-toggle="collapse" data-bs-target="#weekly">
                                     Weekly
                                 </button>
 
                                 <div class="collapse" id="weekly">
                                     <div class="card card-body">
                                         <div class="modal-body">
-                                            <a role="button" id="simple-btt">Monday</a> <br>
-                                            <a role="button" id="simple-btt">Thuesday</a><br>
-                                            <a role="button" id="simple-btt">Wednesday</a><br>
-                                            <a role="button" id="simple-btt">Thursday</a><br>
-                                            <a role="button" id="simple-btt">Friday</a><br>
-                                            <a role="button" id="simple-btt">Saturday</a><br>
-                                            <a role="button" id="simple-btt">Sunday</a><br>
+
+                                            <div class="row mb-1">
+                                                <input type="radio" class="btn-check" name="options" id="Monday" autocomplete="off">
+                                                <label class="btn btn-secondary" for="Monday">Monday </label>
+                                            </div>
+
+                                            <div class="row mb-1">
+                                                <input type="radio" class="btn-check" name="options" id="Thuesday" autocomplete="off">
+                                                <label class="btn btn-secondary" for="Thuesday">Thuesday </label>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <input type="radio" class="btn-check" name="options" id="Wednesday" autocomplete="off">
+                                                <label class="btn btn-secondary" for="Wednesday">Wednesday </label>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <input type="radio" class="btn-check" name="options" id="Thursday" autocomplete="off">
+                                                <label class="btn btn-secondary" for="Thursday">Thursday </label>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <input type="radio" class="btn-check" name="options" id="Friday" autocomplete="off">
+                                                <label class="btn btn-secondary" for="Friday">Friday </label>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <input type="radio" class="btn-check" name="options" id="Saturday" autocomplete="off">
+                                                <label class="btn btn-secondary" for="Saturday">Saturday </label>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <input type="radio" class="btn-check" name="options" id="Sunday" autocomplete="off">
+                                                <label class="btn btn-secondary" for="Sunday">Sunday </label>
+                                            </div>
+
                                         </div>
 
                                     </div>
@@ -130,7 +154,7 @@ navbar();
                     <div class="col-12 col-lg-12">
 
                         <div class="row">
-                            <h3 style='text-align:left;border-bottom:2px solid black;'>Cupons <button type="button" id="simpleicon">redeem</button></h3>
+                            <h3 style='text-align:left;border-bottom:2px solid black;'>Cupons <button type="button" class="simpleicon">redeem</button></h3>
                         </div>
 
                         <div class="row mt-3"></div>
@@ -140,7 +164,7 @@ navbar();
                                 <input type="text" class="form-control" placeholder="CODE">
                             </div>
                             <div class="col-3 text-center">
-                                <button type="button" id="simpleicon">add</button>
+                                <button type="button" class="simpleicon">add</button>
                             </div>
                         </div>
 
@@ -175,22 +199,21 @@ navbar();
         <?php orderTotal(8.37); ?>
 
 
-
-
-        <div class="row m-3"></div>
-
         <div class="col-12">
             <div class="row">
-
                 <div class="d-flex justify-content-center">
-                    <button type="button" class="mainbtt"> <a id="navLinks" href="checkout_shipping_payment.php">Continue</a></button>
+                    <a href="../checkout/checkout_shipping_payment.php">
+                        <button type="button" class="btn btn-primary"> Continue</button>
+                    </a>
                 </div>
+
             </div>
         </div>
 
     </div>
 
+</div>
 
-    <?php
-    footer();
-    ?>
+<?php
+footer();
+?>

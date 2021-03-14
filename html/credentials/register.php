@@ -49,7 +49,7 @@ navbar();
 
             <div class="collapseOne panel-collapse collapse">
                 <div class="panel-body">
-                    <div class="alert alert-primary text-center" role="alert">
+                    <div class="alert alert-success text-center" role="alert">
                         <i class="bi bi-exclamation-triangle"></i>
                         Supplier registrations are subject to confirmation
                     </div>

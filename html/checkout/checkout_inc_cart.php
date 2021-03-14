@@ -36,8 +36,8 @@ function cartProduct($name, $total, $price)
                             </div>
 
                             <div class="col-xl-4">
-                                <button type="button" id="simpleicon">add_circle_outline</button>
-                                <button type="button" id="simpleicon"> remove_circle_outline</button>
+                                <button type="button" class="simpleicon" id="simpleiconwhite">add_circle_outline</button>
+                                <button type="button" class="simpleicon" id="simpleiconwhite"> remove_circle_outline</button>
                             </div>
 
                             <div class="col-xl-4">
@@ -105,9 +105,9 @@ function cuponImage($done)
 function orderTotal($n)
 {
 ?>
-    <div class="row">
+    <div class="col-12">
 
-        <div class="col-6">
+        <!-- <div class="col-6">
             <div class="d-flex justify-content-start">
                 <h4 style='text-align:center;'>Total </h4>
             </div>
@@ -117,7 +117,11 @@ function orderTotal($n)
             <div class="d-flex justify-content-end">
                 <h4 style='text-align:center;'><?= $n ?>€ </h4>
             </div>
-        </div>
+        </div> -->
+
+        <h4 style='text-align:center;'>Total: <?= $n ?> €</h4>
+        <div class="row mb-3"></div>
+
 
     </div>
 <?php
@@ -140,7 +144,7 @@ function paymentCard($holder, $number)
                 </div>
             </div>
             <div class="col-2 col-md-1">
-                <a href="checkout_edit_card.php"> <button type="button" id="simpleicon">edit</button></a>
+                <a href="checkout_edit_card.php"> <button type="button" class="simpleicon" id="simpleiconwhite">edit</button></a>
             </div>
         </div>
     </div>

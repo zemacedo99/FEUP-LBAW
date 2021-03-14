@@ -11,7 +11,12 @@ navbar();
             <span class="badge rounded-pill bg-primary" style="transform:translate(120px,-40px)"><i class="bi bi-pencil"></i></span>
         </div>
     </div>
-    <div class="col-12 d-flex justify-content-center mb-2">Quinta do Zé<i class="bi bi-pencil ms-2"></i></div>
+    <div class="col-12 d-flex justify-content-center mb-2">
+        <div class="form-floating">
+            <input type="text" class="form-control" id="ClientName" placeholder="Name" value="André Gomes">
+            <label for="ClientName">Name</label>
+        </div>
+    </div>
 
 </div>
 

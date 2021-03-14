@@ -1,53 +1,86 @@
+:root {
+  --main-color: rgb(83, 202, 97);
+  --main-color-shadow: rgb(83 202 97 / 50%) ;
+  --sec-color: rgb(222, 184, 135);
+  --background: #f3f2f4;
+  --grey: #4d5057;
+
+  --logo-color: rgb(25, 135, 84);
+  --logo-color-shadow: rgb(25 135 84 / 50%);
+  --logo-accent: #157347;
+}
+
 .navbar {
-  background-color: #198754;
+  background-color: var(--logo-color);
+}
+
+html,
+body {
+  background-color: var(--background);
+}
+
+.btn-primary {
+  background-color: var(--main-color);
+  border-color: var(--main-color);
+}
+
+.btn-primary:hover {
+  background-color: var(--main-color);
+  border-color: var(--main-color);
+}
+
+.btn-primary:focus {
+  background-color: var(--main-color);
+  border-color: var(--main-color);
+  box-shadow: 0 0 0 0.25rem var(--main-color-shadow);
+}
+
+.btn-outline-primary {
+  color: var(--main-color);
+  border-color: var(--main-color);
+}
+
+.btn-outline-primary:hover {
+  color: #fff;
+  background-color: var(--main-color);
+  border-color: var(--main-color);
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  background-color: var(--logo-color);
+  border-color: var(--logo-color);
+}
+
+.page-item.active .page-link {
+  background-color: var(--logo-color);
+  border-color: var(--logo-color-shadow);
+}
+
+.page-link {
+  color: black;
+}
+
+.form-check-input:checked {
+  background-color: var(--main-color);
+  border-color: var(--main-color);
 }
 
 #headericon {
   font-family: "Material Icons";
-  background-color: #198754;
-  color: burlywood;
+  background-color: var(--logo-color);
+  color: var(--sec-color);
   border: 0px solid transparent;
   font-size: 1.25rem;
   border-radius: 1.5rem;
 }
 
 #headericon:hover {
-  background-color: #157347;
-}
-
-#footericon {
-  font-family: "Material Icons";
-  background-color: #15734731;
-  color: burlywood;
-  border: 0px solid transparent;
-  font-size: 1.25rem;
-}
-
-#footericon:hover {
-  background-color: #15734757;
-}
-
-#navfooter {
-  background-color: 15734731;
-}
-
-#navbarPage {
-  background-color: #198754;
-  color: burlywood;
-  border: 0px solid transparent;
-  font-size: 1.25rem;
-  border-radius: 1.5rem;
+  background-color: var(--logo-accent);
 }
 
 #navLinks {
-  color: burlywood;
+  color: var(--sec-color);
   text-decoration: none;
-}
-
-#blackLinks {
-  color: black;
-  text-decoration: none;
-  font-size: 1.15rem;
 }
 
 #selectedLink {
@@ -56,36 +89,16 @@
   text-decoration: none;
 }
 
-.mainbtt {
-  text-align: center;
-  background-color: #198754;
-  color: burlywood;
-  border: 0px solid transparent;
-  font-size: 1.25rem;
-}
-
-.mainbtt:hover {
-  background-color: #157347;
-}
-
-#mainbtticon {
+.simpleicon {
   font-family: "Material Icons";
-  background-color: #198754;
-  color: burlywood;
-  border: 0px solid transparent;
-  font-size: 1.25rem;
-}
-
-#mainbtticon:hover {
-  background-color: #157347;
-}
-
-#simpleicon {
-  font-family: "Material Icons";
-  background-color: white;
+  background-color: var(--background);
   color: black;
   border: 0px solid transparent;
   font-size: 1.5rem;
+}
+
+#simpleiconwhite {
+  background-color:white;
 }
 
 #simple-btt {
@@ -122,15 +135,11 @@
   background-color: black;
 }
 
-/* .profilePhoto{
-    border-radius: 50%;
-} */
-
 /* https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
+
 .rating {
   display: flex;
   flex-direction: row-reverse;
-  justify-content: center;
 }
 
 .rating > input {
@@ -172,48 +181,6 @@
   color: red;
 }
 
-.btn-outline-primary {
-  color: #53ca61;
-  border-color: #53ca61;
-}
-
-.btn-outline-primary:hover {
-  color: #fff;
-  background-color: #53ca61;
-  border-color: #53ca61;
-}
-
-.btn-primary {
-  background-color: #53ca61;
-  border-color: #53ca61;
-}
-
-.btn-primary:hover {
-    background-color: #53ca61;
-    border-color: #53ca61;
-}
-
-/* .card-img-top {
-    width: 100%;
-    height: 15vw;
-    object-fit: cover;
-} */
-
-
-#cardxpto{
-    border-radius: 4px;
-    background: #fff;
-    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
-      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
-  padding: 14px 80px 18px 36px;
-  cursor: pointer;
-}
-
-#cardxpto:hover{
-     transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
-}
-
 /* Favorite Toggle */
 
 label.favorite-checkbox input[type="checkbox"] {
@@ -247,4 +214,31 @@ label.favorite-checkbox input[type="checkbox"] {
 
 .favorite-checkbox input[type="checkbox"]:checked ~ .bi-heart-fill {
   opacity: 1;
+}
+
+label.active {
+  font-weight: bold;
+}
+
+#pills-weekly input[type="radio"]:checked + label {
+  font-weight: bold;
+}
+
+.card {
+  border-radius: 1px;
+  background: #fff;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
+  transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
+    0.3s box-shadow,
+    0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+.card .overdiv {
+  z-index: 2;
 }
