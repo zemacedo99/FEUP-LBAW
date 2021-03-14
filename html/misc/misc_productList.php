@@ -14,12 +14,12 @@ include_once './misc_inc_filters.php'
             <h3> Products </h3>
         </div>
         <div class="col d-inline-flex justify-content-end mb-1">
-        <button id="sidebar-toggler" class="btn bd-sidebar-toggle btn-primary" style="width: max-content;" type="button"
-            data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="filters" aria-expanded="false"
-            aria-label="toggle-filters">
-            Filters
-        </button>
-    </div>
+            <button id="sidebar-toggler" class="btn bd-sidebar-toggle btn-primary" style="width: max-content;"
+                type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="filters"
+                aria-expanded="false" aria-label="toggle-filters">
+                Filters
+            </button>
+        </div>
         <?php
         include_once '../supplier/order_by.php';
         ?>
