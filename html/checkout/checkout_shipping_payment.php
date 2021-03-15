@@ -151,12 +151,12 @@ navbar();
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="card mb-3 d-flex justify-content-center align-items-center" style="height: 60px;">
-                                    <button type="button" id="simple-btt">PayPal</button>
+                                    <button type="button" class="stretched-link" id="simple-btt" >PayPal</button>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="card mb-3 d-flex justify-content-center align-items-center" style="height: 60px;">
-                                    <button type="button" id="simple-btt">Credit</button>
+                                    <button type="button" class="stretched-link" id="simple-btt">Credit</button>
                                 </div>
                             </div>
 
@@ -171,12 +171,14 @@ navbar();
                     <div class="col-12">
                         <h3 class="mb-3 " style='text-align:left;border-bottom:2px solid black;'>Payment Information</h3>
 
-                        <?php paymentCard("Card Holder", 69) ?>
+                        <?php paymentCard("Card Holder", 69);
+                              addNewCard()
+                        ?>
 
-                        <div class="card mb-3 d-flex justify-content-center align-items-center" style="height: 60px;">
+                        <!-- <div class="card mb-3 d-flex justify-content-center align-items-center" style="height: 60px;">
                             <a class="stretched-link" href="../checkout/checkout_add_card.php"></a>
                             <p class="card-text">Add new Card <i class="bi bi-plus"></i></p>
-                        </div>
+                        </div> -->
 
                     </div>
 
