@@ -82,7 +82,7 @@ navbar();
   </div>
 
   <?php
-  include_once './supplier_inc_description_and_tags.php'
+  include_once './include/description_and_tags.php'
   ?>
 
 <div class="row my-5">

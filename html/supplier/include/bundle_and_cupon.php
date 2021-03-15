@@ -22,7 +22,7 @@ function supplierBundle($bundlename, $price)
         </div>
 
         <div class="col-4 d-flex justify-content-center">
-            <a  href="createEditBundle.php"> <button type="button" class="simpleicon">edit</button></a>
+            <a  href="create_edit_bundle.php"> <button type="button" class="simpleicon">edit</button></a>
         </div>
 
         <div class="col-4">

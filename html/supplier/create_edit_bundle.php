@@ -1,6 +1,6 @@
 <?php
 include_once '../common/extras.php';
-include_once 'supplier_inc_bundle.php';
+include_once './include/bundle.php';
 pageHeader("MyGarden - Create/Edit Bundle");
 navbar();
 ?>
@@ -53,7 +53,7 @@ navbar();
 
   <!-- Description + Tags -->
   <?php
-  include_once './supplier_inc_description_and_tags.php'
+  include_once './include/description_and_tags.php'
   ?>
 </div>
 

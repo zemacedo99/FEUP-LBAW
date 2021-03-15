@@ -23,7 +23,7 @@ navbar();
 
     <div class="row">
         <?php
-        include_once '../supplier/supplier_inc_product_detail_cards.php';
+        include_once '../supplier/include/product_detail_cards.php';
         ?>
     </div>
     <?php

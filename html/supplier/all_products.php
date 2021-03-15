@@ -1,6 +1,6 @@
 <?php
 include_once '../common/extras.php';
-include_once 'supplier_inc_all_products.php';
+include_once './include/all_products_card.php';
 pageHeader("MyGarden - Products");
 navbar();
 ?>

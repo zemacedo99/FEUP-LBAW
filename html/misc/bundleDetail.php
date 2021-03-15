@@ -1,6 +1,6 @@
 <?php
 include_once '../common/extras.php';
-include_once '../supplier/supplier_inc_bundle_and_cupon.php';
+include_once '../supplier/include/bundle_and_cupon.php';
 pageHeader("MyGarden - Product Detail");
 navbar();
 ?>
