@@ -46,6 +46,12 @@ body {
   border-color: var(--main-color);
 }
 
+.btn-check:active+.btn-primary, .btn-check:checked+.btn-primary, .btn-primary.active, .btn-primary:active, .show>.btn-primary.dropdown-toggle {
+  background-color: var(--logo-color);
+  border-color: var(--logo-color-shadow);
+  box-shadow: 0 0 0 0.25rem var(--logo-color-shadow);
+}
+
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
   background-color: var(--logo-color);
   border-color: var(--logo-color);
