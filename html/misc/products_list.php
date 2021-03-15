@@ -1,10 +1,10 @@
 <?php
 include_once '../common/extras.php';
-include_once './include/filters.php';
 include_once '../supplier/include/product_detail_cards.php';
-
 pageHeader("MyGarden - Search");
 navbar();
+
+include_once './include/filters.php';
 ?>
 
 <div id="mainContainer" class="container">
