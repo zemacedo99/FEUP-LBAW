@@ -1,6 +1,6 @@
 <?php
 include_once '../common/extras.php';
-include_once 'checkout_inc_cart.php';
+include_once './include/cart.php';
 pageHeader("MyGarden - Cart");
 navbar();
 ?>
@@ -16,7 +16,7 @@ navbar();
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active" id="selectedLink" aria-current="page">Information</li>
-                        <li class="breadcrumb-item"><a href="checkout_shipping_payment.php" style="text-decoration: none; color: black;">Shipping / Payment</a></li>
+                        <li class="breadcrumb-item"><a href="shipping_payment.php" style="text-decoration: none; color: black;">Shipping / Payment</a></li>
                     </ol>
                 </nav>
             </div>
@@ -249,7 +249,7 @@ navbar();
         <div class="col-12">
             <div class="row">
                 <div class="d-flex justify-content-center">
-                    <a href="../checkout/checkout_shipping_payment.php">
+                    <a href="../checkout/shipping_payment.php">
                         <button type="button" class="btn btn-primary"> Continue</button>
                     </a>
                 </div>

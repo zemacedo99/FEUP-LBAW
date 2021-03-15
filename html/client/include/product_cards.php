@@ -19,7 +19,7 @@ function favProduct($id, $name, $description, $price, $unit)
                 <h5 class="card-title"><?= $name ?></h5>
                 <p class="card-text d-none d-md-block"><?= $description ?></p>
                 <h6 class="card-title text-end text-md-start order-md-3"><?= $price ?>€/<?= $unit ?></h6>
-                <a href="../misc/productDetail.php" class="stretched-link"></a>
+                <a href="´#" class="stretched-link"></a>
             </div>
         </div>
     </div>
@@ -66,7 +66,7 @@ function historyProduct($id, $name, $price, $unit, $description, $paid, $type)
 
                         </div>
                     </div>
-                    <a href="../misc/productDetail.php" class="stretched-link"></a>
+                    <a href="../misc/product_detail.php" class="stretched-link"></a>
                 </div>
             </div>
         </div>
@@ -115,7 +115,7 @@ function periodicProduct($id, $name, $price, $unit, $description, $paying, $peri
                             </div>
                         </div>
                     </div>
-                    <a href="../misc/productDetail.php" class="stretched-link"></a>
+                    <a href="../misc/product_detail.php" class="stretched-link"></a>
                 </div>
             </div>
         </div>

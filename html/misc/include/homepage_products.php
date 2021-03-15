@@ -20,7 +20,6 @@ function homepage_card()
                     <p class="card-title">Bananas</p>
                 </div>
                 
-
                 <div class="col-1"><i class="bi bi-star-fill" style="color: #d2d820;"></i></div>
                 <div class="col-1"><i class="bi bi-star-fill" style="color: #d2d820;"></i></div>
                 <div class="col-1"><i class="bi bi-star-fill" style="color: #d2d820;"></i></div>

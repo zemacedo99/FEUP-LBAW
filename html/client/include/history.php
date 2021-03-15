@@ -1,5 +1,4 @@
 <?php
-include_once './client_inc_product_cards.php';
 addModal(
     "CancelOrder",
     "Cancelation Confirmation",

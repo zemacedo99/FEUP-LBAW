@@ -1,5 +1,5 @@
 <?php
-function productCard($name, $price, $unit, $description)
+function productListCard($name, $price, $unit, $description)
 {
 ?>
     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 mx-auto">
