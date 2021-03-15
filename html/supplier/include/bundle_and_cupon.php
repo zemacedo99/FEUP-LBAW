@@ -1,7 +1,5 @@
-<?php
-function supplierBundle($bundlename, $price)
-{
-?>
+<?php function supplierBundle($bundlename, $price)
+{ ?>
     <div class="row m-3"></div>
     <div class="col-12" style='border:1px solid silver;'>
         <div class="row">
@@ -22,7 +20,7 @@ function supplierBundle($bundlename, $price)
         </div>
 
         <div class="col-4 d-flex justify-content-center">
-            <a  href="create_edit_bundle.php"> <button type="button" class="simpleicon">edit</button></a>
+            <a href="create_edit_bundle.php"> <button type="button" class="simpleicon">edit</button></a>
         </div>
 
         <div class="col-4">
@@ -32,25 +30,17 @@ function supplierBundle($bundlename, $price)
 
     </div>
 
-<?php
-}
-?>
+<?php } ?>
 
-<?php
-function bundleProductsImage($productname)
-{
-?>
+<?php function bundleProductsImage($productname)
+{ ?>
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
         <img src="../images/<?= $productname ?>.jpg" alt="<?= $productname ?>" class="img-fluid img-thumbnail" style=" margin-left:auto; margin-right:auto;width:104px;height:142px;">
     </div>
-<?php
-}
-?>
+<?php } ?>
 
-<?php
-function cuponCard($name, $discount, $date, $done)
-{
-?>
+<?php function cuponCard($name, $discount, $date, $done)
+{ ?>
     <div class="col-lg-3 col-md-4 col-10 mx-auto">
         <div class="p-3">
             <div class="card">
@@ -70,20 +60,32 @@ function cuponCard($name, $discount, $date, $done)
             </div>
         </div>
     </div>
+<?php } ?>
 
-
-<?php
-}
-?>
-
-
-<?php
-function cuponImage($done)
-{
-?>
+<?php function cuponImage($done)
+{ ?>
     <div class="col">
         <img src="../images/<?= $done ?>.jpg" class="img-fluid" alt="<?= $done ?>" style="margin-left:auto; margin-right:auto;width:40em;height:10em;">
     </div>
-<?php
-}
-?>
+<?php } ?>
+
+<?php function bundleItem()
+{ ?>
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="../images/red_apple.jpg" class="img-fluid" alt="An apple" style="max-height: 200px">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Red apple</h5>
+                    <p class="card-text">Total: 5</p>
+                    <span>
+                        <button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-plus-circle"></i></button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-dash-circle"></i></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>

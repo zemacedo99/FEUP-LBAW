@@ -1,6 +1,6 @@
 <?php
 include_once '../common/extras.php';
-include_once './include/bundle.php';
+include_once './include/bundle_and_cupon.php';
 pageHeader("MyGarden - Create/Edit Bundle");
 navbar();
 ?>
@@ -16,7 +16,7 @@ navbar();
     <?php
     for ($i = 0; $i < 5; $i++) {
       echo '<div class=" col-10 col-sm-6 col-md-4 col-lg-3">';
-      createCard();
+      BundleItem();
       echo '</div>';
     }
     ?>

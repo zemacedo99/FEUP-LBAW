@@ -179,6 +179,7 @@ body {
   opacity: 0.4;
 }
 
+
 .customcard img {
   height: 230px;
 }
@@ -257,10 +258,7 @@ label.active {
 #sidebar {
   position: fixed;
 
-  
-
   /* full screen size excluding navbar */
-
   transition: all 0.5s;
   z-index: 999;
 

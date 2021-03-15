@@ -1,6 +1,7 @@
 <?php
 include_once '../common/extras.php';
 include_once './include/filters.php';
+include_once '../supplier/include/product_detail_cards.php';
 
 pageHeader("MyGarden - Search");
 navbar();
@@ -16,19 +17,24 @@ navbar();
                 Filters
             </button>
         </div>
-        <?php
-        include_once '../supplier/order_by.php';
-        ?>
+        <?php include_once '../supplier/order_by.php'; ?>
     </div>
 
     <div class="row">
         <?php
-        include_once '../supplier/include/product_detail_cards.php';
+        for ($i = 0; $i < 5; $i++) {
+            productListCard(
+                $i,
+                "test name",
+                "1.00",
+                "kg",
+                "Supplier",
+                "Test Description"
+            );
+        }
         ?>
     </div>
-    <?php
-    include_once '../common/page_navigation.php';
-    ?>
+    <?php include_once '../common/page_navigation.php'; ?>
 </div>
 
 <?php

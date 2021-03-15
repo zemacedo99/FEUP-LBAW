@@ -24,7 +24,7 @@ navbar();
 
         <?php
         for ($i = 0; $i < 5; $i++) {
-            productCard(
+            productListCard(
                 "bananas",
                 "7,80",
                 "kg",
@@ -32,7 +32,7 @@ navbar();
             );
         }
         for ($i = 0; $i < 5; $i++) {
-            productCard(
+            productListCard(
                 "batata-amarela",
                 "7,80",
                 "kg",

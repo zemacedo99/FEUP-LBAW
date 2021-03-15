@@ -1,5 +1,6 @@
 <?php
 include_once '../common/extras.php';
+include_once './include/product_detail_cards.php';
 pageHeader("MyGarden - Supplier");
 navbar();
 ?>
@@ -41,7 +42,14 @@ navbar();
 
     <div class="row">
         <?php
-        include_once './include/product_detail_cards.php';
+        for ($i=0; $i < 5; $i++) { 
+            productListCard($i, 
+            "test name", 
+            "1.00", 
+            "kg", 
+            "Supplier", 
+            "Test Description");
+        }
         ?>
     </div>
     <?php
