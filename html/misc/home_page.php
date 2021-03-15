@@ -1,6 +1,6 @@
 <?php
 include_once '../common/extras.php';
-include_once './misc_inc_hp.php';
+include_once './include/homepage_products.php';
 pageHeader("MyGarden");
 navbar();
 ?>

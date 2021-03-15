@@ -119,7 +119,7 @@ pageHeader("MyGarden - Admin");
                     </table>
                 </div>
 
-                <?php include_once '../common/common_page_navigation.php';?>
+                <?php include_once '../common/page_navigation.php';?>
                 
                 <div class="row">
                     <div class="col-2">

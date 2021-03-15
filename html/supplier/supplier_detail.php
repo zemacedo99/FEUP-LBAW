@@ -45,7 +45,7 @@ navbar();
         ?>
     </div>
     <?php
-    include_once '../common/common_page_navigation.php';
+    include_once '../common/page_navigation.php';
     ?>
 </div>
 

@@ -34,8 +34,8 @@ navbar();
             
             <a href="../misc/home_page.php" class="list-group-item list-group-item-action fw-bold">HomePage</a>
             <a href="../misc/about_us.php" class="list-group-item list-group-item-action">About Us</a>
-            <a href="../misc/misc_productList.php" class="list-group-item list-group-item-action">Product List</a>
-            <a href="../misc/productDetail.php" class="list-group-item list-group-item-action">Product Detail</a>
+            <a href="../misc/products_list.php" class="list-group-item list-group-item-action">Product List</a>
+            <a href="../misc/product_detail.php" class="list-group-item list-group-item-action">Product Detail</a>
             <a href="../misc/supplierDetail.php" class="list-group-item list-group-item-action">Supplier Detail</a>
 
         </div>
