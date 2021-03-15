@@ -1,13 +1,5 @@
-<!-- <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapsefilters" aria-expanded="false" aria-controls="collapseExample">
-    Button with data-bs-target
-  </button> -->
-
-<!-- <nav id="filters" class="col-md-3 col-lg-2 d-md-block bg-light sidebar" style="overflow-y: scroll;overflow-x: hidden;"> -->
-
-<link rel="stylesheet" href="./sidebar.css">
-
-<aside>
-    <nav id="sidebar" class="collapse col-12 col-lg-3" style="background-color: #F3F2F4; ">
+<aside id="aside">
+    <nav id="sidebar" class="collapse col-12 col-lg-3" style="background-color: #F3F2F4;">
         <!--tablet device measure-->
         <div class="row justify-content-end">
             <button id="sidebar-toggler" class="btn bd-sidebar-toggle col-2 " type="button" data-bs-toggle="collapse"
@@ -31,21 +23,6 @@
                 </div>
 
             </div>
-
-            <!-- <div class="row align-content-center">
-                    <div class="col align-content-center">
-
-                        <input type="radio" class="btn-check align-content-center" name="options" id="storesOption"
-                            autocomplete="off" checked>
-                        <label class="btn btn-secondary mb-5" for="storesOption">Stores</label>
-                    </div>
-
-                    <div class="col align-content-center">
-                        <input type="radio" class="btn-check align-content-center" name="options" id="productsOption"
-                            autocomplete="off">
-                        <label class="btn btn-secondary mb-5" for="productsOption">Products</label>
-                    </div>
-                </div> -->
 
 
             <hr class="dropdown-divider">
@@ -150,37 +127,37 @@
                     <ul class="list-unstyled fw-normal pb-1 small">
                         <li class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <label class="form-check-label" for="Poland">
                                 Poland
                             </label>
                         </li>
                         <li class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <label class="form-check-label" for="Jamaica">
                                 Jamaica
                             </label>
                         </li>
                         <li class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <label class="form-check-label" for="Portugal">
                                 Portugal
                             </label>
                         </li>
                         <li class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <label class="form-check-label" for="Canada">
                                 Canada
                             </label>
                         </li>
                         <li class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <label class="form-check-label" for="Congo">
                                 Congo
                             </label>
                         </li>
                         <li class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <label class="form-check-label" for="China">
                                 China
                             </label>
                         </li>
@@ -196,12 +173,5 @@
 </aside>
 
 
-<!--
-    <div id="MaxDistance" class="container border-bottom mt-5">
-        <b>Max Distance</b>
-        <!--https://seiyria.com/bootstrap-slider/-->
-<!--<input id="distance" type="range" class="span2" value="0" data-slider-min="0" data-slider-max="1000"
-            data-slider-step="5">
-        <input name="MaxDistanceRepresentation" type="number" class="form-control disable" placeholder="0">
 
-    </div>-->
+<script src="./include/stickySidebar.js"></script>

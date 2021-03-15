@@ -265,13 +265,13 @@ label.active {
 
 #sidebar {
   position: fixed;
-
+  height: 100%;
   /* full screen size excluding navbar */
   transition: all 0.5s;
   z-index: 999;
 
   /* scrollbar */
-  overflow-x: none;
+  overflow-x: hidden;
   overflow-y: auto;
   
 }
@@ -283,7 +283,7 @@ label.active {
 }
 
 #sidebar.show {
-    top:57px;
+  top:57px;
   left: 0;
   bottom: 0;
 }
@@ -294,6 +294,9 @@ label.active {
   margin-left: 0.5em; /* extra margin on selected element */
 }
 
+.sticky {
+  position: absolute;
+  top: 0;
 
-
+}
 /* END SIDEBAR */
