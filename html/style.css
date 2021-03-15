@@ -122,6 +122,14 @@ body {
   border: 0px solid transparent;
 }
 
+#simple-btt:checked {
+  font-weight: bold;
+  background-color: transparent;
+  color: black;
+  border: 0px solid transparent;
+}
+
+
 #simple-btt:focus {
   font-weight: bold;
   background-color: transparent;
