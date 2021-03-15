@@ -144,7 +144,7 @@ function paymentCard($holder, $number)
                 </div>
             </div>
             <div class="col-2 col-md-1">
-                <a href="checkout_edit_card.php"> <button type="button" class="simpleicon" id="simpleiconwhite">edit</button></a>
+                <a href="edit_card.php"> <button type="button" class="simpleicon" id="simpleiconwhite">edit</button></a>
             </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
 <?php
 include_once '../common/extras.php';
-include_once 'checkout_inc_cart.php';
+include_once 'inc_cart.php';
 pageHeader("MyGarden - Shipping/Payment");
 navbar();
 ?>
@@ -15,7 +15,7 @@ navbar();
             <div class="d-flex justify-content-center">
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="checkout_cart_info.php" style="text-decoration: none; color: black;">Information</a></li>
+                        <li class="breadcrumb-item"><a href="cart_info.php" style="text-decoration: none; color: black;">Information</a></li>
                         <li class="breadcrumb-item active" id="selectedLink" aria-current="page">Shipping / Payment</li>
                     </ol>
                 </nav>
@@ -174,7 +174,7 @@ navbar();
                         <?php paymentCard("Card Holder", 69) ?>
 
                         <div class="card mb-3 d-flex justify-content-center align-items-center" style="height: 60px;">
-                            <a class="stretched-link" href="../checkout/checkout_add_card.php"></a>
+                            <a class="stretched-link" href="../checkout/add_card.php"></a>
                             <p class="card-text">Add new Card <i class="bi bi-plus"></i></p>
                         </div>
 

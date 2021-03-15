@@ -25,8 +25,8 @@ navbar();
             <a href="../admin/view_req.php" class="list-group-item list-group-item-action">Admin - Supplier Requests</a>
             <a href="../admin/view_users.php" class="list-group-item list-group-item-action">Admin - Users</a>
 
-            <a href="../checkout/checkout_cart_info.php" class="list-group-item list-group-item-action fw-bold">CheckOut</a>
-            <a href="../checkout/checkout_shipping_payment.php" class="list-group-item list-group-item-action">CheckOut - Payment</a>
+            <a href="../checkout/cart_info.php" class="list-group-item list-group-item-action fw-bold">CheckOut</a>
+            <a href="../checkout/shipping_payment.php" class="list-group-item list-group-item-action">CheckOut - Payment</a>
 
             <a href="../credentials/register.php" class="list-group-item list-group-item-action fw-bold">Credentials</a>
             <a href="../credentials/login.php" class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#loginModal">Credentials - Login</a>

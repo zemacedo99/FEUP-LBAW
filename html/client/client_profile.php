@@ -4,6 +4,8 @@ pageHeader("MyGarden - Client Profile");
 navbar();
 ?>
 
+<script src="./client_profile.js" defer></script>
+
 <div class="container">
 
     <div class="collapse show" id="profileHeader">
