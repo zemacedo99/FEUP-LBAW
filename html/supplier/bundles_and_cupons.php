@@ -6,9 +6,7 @@ navbar();
 ?>
 
 <div class="container">
-    <div class="row mt-3"></div>
-    <div class="row mt-3"></div>
-    <div class="row mt-3"></div>
+    <div class="row m-4"></div>
 
     <div class="row mb-3">
 
@@ -40,14 +38,21 @@ navbar();
                         <div class="row mt-3"></div>
                         <div class="row mt-3"></div>
 
-                        <?php
-                        for ($i = 0; $i < 2; $i++) {
-                            supplierBundle(
-                                "Winter Bundle",
-                                30.50
-                            );
-                        }
-                        ?>
+                        <div class="row row-cols-1 row-cols-md-2 g-4">
+
+
+                            <?php
+                            for ($i = 0; $i < 5; $i++) {
+                                bundleCard(
+                                    "Winter Bundle",
+                                    30.50,
+                                    3
+                                );
+                            }
+
+                            ?>
+                        </div>
+
                     </div>
                     <div class="col"></div>
                 </div>
@@ -70,13 +75,15 @@ navbar();
                         "SUMMER 2021",
                         10,
                         "2/5/2021",
+                        "WINTER2021",
                         "cupon"
                     );
                     for ($i = 0; $i < 3; $i++) {
                         cuponCard(
-                            "SUMMER 2021",
+                            "SUMMER 2020",
                             10,
-                            "2/5/2021",
+                            "2/5/2020",
+                            "WINTER2020",
                             "cupon_done"
                         );
                     }
