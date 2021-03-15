@@ -3,7 +3,7 @@ include_once '../common/extras.php';
 pageHeader("MyGarden - Add Card");
 navbar();
 
-include 'inc_pay_info.php';
+include './include/pay_info.php';
 ?>
 
 <div class="row mt-3"></div>
