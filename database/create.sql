@@ -141,7 +141,8 @@ CREATE TABLE item_info (
     id_purchase INTEGER NOT NULL REFERENCES purchase (id),
     id_item INTEGER NOT NULL REFERENCES item (id),
     price DECIMAL,
-    amount DECIMAL
+    amount DECIMAL,
+    PRIMARY KEY (id_purchase, id_item)
 );
 
 CREATE TABLE bundle_product (
