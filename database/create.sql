@@ -128,13 +128,12 @@ CREATE TABLE credit_card (
 );
 
 CREATE TABLE review (
-    id SERIAL,
-    rating INTEGER NOT NULL,
-    description TEXT NOT NULL,
     id_client INTEGER NOT NULL REFERENCES client (id_user) ON UPDATE CASCADE,
     id_item INTEGER NOT NULL REFERENCES item (id) ON UPDATE CASCADE,
+    rating INTEGER NOT NULL,
+    description TEXT NOT NULL,
     CONSTRAINT rating_ck CHECK (rating >= 1 AND rating <= 5),
-    PRIMARY KEY (id)
+    PRIMARY KEY (id_client, id_item)
 );
 
 CREATE TABLE item_info (
