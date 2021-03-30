@@ -21,6 +21,11 @@ DROP TYPE IF EXISTS unit_type CASCADE;
 DROP TYPE IF EXISTS coupon_type CASCADE;
 DROP TYPE IF EXISTS purchase_type CASCADE;
 
+DROP FUNCTION IF EXISTS expired_coupon;
+DROP FUNCTION IF EXISTS inactive_item;
+DROP FUNCTION IF EXISTS post_supplier_search_update;
+DROP FUNCTION IF EXISTS post_item_search_update;
+
 -- Types
 CREATE TYPE unit_type AS ENUM ('Kg', 'Un');
 CREATE TYPE coupon_type AS ENUM ('%', '€');
@@ -34,7 +39,8 @@ CREATE TABLE image (
 
 CREATE TABLE tag (
     id SERIAL PRIMARY KEY,
-    value text NOT NULL
+    value text NOT NULL,
+    search tsvector DEFAULT '' NOT NULL
 );
 
 CREATE TABLE shopper (
@@ -60,6 +66,7 @@ CREATE TABLE supplier (
     description TEXT NOT NULL,
     accepted BOOLEAN NOT NULL,
     id_image INTEGER NOT NULL DEFAULT 1 REFERENCES image (id) ON UPDATE CASCADE,
+    search tsvector DEFAULT '' NOT NULL,
     PRIMARY KEY (id_user)
 );
 
@@ -84,6 +91,7 @@ CREATE TABLE item (
     active BOOLEAN NOT NULL,
     rating DECIMAL,
     is_bundle BOOLEAN NOT NULL,
+    search tsvector DEFAULT '' NOT NULL,
     CONSTRAINT price_positive_ck CHECK (price > 0),
     CONSTRAINT stock_not_negative_ck CHECK (stock >= 0)
 );
@@ -176,3 +184,133 @@ CREATE TABLE cart (
     id_item  INTEGER NOT NULL REFERENCES item (id) ON UPDATE CASCADE,
     PRIMARY KEY (id_client, id_item)
 );
+
+
+-----------------------------------------
+-- INDEXES
+-----------------------------------------
+ 
+CREATE INDEX favorite_client ON favorite USING hash (id_client);
+
+CREATE INDEX credit_card_client ON credit_card USING hash (id_client); 
+
+CREATE INDEX search_product_idx ON item USING GIST (search);
+
+CREATE INDEX search_supplier_idx ON supplier USING GIST (search);
+
+-----------------------------------------
+-- TRIGGERS and UDFs
+-----------------------------------------
+
+CREATE FUNCTION expired_coupon() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+
+    IF EXISTS 
+        (SELECT * 
+        FROM coupon
+        WHERE expiration = now())
+    THEN
+        DELETE FROM coupon
+        WHERE id = OLD.id;
+    END IF;
+
+END
+$BODY$
+LANGUAGE plpgsql;
+ 
+CREATE TRIGGER expired_coupon
+    BEFORE INSERT OR UPDATE ON coupon
+    FOR EACH ROW
+    EXECUTE PROCEDURE expired_coupon();
+
+
+CREATE FUNCTION inactive_item() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+
+    IF EXISTS 
+        (SELECT * 
+        FROM item, supplier
+        WHERE item.id_supplier = supplier.id)
+    THEN
+        UPDATE item
+          SET active = FALSE
+          WHERE id = OLD.id;
+    END IF;
+
+
+END
+$BODY$
+LANGUAGE plpgsql;
+ 
+
+CREATE TRIGGER inactive_item
+    BEFORE DELETE ON supplier
+    FOR EACH ROW
+    EXECUTE PROCEDURE inactive_item();
+
+CREATE FUNCTION post_supplier_search_update() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+
+    IF TG_OP = 'INSERT' 
+        THEN
+        NEW.search = setweight(to_tsvector('english', NEW.name), 'A') || setweight(to_tsvector('english', NEW.description), 'C');   
+    END IF;
+    
+    IF TG_OP = 'UPDATE'
+        THEN
+        IF NEW.name <> OLD.name 
+            THEN
+            NEW.search = setweight(to_tsvector('english', NEW.name), 'A') || setweight(to_tsvector('english', NEW.description), 'C');   
+        END IF;
+    END IF;
+    
+    RETURN NEW;
+
+
+END
+$BODY$
+LANGUAGE plpgsql;
+ 
+CREATE TRIGGER post_supplier_search_update
+    BEFORE INSERT OR UPDATE ON supplier
+    FOR EACH ROW
+    EXECUTE PROCEDURE post_supplier_search_update();
+
+
+CREATE FUNCTION post_item_search_update() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+
+    IF TG_OP = 'INSERT' THEN
+        NEW.search = to_tsvector('english', NEW.name);
+    END IF;
+    
+    IF TG_OP = 'UPDATE'
+        THEN
+        IF NEW.name <> OLD.name 
+            THEN
+            NEW.search = to_tsvector('english', NEW.name);
+        END IF;
+    END IF;
+    
+    RETURN NEW;
+
+
+END
+$BODY$
+LANGUAGE plpgsql;
+ 
+CREATE TRIGGER post_item_search_update
+    BEFORE INSERT OR UPDATE ON item
+    FOR EACH ROW
+    EXECUTE PROCEDURE post_item_search_update();
+
+
+-----------------------------------------
+-- TRANSACTIONS
+-----------------------------------------
+
+-- items
