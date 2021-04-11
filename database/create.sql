@@ -17,6 +17,9 @@ DROP TABLE IF EXISTS product_image      CASCADE;
 DROP TABLE IF EXISTS favorite           CASCADE;
 DROP TABLE IF EXISTS cart               CASCADE;
 
+DROP MATERIALIZED VIEW IF EXISTS fts_view_weights;
+DROP MATERIALIZED VIEW IF EXISTS fts_view;
+
 DROP TYPE IF EXISTS unit_type           CASCADE;
 DROP TYPE IF EXISTS coupon_type         CASCADE;
 DROP TYPE IF EXISTS purchase_type       CASCADE;
@@ -42,8 +45,7 @@ CREATE TABLE image (
 
 CREATE TABLE tag (
     tag_id          SERIAL      PRIMARY KEY,
-    value           text        NOT NULL,
-    search          tsvector    DEFAULT '' NOT NULL
+    value           text        NOT NULL
 );
 
 CREATE TABLE shopper (
@@ -69,7 +71,6 @@ CREATE TABLE supplier (
     description     TEXT        NOT NULL,
     accepted        BOOLEAN     NOT NULL,
     id_image        INTEGER     NOT NULL DEFAULT 1 REFERENCES image (image_id) ON UPDATE CASCADE,
-    search          tsvector    DEFAULT '' NOT NULL,
     PRIMARY KEY (supplier_id)
 );
 
@@ -94,7 +95,6 @@ CREATE TABLE item (
     active          BOOLEAN                 NOT NULL,
     rating          DECIMAL,
     is_bundle       BOOLEAN                 NOT NULL,
-    search          tsvector                DEFAULT '' NOT NULL,
     CONSTRAINT      price_positive_ck       CHECK (price > 0),
     CONSTRAINT      stock_not_negative_ck   CHECK (stock >= 0)
 );
@@ -191,16 +191,54 @@ CREATE TABLE cart (
 
 
 -----------------------------------------
+-- MATERIALIZED VIEWS
+-----------------------------------------
+
+CREATE MATERIALIZED VIEW fts_view_weights AS
+SELECT item.item_id                                           as item_id,
+       item.name                                              as item_name,
+       string_agg(value, ' ')                                 as tags,
+       supplier.name                                          as supplier_name,
+       (setweight(to_tsvector('simple', item.name), 'A') ||
+        setweight(to_tsvector('simple', string_agg(value, ' ')), 'C') ||
+        setweight(to_tsvector('simple', supplier.name), 'B')) as "search"
+FROM item
+         JOIN tag_item ON (item.item_id = tag_item.id_item)
+         JOIN tag ON (tag_item.id_tag = tag.tag_id)
+         JOIN supplier ON (item.id_supplier = supplier.supplier_id)
+GROUP BY item_id, supplier_name
+ORDER BY item.item_id;
+
+
+DROP MATERIALIZED VIEW IF EXISTS fts_view;
+CREATE MATERIALIZED VIEW fts_view AS
+SELECT item.item_id           as item_id,
+       item.name              as item_name,
+       string_agg(value, ' ') as tags,
+       supplier.name          as supplier_name,
+       to_tsvector(
+               'simple', item.name || ' ' ||
+                string_agg(value, ' ') || ' ' ||
+                supplier.name
+           )                  as "search"
+FROM item
+         JOIN tag_item ON (item.item_id = tag_item.id_item)
+         JOIN tag ON (tag_item.id_tag = tag.tag_id)
+         JOIN supplier ON (item.id_supplier = supplier.supplier_id)
+GROUP BY item_id, supplier_name
+ORDER BY item.item_id;
+
+-----------------------------------------
 -- INDEXES
 -----------------------------------------
- 
-CREATE INDEX favorite_client        ON favorite     USING hash (id_client);
 
-CREATE INDEX credit_card_client     ON credit_card  USING hash (id_client);
+CREATE INDEX favorite_client        ON favorite         USING hash (id_client);
 
-CREATE INDEX search_product_idx     ON item         USING GIST (search);
+CREATE INDEX credit_card_client     ON credit_card      USING hash (id_client);
 
-CREATE INDEX search_supplier_idx    ON supplier     USING GIST (search);
+CREATE INDEX search_weight_idx      ON fts_view_weights USING GIST (search);
+
+CREATE INDEX search_idx             ON fts_view         USING GIST (search);
 
 -----------------------------------------
 -- TRIGGERS and UDFs
@@ -209,8 +247,8 @@ CREATE INDEX search_supplier_idx    ON supplier     USING GIST (search);
 CREATE OR REPLACE FUNCTION expired_coupon() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF EXISTS 
-        (SELECT * 
+    IF EXISTS
+        (SELECT *
         FROM coupon
         WHERE expiration = now())
     THEN
@@ -221,7 +259,7 @@ BEGIN
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER expired_coupon
     BEFORE INSERT OR UPDATE ON coupon
     FOR EACH ROW
@@ -233,8 +271,8 @@ CREATE OR REPLACE FUNCTION inactive_item() RETURNS TRIGGER AS
 $BODY$
 BEGIN
 
-    IF EXISTS 
-        (SELECT * 
+    IF EXISTS
+        (SELECT *
         FROM item, supplier
         WHERE item.id_supplier = supplier.supplier_id)
     THEN
@@ -255,91 +293,29 @@ CREATE TRIGGER inactive_item
 
 
 
-CREATE OR REPLACE FUNCTION post_supplier_search_update() RETURNS TRIGGER AS
+CREATE OR REPLACE FUNCTION search_update() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-
-    IF TG_OP = 'INSERT' 
-        THEN
-        NEW.search = setweight(to_tsvector('english', NEW.name), 'A') ||
-                     setweight(to_tsvector('english', NEW.description), 'C');
-    END IF;
-    
-    IF TG_OP = 'UPDATE'
-        THEN
-        IF NEW.name <> OLD.name 
-            THEN
-            NEW.search = setweight(to_tsvector('english', NEW.name), 'A') ||
-                         setweight(to_tsvector('english', NEW.description), 'C');
-        END IF;
-    END IF;
-    RETURN NEW;
-
+    REFRESH MATERIALIZED VIEW fts_view;
+    RETURN NULL;
 END
 $BODY$
 LANGUAGE plpgsql;
- 
-CREATE TRIGGER post_supplier_search_update
+
+-- On Populate, triggers to many times, need to check this
+
+CREATE TRIGGER supplier_search_update
     BEFORE INSERT OR UPDATE ON supplier
-    FOR EACH ROW
-    EXECUTE PROCEDURE post_supplier_search_update();
-
-
-
-CREATE OR REPLACE FUNCTION post_item_search_update() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-
-    IF TG_OP = 'INSERT' THEN
-        NEW.search = to_tsvector('english', NEW.name);
-    END IF;
-    
-    IF TG_OP = 'UPDATE'
-        THEN
-        IF NEW.name <> OLD.name 
-            THEN
-            NEW.search = to_tsvector('english', NEW.name);
-        END IF;
-    END IF;
-    RETURN NEW;
-
-END
-$BODY$
-LANGUAGE plpgsql;
- 
-CREATE TRIGGER post_item_search_update
+EXECUTE PROCEDURE search_update();
+CREATE TRIGGER item_search_update
     BEFORE INSERT OR UPDATE ON item
-    FOR EACH ROW
-    EXECUTE PROCEDURE post_item_search_update();
-
-
-
-CREATE OR REPLACE FUNCTION post_tag_search_update() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-
-    IF TG_OP = 'INSERT'
-    THEN
-        NEW.search = to_tsvector('english', NEW.value);
-    END IF;
-
-    IF TG_OP = 'UPDATE'
-    THEN
-        IF NEW.name <> OLD.name
-        THEN
-            NEW.search = to_tsvector('english', NEW.value);
-        END IF;
-    END IF;
-    RETURN NEW;
-
-END
-$BODY$
-    LANGUAGE plpgsql;
-
-CREATE TRIGGER post_tag_search_update
+EXECUTE PROCEDURE search_update();
+CREATE TRIGGER tag_search_update
     BEFORE INSERT OR UPDATE ON tag
-    FOR EACH ROW
-EXECUTE PROCEDURE post_tag_search_update();
+EXECUTE PROCEDURE search_update();
+CREATE TRIGGER tag_item_search_update
+    BEFORE INSERT OR UPDATE ON tag_item
+EXECUTE PROCEDURE search_update();
 
 
 
