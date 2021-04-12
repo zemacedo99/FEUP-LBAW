@@ -77,10 +77,10 @@ CREATE TABLE supplier (
 CREATE TABLE purchase (
     purchase_id     SERIAL              PRIMARY KEY,
     id_client       INTEGER             NOT NULL REFERENCES client (client_id),
-    amount          DECIMAL             NOT NULL,
+    paid            DECIMAL             NOT NULL,
     purchase_date   DATE                NOT NULL,
     type            purchase_type       NOT NULL,
-    CONSTRAINT      amount_positive_ck  CHECK (amount > 0),
+    CONSTRAINT      amount_positive_ck  CHECK (paid > 0),
     CONSTRAINT      old_date_ck         CHECK (purchase_date <= CURRENT_DATE)
 );
 
@@ -200,8 +200,9 @@ SELECT item.item_id                                           as item_id,
        string_agg(value, ' ')                                 as tags,
        supplier.name                                          as supplier_name,
        (setweight(to_tsvector('simple', item.name), 'A') ||
-        setweight(to_tsvector('simple', string_agg(value, ' ')), 'C') ||
-        setweight(to_tsvector('simple', supplier.name), 'B')) as "search"
+         setweight(to_tsvector('simple', string_agg(value, ' ')), 'C') ||
+         setweight(to_tsvector('simple', supplier.name), 'B')
+           ) as "search"
 FROM item
          JOIN tag_item ON (item.item_id = tag_item.id_item)
          JOIN tag ON (tag_item.id_tag = tag.tag_id)

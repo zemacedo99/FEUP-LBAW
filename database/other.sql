@@ -4,51 +4,52 @@
 -- Queries
 -----------------------------------------
 
--- SELECT 01
+-- SELECT 01 T
 SELECT shopper_id
 FROM shopper
-WHERE shopper.email = $email AND shopper.password = $password
+WHERE shopper.email = $email AND shopper.password = $password;
 
--- SELECT 02
--- TODO ver melhor com a aula do Cajó
-SELECT supplier.name, item.name, price, item.description
-FROM item, supplier
-WHERE item.search @@ plainto_tsquery('english', $user_search)
-ORDER BY ts_rank(item.search, plainto_tsquery('english', $user_search)) DESC
+-- TODO SELECT 02
+-- TODO Funciona por agora, não tem filtros
+SELECT *, ts_rank("search", to_tsquery('simple', 'orange')) as "rank"
+FROM fts_view
+WHERE "search" @@ to_tsquery('simple', 'orange')
+ORDER BY "rank" DESC;
 
--- SELECT 03
+-- SELECT 03 T
 SELECT item.name, item.description, item.price
 FROM favorite, client, item
-WHERE client.client_id = favorite.id_client AND item.item_id = favorite.id_item
-  AND client.id_user = $id_shopper
+WHERE client.client_id = favorite.id_client
+  AND item.item_id = favorite.id_item
+  AND client.client_id = $id_client;
 
--- SELECT 04
+-- SELECT 04 T
 SELECT item.name, item.description, item.price
 FROM cart, client, item
 WHERE client.client_id = cart.id_client AND item.item_id = cart.id_item
-  AND client.id_user = $id_shopper
+  AND client.client_id = $id_client;
 
 -- SELECT 05
 -- supplier
 SELECT name, address, post_code, city, description
 FROM supplier
-WHERE supplier.id_user = $id
+WHERE supplier.supplier_id = 51;
 
 -- Client
 SELECT client.name, image.path
 FROM client, image
-WHERE client.id_image = image.image_id AND client.client_id = $id
+WHERE client.id_image = image.image_id AND client.client_id = $id_client;
 
 -- SELECT 06
-SELECT review.rating, review.description, client.name
+SELECT item.item_id, item.name, review.rating, review.description, client.name
 FROM review, item, client
 WHERE review.id_item = item.item_id AND review.id_client = client.client_id
-  AND review.id_item = $id_item
+  AND review.id_item = $item_id;
 
 
 -- INSERT 01
-INSERT INTO review (rating, description, id_client, id_item)
-VALUES ($rating, $description, $id_client, $id_item);
+INSERT INTO review (id_client, id_item, rating, description)
+VALUES ($client_id, $id_item, $rating, $description);
 
 -- INSERT 02
 INSERT INTO image (path) VALUES ($path);
@@ -64,29 +65,29 @@ VALUES ($card_n, $expiration, $cvv, $holder, $id_client);
 
 -- UPDATE 01
 UPDATE coupon
-SET expiration = $expirationDate
-WHERE id = $id;
+SET expiration = $new_date
+WHERE coupon_id = $coupon_id;
 
 -- UPDATE 02
 -- Update email
 UPDATE shopper
 SET email = $email
-WHERE id = $id;
+WHERE shopper_id = $shopper_id;
 
 -- Update password
 UPDATE shopper
 SET password = $password
-WHERE id = $id;
+WHERE shopper_id = $shopper_id;
 
 -- UPDATE 03
 UPDATE item
 SET active = $active
-WHERE id = $id;
+WHERE item_id = $item_id;
 
 -- UPDATE 04
 UPDATE supplier
-SET accepted = 'true'
-WHERE id_user = $id;
+SET accepted = $accepted
+WHERE supplier_id = $supplier_id;
 
 -- DELETE 01
 DELETE FROM review
@@ -94,7 +95,7 @@ WHERE id_client = $id_client AND id_item = $id_item;
 
 -- DELETE 02
 DELETE FROM image
-WHERE id = $id;
+WHERE image_id = $id;
 
 -----------------------------------------
 -- Transactions
@@ -109,7 +110,7 @@ DO $$
     BEGIN
         SELECT COUNT(*) INTO out_of_stock
         FROM cart, item, item_info
-        WHERE cart.id_item = item.item_id AND cart.id_client = $id_client
+        WHERE cart.id_item = item.item_id AND cart.id_client = $client_id
           AND item.stock - item_info.amount < 0;
 
         IF out_of_stock > 0 THEN
@@ -124,8 +125,8 @@ DO $$
                     WHERE item.item_id = itm.item_id;
                 END LOOP;
 
-            INSERT INTO purchase (id_client, amount, purchase_date, type)
-            VALUES ($id_client, $amount, $purchase_date, $type);
+            INSERT INTO purchase (id_client, paid, purchase_date, type)
+            VALUES ($client_id, $paid, $purchase_date, $type);
 
             DELETE FROM cart
             WHERE id_client = $id_client;
@@ -168,10 +169,9 @@ SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
 DO $$
     DECLARE new_id integer;
     BEGIN
-        INSERT INTO item (name, price, stock, description, active, rating, is_bundle)
-        VALUES ($name, $price, $stock, $description, 'true', null, 'false') RETURNING id INTO new_id;
-
+        INSERT INTO item (id_supplier, name, price, stock, description, active, rating, is_bundle)
+        VALUES ($id_supplier, $name, $price, $stock, $description, $active, $rating, $is_bundle) RETURNING item_id INTO new_id;
 
         INSERT INTO product(product_id, type)
-        VALUES (new_id, $unit_type);
+        VALUES (new_id, 'Kg');
     END $$;
