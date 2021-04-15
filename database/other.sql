@@ -9,12 +9,32 @@ SELECT shopper_id
 FROM shopper
 WHERE shopper.email = $email AND shopper.password = $password;
 
--- TODO SELECT 02
--- TODO Funciona por agora, não tem filtros
-SELECT *, ts_rank("search", to_tsquery('simple', 'orange')) as "rank"
-FROM fts_view
-WHERE "search" @@ to_tsquery('simple', 'orange')
+-- SELECT 02
+-- Search items, suppliers and tags
+SELECT *, ts_rank(text_search, to_tsquery('simple', $user_search)) as "rank"
+FROM fts_view_weights
+WHERE text_search @@ to_tsquery('simple', $user_search))
 ORDER BY "rank" DESC;
+
+-- Search only items by name
+SELECT *, ts_rank(search, to_tsquery('simple', $user_search)) as "rank"
+FROM item
+WHERE search @@ to_tsquery('simple', $user_search)
+ORDER BY "rank" DESC;
+
+-- Search only items by name and tags
+SELECT *, ts_rank(search_query.text_search, to_tsquery('simple', $user_search)) FROM
+(SELECT item.item_id                                          as item_id,
+       string_agg(value, ' ')                                 as tags,
+       (setweight(to_tsvector('simple', item.name), 'A') ||
+        setweight(to_tsvector('simple', string_agg(value, ' ')), 'B')
+        ) as text_search
+FROM item
+         JOIN tag_item ON (item.item_id = tag_item.id_item)
+         JOIN tag ON (tag_item.id_tag = tag.tag_id)
+GROUP BY item_id) AS search_query
+WHERE search_query.text_search @@ to_tsquery('simple', $user_search)
+ORDER BY search_query.item_id;
 
 -- SELECT 03 T
 SELECT item.name, item.description, item.price
