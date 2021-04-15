@@ -1,0 +1,369 @@
+openapi: 3.0.3
+
+info:
+  version: '1.0'
+  title: 'MyGarden API'
+  description: 'Web Resources Specification (A7) for MyGarden'
+
+servers:
+  - url: http://lbaw2131.lbaw-prod.fe.up.pt/
+    description: Production server
+
+externalDocs:
+  description: Find more info here.
+  url: https://git.fe.up.pt/lbaw/lbaw2021/lbaw2131/-/wikis/EAP-Architecture-Specification-and-Prototype
+
+tags:
+  - name: 'M01: Authentication and Individual Profile'
+    description: 'Web resources associated with user authentication and individual profile management, includes the following system features: login/logout, registration, credential recovery, view and edit personal profile information.'
+  - name: 'M02: Items'
+    description: 'Web resources associated with grocery items, includes the following system features: items list and search, view and edit item details, and delete items.'
+  - name: 'M03: Reviews, Favorites, Cart, Periodic, History'
+    description: 'Web resources associated with reviews and wish list, includes the following system features: add review, list reviews and delete reviews; add items to wish list and remove items from the wish list.'
+  - name: 'M04: Static pages'
+    description: 'Web resources with static content are associated with this module: dashboard, about, contact, services and faq.'
+  - name: 'M05: User Administration'
+    description: 'Web resources associates with user management, specifically: view and search users, delete or block user accounts, view and change user information, and view system access details for each user.'
+
+paths:
+  ### André
+  /login:
+
+  /logout:
+
+  /register:
+
+  /supplier:
+
+  /supplier/{id}:
+
+  /client:
+  ### Ricardo
+  /client/{id}:  # Acho que não é preciso este access point. O que teria?
+
+  /client/{id}/favorite:
+    get:
+      operationId: R20X
+      summary: 'R20X - View client favorites'
+      description: Returns the favorite list of a user
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/UserID'
+
+      responses:
+        '200':
+          description: Successfully returned the favorite list. Show UI05.2
+          content:
+            application/json: # Vamos fazer em JSON?
+              schema:
+                # array with favorite ids
+                type: array
+                items:
+                  type: integer
+
+    post:
+      operationId: R20X
+      summary: 'R20X - Add favorite'
+      description: Adds an item to the user favorite list
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userid
+                - itemid
+              properties:
+                userid:
+                  type: integer
+                itemid:
+                  type: integer
+      responses:
+        # E se o item não existir?
+        # Se o item já estiver na lista, continua a retornar 200Ok?
+        '204':
+          description: Successfully added item to favorite list
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
+
+    delete:
+      operationId: R20X
+      summary: 'R20X - Remove favorite'
+      description: Removes an item to the user favorite list
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userid
+                - itemid
+              properties:
+                userid:
+                  type: integer
+                itemid:
+                  type: integer
+
+      responses:
+        '204':
+          description: Successfully removed item to favorite list
+
+  /client/{id}/review:
+    get:
+      operationId: R20X
+      summary: 'R20X - View product reviews'
+      description: Returns all reviews done by a user
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/UserID'
+
+      responses:
+        '200':
+          description: Successfully returned all reviews. Show UI12
+          content:
+            application/json:
+              schema:
+                # array with all reviews ids
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+
+    post:
+      operationId: R20X
+      summary: 'R20X - Add review'
+      description: Adds a review to a product by a user
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userid
+                - review
+              properties:
+                userid:
+                  type: integer
+                itemid:
+                  $ref: '#/components/schemas/Review'
+
+      responses:
+        '204':
+          description: Successfully added review to item
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
+
+
+    delete:
+      operationId: R20X
+      summary: 'R20X - Remove review'
+      description: Removes a review of a product by a user
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userid
+                - clientid
+              properties:
+                userid:
+                  type: integer
+                clientid:
+                  type: integer
+
+      responses:
+        '204':
+          description: Successfully removed review of item
+        # Necessário 404?
+
+  /client/{id}/cart:
+    get:
+      operationId: R20X
+      summary: 'R20X - View client cart'
+      description: Returns all item's carts
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/UserID'
+
+      responses:
+        '200':
+          description: Successfully returned item's carts. Show UI10.1
+          content:
+            application/json:
+              schema:
+                # array with all the product carts ids
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+
+    post:
+      operationId: R20X
+      summary: 'R20X - Add item to cart'
+      description: Puts an item in the cart
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userid
+                - itemid
+                - quantity
+              properties:
+                userid:
+                  type: integer
+                itemid:
+                  type: integer
+                quantity:
+                  type: integer
+
+      responses:
+        '204':
+          description: Successfully putted the item in the cart
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
+
+    delete:
+      operationId: R20X
+      summary: 'R20X - Remove item to cart'
+      description: Delete an item in the cart
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userid
+                - itemid
+                - quantity
+              properties:
+                userid:
+                  type: integer
+                itemid:
+                  type: integer
+
+      responses:
+        '204':
+          description: Successfully deleted the item in the cart
+
+  /client/{id}/periodic:
+    get:
+      operationId: R20X
+      summary: 'R20X - See client history'
+      description: Returns all previous purchase of the client
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/UserID'
+
+      responses:
+        '200':
+          description: Successfully returned item's carts. Show UI05.3
+          content:
+            application/json:
+              schema:
+                # array with all product history
+                type: array
+                items:
+                  $ref: '#/components/schemas/Purchase'
+
+    # Acho que não vai ser necessário fazer adds e deletes
+
+components:
+
+  schemas:
+    Review:
+      type: object
+      required:
+        - id_item
+        - rating
+        - description
+
+      properties:
+        id_item:
+          type: integer
+        rating:
+          type: integer
+        description:
+          type: string
+
+    Product:
+      type: object
+      required:
+        - id_item
+        - quantity
+      properties:
+        id_item:
+          type: integer
+        quantity:
+          type: integer
+
+    Purchase:
+      type: object
+      required:
+        - paid
+        - purchase_date
+        - type
+      properties:
+        paid:
+          type: integer
+        purchase_date:
+          type: string
+        type:
+          type: integer
+
+
+  parameters:
+    UserID:
+      name: userid
+      in: path
+      required: true
+      description: The user ID number
+      schema:
+        type: integer
+
+  responses:
+    ItemNotFound:
+      description: The item was not found
+      content:
+        application/json:
+          schema:
+            type: string
+
+
+
+    400Error:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
