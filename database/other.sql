@@ -46,24 +46,28 @@ WHERE client.client_id = favorite.id_client
 -- SELECT 04 T
 SELECT item.name, item.description, item.price
 FROM cart, client, item
-WHERE client.client_id = cart.id_client AND item.item_id = cart.id_item
+WHERE client.client_id = cart.id_client
+  AND item.item_id = cart.id_item
   AND client.client_id = $id_client;
 
 -- SELECT 05
--- supplier
-SELECT name, address, post_code, city, description
-FROM supplier
-WHERE supplier.supplier_id = 51;
+-- Supplier
+SELECT name, address, post_code, city, description, path
+FROM supplier, image
+WHERE supplier.id_image = image.image_id
+  AND supplier.supplier_id = $id_supplier;
 
 -- Client
 SELECT client.name, image.path
 FROM client, image
-WHERE client.id_image = image.image_id AND client.client_id = $id_client;
+WHERE client.id_image = image.image_id
+  AND client.client_id = $id_client;
 
 -- SELECT 06
 SELECT item.item_id, item.name, review.rating, review.description, client.name
 FROM review, item, client
-WHERE review.id_item = item.item_id AND review.id_client = client.client_id
+WHERE review.id_item = item.item_id
+  AND review.id_client = client.client_id
   AND review.id_item = $item_id;
 
 
@@ -111,7 +115,8 @@ WHERE supplier_id = $supplier_id;
 
 -- DELETE 01
 DELETE FROM review
-WHERE id_client = $id_client AND id_item = $id_item;
+WHERE id_client = $id_client
+  AND id_item = $id_item;
 
 -- DELETE 02
 DELETE FROM image

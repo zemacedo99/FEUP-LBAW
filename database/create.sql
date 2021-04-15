@@ -46,7 +46,7 @@ CREATE TABLE image (
 
 CREATE TABLE tag (
     tag_id          SERIAL      PRIMARY KEY,
-    value           text        NOT NULL,
+    value           text        UNIQUE NOT NULL,
     search          tsvector    DEFAULT '' NOT NULL
 );
 
@@ -154,19 +154,18 @@ CREATE TABLE review (
 CREATE TABLE item_info (
     id_purchase     INTEGER     NOT NULL REFERENCES purchase (purchase_id),
     id_item         INTEGER     NOT NULL REFERENCES item (item_id),
-    price           DECIMAL,
-    amount          DECIMAL,
+    price           DECIMAL     NOT NULL CHECK ( price > 0 ),
+    amount          DECIMAL     NOT NULL CHECK ( amount > 0 ),
     PRIMARY KEY (id_purchase, id_item)
 );
 
 CREATE TABLE bundle_product (
     id_bundle       INTEGER             NOT NULL REFERENCES item(item_id),
     id_product      INTEGER             NOT NULL REFERENCES product(product_id),
-    quantity        DECIMAL             NOT NULL,
-    constraint      quantity_positive   check (quantity >= 0),
+    quantity        DECIMAL             NOT NULL CHECK ( quantity > 0 ),
+    constraint      quantity_positive   CHECK ( quantity >= 0),
     PRIMARY KEY (id_bundle, id_product)
 );
-
 
 CREATE TABLE tag_item (
     id_tag          INTEGER     NOT NULL REFERENCES tag (tag_id) ON UPDATE CASCADE,
@@ -340,6 +339,7 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER tag_item_search_update
     BEFORE INSERT OR UPDATE ON tag_item
+    FOR EACH ROW
 EXECUTE PROCEDURE search_update();
 
 
