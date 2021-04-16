@@ -28,18 +28,201 @@ tags:
 paths:
   ### André
   /login:
+    get:
+      operationId: R10X
+      summary: 'R10X Login Form'
+      description: 'Provide login form. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: 'OK, Show [LoginPage](#)'
+
+    post:
+      operationId: R10X
+      summary: 'R10X: Login Action'
+      description: 'Processes the login form submission. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+
+      responses:
+        '302':
+          description: 'Redirect after processing the login credentials.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Client:
+                  description: 'Successful authentication. Redirect to client profile.'
+                  value: '/users/{id}'
+                302Supplier:
+                  description: 'Successful authentication. Redirect to supplier profile.'
+                  value: '/supplier/{id}'
+                302Admin:
+                  description: 'Successful authentication. Redirect to admin dashboard.'
+                  value: '/dashboard'
+                302Error:
+                  description: 'Failed authentication. Redirect to login form.'
+                  value: '/login'
 
   /logout:
+    post:
+      operationId: R10X
+      summary: 'R10X: Logout Action'
+      description: 'Logout the current authenticated user. Access: USR, ADM'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '302':
+          description: 'Redirect after processing logout.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful logout. Redirect to Homepage'
+                  value: '/login'
 
   /register:
+    get:
+      operationId: R10X
+      summary: 'R10X: Register Form'
+      description: 'Provide new user registration form. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: 'Ok. Show [](#)'
+
+    post:
+      operationId: R10X
+      summary: 'R10X: Register Action'
+      description: 'Processes the new user registration form submission. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                address:
+                  type: string
+                post_code:
+                  type: string
+                city:
+                  type: string
+                description:
+                  type: string
+              required:
+                - name
+                - email
+                - password
+
+      responses:
+        '302':
+          description: 'Redirect after processing the new user information.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Client:
+                  description: 'Successful authentication. Redirect to Homepage'
+                  value: '/homepage'
+                302Supplier:
+                  description: 'Successful authentication. Redirect to Supplier profile'
+                  value: '/supplier/{id}'
 
   /supplier:
+    get:
+      operationId: R20X
+      summary: 'R20X: Suppliers list'
+      description: 'Provide a list of Suppliers'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Search'
+
+      responses:
+        '200':
+          description: 'Successfully returned a list of suppliers'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Supplier'
 
   /supplier/{id}:
+    get:
+      operationId: R20X
+      summary: 'R20X: View supplier profile'
+      description: 'Show the individual supplier profile. Access: USR'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'Ok. Show [](#)'
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
 
   /client:
+    get:
+      operationId: R20X
+      summary: 'R20X: Clients list'
+      description: 'Provides a list of Clients'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Search'
+
+      responses:
+        '200':
+          description: 'Successfully returned a list of clients'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'
   ### Ricardo
-  /client/{id}:  # Acho que não é preciso este access point. O que teria?
+  # /client/{id}:  # Acho que não é preciso este access point. O que teria?
 
   /client/{id}/favorite:
     get:
@@ -49,7 +232,7 @@ paths:
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
       parameters:
-        - $ref: '#/components/parameters/UserID'
+        - $ref: '#/components/parameters/ID'
 
       responses:
         '200':
@@ -68,6 +251,10 @@ paths:
       description: Adds an item to the user favorite list
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
+
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
       requestBody:
         required: true
         content:
@@ -75,7 +262,7 @@ paths:
             schema:
               type: object
               required:
-                - userid
+                - id
                 - itemid
               properties:
                 userid:
@@ -91,26 +278,18 @@ paths:
           $ref: '#/components/responses/ItemNotFound'
 
     delete:
-      operationId: R20X
-      summary: 'R20X - Remove favorite'
       description: Removes an item to the user favorite list
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
 
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - userid
-                - itemid
-              properties:
-                userid:
-                  type: integer
-                itemid:
-                  type: integer
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: id
+          in: query
+          required: true
+          description: The item ID number
+          schema:
+            type: integer
 
       responses:
         '204':
@@ -124,7 +303,7 @@ paths:
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
       parameters:
-        - $ref: '#/components/parameters/UserID'
+        - $ref: '#/components/parameters/ID'
 
       responses:
         '200':
@@ -143,6 +322,9 @@ paths:
       description: Adds a review to a product by a user
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
+
+      parameters:
+        - $ref: '#/components/parameters/ID'
 
       requestBody:
         required: true
@@ -165,28 +347,17 @@ paths:
         '404':
           $ref: '#/components/responses/ItemNotFound'
 
-
     delete:
-      operationId: R20X
-      summary: 'R20X - Remove review'
       description: Removes a review of a product by a user
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
-
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - userid
-                - clientid
-              properties:
-                userid:
-                  type: integer
-                clientid:
-                  type: integer
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: id_client
+          in: query
+          description: the identifier of the client
+          schema:
+            type: integer
 
       responses:
         '204':
@@ -201,7 +372,7 @@ paths:
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
       parameters:
-        - $ref: '#/components/parameters/UserID'
+        - $ref: '#/components/parameters/ID'
 
       responses:
         '200':
@@ -220,6 +391,9 @@ paths:
       description: Puts an item in the cart
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
+
+      parameters:
+        - $ref: '#/components/parameters/ID'
 
       requestBody:
         required: true
@@ -246,27 +420,16 @@ paths:
           $ref: '#/components/responses/ItemNotFound'
 
     delete:
-      operationId: R20X
-      summary: 'R20X - Remove item to cart'
       description: Delete an item in the cart
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
-
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - userid
-                - itemid
-                - quantity
-              properties:
-                userid:
-                  type: integer
-                itemid:
-                  type: integer
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: id_item
+          in: query
+          description: the identifier of the item
+          schema:
+            type: integer
 
       responses:
         '204':
@@ -280,7 +443,7 @@ paths:
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
       parameters:
-        - $ref: '#/components/parameters/UserID'
+        - $ref: '#/components/parameters/ID'
 
       responses:
         '200':
@@ -294,6 +457,121 @@ paths:
                   $ref: '#/components/schemas/Purchase'
 
     # Acho que não vai ser necessário fazer adds e deletes
+
+  ### Luis
+  # /client/{id}/history:
+
+  # /item:
+
+  # /coupon:
+
+  # /tag:
+
+  # /homepage:
+  ### Zé
+  /about_us:
+    get:
+      operationId: R40X
+      summary: 'R40X About us'
+      description: 'Access about us page. Access: PUB'
+      tags:
+        - 'M04: Static pages'
+      responses:
+        '200':
+          description: 'OK, Show [AboutUs](#)'
+
+  /dashboard:
+    get:
+      operationId: R50X
+      summary: 'R50X: View dashboard'
+      description: 'Show the admin options. Access: ADM'
+      tags:
+        - 'M05: User Administration'
+      responses:
+        '200':
+          description: 'Ok. Show [Dashboard](...)'
+
+  /dashboard/supplier:
+    get:
+      operationId: R50X
+      summary: 'R50X: View suppliers'
+      description: 'Show a list with all suppliers. Access: ADM'
+      tags:
+        - 'M05: User Administration'
+      responses:
+        '200':
+          description: 'Ok. Show [Suppliers](...)'
+
+    # é necessario aceder a /dashboard/supplier/{id}
+    delete:
+      description: deletes a single supplier based on the ID
+      operationId: deleteSupplier
+      parameters:
+        - name: id
+          in: query
+          description: ID of supplier to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: supplier deleted
+        default:
+          $ref: '#/components/responses/400Error'
+
+  /dashboard/client:
+    get:
+      operationId: R50X
+      summary: 'R50X: View clients'
+      description: 'Show a list with all clients. Access: ADM'
+      tags:
+        - 'M05: User Administration'
+      responses:
+        '200':
+          description: 'Ok. Show [Clients](...)'
+
+    delete:
+      description: deletes a single client based on the ID
+      operationId: deleteClient
+      parameters:
+        - name: id
+          in: query
+          description: ID of client to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: client deleted
+        default:
+          $ref: '#/components/responses/400Error'
+
+  /dashboard/item:
+    get:
+      operationId: R50X
+      summary: 'R50X: View items'
+      description: 'Show a list with all items. Access: ADM'
+      tags:
+        - 'M05: User Administration'
+      responses:
+        '200':
+          description: 'Ok. Show [Items](...)'
+
+    delete:
+      description: deletes a single item based on the ID
+      operationId: deleteItem
+      parameters:
+        - name: id
+          in: query
+          description: ID of item to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: item deleted
+        default:
+          $ref: '#/components/responses/400Error'
 
 components:
 
@@ -338,15 +616,63 @@ components:
         type:
           type: integer
 
+    Supplier:
+      type: object
+      properties:
+        supplier_id:
+          type: integer
+        name:
+          type: string
+        address:
+          type: string
+        post_code:
+          type: string
+        city:
+          type: string
+        description:
+          type: string
+      required:
+        - supplier_id
+        - name
+        - address
+        - post_code
+        - city
+        - description
+
+    Client:
+      type: object
+      properties:
+        client_id:
+          type: integer
+        name:
+          type: string
+      required:
+        - client_id
+        - name
+
 
   parameters:
-    UserID:
-      name: userid
+    ID:
+      name: id
       in: path
       required: true
       description: The user ID number
       schema:
         type: integer
+
+    Limit:
+      name: limit
+      in: query
+      description: 'Limits the number of results to return'
+      schema:
+        type: integer
+
+    Search:
+      name: search
+      in: query
+      description: 'Filters results based on search criteria'
+      schema:
+        type: string
 
   responses:
     ItemNotFound:
@@ -355,8 +681,6 @@ components:
         application/json:
           schema:
             type: string
-
-
 
     400Error:
       description: Invalid request
