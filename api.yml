@@ -529,12 +529,10 @@ paths:
                 items:
                   $ref: '#/components/schemas/Product'
 
-  # VER ERRO E PESQUISA
-
   /item:
     get:
-      operationId: R215
-      summary: 'R215: Item List'
+      operationId: R217
+      summary: 'R217: Item List'
       description: 'Provide a list of Items'
       tags:
         - 'M02: Items'
