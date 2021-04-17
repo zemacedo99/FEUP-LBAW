@@ -222,10 +222,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Client'
   ### Ricardo
-  
+
   # Adding client, delete, get
-  /client/{id}:  
-  
 
   /client/{id}/favorite:
     get:
@@ -427,7 +425,7 @@ paths:
           $ref: '#/components/responses/ItemNotFound'
 
     delete:
-      operationId: R212 
+      operationId: R212
       summary:  'R212 - Remove item to cart'
       description: Delete an item in the cart
       tags:
@@ -477,20 +475,93 @@ paths:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
       parameters:
         - $ref: '#/components/parameters/ID'
-        
+
       responses:
         '200':
-          description: Successfully returned purchase history (or should it be purchased products?) Show UI05.2
+          description: Successfully returned purchase history
           content:
             application/json:
               schema:
                 # array with all the previous purchases ids
                 type: array
                 items:
-                  type: integer
-  
+                  $ref: '#/components/schemas/Product'
+
   # VER ERRO E PESQUISA
-  /item/{id}/:
+
+  /item:
+    get:
+      operationId: R215
+      summary: 'R215: Item List'
+      description: 'Provide a list of Items'
+      tags:
+        - 'M02: Items'
+
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Search'
+        - in: query
+          name: supplierId
+          schema:
+            type: string
+          required: false
+
+      responses:
+        '200':
+          description: 'Successfully returned a list of Items'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemInList'
+
+    post: #add item
+      operationId: R302
+      summary: 'R302 - Item, tag e coupon'
+      description: Creates or updates item (description, unit, stock, seller, image) and its reviews and tags
+      tags:
+        - 'M02: Item'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - sellerid
+              properties:
+                sellerid:
+                  type: integer
+                description:
+                  type: string
+                quantityAvailable:
+                  type: integer
+                price:
+                  type: number
+                unit:
+                  type: string
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: byte
+                    description: Base64-encoded contents of image
+                tags:
+                  type: array
+                  items:
+                    type: integer
+                bundle:
+                  type: boolean
+
+      responses:
+        '204':
+          description: Successfully added/updated item
+
+        '405':
+          description: Method not allowed
+
+  /item/{id}:
     get:
       operationId: R301
       summary: 'R301 - Item, tag e coupon'
@@ -510,27 +581,136 @@ paths:
                 type: object
                 items:
                   properties:
+                    sellerID:
+                      type: integer
                     description:
                       type: string
-                    quantityAvailable:    # VE ISTO (ARRAY)
+                    quantityAvailable:
                       type: integer
+                    price:
+                      type: number
                     unit:
-                      type: boolean
-                    SellerID:
-                      type: integer
+                      type: string
                     images:
                       type: array
+                      items:
+                        type: string
+                        format: byte
+                        description: Base64-encoded contents of image
                     reviews:
                       type: array
+                      items:
+                        type: integer
                     tags:
                       type: array
+                      items:
+                        type: integer
                     bundle:
                       type: boolean
 
-    post: #add or update item
-      operationId: R302
+    post: #update item
+      operationId: R303
       summary: 'R302 - Item, tag e coupon'
       description: Creates or updates item (description, unit, stock, seller, image) and its reviews and tags
+      tags:
+        - 'M02: Item'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - sellerid
+                - itemid
+              properties:
+                sellerid:
+                  type: integer
+                itemid:
+                  type: integer
+                description:
+                  type: string
+                quantityAvailable:
+                  type: integer
+                price:
+                  type: number
+                unit:
+                  type: string
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: byte
+                    description: Base64-encoded contents of image
+                tags:
+                  type: array
+                  items:
+                    type: integer
+                bundle:
+                  type: boolean
+
+      responses:
+        '204':
+          description: Successfully added/updated item
+
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
+
+        '405':
+          description: Method not allowed
+
+    delete:
+      operationId: R304
+      summary: 'R303 - Item, tag e coupon'
+      description: Removes a seller's item
+      tags:
+        - 'M02: Item'
+
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+
+      responses:
+        '204':
+          description: Successfully removed/deactivated item
+        '405':
+          description: Method not allowed
+
+
+
+  /coupon:
+    get:
+      operationId: R305
+      summary: 'R215: Coupon List'
+      description: 'Provide a list of Coupons'
+      tags:
+        - 'M02: Items'
+
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Search'
+        - in: query
+          name: supplierId
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Successfully returned a list of coupons for the respective supplier'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Coupon'
+
+    post: #add COUPON
+      operationId: R306
+      summary: 'R305 - Item, tag e coupon'
+      description: Creates or updates coupon data
       tags:
         - 'M02: Item'
       requestBody:
@@ -544,89 +724,57 @@ paths:
               properties:
                 sellerid:
                   type: integer
-                itemid:
-                  type: integer #only exists if updating instead of inserting new one
+                name:
+                  type: string
+                discount:
+                  type: number
+                unit:
+                  type: string
                 description:
                   type: string
-                quantityAvailable:
-                  type: integer
-                unit:
-                  type: boolean
-                SellerID:
-                  type: integer
-                images:
-                  type: array     # FAZER ISTO PARA TODOS OS ARRAYS
-                  items:
-                    type: string
-                    format: binary
-                reviews:
-                  type: array
-                tags:     # Tem de ser objeto tags
-                  type: array
-                bundle:
-                  type: boolean
+                expirationDate:
+                  type: string
 
       responses:
         '204':
           description: Successfully added/updated item
 
-        #ERRO NOT ALLOWED
+        '405':
+          description: Method not allowed
+
+        '422':
+          description: Code already in use
 
         '404':
           $ref: '#/components/responses/ItemNotFound' #when updating
 
-    delete:
-      operationId: R303
-      summary: 'R303 - Item, tag e coupon'
-      description: Removes a seller's item
 
-      parameters:
-        - $ref: '#/components/parameters/ID'
-
-
-      responses:
-        '204':
-          description: Successfully removed/deactivated item
-
-  /coupon:
+  /coupon/{couponCode}:
     get:
-      operationId: R304
+      operationId: R307
       summary: 'R304 - Item, tag e coupon'
       description: Returns coupon information (name, code, discout amount, unit, description, expiration date)
       tags:
-        - 'M02: Item' 
+        - 'M02: Item'
       parameters:
-        - $ref: '#/components/parameters/CouponCode'
+        - $ref: '#/components/parameters/couponCode'
 
       responses:
         '200':
-          description: Successfully returned item's data and reviews
+          description: Successfully returned coupon
           content:
             application/json:
               schema:
-                # tree with all the information needed
-                type: object
-                items:
-                  properties:
-                    name:
-                      type: string
-                    code:
-                      type: integer
-                    discount:
-                      type: integer
-                    unit:
-                      type: string
-                    description:
-                      type: string
-                    expirationDate:
-                      type: string  
+                $ref: '#/components/schemas/Coupon'
 
-    post: #add or update COUPON
-      operationId: R305
+    post: #update COUPON
+      operationId: R308
       summary: 'R305 - Item, tag e coupon'
       description: Creates or updates coupon data
       tags:
-        - 'M02: Item'  #STILL NOT DEFINED
+        - 'M02: Item'
+      parameters:
+        - $ref: '#/components/parameters/couponCode'
       requestBody:
         required: true
         content:
@@ -640,34 +788,37 @@ paths:
                   type: integer
                 name:
                   type: string
-                code:
-                  type: integer
                 discount:
-                  type: integer
+                  type: number
                 unit:
                   type: string
                 description:
                   type: string
                 expirationDate:
-                  type: string  
+                  type: string
 
       responses:
         '204':
           description: Successfully added/updated item
 
-        #ERRO NOT ALLOWED
-        #INTERNAL SERVER ERROR
+        '405':
+          description: Method not allowed
+
+        '422':
+          description: Code already in use
 
         '404':
           $ref: '#/components/responses/ItemNotFound' #when updating
 
     delete:
-      operationId: R306
+      operationId: R309
       summary: 'R306 - Item, tag e coupon'
       description: Removes a seller's item
+      tags:
+        - 'M02: Item'
 
       parameters:
-        - $ref: '#/components/parameters/CouponCode'
+        - $ref: '#/components/parameters/couponCode'
 
       responses:
         '204':
@@ -675,35 +826,14 @@ paths:
         '404':
           $ref: '#/components/responses/ItemNotFound'
 
+
   /tag:
-    get: #should it be the tagname finding the tagId or vice versa?
-      operationId: R307
-      summary: 'R307 - Item, tag e coupon'
-      description: Return tag
-      tags:
-        - 'M02: Item'  #THIS IS NOT DEFINED YET
-      parameters:
-        - $ref: '#/components/parameters/TagName'
-
-      responses:
-        '200':
-          description: Successfully returned item's data
-          content:
-            application/json:
-              schema:
-                # tree with all the information needed
-                type: object
-                items:
-                  properties:
-                    tagId:
-                      type: integer
-
     post: #add TAG
-      operationId: R308
+      operationId: R310
       summary: 'R308 - Item, tag e coupon'
       description: Creates Tag
       tags:
-        - 'M02: Item'  #STILL NOT DEFINED
+        - 'M02: Item'
       requestBody:
         required: true
         content:
@@ -720,11 +850,36 @@ paths:
         '204':
           description: Created Tag
 
-        #ERRO NOT ALLOWED
-        #INTERNAL SERVER ERROR
-
         '404':
           $ref: '#/components/responses/ItemNotFound' #when updating
+
+        '405':
+          description: Method not allowed
+
+  /tag/{tagName}:
+    get:
+      operationId: R311
+      summary: 'R307 - Item, tag e coupon'
+      description: Return tag
+      tags:
+        - 'M02: Item'
+      parameters:
+        - $ref: '#/components/parameters/tagName'
+
+      responses:
+        '200':
+          description: Successfully returned item's data
+          content:
+            application/json:
+              schema:
+                # tree with all the information needed
+                type: object
+                items:
+                  properties:
+                    tagId:
+                      type: integer
+
+
 
   ### Zé
   /about_us:
@@ -772,7 +927,7 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [Clients](...)'
-    
+
 
 
   /dashboard/item:
@@ -863,6 +1018,44 @@ components:
         - client_id
         - name
 
+    ItemInList:
+      type: object
+      properties:
+        item_id:
+          type: integer
+        supplier_id:
+          type: integer
+        supplier_name:
+          type: string
+        supplier_location:
+          type: string
+        item_description:
+          type: string
+        item_price:
+          type: number
+        item_unit:
+          type: string
+        item_picture:
+          type: string
+          format: byte
+
+    Coupon:
+      type: object
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        discount:
+          type: number
+        unit:
+          type: string
+        description:
+          type: string
+        expirationDate:
+          type: string
+        sellerId:
+          type: integer
 
   parameters:
     ID:
@@ -887,16 +1080,16 @@ components:
       schema:
         type: string
 
-    CouponCode:
-      name: couponcode
+    couponCode:
+      name: couponCode
       in: path
       required: true
       description: The coupon code
       schema:
         type: string
 
-    TagName:
-      name: tagname
+    tagName:
+      name: tagName
       in: path
       required: true
       description: The tag name
