@@ -36,7 +36,7 @@ paths:
         - 'M01: Authentication and Individual Profile'
       responses:
         '200':
-          description: 'OK, Show [LoginPage](#)'
+          description: 'OK, Show [UI07](#)'
 
     post:
       operationId: R10X
@@ -98,7 +98,7 @@ paths:
               examples:
                 302Success:
                   description: 'Successful logout. Redirect to Homepage'
-                  value: '/login'
+                  value: '/homepage'
 
   /register:
     get:
@@ -109,7 +109,7 @@ paths:
         - 'M01: Authentication and Individual Profile'
       responses:
         '200':
-          description: 'Ok. Show [](#)'
+          description: 'Ok. Show [UI01](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/home_page.php)'
 
     post:
       operationId: R10X
@@ -163,7 +163,7 @@ paths:
     get:
       operationId: R20X
       summary: 'R20X: Suppliers list'
-      description: 'Provide a list of Suppliers'
+      description: 'Provide a list of Suppliers. Access: PUB'
       tags:
         - 'M01: Authentication and Individual Profile'
 
@@ -189,16 +189,47 @@ paths:
       tags:
         - 'M01: Authentication and Individual Profile'
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
+        - $ref: '#/components/parameters/ID'
+
       responses:
         '200':
-          description: 'Ok. Show [](#)'
+          description: 'Ok. Show [UI05](http://lbaw2131-piu.lbaw-prod.fe.up.pt/client/client_profile.php)'
         '404':
           $ref: '#/components/responses/ItemNotFound'
+
+    post:
+      operationId: R20X
+      summary: 'R20X: Change supplier profile Data'
+      description: 'Alters supplier information. Access: ADM, OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+
+      responses:
+        '200':
+          description: 'The request has succeeded'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+        '400':
+          $ref: '#/components/responses/400Error'
+
+        '401':
+          $ref: '#/components/responses/401Error'
+
+        '404':
+          $ref: '#/components/responses/404Error'
 
   /client:
     get:
@@ -221,6 +252,14 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Client'
+
+    # TODO maybe this
+    put:
+
+  /homepage:
+    # TODO this
+    get:
+
   ### Ricardo
   # /client/{id}:  # Acho que não é preciso este access point. O que teria?
 
@@ -459,15 +498,261 @@ paths:
     # Acho que não vai ser necessário fazer adds e deletes
 
   ### Luis
-  # /client/{id}/history:
+  /client/{id}/history:
+    get:
+      operationId: R20X
+      summary: 'R20X - View client history'
+      description: Returns all user’s previous purchases
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/UserID'
 
-  # /item:
+      responses:
+        '200':
+          description: Successfully returned purchase history (or should it be purchased products?) Show UI05.2
+          content:
+            application/json:
+              schema:
+                # array with all the previous purchases ids
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
 
-  # /coupon:
+  /item:
+    get:
+      operationId: R30X
+      summary: 'R30X - Item, tag e coupon'
+      description: Returns item’s information (description, unit, stock, seller, image) and its reviews and tags
+      tags:
+        - 'M02: Item'
+      parameters:
+        - $ref: '#/components/parameters/ItemID'
 
-  # /tag:
+      responses:
+        '200':
+          description: Successfully returned item's data and reviews
+          content:
+            application/json:
+              schema:
+                # tree with all the information needed
+                type: object
+                items:
+                  properties:
+                    description:
+                      type: string
+                    quantityAvailable:
+                      type: integer
+                    unit:
+                      type: boolean
+                    SellerID:
+                      type: integer
+                    images:
+                      type: array
+                    reviews:
+                      type: array
+                    tags:
+                      type: array
+                    bundle:
+                      type: boolean
 
-  # /homepage:
+    post: #add or update item
+      operationId: R30X
+      summary: 'R30X - Item, tag e coupon'
+      description: Creates or updates item (description, unit, stock, seller, image) and its reviews and tags
+      tags:
+        - 'M02: Item'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - sellerid
+              properties:
+                sellerid:
+                  type: integer
+                itemid:
+                  type: integer #only exists if updating instead of inserting new one
+                description:
+                  type: string
+                quantityAvailable:
+                  type: integer
+                unit:
+                  type: boolean
+                SellerID:
+                  type: integer
+                images:
+                  type: array
+                reviews:
+                  type: array
+                tags:
+                  type: array
+                bundle:
+                  type: boolean
+
+      responses:
+        '204':
+          description: Successfully added/updated item
+
+        #ERRO NOT ALLOWED
+        #INTERNAL SERVER ERROR
+
+        '404':
+          $ref: '#/components/responses/ItemNotFound' #when updating
+
+    delete:
+      operationId: R30X
+      summary: 'R30X - Item, tag e coupon'
+      description: Removes a seller's item
+
+      parameters:
+        - $ref: '#/components/parameters/SellerID'
+        - $ref: '#/components/parameters/ItemID'
+
+      responses:
+        '204':
+          description: Successfully removed/deactivated item
+
+  /coupon:
+    get:
+      operationId: R30X
+      summary: 'R30X - Item, tag e coupon'
+      description: Returns coupon information (name, code, discout amount, unit, description, expiration date)
+      tags:
+        - 'M02: Item'  #THIS IS NOT DEFINED YET
+      parameters:
+        - $ref: '#/components/parameters/CouponCode'
+
+      responses:
+        '200':
+          description: Successfully returned item's data and reviews
+          content:
+            application/json:
+              schema:
+                # tree with all the information needed
+                type: object
+                items:
+                  properties:
+                    name:
+                      type: string
+                    code:
+                      type: integer
+                    discount:
+                      type: integer
+                    unit:
+                      type: boolean   #IS THIS CORRECT?
+                    description:
+                      type: string
+                    expirationDate:
+                      type: string  #IS THIS CORRECT?
+
+    post: #add or update COUPON
+      operationId: R30X
+      summary: 'R30X - Item, tag e coupon'
+      description: Creates or updates coupon data
+      tags:
+        - 'M02: Item'  #STILL NOT DEFINED
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - sellerid
+              properties:
+                sellerid:
+                  type: integer
+                name:
+                  type: string
+                code:
+                  type: integer
+                discount:
+                  type: integer
+                unit:
+                  type: boolean   #IS THIS CORRECT?
+                description:
+                  type: string
+                expirationDate:
+                  type: string  #IS THIS CORRECT?
+
+      responses:
+        '204':
+          description: Successfully added/updated item
+
+        #ERRO NOT ALLOWED
+        #INTERNAL SERVER ERROR
+
+        '404':
+          $ref: '#/components/responses/ItemNotFound' #when updating
+
+    delete:
+      operationId: R30X
+      summary: 'R30X - Item, tag e coupon'
+      description: Removes a seller's item
+
+      parameters:
+        - $ref: '#/components/parameters/CouponCode'
+
+      responses:
+        '204':
+          description: Successfully removed/deactivated item
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
+
+  /tag:
+    get: #should it be the tagname finding the tagId or vice versa?
+      operationId: R30X
+      summary: 'R30X - Item, tag e coupon'
+      description: Return tag
+      tags:
+        - 'M02: Item'  #THIS IS NOT DEFINED YET
+      parameters:
+        - $ref: '#/components/parameters/TagName'
+
+      responses:
+        '200':
+          description: Successfully returned item's data
+          content:
+            application/json:
+              schema:
+                # tree with all the information needed
+                type: object
+                items:
+                  properties:
+                    tagId:
+                      type: integer
+
+    post: #add TAG
+      operationId: R30X
+      summary: 'R30X - Item, tag e coupon'
+      description: Creates Tag
+      tags:
+        - 'M02: Item'  #STILL NOT DEFINED
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+              required:
+                - tagName
+              properties:
+                tagName:
+                  type: string
+
+      responses:
+        '204':
+          description: Created Tag
+
+        #ERRO NOT ALLOWED
+        #INTERNAL SERVER ERROR
+
+        '404':
+          $ref: '#/components/responses/ItemNotFound' #when updating
+
   ### Zé
   /about_us:
     get:
@@ -574,7 +859,6 @@ paths:
           $ref: '#/components/responses/400Error'
 
 components:
-
   schemas:
     Review:
       type: object
@@ -631,6 +915,10 @@ components:
           type: string
         description:
           type: string
+        accepted:
+          type: boolean
+        id_image:
+          type: integer
       required:
         - supplier_id
         - name
@@ -638,6 +926,7 @@ components:
         - post_code
         - city
         - description
+        - accepted
 
     Client:
       type: object
@@ -656,7 +945,7 @@ components:
       name: id
       in: path
       required: true
-      description: The user ID number
+      description: The ID number
       schema:
         type: integer
 
@@ -674,6 +963,30 @@ components:
       schema:
         type: string
 
+    ItemID:
+      name: itemid
+      in: path
+      required: true
+      description: The item ID number
+      schema:
+        type: integer
+
+    CouponCode:
+      name: couponcode
+      in: path
+      required: true
+      description: The coupon code
+      schema:
+        type: string
+
+    TagName:
+      name: tagname
+      in: path
+      required: true
+      description: The tag name
+      schema:
+        type: string
+
   responses:
     ItemNotFound:
       description: The item was not found
@@ -683,7 +996,27 @@ components:
             type: string
 
     400Error:
-      description: Invalid request
+      description: 'Invalid request'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+
+    401Error:
+      description: 'The request requires user authentication.'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+
+    404Error:
+      description: 'Could not find request'
       content:
         application/json:
           schema:
