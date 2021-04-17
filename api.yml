@@ -159,7 +159,23 @@ paths:
                   description: 'Successful authentication. Redirect to Supplier profile'
                   value: '/supplier/{id}'
 
-  /supplier:
+  /supplier/{id}/profile: # TODO: Mostra o perfil para editar
+
+  /supplier/{id}: # TODO: Mostra perfil publico
+
+  /supplier/{id}/createProduct: # TODO:
+
+  /supplier/{id}/allProducts: # TODO:
+
+  /supplier/{id}/bundlesCoupons: #TODO:
+
+  /supplier/{id}/createBundle: #TODO:
+
+  /supplier/{id}/createCoupon: #TODO:
+
+
+
+  /api/supplier:
     get:
       operationId: R106
       summary: 'R106: Suppliers list'
@@ -208,7 +224,7 @@ paths:
         '400':
           $ref: '#/components/responses/400Error'
 
-  /supplier/{id}:
+  /api/supplier/{id}:
     get:
       operationId: R108
       summary: 'R108: View supplier profile'
@@ -219,7 +235,7 @@ paths:
         - $ref: '#/components/parameters/ID'
 
       responses:
-        '200':
+        '200':  # TODO: MUDAR
           description: 'Ok. Show [UI05](http://lbaw2131-piu.lbaw-prod.fe.up.pt/client/client_profile.php)'
         '404':
           $ref: '#/components/responses/ItemNotFound'
@@ -281,7 +297,11 @@ paths:
         '404':
           $ref: '#/components/responses/404Error'
 
-  /client:
+  /client/{id}/profile: # TODO
+
+  /client/{id}/checkout: #TODO
+
+  /api/client:
     get:
       operationId: R111
       summary: 'R111: Clients list'
@@ -330,7 +350,7 @@ paths:
         '400':
           $ref: '#/components/responses/400Error'
 
-  /client/{id}:
+  /api/client/{id}:
     get:
       operationId: R204
       summary: 'R204 - Get client info'
@@ -340,8 +360,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/ID'
 
-      responses:
-        '200':
+      responses:  
+        '200':  # TODO: Mudar
           description: 'Successfully returned the client info. Show [UI05.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/client/client_profile.php)'
           content:
             application/json:
@@ -371,10 +391,21 @@ paths:
         '404':
           $ref: '#/components/responses/ClientNotFound'
      
-    # Acho que não é necessário delete
+    delete:
+      operationId: R204
+      summary: 'R204 - Delete client'
+      description: 'Deletes a client'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:  
+        '200':  # TODO: Mudar
+          description: 'Successfully deleted the client'
 
 
-  /client/{id}/favorite:
+  /api/client/{id}/favorite:
     get:
       operationId: R201
       summary: 'R201 - View client favorites'
@@ -385,7 +416,7 @@ paths:
         - $ref: '#/components/parameters/ID'
 
       responses:
-        '200':
+        '200':  # Mudar
           description: Successfully returned the favorite list. Show [UI05.2](http://lbaw2131-piu.lbaw-prod.fe.up.pt/client/client_profile.php)
           content:
             application/json: 
@@ -445,7 +476,7 @@ paths:
         '204':
           description: Successfully removed item to favorite list
 
-  /client/{id}/review:
+  /api/client/{id}/review:
     get:
       operationId: R204
       summary: 'R204 - View product reviews'
@@ -515,7 +546,7 @@ paths:
         '204':
           description: Successfully removed review of item
 
-  /client/{id}/cart:
+  /api/client/{id}/cart:
     get:
       operationId: R207
       summary: 'R207 - View client cart'
@@ -527,7 +558,7 @@ paths:
 
       responses:
         '200':
-          description: Successfully returned item's carts. Show UI10.1
+          description: Successfully returned item's carts
           content:
             application/json:
               schema:
@@ -588,7 +619,7 @@ paths:
         '204':
           description: Successfully deleted the item in the cart
 
-  /client/{id}/periodic:
+  /api/client/{id}/periodic:
     get:
       operationId: R210
       summary: 'R210 - See client history'
@@ -600,7 +631,7 @@ paths:
 
       responses:
         '200':
-          description: Successfully returned item's carts. Show UI05.3
+          description: Successfully returned item's carts
           content:
             application/json:
               schema:
@@ -609,7 +640,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Purchase'
 
-  /client/{id}/history:
+  /api/client/{id}/history:
     get:
       operationId: R211
       summary: 'R211 - View client history'
@@ -630,7 +661,12 @@ paths:
                 items:
                   $ref: '#/components/schemas/Product'
 
-  /item:
+  /item/search: # TODO:
+
+  /item/{id}: #TODO  
+
+
+  /api/item:
     get:
       operationId: R301
       summary: 'R301: Item List'
@@ -668,7 +704,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              type: object    # TODO: Secalhar criar component?
               required:
                 - sellerid
               properties:
@@ -702,7 +738,7 @@ paths:
         '405':
           description: Method not allowed
 
-  /item/{id}:
+  /api/item/{id}:
     get:
       operationId: R303
       summary: 'R303 - Item, tag e coupon'
@@ -719,7 +755,7 @@ paths:
             application/json:
               schema:
                 # tree with all the information needed
-                type: object
+                type: object      # TODO: Secalhar componente?
                 items:
                   properties:
                     sellerID:
@@ -819,7 +855,8 @@ paths:
         '405':
           description: Method not allowed
 
-  /coupon:
+
+  /api/coupon:
     get:
       operationId: R306
       summary: 'R306: Coupon List'
@@ -888,7 +925,7 @@ paths:
           $ref: '#/components/responses/ItemNotFound' 
 
 
-  /coupon/{couponCode}:
+  /api/coupon/{couponCode}:
     get:
       operationId: R308
       summary: 'R308 - Item, tag e coupon'
@@ -967,7 +1004,7 @@ paths:
           $ref: '#/components/responses/ItemNotFound'
 
 
-  /tag:
+  /api/tag:
     # TODO: Ir buscar todas as tags
     get:
 
@@ -999,7 +1036,7 @@ paths:
         '405':
           description: Method not allowed
 
-  /tag/{tagName}:
+  /api/tag/{tagName}:
     get:
       operationId: R312
       summary: 'R312 - Item, tag e coupon'
@@ -1092,6 +1129,9 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [UI04.4](http://lbaw2131-piu.lbaw-prod.fe.up.pt/admin/view_users.php)'
+
+
+  
 
 
 
