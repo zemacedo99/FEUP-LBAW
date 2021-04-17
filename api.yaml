@@ -258,6 +258,26 @@ paths:
         '404':
           $ref: '#/components/responses/404Error'
 
+    delete:
+      operationId: R20X
+      summary: 'R20X: Delete Supplirt'
+      description: 'Deletes a Supplier. Access: ADM, OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200':
+          description: 'Deleted the Supplier'
+
+        '400':
+          $ref: '#/components/responses/400Error'
+
+        '404':
+          $ref: '#/components/responses/404Error'
+
   /client:
     get:
       operationId: R20X
