@@ -221,14 +221,56 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Client'
-  ### Ricardo
+  # Ricardo
+  /client/{id}:
+    get:
+      operationId: R204
+      summary: 'R204 - Get client info'
+      description: 'Returns all information about the client'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - $ref: '#/components/parameters/ID'
 
-  # Adding client, delete, get
+      responses:
+        '200':
+          description: 'Successfully returned the client info. Show [UI05.1](...)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+
+    post:
+      operationId: R205
+      summary: 'R205 - Change client information'
+      description: 'Updates the client information'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientInfo'
+
+      responses:
+        '204':
+          description: Successfully updated client information
+        '404':
+          $ref: '#/components/responses/ClientNotFound'
+     
+    # Acho que não é necessário delete
+
+  
 
   /client/{id}/favorite:
     get:
-      operationId: R204
-      summary: 'R20X - View client favorites'
+      operationId: R206
+      summary: 'R206 - View client favorites'
       description: Returns the favorite list of a user
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -239,7 +281,7 @@ paths:
         '200':
           description: Successfully returned the favorite list. Show UI05.2
           content:
-            application/json: # Vamos fazer em JSON?
+            application/json: 
               schema:
                 # array with favorite ids
                 type: array
@@ -247,8 +289,8 @@ paths:
                   type: integer
 
     post:
-      operationId: R205
-      summary: 'R20X - Add favorite'
+      operationId: R207
+      summary: 'R207 - Add favorite'
       description: Adds an item to the user favorite list
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -279,8 +321,8 @@ paths:
           $ref: '#/components/responses/ItemNotFound'
 
     delete:
-      operationId: R206
-      summary: 'R206 - Remove favorite'
+      operationId: R208
+      summary: 'R208 - Remove favorite'
       description: Removes an item to the user favorite list
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -300,8 +342,8 @@ paths:
 
   /client/{id}/review:
     get:
-      operationId: R207
-      summary: 'R207 - View product reviews'
+      operationId: R209
+      summary: 'R209 - View product reviews'
       description: Returns all reviews done by a user
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -320,8 +362,8 @@ paths:
                   $ref: '#/components/schemas/Review'
 
     post:
-      operationId: R208
-      summary: 'R208 - Add review'
+      operationId: R210
+      summary: 'R210 - Add review'
       description: Adds a review to a product by a user
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -351,8 +393,8 @@ paths:
           $ref: '#/components/responses/ItemNotFound'
 
     delete:
-      operationId: R209
-      summary: 'R209 - Remove review'
+      operationId: R211
+      summary: 'R211 - Remove review'
       description: Removes a review of a product by a user
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -371,8 +413,8 @@ paths:
 
   /client/{id}/cart:
     get:
-      operationId: R210
-      summary: 'R210 - View client cart'
+      operationId: R212
+      summary: 'R212 - View client cart'
       description: Returns all item's carts
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -391,8 +433,8 @@ paths:
                   $ref: '#/components/schemas/Product'
 
     post:
-      operationId: R211
-      summary: 'R211 - Add item to cart'
+      operationId: R213
+      summary: 'R213 - Add item to cart'
       description: Puts an item in the cart
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -425,8 +467,8 @@ paths:
           $ref: '#/components/responses/ItemNotFound'
 
     delete:
-      operationId: R212
-      summary:  'R212 - Remove item to cart'
+      operationId: R214 
+      summary:  'R214 - Remove item to cart'
       description: Delete an item in the cart
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -444,8 +486,8 @@ paths:
 
   /client/{id}/periodic:
     get:
-      operationId: R213
-      summary: 'R213 - See client history'
+      operationId: R215
+      summary: 'R215 - See client history'
       description: Returns all previous purchase of the client
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -468,8 +510,8 @@ paths:
   ### Luis
   /client/{id}/history:
     get:
-      operationId: R214
-      summary: 'R214 - View client history'
+      operationId: R216
+      summary: 'R216 - View client history'
       description: Returns all user’s previous purchases
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -1056,6 +1098,24 @@ components:
           type: string
         sellerId:
           type: integer
+    ClientInfo:
+      type: object
+      required:
+        - client_id
+        - name
+        - email        
+        - password
+      properties:
+        client_id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+
+
 
   parameters:
     ID:
@@ -1102,7 +1162,14 @@ components:
       content:
         application/json:
           schema:
-            type: string
+            type: string    # path to redirect
+    
+    ClientNotFound:
+      description: The client was not found
+      content:
+        application/json:
+          schema:
+            type: string    # path to redirect
 
     400Error:
       description: Invalid request
