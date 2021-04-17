@@ -181,6 +181,33 @@ paths:
                 items:
                   $ref: '#/components/schemas/Supplier'
 
+    post:
+      operationId: R10X
+      summary: 'R10X: Create a Supplier'
+      description: 'Access: ADM, PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+
+      responses:
+        '201':
+          description: 'Created new Supplier'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          $ref: '#/components/responses/400Error'
+
   /supplier/{id}:
     get:
       operationId: R20X
@@ -253,12 +280,43 @@ paths:
                 items:
                   $ref: '#/components/schemas/Client'
 
-    # TODO maybe this
-    put:
+    post:
+      operationId: R10X
+      summary: 'R10X: Create a Client'
+      description: 'Access: ADM, PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+
+      responses:
+        '201':
+          description: 'Created new Client'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          $ref: '#/components/responses/400Error'
 
   /homepage:
-    # TODO this
     get:
+      operationId: R40X
+      summary: 'R40X: Homepage'
+      description: 'Provide Homepage. Access: PUB'
+      tags:
+        - 'M04: Static pages'
+      responses:
+        '200':
+          description: 'Ok. Show [UI01](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/home_page.php)'
 
   ### Ricardo
   # /client/{id}:  # Acho que não é preciso este access point. O que teria?
