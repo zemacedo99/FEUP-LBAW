@@ -299,7 +299,10 @@ paths:
 
   /client/{id}/profile: # TODO
 
-  /client/{id}/checkout: #TODO
+  /client/{id}/checkoutInfo: #TODO
+
+  /client/{id}/checkoutPayment: #TODO
+  
 
   /api/client:
     get:
