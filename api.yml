@@ -159,19 +159,104 @@ paths:
                   description: 'Successful authentication. Redirect to Supplier profile'
                   value: '/supplier/{id}'
 
-  /supplier/{id}/profile: # TODO: Mostra o perfil para editar
+  /supplier/{id}/profile: #Mostra o perfil para editar
+    get:
+      operationId: RXXX
+      summary: 'RXXX: View supplier profile'
+      description: 'Show the individual supplier profile. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - $ref: '#/components/parameters/ID'
 
-  /supplier/{id}: # TODO: Mostra perfil publico
+      responses:
+        '200': 
+          description: 'Ok. Show [UI06.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/supplier_profile.php)'
 
-  /supplier/{id}/createProduct: # TODO:
 
-  /supplier/{id}/allProducts: # TODO:
+  /supplier/{id}: #Mostra perfil publico
+    get:
+      operationId: RXXX
+      summary: 'RXXX: View supplier profile'
+      description: 'Show the supplier profile. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - $ref: '#/components/parameters/ID'
 
-  /supplier/{id}/bundlesCoupons: #TODO:
+      responses:
+        '200': 
+          description: 'Ok. Show [UI13](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/detail.php)'
 
-  /supplier/{id}/createBundle: #TODO:
+  /supplier/{id}/createProduct: 
+    get:
+      operationId: RXXX
+      summary: 'RXXX: View create product page'
+      description: 'Show the product creation page. Access: OWN'
+      tags:
+        - 'M02: Items'
+      parameters:
+        - $ref: '#/components/parameters/ID'
 
-  /supplier/{id}/createCoupon: #TODO:
+      responses:
+        '200': 
+          description: 'Ok. Show [UI06.2](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/create_product.php)'
+
+  /supplier/{id}/allProducts: 
+    get:
+      operationId: RXXX
+      summary: 'RXXX: View supplier products'
+      description: 'Show the supplier products. Access: OWN'
+      tags:
+        - 'M02: Items'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200': 
+          description: 'Ok. Show [UI06.3](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/all_products.php)'
+
+  /supplier/{id}/bundlesCoupons: 
+    get:
+      operationId: RXXX
+      summary: 'RXXX: View supplier bundles and cupons'
+      description: 'Show the supplier bundles and cupons. Access: OWN'
+      tags:
+        - 'M02: Items'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200': 
+          description: 'Ok. Show [UI06.4](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/bundles_and_cupons.php)'
+
+  /supplier/{id}/createBundle: 
+    get:
+      operationId: RXXX
+      summary: 'RXXX: View create bundle page'
+      description: 'Show the bundle creation page. Access: OWN'
+      tags:
+        - 'M02: Items'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200': 
+          description: 'Ok. Show [UI06.5](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/create_edit_bundle.php)'
+
+  /supplier/{id}/createCoupon: 
+    get:
+      operationId: RXXX
+      summary: 'RXXX: View create coupon page'
+      description: 'Show the coupon creation page. Access: OWN'
+      tags:
+        - 'M02: Items'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200': 
+          description: 'Ok. Show [UI06.6](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/create_edit_coupon.php)'
 
   /api/supplier:
     get:
@@ -295,7 +380,21 @@ paths:
         '404':
           $ref: '#/components/responses/404Error'
 
-  /client/{id}/profile: # TODO
+  /client/{id}/profile: 
+    get:
+      operationId: RXXX
+      summary: 'RXXX: View client profile'
+      description: 'Show the individual client profile. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200': 
+          description: 'Ok. Show [UI05](http://lbaw2131-piu.lbaw-prod.fe.up.pt/client/client_profile.php)'
+
+
 
   /client/{id}/checkoutInfo:
     get:
