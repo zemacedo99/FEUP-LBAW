@@ -1041,6 +1041,23 @@ paths:
   /api/tag:
     # TODO: Ir buscar todas as tags
     get:
+      operationId: R312
+      summary: 'R312 - Item, tag e coupon'
+      description: 'Return all tags. Access: PUB'
+      tags:
+        - 'M02: Item'
+
+      responses:
+        '200':
+          description: Successfully returned all tags
+          content:
+            application/json:
+              schema:
+                # tree with all the information needed
+                type: array
+                items:
+                  type: string
+
 
     post: #add TAG
       operationId: R311
@@ -1095,6 +1112,19 @@ paths:
     
     # TODO: Apagar tag
     delete:
+      operationId: R3xx
+      summary: 'R3xx - Item, tag e coupon'
+      description: 'Delete tag. Access: ADM'
+      tags:
+        - 'M02: Item'
+
+      parameters:
+        - $ref: '#/components/parameters/tagName'
+
+      responses:
+        '200':
+          description: 'Deleted tag'
+
 
 
   /homepage:
