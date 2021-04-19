@@ -797,8 +797,6 @@ paths:
         '405':
           description: Method not allowed
 
-
-
   /coupon:
     get:
       operationId: R305
@@ -866,7 +864,6 @@ paths:
 
         '404':
           $ref: '#/components/responses/ItemNotFound' #when updating
-
 
   /coupon/{couponCode}:
     get:
@@ -945,7 +942,6 @@ paths:
         '404':
           $ref: '#/components/responses/ItemNotFound'
 
-
   /tag:
     post: #add TAG
       operationId: R310
@@ -998,8 +994,6 @@ paths:
                     tagId:
                       type: integer
 
-
-
   ### Zé
   /about_us:
     get:
@@ -1034,8 +1028,6 @@ paths:
         '200':
           description: 'Ok. Show [Suppliers](...)'
 
-
-
   /dashboard/client:
     get:
       operationId: R505
@@ -1047,8 +1039,6 @@ paths:
         '200':
           description: 'Ok. Show [Clients](...)'
 
-
-
   /dashboard/item:
     get:
       operationId: R507
@@ -1059,7 +1049,6 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [Items](...)'
-
 
 components:
   schemas:
@@ -1232,6 +1221,7 @@ components:
             properties:
               message:
                 type: string
+
     401Error:
       description: 'The request requires user authentication.'
       content:
