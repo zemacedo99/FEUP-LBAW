@@ -173,8 +173,6 @@ paths:
 
   /supplier/{id}/createCoupon: #TODO:
 
-
-
   /api/supplier:
     get:
       operationId: R106
@@ -299,10 +297,35 @@ paths:
 
   /client/{id}/profile: # TODO
 
-  /client/{id}/checkoutInfo: #TODO
+  /client/{id}/checkoutInfo:
+    get:
+      operationId: R40X
+      summary: 'R40X: Cart Info Page'
+      description: 'Provide the cart information, coupons and periodicity of the purchase. Access: OWN'
+      tags:
+        - 'M04: Static pages'
 
-  /client/{id}/checkoutPayment: #TODO
-  
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200':
+          description: 'Ok. Show [UI10.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/checkout/cart_info.php)'
+
+  /client/{id}/checkoutPayment:
+    get:
+      operationId: R40X
+      summary: 'R40X: Checkout page'
+      description: 'Provide the shipping adress and payment method to finalize purchase. Access: OWN'
+      tags:
+        - 'M04: Static pages'
+
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200':
+          description: 'Ok. Show [UI10.2](http://lbaw2131-piu.lbaw-prod.fe.up.pt/checkout/shipping_payment.php)'
 
   /api/client:
     get:
@@ -393,7 +416,7 @@ paths:
           description: Successfully updated client information
         '404':
           $ref: '#/components/responses/ClientNotFound'
-     
+
     delete:
       operationId: R204
       summary: 'R204 - Delete client'
@@ -406,7 +429,6 @@ paths:
       responses:  
         '200':  # TODO: Mudar
           description: 'Successfully deleted the client'
-
 
   /api/client/{id}/favorite:
     get:
@@ -664,10 +686,22 @@ paths:
                 items:
                   $ref: '#/components/schemas/Product'
 
-  /item/search: # TODO:
+  /search:
+    get:
+      operationId: R40X
+      summary: 'R40X: Search Page'
+      description: 'Provide the Search page to browse products and suppliers. Access: PUB'
+      tags:
+        - 'M04: Static pages'
+
+      parameters:
+        - $ref: '#/components/parameters/Search'
+
+      responses:
+        '200':
+          description: 'Ok. Show [UI11](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/products_list.php)'
 
   /item/{id}: #TODO  
-
 
   /api/item:
     get:
@@ -858,7 +892,6 @@ paths:
         '405':
           description: Method not allowed
 
-
   /api/coupon:
     get:
       operationId: R306
@@ -926,7 +959,6 @@ paths:
 
         '404':
           $ref: '#/components/responses/ItemNotFound' 
-
 
   /api/coupon/{couponCode}:
     get:
@@ -1006,7 +1038,6 @@ paths:
         '404':
           $ref: '#/components/responses/ItemNotFound'
 
-
   /api/tag:
     # TODO: Ir buscar todas as tags
     get:
@@ -1064,7 +1095,6 @@ paths:
     
     # TODO: Apagar tag
     delete:
-
 
   /homepage:
     get:
@@ -1132,11 +1162,6 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [UI04.4](http://lbaw2131-piu.lbaw-prod.fe.up.pt/admin/view_users.php)'
-
-
-  
-
-
 
 components:
   schemas:
@@ -1327,6 +1352,7 @@ components:
             properties:
               message:
                 type: string
+
     401Error:
       description: 'The request requires user authentication.'
       content:
