@@ -172,13 +172,12 @@ paths:
       responses:
         '200': 
           description: 'Ok. Show [UI06.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/supplier_profile.php)'
-
-
+ 
   /supplier/{id}: #Mostra perfil publico
     get:
       operationId: RXXX
       summary: 'RXXX: View supplier profile'
-      description: 'Show the supplier profile. Access: PUB'
+      description: 'Provide the supplier avatar, name, description, average rating, email and selling items. Access: PUB'
       tags:
         - 'M01: Authentication and Individual Profile'
       parameters:
@@ -493,6 +492,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Client'
 
+    #TODO:CHANGE to PUT
     post:
       operationId: R205
       summary: 'R205 - Change client information'
@@ -799,8 +799,20 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [UI11](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/products_list.php)'
+  /item/{id}: #TODO
+    get:
+      operationId: R40X
+      summary: 'R40X: Item Page'
+      description: 'Provide the item description, images, reviews, price and allow placing order. Access: PUB'
+      tags:
+        - 'M04: Static pages'
 
-  /item/{id}: #TODO  
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200':
+          description: 'Ok. Show [UI12](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/product_detail.php)'
 
   /api/item:
     get:
