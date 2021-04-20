@@ -1,14 +1,17 @@
 version: "3"
-services: 
+services:
   # frontend:
     # build:
       # context: .
       # dockerfile: Dockerfile
     # volumes:
       # - "./html:/var/www/html"
-    # ports: 
+    # ports:
       # - "8000:80"
-    
+
+   # php artisan db:seed
+  #php artisan serve
+
   postgres:
     image: postgres:13
     restart: always
