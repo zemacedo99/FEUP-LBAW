@@ -161,8 +161,8 @@ paths:
 
   /supplier/{id}/profile: #Mostra o perfil para editar
     get:
-      operationId: RXXX
-      summary: 'RXXX: View supplier profile'
+      operationId: R106
+      summary: 'R106: View supplier profile'
       description: 'Show the individual supplier profile. Access: OWN'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -175,8 +175,8 @@ paths:
  
   /supplier/{id}: #Mostra perfil publico
     get:
-      operationId: RXXX
-      summary: 'RXXX: View supplier profile'
+      operationId: R107
+      summary: 'R107: View supplier profile'
       description: 'Provide the supplier avatar, name, description, average rating, email and selling items. Access: PUB'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -187,10 +187,25 @@ paths:
         '200': 
           description: 'Ok. Show [UI13](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/detail.php)'
 
+  /client/{id}/profile: 
+    get:
+      operationId: R108
+      summary: 'R108: View client profile'
+      description: 'Show the individual client profile. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200': 
+          description: 'Ok. Show [UI05](http://lbaw2131-piu.lbaw-prod.fe.up.pt/client/client_profile.php)'
+
+
   /supplier/{id}/createProduct: 
     get:
-      operationId: RXXX
-      summary: 'RXXX: View create product page'
+      operationId: R201
+      summary: 'R201: View create product page'
       description: 'Show the product creation page. Access: OWN'
       tags:
         - 'M02: Items'
@@ -203,8 +218,8 @@ paths:
 
   /supplier/{id}/allProducts: 
     get:
-      operationId: RXXX
-      summary: 'RXXX: View supplier products'
+      operationId: R202
+      summary: 'R202: View supplier products'
       description: 'Show the supplier products. Access: OWN'
       tags:
         - 'M02: Items'
@@ -217,8 +232,8 @@ paths:
 
   /supplier/{id}/bundlesCoupons: 
     get:
-      operationId: RXXX
-      summary: 'RXXX: View supplier bundles and cupons'
+      operationId: R203
+      summary: 'R203: View supplier bundles and cupons'
       description: 'Show the supplier bundles and cupons. Access: OWN'
       tags:
         - 'M02: Items'
@@ -231,8 +246,8 @@ paths:
 
   /supplier/{id}/createBundle: 
     get:
-      operationId: RXXX
-      summary: 'RXXX: View create bundle page'
+      operationId: R204
+      summary: 'R204: View create bundle page'
       description: 'Show the bundle creation page. Access: OWN'
       tags:
         - 'M02: Items'
@@ -245,8 +260,8 @@ paths:
 
   /supplier/{id}/createCoupon: 
     get:
-      operationId: RXXX
-      summary: 'RXXX: View create coupon page'
+      operationId: R205
+      summary: 'R205: View create coupon page'
       description: 'Show the coupon creation page. Access: OWN'
       tags:
         - 'M02: Items'
@@ -257,10 +272,144 @@ paths:
         '200': 
           description: 'Ok. Show [UI06.6](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/create_edit_coupon.php)'
 
+
+
+  /client/{id}/checkoutInfo:
+    get:
+      operationId: R206
+      summary: 'R206: Cart Info Page'
+      description: 'Provide the cart information, coupons and periodicity of the purchase. Access: OWN'
+      tags:
+        - 'M02: Items'
+
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200':
+          description: 'Ok. Show [UI10.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/checkout/cart_info.php)'
+          
+
+  /client/{id}/checkoutPayment:
+    get:
+      operationId: R207
+      summary: 'R207: Checkout page'
+      description: 'Provide the shipping adress and payment method to finalize purchase. Access: OWN'
+      tags:
+        - 'M02: Items'
+
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200':
+          description: 'Ok. Show [UI10.2](http://lbaw2131-piu.lbaw-prod.fe.up.pt/checkout/shipping_payment.php)'
+  
+
+  /search:
+    get:
+      operationId: R208
+      summary: 'R208: Search Page'
+      description: 'Provide the Search page to browse products and suppliers. Access: PUB'
+      tags:
+        - 'M02: Items'
+
+      parameters:
+        - $ref: '#/components/parameters/Search'
+
+      responses:
+        '200':
+          description: 'Ok. Show [UI11](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/products_list.php)'
+  /item/{id}: #TODO
+    get:
+      operationId: R209
+      summary: 'R209: Item Page'
+      description: 'Provide the item description, images, reviews, price and allow placing order. Access: PUB'
+      tags:
+        - 'M02: Items'
+
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200':
+          description: 'Ok. Show [UI12](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/product_detail.php)'
+
+  /homepage:
+    get:
+      operationId: R401
+      summary: 'R401: Homepage'
+      description: 'Provide Homepage. Access: PUB'
+      tags:
+        - 'M04: Static pages'
+      responses:
+        '200':
+          description: 'Ok. Show [UI01](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/home_page.php)'
+ 
+  /about_us:
+    get:
+      operationId: R402
+      summary: 'R402 About us'
+      description: 'Access about us page. Access: PUB'
+      tags:
+        - 'M04: Static pages'
+      responses:
+        '200':
+          
+          description: 'OK, Show [UI02](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/about_us.php)'
+
+  /dashboard:
+    get:
+      operationId: R501
+      summary: 'R501: View dashboard'
+      description: 'Show the admin options. Access: ADM'
+      tags:
+        - 'M05: User Administration'
+      responses:
+        '200':
+          description: 'Ok. Show [UI04.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/admin/dashboard.php)'
+
+  /dashboard/supplier:
+    get:
+      operationId: R502
+      summary: 'R502: View suppliers'
+      description: 'Show a list with all suppliers. Access: ADM'
+      tags:
+        - 'M05: User Administration'
+      responses:
+        '200':
+          description: 'Ok. Show [UI04.2](http://lbaw2131-piu.lbaw-prod.fe.up.pt/admin/view_req.php)'
+
+  /dashboard/users:
+    get:
+      operationId: R503
+      summary: 'R503: View users'
+      description: 'Show a list with all users. Access: ADM'
+      tags:
+        - 'M05: User Administration'
+      responses:
+        '200':
+          description: 'Ok. Show [UI04.4](http://lbaw2131-piu.lbaw-prod.fe.up.pt/admin/view_users.php)'
+
+
+  /dashboard/item:
+    get:
+      operationId: R504
+      summary: 'R504: View items'
+      description: 'Show a list with all items. Access: ADM'
+      tags:
+        - 'M05: User Administration'
+      responses:
+        '200':
+          description: 'Ok. Show [UI04.3](http://lbaw2131-piu.lbaw-prod.fe.up.pt/admin/view_prods.php)'
+
+
+
+
   /api/supplier:
     get:
-      operationId: R106
-      summary: 'R106: Suppliers list'
+      operationId: R601
+      summary: 'R601: Suppliers list'
       description: 'Provide a list of Suppliers. Access: PUB'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -280,8 +429,8 @@ paths:
                   $ref: '#/components/schemas/Supplier'
 
     post:
-      operationId: R107
-      summary: 'R107: Create a Supplier'
+      operationId: R602
+      summary: 'R602: Create a Supplier'
       description: 'Access: ADM, PUB'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -308,8 +457,8 @@ paths:
 
   /api/supplier/{id}:
     get:
-      operationId: R108
-      summary: 'R108: View supplier profile'
+      operationId: R603
+      summary: 'R603: View supplier profile'
       description: 'Show the individual supplier profile. Access: USR'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -323,8 +472,8 @@ paths:
           $ref: '#/components/responses/ItemNotFound'
 
     post:
-      operationId: R109
-      summary: 'R109: Change supplier profile Data'
+      operationId: R604
+      summary: 'R604: Change supplier profile Data'
       description: 'Alters supplier information. Access: ADM, OWN'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -360,8 +509,8 @@ paths:
           $ref: '#/components/responses/404Error'
 
     delete:
-      operationId: R110
-      summary: 'R110: Delete Supplirt'
+      operationId: R605
+      summary: 'R605: Delete Supplirt'
       description: 'Deletes a Supplier. Access: ADM, OWN'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -379,56 +528,11 @@ paths:
         '404':
           $ref: '#/components/responses/404Error'
 
-  /client/{id}/profile: 
-    get:
-      operationId: RXXX
-      summary: 'RXXX: View client profile'
-      description: 'Show the individual client profile. Access: OWN'
-      tags:
-        - 'M01: Authentication and Individual Profile'
-      parameters:
-        - $ref: '#/components/parameters/ID'
-
-      responses:
-        '200': 
-          description: 'Ok. Show [UI05](http://lbaw2131-piu.lbaw-prod.fe.up.pt/client/client_profile.php)'
-
-
-
-  /client/{id}/checkoutInfo:
-    get:
-      operationId: R40X
-      summary: 'R40X: Cart Info Page'
-      description: 'Provide the cart information, coupons and periodicity of the purchase. Access: OWN'
-      tags:
-        - 'M04: Static pages'
-
-      parameters:
-        - $ref: '#/components/parameters/ID'
-
-      responses:
-        '200':
-          description: 'Ok. Show [UI10.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/checkout/cart_info.php)'
-
-  /client/{id}/checkoutPayment:
-    get:
-      operationId: R40X
-      summary: 'R40X: Checkout page'
-      description: 'Provide the shipping adress and payment method to finalize purchase. Access: OWN'
-      tags:
-        - 'M04: Static pages'
-
-      parameters:
-        - $ref: '#/components/parameters/ID'
-
-      responses:
-        '200':
-          description: 'Ok. Show [UI10.2](http://lbaw2131-piu.lbaw-prod.fe.up.pt/checkout/shipping_payment.php)'
 
   /api/client:
     get:
-      operationId: R111
-      summary: 'R111: Clients list'
+      operationId: R606
+      summary: 'R606: Clients list'
       description: 'Provides a list of Clients. Access: ADM'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -448,8 +552,8 @@ paths:
                   $ref: '#/components/schemas/Client'
 
     post:
-      operationId: R112
-      summary: 'R112: Create a Client'
+      operationId: R607
+      summary: 'R607: Create a Client'
       description: 'Creates a client. Access: ADM, OWN'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -476,8 +580,8 @@ paths:
 
   /api/client/{id}:
     get:
-      operationId: R204
-      summary: 'R204 - Get client info'
+      operationId: R608
+      summary: 'R608 - Get client info'
       description: 'Returns all information about the client'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -485,17 +589,17 @@ paths:
         - $ref: '#/components/parameters/ID'
 
       responses:  
-        '200':  # TODO: Mudar
+        '200': 
           description: 'Successfully returned the client info. Show [UI05.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/client/client_profile.php)'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Client'
 
-    #TODO:CHANGE to PUT
+    
     post:
-      operationId: R205
-      summary: 'R205 - Change client information'
+      operationId: R609
+      summary: 'R609 - Change client information'
       description: 'Updates the client information'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -517,8 +621,8 @@ paths:
           $ref: '#/components/responses/ClientNotFound'
 
     delete:
-      operationId: R204
-      summary: 'R204 - Delete client'
+      operationId: R610
+      summary: 'R610 - Delete client'
       description: 'Deletes a client'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -529,10 +633,11 @@ paths:
         '200':  # TODO: Mudar
           description: 'Successfully deleted the client'
 
+
   /api/client/{id}/favorite:
     get:
-      operationId: R201
-      summary: 'R201 - View client favorites'
+      operationId: R611
+      summary: 'R611 - View client favorites'
       description: 'Returns the favorite list of a user. Access: OWN'
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -551,8 +656,8 @@ paths:
                   type: integer
 
     post:
-      operationId: R202
-      summary: 'R202 - Add favorite'
+      operationId: R612
+      summary: 'R612 - Add favorite'
       description: 'Adds an item to the user favorite list- Access: OWN'
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -581,8 +686,8 @@ paths:
           $ref: '#/components/responses/ItemNotFound'
 
     delete:
-      operationId: R203
-      summary: 'R203 - Remove favorite'
+      operationId: R613
+      summary: 'R613 - Remove favorite'
       description: 'Removes an item to the user favorite list. Access: OWN'
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -602,8 +707,8 @@ paths:
 
   /api/client/{id}/review:
     get:
-      operationId: R204
-      summary: 'R204 - View product reviews'
+      operationId: R614
+      summary: 'R614 - View product reviews'
       description: 'Returns all reviews done by a user. Access: PUB'
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -622,8 +727,8 @@ paths:
                   $ref: '#/components/schemas/Review'
 
     post:
-      operationId: R205
-      summary: 'R205 - Add review'
+      operationId: R615
+      summary: 'R615 - Add review'
       description: 'Adds a review to a product by a user. Access: OWN'
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -653,8 +758,8 @@ paths:
           $ref: '#/components/responses/ItemNotFound'
 
     delete:
-      operationId: R206
-      summary: 'R206 - Remove review'
+      operationId: R616
+      summary: 'R616 - Remove review'
       description: 'Removes a review of a product by a user. Access: OWN'
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -670,10 +775,11 @@ paths:
         '204':
           description: Successfully removed review of item
 
+
   /api/client/{id}/cart:
     get:
-      operationId: R207
-      summary: 'R207 - View client cart'
+      operationId: R617
+      summary: 'R617 - View client cart'
       description: 'Returns all items carts. Access: OWN'
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -692,8 +798,8 @@ paths:
                   $ref: '#/components/schemas/Product'
 
     post:
-      operationId: R208
-      summary: 'R208 - Add item to cart'
+      operationId: R618
+      summary: 'R618 - Add item to cart'
       description: 'Puts an item in the cart. Access: OWN'
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -726,8 +832,8 @@ paths:
           $ref: '#/components/responses/ItemNotFound'
 
     delete:
-      operationId: R209
-      summary:  'R209 - Remove item to cart'
+      operationId: R619
+      summary:  'R619 - Remove item to cart'
       description: 'Delete an item in the cart. Access: OWN'
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -745,8 +851,8 @@ paths:
 
   /api/client/{id}/periodic:
     get:
-      operationId: R210
-      summary: 'R210 - See client history'
+      operationId: R620
+      summary: 'R620 - See client history'
       description: 'Returns all previous purchase of the client. Access: OWN'
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -766,8 +872,8 @@ paths:
 
   /api/client/{id}/history:
     get:
-      operationId: R211
-      summary: 'R211 - View client history'
+      operationId: R621
+      summary: 'R621 - View client history'
       description: 'Returns all user’s previous purchases. Access: OWN'
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
@@ -785,39 +891,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Product'
 
-  /search:
-    get:
-      operationId: R40X
-      summary: 'R40X: Search Page'
-      description: 'Provide the Search page to browse products and suppliers. Access: PUB'
-      tags:
-        - 'M04: Static pages'
-
-      parameters:
-        - $ref: '#/components/parameters/Search'
-
-      responses:
-        '200':
-          description: 'Ok. Show [UI11](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/products_list.php)'
-  /item/{id}: #TODO
-    get:
-      operationId: R40X
-      summary: 'R40X: Item Page'
-      description: 'Provide the item description, images, reviews, price and allow placing order. Access: PUB'
-      tags:
-        - 'M04: Static pages'
-
-      parameters:
-        - $ref: '#/components/parameters/ID'
-
-      responses:
-        '200':
-          description: 'Ok. Show [UI12](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/product_detail.php)'
 
   /api/item:
     get:
-      operationId: R301
-      summary: 'R301: Item List'
+      operationId: R622
+      summary: 'R622: Item List'
       description: 'Provide a list of Items. Access: PUB'
       tags:
         - 'M02: Items'
@@ -842,8 +920,8 @@ paths:
                   $ref: '#/components/schemas/ItemInList'
 
     post: 
-      operationId: R302
-      summary: 'R302 - Item, tag e coupon'
+      operationId: R623
+      summary: 'R623 - Item, tag e coupon'
       description: 'Creates or updates item (description, unit, stock, seller, image) and its reviews and tags. Acess: USR'
       tags:
         - 'M02: Item'
@@ -888,8 +966,8 @@ paths:
 
   /api/item/{id}:
     get:
-      operationId: R303
-      summary: 'R303 - Item, tag e coupon'
+      operationId: R624
+      summary: 'R624 - Item, tag e coupon'
       description: 'Returns item’s information (description, unit, stock, seller, image) and its reviews and tags. Access: PUB'
       tags:
         - 'M02: Item'
@@ -934,8 +1012,8 @@ paths:
                       type: boolean
 
     post:
-      operationId: R304
-      summary: 'R304 - Item, tag e coupon'
+      operationId: R625
+      summary: 'R625 - Item, tag e coupon'
       description: 'Creates or updates item (description, unit, stock, seller, image) and its reviews and tags. Access: OWN'
       tags:
         - 'M02: Item'
@@ -987,8 +1065,8 @@ paths:
           description: Method not allowed
 
     delete:
-      operationId: R305
-      summary: 'R305 - Item, tag e coupon'
+      operationId: R626
+      summary: 'R626 - Item, tag e coupon'
       description: 'Removes a seller s item. Access: OWN, ADM'
       tags:
         - 'M02: Item'
@@ -1005,8 +1083,8 @@ paths:
 
   /api/coupon:
     get:
-      operationId: R306
-      summary: 'R306: Coupon List'
+      operationId: R627
+      summary: 'R627: Coupon List'
       description: 'Provide a list of Coupons. Access: PUB'
       tags:
         - 'M02: Items'
@@ -1031,8 +1109,8 @@ paths:
                   $ref: '#/components/schemas/Coupon'
 
     post: 
-      operationId: R307
-      summary: 'R307 - Item, tag e coupon'
+      operationId: R628
+      summary: 'R628 - Item, tag e coupon'
       description: 'Creates or updates coupon data. Access: OWN'
       tags:
         - 'M02: Item'
@@ -1073,8 +1151,8 @@ paths:
 
   /api/coupon/{couponCode}:
     get:
-      operationId: R308
-      summary: 'R308 - Item, tag e coupon'
+      operationId: R629
+      summary: 'R629 - Item, tag e coupon'
       description: 'Returns coupon information (name, code, discout amount, unit, description, expiration date). Access: PUB'
       tags:
         - 'M02: Item'
@@ -1090,8 +1168,8 @@ paths:
                 $ref: '#/components/schemas/Coupon'
 
     post: 
-      operationId: R309
-      summary: 'R309 - Item, tag e coupon'
+      operationId: R630
+      summary: 'R630 - Item, tag e coupon'
       description: 'Creates or updates coupon data. Access: OWN'
       tags:
         - 'M02: Item'
@@ -1130,12 +1208,12 @@ paths:
           description: Code already in use
 
         '404':
-          $ref: '#/components/responses/ItemNotFound' #when updating
+          $ref: '#/components/responses/ItemNotFound' 
 
-    # TODO: VER ISTO
+
     delete:
-      operationId: R310
-      summary: 'R310 - Item, tag e coupon'
+      operationId: R631
+      summary: 'R631 - Item, tag e coupon'
       description: 'Removes a seller s item. Access: OWN'
       tags:
         - 'M02: Item'
@@ -1150,10 +1228,10 @@ paths:
           $ref: '#/components/responses/ItemNotFound'
 
   /api/tag:
-    # TODO: Ir buscar todas as tags
+    
     get:
-      operationId: R312
-      summary: 'R312 - Item, tag e coupon'
+      operationId: R632
+      summary: 'R632 - Item, tag e coupon'
       description: 'Return all tags. Access: PUB'
       tags:
         - 'M02: Item'
@@ -1170,9 +1248,9 @@ paths:
                   type: string
 
 
-    post: #add TAG
-      operationId: R311
-      summary: 'R311 - Item, tag e coupon. Access: OWN'
+    post:
+      operationId: R633
+      summary: 'R633 - Item, tag e coupon. Access: OWN'
       description: Creates Tag
       tags:
         - 'M02: Item'
@@ -1200,8 +1278,8 @@ paths:
 
   /api/tag/{tagName}:
     get:
-      operationId: R312
-      summary: 'R312 - Item, tag e coupon'
+      operationId: R634
+      summary: 'R634 - Item, tag e coupon'
       description: 'Return tag. Access: PUB'
       tags:
         - 'M02: Item'
@@ -1221,10 +1299,10 @@ paths:
                     tagId:
                       type: integer
     
-    # TODO: Apagar tag
+   
     delete:
-      operationId: R3xx
-      summary: 'R3xx - Item, tag e coupon'
+      operationId: R635
+      summary: 'R635 - Item, tag e coupon'
       description: 'Delete tag. Access: ADM'
       tags:
         - 'M02: Item'
@@ -1237,72 +1315,6 @@ paths:
           description: 'Deleted tag'
 
 
-  /homepage:
-    get:
-      operationId: R401
-      summary: 'R401: Homepage'
-      description: 'Provide Homepage. Access: PUB'
-      tags:
-        - 'M04: Static pages'
-      responses:
-        '200':
-          description: 'Ok. Show [UI01](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/home_page.php)'
- 
-  /about_us:
-    get:
-      operationId: R402
-      summary: 'R402 About us'
-      description: 'Access about us page. Access: PUB'
-      tags:
-        - 'M04: Static pages'
-      responses:
-        '200':
-          
-          description: 'OK, Show [UI02](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/about_us.php)'
-
-  /dashboard:
-    get:
-      operationId: R501
-      summary: 'R501: View dashboard'
-      description: 'Show the admin options. Access: ADM'
-      tags:
-        - 'M05: User Administration'
-      responses:
-        '200':
-          description: 'Ok. Show [UI04.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/admin/dashboard.php)'
-
-  /dashboard/supplier:
-    get:
-      operationId: R502
-      summary: 'R502: View suppliers'
-      description: 'Show a list with all suppliers. Access: ADM'
-      tags:
-        - 'M05: User Administration'
-      responses:
-        '200':
-          description: 'Ok. Show [UI04.2](http://lbaw2131-piu.lbaw-prod.fe.up.pt/admin/view_req.php)'
-
-  /dashboard/item:
-    get:
-      operationId: R504
-      summary: 'R504: View items'
-      description: 'Show a list with all items. Access: ADM'
-      tags:
-        - 'M05: User Administration'
-      responses:
-        '200':
-          description: 'Ok. Show [UI04.3](http://lbaw2131-piu.lbaw-prod.fe.up.pt/admin/view_prods.php)'
-
-  /dashboard/users:
-    get:
-      operationId: R503
-      summary: 'R503: View users'
-      description: 'Show a list with all users. Access: ADM'
-      tags:
-        - 'M05: User Administration'
-      responses:
-        '200':
-          description: 'Ok. Show [UI04.4](http://lbaw2131-piu.lbaw-prod.fe.up.pt/admin/view_users.php)'
 
 components:
   schemas:
