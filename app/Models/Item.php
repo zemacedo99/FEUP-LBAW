@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
-  // Don't add create and update timestamps in database.
-  public $timestamps  = false;
+    public $timestamps  = false;
+    protected $table = 'item';
 
-  /**
-   * The card this item belongs to.
-   */
-  public function card() {
-    return $this->belongsTo('App\Models\Card');
-  }
+    use HasFactory;
+
+    public function images(){return $this->hasMany('App\Models\Image');}
+
+    public function supplier(){return $this->belongsTo('App\Models\Supplier');}
+
+    
 }
