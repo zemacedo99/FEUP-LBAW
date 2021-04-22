@@ -170,9 +170,9 @@ paths:
         - $ref: '#/components/parameters/ID'
 
       responses:
-        '200': 
+        '200':
           description: 'Ok. Show [UI06.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/supplier_profile.php)'
- 
+
   /supplier/{id}: #Mostra perfil publico
     get:
       operationId: R107
@@ -184,10 +184,10 @@ paths:
         - $ref: '#/components/parameters/ID'
 
       responses:
-        '200': 
+        '200':
           description: 'Ok. Show [UI13](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/detail.php)'
 
-  /client/{id}/profile: 
+  /client/{id}/profile:
     get:
       operationId: R108
       summary: 'R108: View client profile'
@@ -198,11 +198,11 @@ paths:
         - $ref: '#/components/parameters/ID'
 
       responses:
-        '200': 
+        '200':
           description: 'Ok. Show [UI05](http://lbaw2131-piu.lbaw-prod.fe.up.pt/client/client_profile.php)'
 
 
-  /supplier/{id}/createProduct: 
+  /supplier/{id}/createProduct:
     get:
       operationId: R201
       summary: 'R201: View create product page'
@@ -213,10 +213,10 @@ paths:
         - $ref: '#/components/parameters/ID'
 
       responses:
-        '200': 
+        '200':
           description: 'Ok. Show [UI06.2](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/create_product.php)'
 
-  /supplier/{id}/allProducts: 
+  /supplier/{id}/allProducts:
     get:
       operationId: R202
       summary: 'R202: View supplier products'
@@ -227,10 +227,10 @@ paths:
         - $ref: '#/components/parameters/ID'
 
       responses:
-        '200': 
+        '200':
           description: 'Ok. Show [UI06.3](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/all_products.php)'
 
-  /supplier/{id}/bundlesCoupons: 
+  /supplier/{id}/bundlesCoupons:
     get:
       operationId: R203
       summary: 'R203: View supplier bundles and cupons'
@@ -241,10 +241,10 @@ paths:
         - $ref: '#/components/parameters/ID'
 
       responses:
-        '200': 
+        '200':
           description: 'Ok. Show [UI06.4](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/bundles_and_cupons.php)'
 
-  /supplier/{id}/createBundle: 
+  /supplier/{id}/createBundle:
     get:
       operationId: R204
       summary: 'R204: View create bundle page'
@@ -255,10 +255,10 @@ paths:
         - $ref: '#/components/parameters/ID'
 
       responses:
-        '200': 
+        '200':
           description: 'Ok. Show [UI06.5](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/create_edit_bundle.php)'
 
-  /supplier/{id}/createCoupon: 
+  /supplier/{id}/createCoupon:
     get:
       operationId: R205
       summary: 'R205: View create coupon page'
@@ -269,9 +269,8 @@ paths:
         - $ref: '#/components/parameters/ID'
 
       responses:
-        '200': 
+        '200':
           description: 'Ok. Show [UI06.6](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/create_edit_coupon.php)'
-
 
 
   /client/{id}/checkoutInfo:
@@ -288,7 +287,6 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [UI10.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/checkout/cart_info.php)'
-          
 
   /client/{id}/checkoutPayment:
     get:
@@ -304,7 +302,7 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [UI10.2](http://lbaw2131-piu.lbaw-prod.fe.up.pt/checkout/shipping_payment.php)'
-  
+
 
   /search:
     get:
@@ -320,7 +318,8 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [UI11](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/products_list.php)'
-  /item/{id}: #TODO
+
+  /item/{id}:
     get:
       operationId: R209
       summary: 'R209: Item Page'
@@ -345,7 +344,7 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [UI01](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/home_page.php)'
- 
+
   /about_us:
     get:
       operationId: R402
@@ -355,7 +354,7 @@ paths:
         - 'M04: Static pages'
       responses:
         '200':
-          
+
           description: 'OK, Show [UI02](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/about_us.php)'
 
   /dashboard:
@@ -391,7 +390,6 @@ paths:
         '200':
           description: 'Ok. Show [UI04.4](http://lbaw2131-piu.lbaw-prod.fe.up.pt/admin/view_users.php)'
 
-
   /dashboard/item:
     get:
       operationId: R504
@@ -402,8 +400,6 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [UI04.3](http://lbaw2131-piu.lbaw-prod.fe.up.pt/admin/view_prods.php)'
-
-
 
 
   /api/supplier:
@@ -471,13 +467,13 @@ paths:
         '404':
           $ref: '#/components/responses/ItemNotFound'
 
-    post:
+    put:
       operationId: R604
       summary: 'R604: Change supplier profile Data'
       description: 'Alters supplier information. Access: ADM, OWN'
       tags:
         - 'M01: Authentication and Individual Profile'
-        
+
       parameters:
         - $ref: '#/components/parameters/ID'
 
@@ -527,7 +523,6 @@ paths:
 
         '404':
           $ref: '#/components/responses/404Error'
-
 
   /api/client:
     get:
@@ -588,16 +583,15 @@ paths:
       parameters:
         - $ref: '#/components/parameters/ID'
 
-      responses:  
-        '200': 
+      responses:
+        '200':
           description: 'Successfully returned the client info. Show [UI05.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/client/client_profile.php)'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Client'
 
-    
-    post:
+    put:
       operationId: R609
       summary: 'R609 - Change client information'
       description: 'Updates the client information'
@@ -629,10 +623,9 @@ paths:
       parameters:
         - $ref: '#/components/parameters/ID'
 
-      responses:  
+      responses:
         '200':  # TODO: Mudar
           description: 'Successfully deleted the client'
-
 
   /api/client/{id}/favorite:
     get:
@@ -648,7 +641,7 @@ paths:
         '200':  # Mudar
           description: Successfully returned the favorite list. Show [UI05.2](http://lbaw2131-piu.lbaw-prod.fe.up.pt/client/client_profile.php)
           content:
-            application/json: 
+            application/json:
               schema:
                 # array with favorite ids
                 type: array
@@ -775,7 +768,6 @@ paths:
         '204':
           description: Successfully removed review of item
 
-
   /api/client/{id}/cart:
     get:
       operationId: R617
@@ -891,7 +883,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/Product'
 
-
   /api/item:
     get:
       operationId: R622
@@ -919,10 +910,10 @@ paths:
                 items:
                   $ref: '#/components/schemas/ItemInList'
 
-    post: 
+    post:
       operationId: R623
       summary: 'R623 - Item, tag e coupon'
-      description: 'Creates or updates item (description, unit, stock, seller, image) and its reviews and tags. Acess: USR'
+      description: 'Creates item (description, unit, stock, seller, image). Acess: USR'
       tags:
         - 'M02: Item'
       requestBody:
@@ -1011,10 +1002,10 @@ paths:
                     bundle:
                       type: boolean
 
-    post:
+    put:
       operationId: R625
       summary: 'R625 - Item, tag e coupon'
-      description: 'Creates or updates item (description, unit, stock, seller, image) and its reviews and tags. Access: OWN'
+      description: 'Updates item (description, unit, stock, seller, image) and its reviews and tags. Access: OWN'
       tags:
         - 'M02: Item'
       parameters:
@@ -1108,7 +1099,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Coupon'
 
-    post: 
+    post:
       operationId: R628
       summary: 'R628 - Item, tag e coupon'
       description: 'Creates or updates coupon data. Access: OWN'
@@ -1147,7 +1138,7 @@ paths:
           description: Code already in use
 
         '404':
-          $ref: '#/components/responses/ItemNotFound' 
+          $ref: '#/components/responses/ItemNotFound'
 
   /api/coupon/{couponCode}:
     get:
@@ -1167,10 +1158,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Coupon'
 
-    post: 
+    put:
       operationId: R630
       summary: 'R630 - Item, tag e coupon'
-      description: 'Creates or updates coupon data. Access: OWN'
+      description: 'Updates coupon data. Access: OWN'
       tags:
         - 'M02: Item'
       parameters:
@@ -1208,8 +1199,7 @@ paths:
           description: Code already in use
 
         '404':
-          $ref: '#/components/responses/ItemNotFound' 
-
+          $ref: '#/components/responses/ItemNotFound'
 
     delete:
       operationId: R631
@@ -1228,7 +1218,6 @@ paths:
           $ref: '#/components/responses/ItemNotFound'
 
   /api/tag:
-    
     get:
       operationId: R632
       summary: 'R632 - Item, tag e coupon'
@@ -1247,11 +1236,10 @@ paths:
                 items:
                   type: string
 
-
     post:
       operationId: R633
       summary: 'R633 - Item, tag e coupon. Access: OWN'
-      description: Creates Tag
+      description: 'Creates Tag'
       tags:
         - 'M02: Item'
       requestBody:
@@ -1298,8 +1286,7 @@ paths:
                   properties:
                     tagId:
                       type: integer
-    
-   
+
     delete:
       operationId: R635
       summary: 'R635 - Item, tag e coupon'
@@ -1436,7 +1423,7 @@ components:
       required:
         - client_id
         - name
-        - email        
+        - email
         - password
       properties:
         client_id:
@@ -1447,7 +1434,7 @@ components:
           type: string
         password:
           type: string
-    
+
 
   parameters:
     ID:
