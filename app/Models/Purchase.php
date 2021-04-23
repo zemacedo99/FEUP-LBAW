@@ -9,10 +9,12 @@ class Purchase extends Model
 {
     public $timestamps  = false;
     protected $table = 'purchase';
+    protected $fillable = ['client_id', 'paid', 'purchase_date', 'type'];
+
     use HasFactory;
+    
 
     public function buyer(){return $this->belongsTo('App\Models\Shopper');}
 
-    public function items(){return $this->hasMany('App\Models\Item');}
-                            //$this->belongsToMany('App\Models\Person')->withPivot('price','amount');}
+    public function items() {return $this->belongsToMany('App\Models\Item', 'item_info')->withPivot('price', 'amount');}
 }

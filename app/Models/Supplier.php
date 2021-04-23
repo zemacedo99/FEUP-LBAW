@@ -9,13 +9,13 @@ class Supplier extends Model
 {
     public $timestamps  = false;
     protected $table = 'supplier';
+    protected $fillable = ['name', 'address', 'post_code', 'city', 'description', 'accepted', 'image_id'];
+
     use HasFactory;
 
-    public function itens(){return $this->hasMany('App\Models\Item');}
+    public function items(){return $this->hasMany('App\Models\Item');}
 
     public function coupons(){return $this->hasMany('App\Models\Coupon');}
 
     public function image(){return $this->hasOne('App\Models\Image');}
-
-
 }

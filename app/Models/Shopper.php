@@ -9,10 +9,9 @@ class Shopper extends Model
 {
     public $timestamps  = false;
     protected $table = 'shopper';
+    protected $fillable = ['email', 'password'];
     
     use HasFactory;
 
-
-    public function cart(){return $this->hasOne('App\Models\Cart');}
-
+    
 }

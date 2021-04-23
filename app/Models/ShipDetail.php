@@ -9,6 +9,9 @@ class ShipDetail extends Model
 {
     public $timestamps  = false;
     protected $table = 'ship_detail';
+    protected $fillable = ['first_name', 'last_name', 'address', 'door_n', 'post_code', 'district', 'city', 'country', 'phone_n', 'client_id'];
+
+
     use HasFactory;
 
     public function client() { return $this->belongsTo('App\Models\Client');}

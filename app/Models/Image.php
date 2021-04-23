@@ -9,6 +9,8 @@ class Image extends Model
 {
     public $timestamps  = false;
     protected $table = 'image';
+    protected $fillable = ['path'];
+
     
     use HasFactory;
 
@@ -16,5 +18,5 @@ class Image extends Model
 
     public function client() { return $this->hasOne('App\Models\Client');}
 
-    public function products() { return $this->belongsTo('App\Models\Product');}
+    public function products() { return $this->belongsToMany('App\Models\Product');}
 }
