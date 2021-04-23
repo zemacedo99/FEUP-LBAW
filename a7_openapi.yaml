@@ -921,9 +921,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object    # TODO: Secalhar criar component?
+              type: object
               required:
                 - sellerid
+                - description
+                - quantityAvailable
+                - price
+                - unit
+                - images
               properties:
                 sellerid:
                   type: integer
@@ -1113,12 +1118,16 @@ paths:
               type: object
               required:
                 - sellerid
+                - name
+                - amount
+                - unit
+                - expirationDate
               properties:
                 sellerid:
                   type: integer
                 name:
                   type: string
-                discount:
+                amount:
                   type: number
                 unit:
                   type: string
@@ -1126,6 +1135,7 @@ paths:
                   type: string
                 expirationDate:
                   type: string
+
 
       responses:
         '204':
@@ -1179,7 +1189,7 @@ paths:
                   type: integer
                 name:
                   type: string
-                discount:
+                amount:
                   type: number
                 unit:
                   type: string
@@ -1407,7 +1417,7 @@ components:
           type: string
         code:
           type: string
-        discount:
+        amount:
           type: number
         unit:
           type: string
