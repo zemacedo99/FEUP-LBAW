@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS item_product       CASCADE;
 DROP TABLE IF EXISTS item_tag           CASCADE;
 DROP TABLE IF EXISTS image_product      CASCADE;
 DROP TABLE IF EXISTS client_item        CASCADE;
-DROP TABLE IF EXISTS cart               CASCADE;
+DROP TABLE IF EXISTS carts               CASCADE;
 
 DROP MATERIALIZED VIEW IF EXISTS fts_view_weights;
 
