@@ -11,6 +11,8 @@
 |
 */
 // Home
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', 'Auth\LoginController@home');
 
 // Cards
