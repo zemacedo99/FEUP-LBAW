@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Item;
+use App\Models\Client;
+use App\Models\CreditCard;
 use Illuminate\Http\Request;
 
-class ItemController extends Controller
+class CreditCardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,9 +23,11 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $creditCard = CreditCard::create([
+            
+        ]);
     }
 
     /**
@@ -35,16 +38,16 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\CreditCard  $creditCard
      * @return \Illuminate\Http\Response
      */
-    public function show(Item $item)
+    public function show(CreditCard $creditCard)
     {
         //
     }
@@ -52,10 +55,10 @@ class ItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\CreditCard  $creditCard
      * @return \Illuminate\Http\Response
      */
-    public function edit(Item $item)
+    public function edit(CreditCard $creditCard)
     {
         //
     }
@@ -64,10 +67,10 @@ class ItemController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\CreditCard  $creditCard
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Item $item)
+    public function update(Request $request, CreditCard $creditCard)
     {
         //
     }
@@ -75,10 +78,10 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\CreditCard  $creditCard
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function destroy(CreditCard $creditCard)
     {
         //
     }

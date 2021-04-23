@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Item;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 
-class ItemController extends Controller
+class CouponController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,9 +22,17 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $coupon = Coupon::create([
+            'code' => $request->input('code'),
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'expiration' => $request->input('expiration'),
+            'type' => $request->input('type'),
+            'supplier_id' => $request->input('supplier_id'),
+        ]);
+        return $coupon;
     }
 
     /**
@@ -41,21 +49,21 @@ class ItemController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function show(Item $item)
+    public function show(Coupon $coupon)
     {
-        //
+        return 
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function edit(Item $item)
+    public function edit(Coupon $coupon)
     {
         //
     }
@@ -64,10 +72,10 @@ class ItemController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Item $item)
+    public function update(Request $request, Coupon $coupon)
     {
         //
     }
@@ -75,10 +83,10 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function destroy(Coupon $coupon)
     {
         //
     }
