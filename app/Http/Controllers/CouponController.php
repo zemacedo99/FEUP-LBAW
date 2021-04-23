@@ -54,24 +54,7 @@ class CouponController extends Controller
      */
     public function show(Request $request)
     {
-        // Get coupon by code
-        if($request->has("couponCode")){
-            return Coupon::where('code', '=', $request->input("couponCode"));
-        }
-
-
-        
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Coupon  $coupon
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Request $request)
-    {
-        //
+        return Coupon::where('code', '=', $request->input("couponCode"))->get();        
     }
 
     /**
@@ -81,9 +64,11 @@ class CouponController extends Controller
      * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Coupon $coupon)
+    public function update(Request $request)
     {
-        //
+        $coupon = Coupon::where('code', '=', $request->input("couponCode"))->get();
+        if($request->has('name')){
+        }
     }
 
     /**

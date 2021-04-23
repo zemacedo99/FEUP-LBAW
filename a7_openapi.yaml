@@ -1135,8 +1135,6 @@ paths:
                   type: string
                 expirationDate:
                   type: string
-
-
       responses:
         '204':
           description: Successfully added/updated item

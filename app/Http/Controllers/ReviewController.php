@@ -14,6 +14,7 @@ class ReviewController extends Controller
      */
     public function index(Request $request)
     {   
+        // Acho que é com get
         return Review::where('item_id', "=", $request->input("item_id"))->lists('user_id', 'rating', 'description');
     }
 
