@@ -9,6 +9,9 @@ class Coupon extends Model
 {
     public $timestamps  = false;
     protected $table = 'coupon';
+    protected $fillable = ['name'];
+
+
     use HasFactory;
 
 
