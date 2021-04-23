@@ -12,9 +12,9 @@ class CouponController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return Coupon::where('supplier_id', '=', $request->input("supplierId"))->get();
     }
 
     /**
@@ -52,9 +52,15 @@ class CouponController extends Controller
      * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function show(Coupon $coupon)
+    public function show(Request $request)
     {
-        return 
+        // Get coupon by code
+        if($request->has("couponCode")){
+            return Coupon::where('code', '=', $request->input("couponCode"));
+        }
+
+
+        
     }
 
     /**
@@ -63,7 +69,7 @@ class CouponController extends Controller
      * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function edit(Coupon $coupon)
+    public function edit(Request $request)
     {
         //
     }

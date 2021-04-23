@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 class ReviewController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the reviews of a product.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(Request $request)
+    {   
+        return Review::where('item_id', "=", $request->input("item_id"))->lists('user_id', 'rating', 'description');
     }
 
     /**
@@ -22,54 +22,15 @@ class ReviewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Review  $review
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Review $review)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Review  $review
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Review $review)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Review  $review
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Review $review)
-    {
-        //
+        $review = Review::create([
+            'client_id' => $request->input('client_id'),
+            'item_id' => $request->input('item_id'),
+            'rating' => $request->input('rating'),
+            'description' => $request->input('description'),
+        ]);
+        return $review;
     }
 
     /**
@@ -78,8 +39,12 @@ class ReviewController extends Controller
      * @param  \App\Models\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Review $review)
+    public function delete(Request $request, $id)
     {
+        $review = Review::find($id);
+        $this->authorize('delete', $review);
+        $review->delete();
+        return $review;
         //
     }
 }

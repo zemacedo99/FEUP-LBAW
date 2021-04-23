@@ -1107,7 +1107,7 @@ paths:
     post:
       operationId: R628
       summary: 'R628 - Item, tag e coupon'
-      description: 'Creates or updates coupon data. Access: OWN'
+      description: 'Creates coupon data. Access: OWN'
       tags:
         - 'M02: Item'
       requestBody:
