@@ -14,6 +14,9 @@ class CouponController extends Controller
      */
     public function index(Request $request)
     {
+        $request->validate([
+            'supplierID' => 'integer|unique:coupons'
+        ]);
         return Coupon::where('supplier_id', '=', $request->input("supplierId"))->get();
     }
 
@@ -68,7 +71,25 @@ class CouponController extends Controller
     {
         $coupon = Coupon::where('code', '=', $request->input("couponCode"))->get();
         if($request->has('name')){
+            $coupon->name = $request->input('name'); 
         }
+
+        if($request->has('amount')){
+            $coupon->name = $request->input('amount'); 
+        }
+
+        if($request->has('unit')){
+            $coupon->name = $request->input('unit'); 
+        }
+
+        if($request->has('description')){
+            $coupon->name = $request->input('description'); 
+        }
+
+        if($request->has('expirationDate')){
+            $coupon->name = $request->input('expirationDate'); 
+        }
+        $coupon->save();
     }
 
     /**
@@ -77,8 +98,8 @@ class CouponController extends Controller
      * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Coupon $coupon)
+    public function destroy(Request $request)
     {
-        //
+        Coupon::where('code', '=', $request->input("couponCode"))->delete();
     }
 }

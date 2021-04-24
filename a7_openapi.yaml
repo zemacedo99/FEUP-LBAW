@@ -1212,7 +1212,7 @@ paths:
     delete:
       operationId: R631
       summary: 'R631 - Item, tag e coupon'
-      description: 'Removes a seller s item. Access: OWN'
+      description: 'Removes a coupon. Access: OWN'
       tags:
         - 'M02: Item'
 
@@ -1221,7 +1221,7 @@ paths:
 
       responses:
         '204':
-          description: Successfully removed/deactivated item
+          description: Successfully removed coupon
         '404':
           $ref: '#/components/responses/ItemNotFound'
 
