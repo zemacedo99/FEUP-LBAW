@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Supplier extends Model
 {
     public $timestamps  = false;
-    protected $table = 'supplier';
     protected $fillable = ['name', 'address', 'post_code', 'city', 'description', 'accepted', 'image_id'];
 
     use HasFactory;

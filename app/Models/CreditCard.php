@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class CreditCard extends Model
 {
     public $timestamps  = false;
-    protected $table = 'credit_card';
     protected $fillable = ['cc_id', 'card_n', 'expiration', 'cvv', 'holder', 'client_id'];
 
 

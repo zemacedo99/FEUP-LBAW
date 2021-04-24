@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Tag extends Model
 {
     public $timestamps  = false;
-    protected $table = 'tag';
     protected $fillable = ['value'];
 
     use HasFactory;

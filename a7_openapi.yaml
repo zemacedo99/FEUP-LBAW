@@ -1115,26 +1115,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - sellerid
-                - name
-                - amount
-                - unit
-                - expirationDate
-              properties:
-                sellerid:
-                  type: integer
-                name:
-                  type: string
-                amount:
-                  type: number
-                unit:
-                  type: string
-                description:
-                  type: string
-                expirationDate:
-                  type: string
+              $ref: '#/components/schemas/Coupon'
       responses:
         '204':
           description: Successfully added/updated item
@@ -1179,26 +1160,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - sellerid
-              properties:
-                sellerid:
-                  type: integer
-                name:
-                  type: string
-                amount:
-                  type: number
-                unit:
-                  type: string
-                description:
-                  type: string
-                expirationDate:
-                  type: string
+              $ref: '#/components/schemas/Coupon'
 
       responses:
         '204':
           description: Successfully added/updated item
+          
+        '403':
+          description: You do not own this coupon
 
         '405':
           description: Method not allowed
@@ -1222,6 +1191,10 @@ paths:
       responses:
         '204':
           description: Successfully removed coupon
+  
+        '403':
+          description: You do not own this coupon
+
         '404':
           $ref: '#/components/responses/ItemNotFound'
 
@@ -1422,7 +1395,7 @@ components:
           type: string
         expirationDate:
           type: string
-        sellerId:
+        supplierID:
           type: integer
 
     ClientInfo:

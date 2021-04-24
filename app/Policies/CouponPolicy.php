@@ -53,7 +53,7 @@ class CouponPolicy
      */
     public function update(User $user, Coupon $coupon)
     {
-        //
+        return $user->id === $coupon->supplierID;
     }
 
     /**
@@ -65,7 +65,7 @@ class CouponPolicy
      */
     public function delete(User $user, Coupon $coupon)
     {
-        //
+        return $user->id === $coupon->supplierID;
     }
 
     /**

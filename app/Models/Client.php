@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     public $timestamps  = false;
-    protected $table = 'client';
-    protected $fillable = ['code', 'name', 'description', 'expiration', 'type', 'amount', 'supplier_id'];
+    protected $fillable = ['name'];
 
     use HasFactory;
 
