@@ -42,6 +42,7 @@ class SupplierPolicy
     public function create(User $user)
     {
         //
+        return true;
     }
 
     /**
@@ -54,6 +55,7 @@ class SupplierPolicy
     public function update(User $user, Supplier $supplier)
     {
         //
+        return $user->id==$supplier->id || $user->isAdministrator;
     }
 
     /**
@@ -66,6 +68,7 @@ class SupplierPolicy
     public function delete(User $user, Supplier $supplier)
     {
         //
+        return $user->id==$supplier->id || $user->isAdministrator;
     }
 
     /**

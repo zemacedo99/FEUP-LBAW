@@ -30,7 +30,9 @@ class ShipDetailPolicy
      */
     public function view(User $user, ShipDetail $shipDetail)
     {
+        FALTA deixar o vendedor tmb ver
         //
+        return $user->id==shipDetail->Client()->id;
     }
 
     /**
@@ -42,6 +44,7 @@ class ShipDetailPolicy
     public function create(User $user)
     {
         //
+        return $user->isClient;
     }
 
     /**
@@ -54,6 +57,7 @@ class ShipDetailPolicy
     public function update(User $user, ShipDetail $shipDetail)
     {
         //
+        return false;
     }
 
     /**
@@ -66,6 +70,7 @@ class ShipDetailPolicy
     public function delete(User $user, ShipDetail $shipDetail)
     {
         //
+        return false;
     }
 
     /**
@@ -78,6 +83,7 @@ class ShipDetailPolicy
     public function restore(User $user, ShipDetail $shipDetail)
     {
         //
+        return false;
     }
 
     /**
@@ -90,5 +96,6 @@ class ShipDetailPolicy
     public function forceDelete(User $user, ShipDetail $shipDetail)
     {
         //
+        return false;
     }
 }

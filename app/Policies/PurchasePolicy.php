@@ -30,7 +30,9 @@ class PurchasePolicy
      */
     public function view(User $user, Purchase $purchase)
     {
-        //
+        //only buyer, supplier or admin may see it
+        TÁ MAL 
+        return $user->isAdministrator||$user->id==$purchase->client_id||$user->id==$purchase->item->supplier->id;
     }
 
     /**
@@ -42,6 +44,7 @@ class PurchasePolicy
     public function create(User $user)
     {
         //
+        return $user->isClient;
     }
 
     /**
@@ -54,6 +57,7 @@ class PurchasePolicy
     public function update(User $user, Purchase $purchase)
     {
         //
+        return false;
     }
 
     /**
@@ -66,6 +70,7 @@ class PurchasePolicy
     public function delete(User $user, Purchase $purchase)
     {
         //
+        return false;
     }
 
     /**
@@ -78,6 +83,7 @@ class PurchasePolicy
     public function restore(User $user, Purchase $purchase)
     {
         //
+        return false;
     }
 
     /**
@@ -90,5 +96,6 @@ class PurchasePolicy
     public function forceDelete(User $user, Purchase $purchase)
     {
         //
+        return false;
     }
 }

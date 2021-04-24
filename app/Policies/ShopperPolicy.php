@@ -31,6 +31,7 @@ class ShopperPolicy
     public function view(User $user, Shopper $shopper)
     {
         //
+        return true;
     }
 
     /**
@@ -42,6 +43,7 @@ class ShopperPolicy
     public function create(User $user)
     {
         //
+        return true;
     }
 
     /**
@@ -54,6 +56,7 @@ class ShopperPolicy
     public function update(User $user, Shopper $shopper)
     {
         //
+        return $user->id==$shopper->id;
     }
 
     /**
@@ -66,6 +69,7 @@ class ShopperPolicy
     public function delete(User $user, Shopper $shopper)
     {
         //
+        return $user->id==$shopper->id || $user->isAdministrator;
     }
 
     /**

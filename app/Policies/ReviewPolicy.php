@@ -10,17 +10,7 @@ class ReviewPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
-     */
-    public function viewAny(User $user)
-    {
-        //
-    }
-
+    
     /**
      * Determine whether the user can view the model.
      *
@@ -30,7 +20,8 @@ class ReviewPolicy
      */
     public function view(User $user, Review $review)
     {
-        //
+        //anybody can view
+        return true;
     }
 
     /**
@@ -41,7 +32,9 @@ class ReviewPolicy
      */
     public function create(User $user)
     {
-        //
+        //only allow if user as purchased it
+        $purchase=DB::table('purchase')->where('user_id','===',$user->user_id)->get();
+        return sizeof($purchase)==0;
     }
 
     /**
@@ -53,7 +46,8 @@ class ReviewPolicy
      */
     public function update(User $user, Review $review)
     {
-        //
+        //only author
+        return $user->id == $review->user_id;
     }
 
     /**
@@ -65,7 +59,8 @@ class ReviewPolicy
      */
     public function delete(User $user, Review $review)
     {
-        //
+        //only author and administrator can remove
+        return $user->isAdministrator||$user->id == $review->user_id;
     }
 
     /**
@@ -78,6 +73,7 @@ class ReviewPolicy
     public function restore(User $user, Review $review)
     {
         //
+        return $user->isAdministrator;
     }
 
     /**
@@ -90,5 +86,6 @@ class ReviewPolicy
     public function forceDelete(User $user, Review $review)
     {
         //
+        return $user->isAdministrator;
     }
 }
