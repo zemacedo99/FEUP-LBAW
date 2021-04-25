@@ -300,3 +300,12 @@ label.active {
 
 }
 /* END SIDEBAR */
+
+.footer {
+  position: relative;
+  top: 10em;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: left;
+}

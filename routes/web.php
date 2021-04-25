@@ -18,5 +18,9 @@ use Illuminate\Support\Facades\Route;
 // Route::view('/', 'pages/misc.bundle_detail');
 // Route::view('/', 'pages/misc.home_page');
 // Route::view('/', 'pages/misc.product_detail');
+// Route::view('/', 'pages/misc.products_list');
 
-Route::view('/', 'pages/misc.products_list');
+// Route::view('/', 'pages/checkout.add_credit_card');
+// Route::view('/', 'pages/checkout.edit_credit_card');
+// Route::view('/', 'pages/checkout.cart_info');
+Route::view('/', 'pages/checkout.shipping_payment');
