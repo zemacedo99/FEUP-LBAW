@@ -22,9 +22,36 @@ class PurchaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+
+        if (!Auth::check()) return redirect('/login');
+
         //
+        $purchase = new Purchase();
+
+        $this->authorize('create', $purchase);
+        $purchase->client_id=$request->user_id;
+        //$purchase->paid
+        $purchase->purchase_date=Carbon::now()->toDateString();
+        $purchase->save();
+
+        $carts=DB::table('carts')->where('client_id', '===', $request->client_id)->get();
+
+        foreach ($carts as $cart){
+            $item_purchase = new ItemPurchase();
+            $this->authorize('create', $item_purchase);
+            $item_purchase->purchase_id=$purchase->id;
+            $item_purchase->item_id=$cart->item_id;
+            // $item_purchase->price
+            // $item_purchase->amount
+            $item_purchase->save();
+        }
+        // $purchase->name = $request->input('name');
+        // $purchase->user_id = Auth::user()->id;
+
+
+        return $purchase;
         
     }
 

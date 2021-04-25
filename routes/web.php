@@ -20,6 +20,8 @@ Route::get('/api/coupon/{couponCode}', 'CouponController@show');
 Route::put('/api/coupon/{couponCode}', 'CouponController@update');
 Route::delete('/api/coupon/{couponCode}', 'CouponController@destroy');
 
+Route::get('/api/review', 'ReviewController@index');
+
 
 
 // Route::get('/', 'Auth\LoginController@home');

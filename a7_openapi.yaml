@@ -698,15 +698,20 @@ paths:
         '204':
           description: Successfully removed item to favorite list
 
-  /api/client/{id}/review:
+  /api/review:
     get:
       operationId: R614
       summary: 'R614 - View product reviews'
-      description: 'Returns all reviews done by a user. Access: PUB'
+      description: 'Returns all reviews done to an item. Access: PUB'
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
       parameters:
-        - $ref: '#/components/parameters/ID'
+        - name: id_item
+          in: query
+          required: true
+          description: The ID number
+          schema:
+            type: integer
 
       responses:
         '200':
@@ -726,9 +731,6 @@ paths:
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
 
-      parameters:
-        - $ref: '#/components/parameters/ID'
-
       requestBody:
         required: true
         content:
@@ -736,13 +738,19 @@ paths:
             schema:
               type: object
               required:
-                - userid
+                - client_id
+                - item_id
                 - review
               properties:
-                userid:
+                client_id:
                   type: integer
-                itemid:
-                  $ref: '#/components/schemas/Review'
+                item_id:
+                  type: integer
+                rating:
+                  type: integer
+                description:
+                  type: string
+                  # $ref: '#/components/schemas/Review'
 
       responses:
         '204':
