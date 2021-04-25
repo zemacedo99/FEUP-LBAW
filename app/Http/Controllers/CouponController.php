@@ -13,11 +13,14 @@ class CouponController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
+    {   //VER
+        
         $request->validate([
             'supplierID' => 'required|integer'
         ]);
-        return Coupon::where('supplier_id', '=', $request->input("supplierId"))->get();
+        
+        return Coupon::where('supplier_id', '=', $request->input("supplierID"))->get();
+
     }
 
     /**
@@ -36,20 +39,31 @@ class CouponController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $coupon)
-    {
+    public function store(Request $request)
+    {   // Tá todo fossado e nem sei pq
+        
         $request->validate([
-            'code' => 'required|string|unique:coupons,code',
-            'name' => 'required|string',
-            'description' => 'required|string',
-            'expiration' => 'required|string',
-            'type' => 'required|integer',
-            'supplierID' => 'required|integer'
+            'coupon.code' => 'required|string|unique:coupons,code',
+            'coupon.name' => 'required|string',
+            'coupon.description' => 'required|string',
+            'coupon.amount' => 'required|numeric',
+            'coupon.expirationDate' => 'required|string',
+            'coupon.unit' => 'required|string',
+            'coupon.supplierID' => 'required|integer'
         ]);
 
-        $created_coupon = Coupon::create($coupon);
+        $created_coupon = Coupon::create([
+            'code' => $request->input('coupon.code'),
+            'name' => $request->input('coupon.name'),
+            'description' => $request->input('coupon.description'),
+            'expiration' => $request->input('coupon.expirationDate'),
+            'amount' => $request->input('coupon.amount'),
+            'type' => $request->input('coupon.unit'),
+            'supplier_id' => $request->input('coupon.supplierID'),
+        
+        ]);
 
-        return $created_coupon;
+        return "HELLO";
     }
 
     /**
@@ -58,13 +72,14 @@ class CouponController extends Controller
      * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $couponCode)
-    {
-        $request->validate([
-            'couponCode' => 'required|string|unique:coupons,code'
-        ]);
+    public function show($couponCode)
+    {   // Testado
+        $coupon = Coupon::where('code', '=', $couponCode)->get();
 
-        return Coupon::where('code', '=', $couponCode)->get();        
+        if($coupon->isEmpty()){
+            return response('', 404)->header('description', 'Coupon not found');
+        }
+        return $coupon;
     }
 
     /**
@@ -74,31 +89,43 @@ class CouponController extends Controller
      * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
-    {
-        $coupon = Coupon::where('code', '=', $request->input("couponCode"))->get();
+    public function update(Request $request, $couponCode)
+    {   //Testado!
+        
 
-        if($request->has('name')){
-            $coupon->name = $request->input('name'); 
+        $collection_coupon = Coupon::where('code', '=', $couponCode)->get();
+        
+        
+        if($collection_coupon->isEmpty()){
+            return response('', 404)->header('description','Coupon not found');
         }
 
-        if($request->has('amount')){
-            $coupon->name = $request->input('amount'); 
+       
+        $coupon = $collection_coupon->first();
+
+        if($request->has('coupon.name')){
+            $coupon->name = $request->input('coupon.name'); 
         }
 
-        if($request->has('unit')){
-            $coupon->name = $request->input('unit'); 
+        if($request->has('coupon.amount')){
+            $coupon->amount = $request->input('coupon.amount'); 
         }
 
-        if($request->has('description')){
-            $coupon->name = $request->input('description'); 
+        if($request->has('coupon.unit')){
+            $coupon->type = $request->input('coupon.unit'); 
         }
 
-        if($request->has('expirationDate')){
-            $coupon->name = $request->input('expirationDate'); 
+        if($request->has('coupon.description')){
+            $coupon->description = $request->input('coupon.description'); 
+        }
+
+        if($request->has('coupon.expirationDate')){
+            $coupon->expiration = $request->input('coupon.expirationDate'); 
         }
         
         $coupon->save();
+        
+        return response('', 204,)->header('description', 'Successfully updated coupon');
     }
 
     /**

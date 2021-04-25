@@ -1139,6 +1139,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/couponCode'
 
+      
+
       responses:
         '200':
           description: Successfully returned coupon
@@ -1146,6 +1148,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Coupon'
+        '404':
+          description: Coupon not found
 
     put:
       operationId: R630
@@ -1155,6 +1159,7 @@ paths:
         - 'M02: Item'
       parameters:
         - $ref: '#/components/parameters/couponCode'
+
       requestBody:
         required: true
         content:
@@ -1164,19 +1169,16 @@ paths:
 
       responses:
         '204':
-          description: Successfully added/updated item
+          description: Successfully updated coupon
           
         '403':
           description: You do not own this coupon
 
         '405':
-          description: Method not allowed
-
-        '422':
-          description: Code already in use
+          description: Method not allowed 
 
         '404':
-          $ref: '#/components/responses/ItemNotFound'
+          description: Coupon not found
 
     delete:
       operationId: R631
@@ -1417,6 +1419,8 @@ components:
 
 
   parameters:
+
+
     ID:
       name: id
       in: path

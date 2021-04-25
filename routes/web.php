@@ -13,7 +13,7 @@
 // Home
 use Illuminate\Support\Facades\Route;
 
-
+// Coupon
 Route::get('/api/coupon', 'CouponController@index');
 Route::post('/api/coupon', 'CouponController@store');
 Route::get('/api/coupon/{couponCode}', 'CouponController@show');
