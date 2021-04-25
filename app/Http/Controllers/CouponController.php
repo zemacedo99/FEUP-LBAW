@@ -13,7 +13,7 @@ class CouponController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {   //VER
+    {   //Testado!
         
         $request->validate([
             'supplierID' => 'required|integer'
@@ -40,7 +40,7 @@ class CouponController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   // Tá todo fossado e nem sei pq
+    {   //Continua com o erro do increment
         
         $request->validate([
             'coupon.code' => 'required|string|unique:coupons,code',
@@ -63,7 +63,7 @@ class CouponController extends Controller
         
         ]);
 
-        return "HELLO";
+        return response('', 204)->header('description', 'Successfully added item');
     }
 
     /**
@@ -134,12 +134,18 @@ class CouponController extends Controller
      * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
-    {
-        $request->validate([
-            'couponCode' => 'required|string|unique:coupons,code'
-        ]);
+    public function destroy($couponCode)
+    {   //Testado
+        $coupon_builder = Coupon::where('code', '=', $couponCode);
         
-        Coupon::where('code', '=', $request->input("couponCode"))->delete();
+
+
+        if($coupon_builder->get()->isEmpty()){
+            return response('', 404,)->header('description', 'Coupon not found');
+        }
+
+        $coupon_builder->delete();
+
+        return response('', 204,)->header('description', 'Successfully removed coupon');
     }
 }

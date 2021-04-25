@@ -1118,7 +1118,7 @@ paths:
               $ref: '#/components/schemas/Coupon'
       responses:
         '204':
-          description: Successfully added/updated item
+          description: Successfully added item
 
         '405':
           description: Method not allowed
@@ -1198,7 +1198,7 @@ paths:
           description: You do not own this coupon
 
         '404':
-          $ref: '#/components/responses/ItemNotFound'
+          description: Coupon not found
 
   /api/tag:
     get:

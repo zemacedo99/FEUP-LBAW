@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Coupon extends Model
 {
     public $timestamps  = false;
-    protected $fillable = ['code', 'name', 'description', 'expiration', 'type', 'amount', 'supplier_id'];
+    protected $fillable = ['id', 'code', 'name', 'description', 'expiration', 'type', 'amount', 'supplier_id'];
 
 
 
