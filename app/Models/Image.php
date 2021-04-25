@@ -17,9 +17,9 @@ class Image extends Model
      * An image can belong to many shoppers (Has default value 1)
      * A Shopper can only have 1 image
      */
-    public function supplier() { return $this->belongsTo('App\Models\Supplier');}
+    public function supplier() { return $this->hasMany('App\Models\Supplier');}
 
-    public function client() { return $this->belongsTo('App\Models\Client');}
+    public function client() { return $this->hasMany('App\Models\Client');}
 
     /*
      * Each Product has many images

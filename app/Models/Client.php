@@ -23,5 +23,5 @@ class Client extends Model
     public function item_carts() {return $this->belongsToMany('App\Models\Item', 'carts')
         ->withPivot('quantity');}
 
-    public function image(){return $this->hasOne('App\Models\Image');}
+    public function image(){return $this->belongsTo('App\Models\Image');}
 }
