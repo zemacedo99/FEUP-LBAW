@@ -14,6 +14,7 @@
 use Illuminate\Support\Facades\Route;
 
 
-// Route::view('/', 'pages.about_us');
-// Route::view('/', 'pages.bundleDetail');
-Route::view('/', 'pages.home_page');
+Route::view('/about_us', 'pages.about_us')->name('about_us');
+Route::view('/bundle_detail', 'pages.bundleDetail');
+Route::view('/', 'pages.home_page')->name('homepage');
+Route::view('/map', 'pages.site_map')->name('map');

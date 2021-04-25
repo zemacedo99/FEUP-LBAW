@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'MyGarden') }}</title>
 
     <!-- Styles -->
     <!-- Bootstrap CSS -->
@@ -30,11 +30,6 @@
     <!-- Self included style and scripts -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
 
-    <script type="text/javascript">
-        // Fix for Firefox autofocus CSS bug
-        // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
-
-    </script>
     <script type="text/javascript" src={{ asset('js/app.js') }} defer>
     </script>
 </head>
