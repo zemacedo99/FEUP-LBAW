@@ -10,12 +10,20 @@ class Image extends Model
     public $timestamps  = false;
     protected $fillable = ['path'];
 
-    
+
     use HasFactory;
 
-    public function supplier() { return $this->hasOne('App\Models\Supplier');}
+    /* Shopper and Image is one to many
+     * An image can belong to many shoppers (Has default value 1)
+     * A Shopper can only have 1 image
+     */
+    public function supplier() { return $this->hasMany('App\Models\Supplier');}
 
-    public function client() { return $this->hasOne('App\Models\Client');}
+    public function client() { return $this->hasMany('App\Models\Client');}
 
-    public function products() { return $this->belongsToMany('App\Models\Product');}
+    /*
+     * Each Product has many images
+     * But each image belongs to one product
+     */
+    public function products() { return $this->belongsTo('App\Models\Product');}
 }

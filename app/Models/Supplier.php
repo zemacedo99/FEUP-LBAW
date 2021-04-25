@@ -16,5 +16,5 @@ class Supplier extends Model
 
     public function coupons(){return $this->hasMany('App\Models\Coupon');}
 
-    public function image(){return $this->hasOne('App\Models\Image');}
+    public function image(){return $this->belongsTo('App\Models\Image');}
 }
