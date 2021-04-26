@@ -159,7 +159,7 @@ paths:
                   description: 'Successful authentication. Redirect to Supplier profile'
                   value: '/supplier/{id}'
 
-/supplier: #Mostra todos os suppliers
+  /supplier: #Mostra todos os suppliers
     get:
       operationId: R106
       summary: 'R106: Get all suppliers'
@@ -955,7 +955,7 @@ paths:
 
       parameters:
         - $ref: '#/components/parameters/Limit'
-        - $ref: '#/components/parameters/Search'
+        - $ref: '#/components/parameters/Search'      # O que é isso?
         - in: query
           name: supplierId
           schema:
@@ -985,22 +985,27 @@ paths:
             schema:
               type: object
               required:
-                - sellerid
-                - description
-                - quantityAvailable
+                - supplier_id
+                - name
                 - price
-                - unit
+                - quantityAvailable
+                - description
                 - images
+
               properties:
-                sellerid:
+                supplier_id:
                   type: integer
+                name:
+                  type: string
                 description:
                   type: string
                 quantityAvailable:
                   type: integer
                 price:
                   type: number
-
+                type:
+                  type: string
+                  
                 images:
                   type: array
                   items:
@@ -1069,6 +1074,8 @@ paths:
             schema:
               type: object
               properties:
+                name:
+                  type: string
                 description:
                   type: string
                 quantityAvailable:

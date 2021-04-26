@@ -52,7 +52,7 @@ class CouponController extends Controller
             'coupon.supplierID' => 'required|integer'
         ]);
 
-        $created_coupon = Coupon::create([
+        Coupon::create([
             'code' => $request->input('coupon.code'),
             'name' => $request->input('coupon.name'),
             'description' => $request->input('coupon.description'),
