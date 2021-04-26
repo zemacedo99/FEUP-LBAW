@@ -25,4 +25,6 @@ use Illuminate\Support\Facades\Route;
 // Route::view('/', 'pages/checkout.cart_info');
 // Route::view('/', 'pages/checkout.shipping_payment');
 
-Route::view('/', 'pages/client.client_profile');
+// Route::view('/', 'pages/client.client_profile');
+
+Route::view('/', 'pages/credentials.register');
