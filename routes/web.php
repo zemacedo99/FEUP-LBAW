@@ -13,7 +13,7 @@
 // Home
 use Illuminate\Support\Facades\Route;
 
-
+// Coupon
 Route::get('/api/coupon', 'CouponController@index');
 Route::post('/api/coupon', 'CouponController@store');
 Route::get('/api/coupon/{couponCode}', 'CouponController@show');
@@ -27,7 +27,6 @@ Route::delete('/api/review', 'ReviewController@delete');
 
 Route::get('/api/client/{id}/history', 'PurchaseController@index');
 Route::get('/api/client/{id}/periodic', 'PurchaseController@index');//reevaluate
-
 Route::post('/client/{id}/checkoutInfo', 'PurchaseController@create');
 
 //ship details
@@ -40,9 +39,19 @@ Route::get('/api/supplier', 'SupplierController@index');
 Route::get('/supplier', 'SupplierController@index');
 Route::get('/supplier/{id}', 'SupplierController@show');
 
+// Client
+Route::get('/api/client', 'ClientController@index');
+//Route::post('/api/client', 'ClientController@store');
+Route::get('/api/client/{id}', 'ClientController@show');
+Route::put('/api/client/{id}', 'ClientController@update');
+Route::delete('/api/client/{id}', 'ClientController@destroy');
 
-
-
+// Item
+Route::get('/api/item', 'ItemController@index');
+//Route::post('/api/item', 'ClientController@store');
+Route::get('/api/item/{id}', 'ItemController@show');
+Route::put('/api/item/{id}', 'ItemController@update');
+Route::delete('/api/item/{id}', 'ItemController@destroy');
 
 // Route::get('/', 'Auth\LoginController@home');
 
