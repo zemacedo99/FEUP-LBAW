@@ -13,7 +13,7 @@ class Product extends Model
 
     use HasFactory;
 
-    public function is_part_of() {return $this->belongsToMany('App\Models\Item', 'bundle_product', 'bundle_id', 'product_id')->withPivot('quantity');}
+    public function is_part_of() {return $this->belongsToMany('App\Models\Item')->withPivot('quantity');}
 
-    public function images() {return $this->belongsToMany('App\Models\Image');}    
+    public function images() {return $this->hasMany('App\Models\Image');}
 }

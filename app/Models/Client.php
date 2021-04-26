@@ -18,7 +18,10 @@ class Client extends Model
 
     public function ship_detail() { return $this->hasOne('App\Models\ShipDetail');}
 
-    public function item_favorites() {return $this->belongsToMany('App\Models\Item', 'favorite');}
+    public function item_favorites() {return $this->belongsToMany('App\Models\Item');}
 
-    public function item_carts() {return $this->belongsToMany('App\Models\Item', 'cart')->withPivot('quantity');}
+    public function item_carts() {return $this->belongsToMany('App\Models\Item', 'carts')
+        ->withPivot('quantity');}
+
+    public function image(){return $this->belongsTo('App\Models\Image');}
 }
