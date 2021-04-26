@@ -544,9 +544,9 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Client'
+                  $ref: '#/components/schemas/ClientBasicInfo'
 
-    post:
+    post: # TODO: Acho que é desnecessário
       operationId: R607
       summary: 'R607: Create a Client'
       description: 'Creates a client. Access: ADM, OWN'
@@ -558,18 +558,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Client'
+              $ref: '#/components/schemas/ClientInfo'
 
       responses:
-        '201':
+        '204':
           description: 'Created new Client'
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
+
         '400':
           $ref: '#/components/responses/400Error'
 
@@ -585,11 +579,12 @@ paths:
 
       responses:
         '200':
-          description: 'Successfully returned the client info. Show [UI05.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/client/client_profile.php)'
+          description: 'Successfully returned the client info'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Client'
+                $ref: '#/components/schemas/ClientInfo'
+
 
     put:
       operationId: R609
@@ -624,8 +619,10 @@ paths:
         - $ref: '#/components/parameters/ID'
 
       responses:
-        '200':  # TODO: Mudar
+        '204':  
           description: 'Successfully deleted the client'
+        '404':
+          description: 'Client not found'
 
   /api/client/{id}/favorite:
     get:
@@ -938,14 +935,12 @@ paths:
                   type: integer
                 price:
                   type: number
-                unit:
-                  type: string
                 images:
                   type: array
                   items:
                     type: string
                     format: byte
-                    description: Base64-encoded contents of image
+                    description: Base64-encoded contents of image  # TODO: Como vamos carregar as imagens?
                 tags:
                   type: array
                   items:
@@ -957,8 +952,6 @@ paths:
         '204':
           description: Successfully added/updated item
 
-        '405':
-          description: Method not allowed
 
   /api/item/{id}:
     get:
@@ -980,7 +973,7 @@ paths:
                 type: object      # TODO: Secalhar componente?
                 items:
                   properties:
-                    sellerID:
+                    supplierID:
                       type: integer
                     description:
                       type: string
@@ -988,19 +981,17 @@ paths:
                       type: integer
                     price:
                       type: number
-                    unit:
-                      type: string
-                    images:
+                    images: # TODO: É necessário mandar as Items? Não devia ser o controller dos Items?
                       type: array
                       items:
                         type: string
                         format: byte
                         description: Base64-encoded contents of image
-                    reviews:
+                    reviews:      # TODO: É necessário mandar as reviews? Não devia ser o controller das reviews?
                       type: array
                       items:
                         type: integer
-                    tags:
+                    tags:         # TODO: Devia ser o controller das tags
                       type: array
                       items:
                         type: integer
@@ -1018,25 +1009,16 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          application/json: # TODO: Images e tags não necessárias?
             schema:
               type: object
-              required:
-                - sellerid
-                - itemid
               properties:
-                sellerid:
-                  type: integer
-                itemid:
-                  type: integer
                 description:
                   type: string
                 quantityAvailable:
                   type: integer
                 price:
                   type: number
-                unit:
-                  type: string
                 images:
                   type: array
                   items:
@@ -1052,7 +1034,7 @@ paths:
 
       responses:
         '204':
-          description: Successfully added/updated item
+          description: Successfully updated item
 
         '404':
           $ref: '#/components/responses/ItemNotFound'
@@ -1073,9 +1055,11 @@ paths:
 
       responses:
         '204':
-          description: Successfully removed/deactivated item
-        '405':
-          description: Method not allowed
+          description: Successfully deactivated item
+
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
+
 
   /api/coupon:
     get:
@@ -1350,16 +1334,37 @@ components:
         - city
         - description
 
-    Client:
+    ClientBasicInfo:
       type: object
       properties:
         client_id:
           type: integer
         name:
           type: string
+        image_id:
+          type: integer
       required:
         - client_id
         - name
+        - image_id
+    
+    ClientCreate:
+      type: object
+      required:
+        - name
+        - email
+        - password
+        - image_id
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        image_id:
+          type: integer
+
 
     ItemInList:
       type: object
@@ -1402,11 +1407,6 @@ components:
 
     ClientInfo:
       type: object
-      required:
-        - client_id
-        - name
-        - email
-        - password
       properties:
         client_id:
           type: integer
@@ -1416,6 +1416,8 @@ components:
           type: string
         password:
           type: string
+        image_id:
+          type: integer
 
 
   parameters:
