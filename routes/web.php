@@ -14,11 +14,12 @@
 use Illuminate\Support\Facades\Route;
 
 
+// Route::view('/', 'pages/misc.home_page');
 // Route::view('/', 'pages/misc.about_us');
 // Route::view('/', 'pages/misc.bundle_detail');
-// Route::view('/', 'pages/misc.home_page');
 // Route::view('/', 'pages/misc.product_detail');
-// Route::view('/', 'pages/misc.products_list');
+// Route::view('/', 'pages/misc.supplier_detail');
+// Route::view('/', 'pages/misc.products_list');  // melhor mudar para products/stores list?
 
 // Route::view('/', 'pages/checkout.add_credit_card');
 // Route::view('/', 'pages/checkout.edit_credit_card');
@@ -27,4 +28,11 @@ use Illuminate\Support\Facades\Route;
 
 // Route::view('/', 'pages/client.client_profile');
 
-Route::view('/', 'pages/credentials.register');
+// Route::view('/', 'pages/credentials.register');
+
+Route::view('/', 'pages/supplier.supplier_profile');
+// Route::view('/', 'pages/supplier.all_products');
+// Route::view('/', 'pages/supplier.bundles_and_coupons');
+// Route::view('/', 'pages/supplier.create_edit_bundle');
+// Route::view('/', 'pages/supplier.create_edit_coupon');
+// Route::view('/', 'pages/supplier.create_edit_product');
