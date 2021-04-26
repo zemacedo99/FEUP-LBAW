@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
 
     /**
@@ -43,7 +43,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/home');
+            return redirect()->intended('/');
         }
 
         return back()->withErrors([
@@ -52,7 +52,7 @@ class LoginController extends Controller
     }
 
 
-   
+
     /**
      * Create a new controller instance.
      *

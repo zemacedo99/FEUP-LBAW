@@ -13,11 +13,14 @@
 // Home
 use Illuminate\Support\Facades\Route;
 
-
+Route::view('/', 'pages.misc.home_page')->name('homepage');
 Route::view('/about_us', 'pages.about_us')->name('about_us');
 Route::view('/bundle_detail', 'pages.bundleDetail');
-Route::view('/', 'pages.home_page')->name('homepage');
 Route::view('/map', 'pages.site_map')->name('map');
+
+Route::view('/register', 'auth.register')->name('register');
+Route::view('/login', 'auth.login')->name('login');
+
 
 Route::view('/dashboard', 'pages.admin.dashboard')->name('dashboard');
 Route::view('/dashboard_products', 'pages.admin.products')->name('admin_products');
@@ -78,7 +81,7 @@ Route::delete('/api/item/{id}', 'ItemController@destroy');
 
 // // Authentication
 // Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-// Route::post('login', 'Auth\LoginController@login');
+Route::post('login', 'Auth\LoginController@login');
 // Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 // Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-// Route::post('register', 'Auth\RegisterController@register');
+Route::post('register', 'Auth\RegisterController@register');
