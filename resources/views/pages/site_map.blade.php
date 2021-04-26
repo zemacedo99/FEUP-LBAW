@@ -24,11 +24,11 @@
                 <a href="../supplier/create_edit_coupon.php" class="list-group-item list-group-item-action">Supplier -
                     Create/Edit Coupon</a>
 
-                <a href="../admin/dashboard.php" class="list-group-item list-group-item-action fw-bold">Admin</a>
-                <a href="../admin/view_prods.php" class="list-group-item list-group-item-action">Admin - Products</a>
-                <a href="../admin/view_req.php" class="list-group-item list-group-item-action">Admin - Supplier
+                <a href="{{ route('dashboard') }}" class="list-group-item list-group-item-action fw-bold">Admin</a>
+                <a href="{{ route('admin_products') }}" class="list-group-item list-group-item-action">Admin - Products</a>
+                <a href="{{ route('admin_requests') }}" class="list-group-item list-group-item-action">Admin - Supplier
                     Requests</a>
-                <a href="../admin/view_users.php" class="list-group-item list-group-item-action">Admin - Users</a>
+                <a href="{{ route('admin_users') }}" class="list-group-item list-group-item-action">Admin - Users</a>
 
                 <a href="../checkout/cart_info.php" class="list-group-item list-group-item-action fw-bold">CheckOut</a>
                 <a href="../checkout/shipping_payment.php" class="list-group-item list-group-item-action">CheckOut -

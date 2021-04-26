@@ -5,23 +5,23 @@
 
 <div class="container">
     <div class="row mt-5 justify-content-center">
-        <div class="col-12 col-md-10"> 
-            <img class="img-fluid" src="../images/garden.jpg" alt="Photo of a garden"    height="400px">
+        <div class="col-12 col-md-10">
+            <img class="img-fluid" src="{{ asset('images/garden.jpg') }}" alt="Photo of a garden" height="400px">
         </div>
     </div>
-    
-    <?php 
+
+    <?php
         product_row("Almost Sold Out", "clock");
     ?>
 
-    <?php 
+    <?php
         product_row("Hot", "sun");
     ?>
-    
-    <?php 
+
+    <?php
         product_row("New", "newspaper");
     ?>
-    
+
     <div class="row my-5">
         <div class="col"></div>
         <div class="col-6 col-md-4 col-lg-3 text-end">
@@ -52,7 +52,7 @@ function homepage_card()
                 <div class="col">
                     <p class="card-title">Bananas</p>
                 </div>
-                
+
                 <div class="col-1"><i class="bi bi-star-fill" style="color: #d2d820;"></i></div>
                 <div class="col-1"><i class="bi bi-star-fill" style="color: #d2d820;"></i></div>
                 <div class="col-1"><i class="bi bi-star-fill" style="color: #d2d820;"></i></div>
@@ -80,11 +80,11 @@ function product_row($name, $icon){
         <div class="col-9 col-sm-6 col-md-4 col-lg-3 mb-4 mb-md-0">
             <?php  homepage_card(); ?>
         </div>
-        
+
         <div class="col-9 col-sm-6 col-md-4 col-lg-3 mb-4 mb-md-0">
             <?php  homepage_card(); ?>
         </div>
-        
+
         <div class="col-9 col-sm-6 col-md-4 col-lg-3 mb-4 mb-md-0">
             <?php  homepage_card(); ?>
         </div>
