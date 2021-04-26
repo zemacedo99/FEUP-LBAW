@@ -11,9 +11,9 @@ class Purchase extends Model
     protected $fillable = ['client_id', 'paid', 'purchase_date', 'type'];
 
     use HasFactory;
-    
 
-    public function buyer(){return $this->belongsTo('App\Models\Shopper');}
 
-    public function items() {return $this->belongsToMany('App\Models\Item', 'item_info')->withPivot('price', 'amount');}
+    public function buyer(){return $this->belongsTo('App\Models\Client');}
+
+    public function items() {return $this->belongsToMany('App\Models\Item')->withPivot('price', 'amount');}
 }
