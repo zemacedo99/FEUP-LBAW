@@ -159,7 +159,7 @@ paths:
                   description: 'Successful authentication. Redirect to Supplier profile'
                   value: '/supplier/{id}'
 
-/supplier: #Mostra todos os suppliers
+  /supplier: #Mostra todos os suppliers
     get:
       operationId: R106
       summary: 'R106: Get all suppliers'
@@ -1274,9 +1274,6 @@ paths:
         '404':
           $ref: '#/components/responses/ItemNotFound' #when updating
 
-        '405':
-          description: Method not allowed
-
   /api/tag/{tagName}:
     get:
       operationId: R634
@@ -1316,8 +1313,105 @@ paths:
   
   /api/image:   # TODO:
 
+
+  /api/creditcard: 
+    get:
+      operationId: R635
+      summary: 'R635 - Client Info'
+      description: 'Return Credit Card of client. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: The client ID number
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Successfully returned client credit card
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCard'
+
+    post:
+      operationId: R636
+      summary: 'R636 - Client Info'
+      description: 'Creates Credit Card. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditCard'
+
+      responses:
+        '204':
+          description: Successfully created credit card
+
+        '404':
+          $ref: '#/components/responses/404Error'
+    
+    put:
+      operationId: R636
+      summary: 'R637 - Client Info'
+      description: 'Updates Credit Card. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditCard'
+
+      responses:
+        '204':
+          description: Successfully updated credit card
+
+        '404':
+          $ref: '#/components/responses/404Error'
+
+    delete:
+      operationId: R637
+      summary: 'R635 - Client Info'
+      description: 'Delete Credit Card of client. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - $ref: '#/components/parameters/QID'
+
+      responses:
+        '204':
+          description: Successfully deleted client credit card
+        
+        '404':
+          $ref: '#/components/responses/404Error'
+
+
+
+
 components:
   schemas:
+    CreditCard:
+      type: object
+      properties:
+        card_n:
+          type: string
+        expiration:
+          type: string
+        cvv:
+          type: integer
+        holder:
+          type: string
+        client_id:
+          type: integer
+
     Review:
       type: object
       required:
@@ -1468,7 +1562,13 @@ components:
 
 
   parameters:
-
+    QID:
+      name: id
+      in: query
+      required: true
+      description: The ID number
+      schema:
+        type: integer
 
     ID:
       name: id
@@ -1544,7 +1644,7 @@ components:
             type: string    # path to redirect
 
     404Error:
-      description: 'Could not find request'
+      description: 'Could not find resource'
       content:
         application/json:
           schema:
