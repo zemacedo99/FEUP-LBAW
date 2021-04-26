@@ -159,6 +159,19 @@ paths:
                   description: 'Successful authentication. Redirect to Supplier profile'
                   value: '/supplier/{id}'
 
+/supplier: #Mostra todos os suppliers
+    get:
+      operationId: R106
+      summary: 'R106: Get all suppliers'
+      description: 'Get all suppliers. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+     
+      responses:
+        '200':
+          description: 'Ok. Show [UI06.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/supplier_profile.php)'
+
+
   /supplier/{id}/profile: #Mostra o perfil para editar
     get:
       operationId: R106
@@ -288,6 +301,39 @@ paths:
         '200':
           description: 'Ok. Show [UI10.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/checkout/cart_info.php)'
 
+    post:
+      operationId: R20x
+      summary: 'R20x - Add a purchase'
+      description: 'Converts products in cart to purchase. Access: OWN'
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - paid
+                - type
+              properties:
+                paid:
+                  type: number
+                type:
+                  type: string
+                  # $ref: '#/components/schemas/Review'
+
+      responses:
+        '204':
+          description: Successfully added review to item
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
+
+         
+
   /client/{id}/checkoutPayment:
     get:
       operationId: R207
@@ -303,6 +349,59 @@ paths:
         '200':
           description: 'Ok. Show [UI10.2](http://lbaw2131-piu.lbaw-prod.fe.up.pt/checkout/shipping_payment.php)'
 
+    post:
+      operationId: R20x
+      summary: 'R20x - Add a shipping address'
+      description: 'creates new shipping data. Access: OWN'
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - first_name
+                - last_name
+                - address
+                - door_n
+                - post_code
+                - district
+                - city
+                - country
+                - phone_n
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                address:
+                  type: string
+                door_n:
+                  type: number
+                floor:
+                  type: string
+                post_code:
+                  type: string
+                district:
+                  type: string
+                city:
+                  type: string
+                country:
+                  type: string
+                phone_n:
+                  type: string
+                  # $ref: '#/components/schemas/Review'
+
+      responses:
+        '204':
+          description: Successfully added review to item
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
 
   /search:
     get:
@@ -544,9 +643,9 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Client'
+                  $ref: '#/components/schemas/ClientBasicInfo'
 
-    post:
+    post: # TODO: Acho que é desnecessário
       operationId: R607
       summary: 'R607: Create a Client'
       description: 'Creates a client. Access: ADM, OWN'
@@ -558,18 +657,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Client'
+              $ref: '#/components/schemas/ClientInfo'
 
       responses:
-        '201':
+        '204':
           description: 'Created new Client'
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
+
         '400':
           $ref: '#/components/responses/400Error'
 
@@ -585,11 +678,12 @@ paths:
 
       responses:
         '200':
-          description: 'Successfully returned the client info. Show [UI05.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/client/client_profile.php)'
+          description: 'Successfully returned the client info'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Client'
+                $ref: '#/components/schemas/ClientInfo'
+
 
     put:
       operationId: R609
@@ -624,8 +718,10 @@ paths:
         - $ref: '#/components/parameters/ID'
 
       responses:
-        '200':  # TODO: Mudar
+        '204':  
           description: 'Successfully deleted the client'
+        '404':
+          description: 'Client not found'
 
   /api/client/{id}/favorite:
     get:
@@ -698,15 +794,20 @@ paths:
         '204':
           description: Successfully removed item to favorite list
 
-  /api/client/{id}/review:
+  /api/review:
     get:
       operationId: R614
       summary: 'R614 - View product reviews'
-      description: 'Returns all reviews done by a user. Access: PUB'
+      description: 'Returns all reviews done to an item. Access: PUB'
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
       parameters:
-        - $ref: '#/components/parameters/ID'
+        - name: id_item
+          in: query
+          required: true
+          description: The ID number
+          schema:
+            type: integer
 
       responses:
         '200':
@@ -726,9 +827,6 @@ paths:
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
 
-      parameters:
-        - $ref: '#/components/parameters/ID'
-
       requestBody:
         required: true
         content:
@@ -736,13 +834,20 @@ paths:
             schema:
               type: object
               required:
-                - userid
-                - review
+                - client_id
+                - item_id
+                - rating
+                - description
               properties:
-                userid:
+                client_id:
                   type: integer
-                itemid:
-                  $ref: '#/components/schemas/Review'
+                item_id:
+                  type: integer
+                rating:
+                  type: integer
+                description:
+                  type: string
+                  # $ref: '#/components/schemas/Review'
 
       responses:
         '204':
@@ -757,8 +862,12 @@ paths:
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
       parameters:
-        - $ref: '#/components/parameters/ID'
         - name: id_client
+          in: query
+          description: the identifier of the client
+          schema:
+            type: integer
+        - name: id_item
           in: query
           description: the identifier of the client
           schema:
@@ -921,9 +1030,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object    # TODO: Secalhar criar component?
+              type: object
               required:
                 - sellerid
+                - description
+                - quantityAvailable
+                - price
+                - unit
+                - images
               properties:
                 sellerid:
                   type: integer
@@ -933,14 +1047,12 @@ paths:
                   type: integer
                 price:
                   type: number
-                unit:
-                  type: string
                 images:
                   type: array
                   items:
                     type: string
                     format: byte
-                    description: Base64-encoded contents of image
+                    description: Base64-encoded contents of image  # TODO: Como vamos carregar as imagens?
                 tags:
                   type: array
                   items:
@@ -952,8 +1064,6 @@ paths:
         '204':
           description: Successfully added/updated item
 
-        '405':
-          description: Method not allowed
 
   /api/item/{id}:
     get:
@@ -975,7 +1085,7 @@ paths:
                 type: object      # TODO: Secalhar componente?
                 items:
                   properties:
-                    sellerID:
+                    supplierID:
                       type: integer
                     description:
                       type: string
@@ -983,19 +1093,17 @@ paths:
                       type: integer
                     price:
                       type: number
-                    unit:
-                      type: string
-                    images:
+                    images: # TODO: É necessário mandar as Items? Não devia ser o controller dos Items?
                       type: array
                       items:
                         type: string
                         format: byte
                         description: Base64-encoded contents of image
-                    reviews:
+                    reviews:      # TODO: É necessário mandar as reviews? Não devia ser o controller das reviews?
                       type: array
                       items:
                         type: integer
-                    tags:
+                    tags:         # TODO: Devia ser o controller das tags
                       type: array
                       items:
                         type: integer
@@ -1013,25 +1121,16 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          application/json: # TODO: Images e tags não necessárias?
             schema:
               type: object
-              required:
-                - sellerid
-                - itemid
               properties:
-                sellerid:
-                  type: integer
-                itemid:
-                  type: integer
                 description:
                   type: string
                 quantityAvailable:
                   type: integer
                 price:
                   type: number
-                unit:
-                  type: string
                 images:
                   type: array
                   items:
@@ -1047,7 +1146,7 @@ paths:
 
       responses:
         '204':
-          description: Successfully added/updated item
+          description: Successfully updated item
 
         '404':
           $ref: '#/components/responses/ItemNotFound'
@@ -1068,9 +1167,11 @@ paths:
 
       responses:
         '204':
-          description: Successfully removed/deactivated item
-        '405':
-          description: Method not allowed
+          description: Successfully deactivated item
+
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
+
 
   /api/coupon:
     get:
@@ -1102,7 +1203,7 @@ paths:
     post:
       operationId: R628
       summary: 'R628 - Item, tag e coupon'
-      description: 'Creates or updates coupon data. Access: OWN'
+      description: 'Creates coupon data. Access: OWN'
       tags:
         - 'M02: Item'
       requestBody:
@@ -1110,26 +1211,10 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - sellerid
-              properties:
-                sellerid:
-                  type: integer
-                name:
-                  type: string
-                discount:
-                  type: number
-                unit:
-                  type: string
-                description:
-                  type: string
-                expirationDate:
-                  type: string
-
+              $ref: '#/components/schemas/Coupon'
       responses:
         '204':
-          description: Successfully added/updated item
+          description: Successfully added item
 
         '405':
           description: Method not allowed
@@ -1150,6 +1235,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/couponCode'
 
+      
+
       responses:
         '200':
           description: Successfully returned coupon
@@ -1157,6 +1244,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Coupon'
+        '404':
+          description: Coupon not found
 
     put:
       operationId: R630
@@ -1166,45 +1255,31 @@ paths:
         - 'M02: Item'
       parameters:
         - $ref: '#/components/parameters/couponCode'
+
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - sellerid
-              properties:
-                sellerid:
-                  type: integer
-                name:
-                  type: string
-                discount:
-                  type: number
-                unit:
-                  type: string
-                description:
-                  type: string
-                expirationDate:
-                  type: string
+              $ref: '#/components/schemas/Coupon'
 
       responses:
         '204':
-          description: Successfully added/updated item
+          description: Successfully updated coupon
+          
+        '403':
+          description: You do not own this coupon
 
         '405':
-          description: Method not allowed
-
-        '422':
-          description: Code already in use
+          description: Method not allowed 
 
         '404':
-          $ref: '#/components/responses/ItemNotFound'
+          description: Coupon not found
 
     delete:
       operationId: R631
       summary: 'R631 - Item, tag e coupon'
-      description: 'Removes a seller s item. Access: OWN'
+      description: 'Removes a coupon. Access: OWN'
       tags:
         - 'M02: Item'
 
@@ -1213,9 +1288,13 @@ paths:
 
       responses:
         '204':
-          description: Successfully removed/deactivated item
+          description: Successfully removed coupon
+  
+        '403':
+          description: You do not own this coupon
+
         '404':
-          $ref: '#/components/responses/ItemNotFound'
+          description: Coupon not found
 
   /api/tag:
     get:
@@ -1302,7 +1381,6 @@ paths:
           description: 'Deleted tag'
 
 
-
 components:
   schemas:
     Review:
@@ -1368,16 +1446,37 @@ components:
         - city
         - description
 
-    Client:
+    ClientBasicInfo:
       type: object
       properties:
         client_id:
           type: integer
         name:
           type: string
+        image_id:
+          type: integer
       required:
         - client_id
         - name
+        - image_id
+    
+    ClientCreate:
+      type: object
+      required:
+        - name
+        - email
+        - password
+        - image_id
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        image_id:
+          type: integer
+
 
     ItemInList:
       type: object
@@ -1407,7 +1506,7 @@ components:
           type: string
         code:
           type: string
-        discount:
+        amount:
           type: number
         unit:
           type: string
@@ -1415,16 +1514,11 @@ components:
           type: string
         expirationDate:
           type: string
-        sellerId:
+        supplierID:
           type: integer
 
     ClientInfo:
       type: object
-      required:
-        - client_id
-        - name
-        - email
-        - password
       properties:
         client_id:
           type: integer
@@ -1434,9 +1528,13 @@ components:
           type: string
         password:
           type: string
+        image_id:
+          type: integer
 
 
   parameters:
+
+
     ID:
       name: id
       in: path

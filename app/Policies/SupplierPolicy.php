@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Item;
+use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ItemPolicy
+class SupplierPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class ItemPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Supplier  $supplier
      * @return mixed
      */
-    public function view(User $user, Item $item)
+    public function view(User $user, Supplier $supplier)
     {
         //
     }
@@ -42,40 +42,43 @@ class ItemPolicy
     public function create(User $user)
     {
         //
+        return true;
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Supplier  $supplier
      * @return mixed
      */
-    public function update(User $user, Item $item)
+    public function update(User $user, Supplier $supplier)
     {
         //
+        return $user->id==$supplier->id || $user->isAdministrator;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Supplier  $supplier
      * @return mixed
      */
-    public function delete(User $user, Item $item)
+    public function delete(User $user, Supplier $supplier)
     {
         //
+        return $user->id==$supplier->id || $user->isAdministrator;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Supplier  $supplier
      * @return mixed
      */
-    public function restore(User $user, Item $item)
+    public function restore(User $user, Supplier $supplier)
     {
         //
     }
@@ -84,10 +87,10 @@ class ItemPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Supplier  $supplier
      * @return mixed
      */
-    public function forceDelete(User $user, Item $item)
+    public function forceDelete(User $user, Supplier $supplier)
     {
         //
     }

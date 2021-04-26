@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Tag extends Model
 {
     public $timestamps  = false;
-    protected $table = "shoppers";
-    protected $fillable = ['id', 'email', 'password'];
+    protected $fillable = ['value'];
 
     use HasFactory;
 
+    public function items(){ return $this->belongsToMany('App\Models\Item');}
 }

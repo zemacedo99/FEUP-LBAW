@@ -3,60 +3,134 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
-use App\Models\Card;
-
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
-  /**
-   * Creates a new item.
-   *
-   * @param  int  $card_id
-   * @param  Request request containing the description
-   * @return Response
-   */
-  public function create(Request $request, $card_id)
-  {
-    $item = new Item();
-    $item->card_id = $card_id;
-    $this->authorize('create', $item);
-    $item->done = false;
-    $item->description = $request->input('description');
-    $item->save();
-    return $item;
-  }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return Item::all();
+    }
 
     /**
-     * Updates the state of an individual item.
+     * Show the form for creating a new resource.
      *
-     * @param  int  $id
-     * @param  Request request containing the new state
-     * @return Response
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Item  $item
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        return Item::where('id', '=', $id)->get();
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Item  $item
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Item $item)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Item  $item
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-      $item = Item::find($id);
-      $this->authorize('update', $item);
-      $item->done = $request->input('done');
-      $item->save();
-      return $item;
+        $request->validate([
+            'item.description' => 'string',
+            'item.quantityAvailable' => 'integer',
+            'item.price' => 'numeric',
+            'item.unit' => 'string'
+        ]);
+
+        if(!is_numeric($id)){
+            return response('', 404)->header('description','The item was not found');
+        }
+
+        $item = Item::where('id', '=', $id)->get();
+        if($item->isEmpty()){
+            return response('', 404)->header('description','The item was not found');
+        }
+
+        $item_data = $item->first();
+
+        if($request->has('item.description')){
+            $item_data->description = $request->input('item.description'); 
+        }
+
+        if($request->has('item.quantityAvailable')){
+            $item_data->stock = $request->input('item.quantityAvailable'); 
+        }
+
+        if($request->has('item.price')){
+            $item_data->price = $request->input('item.price'); 
+        }
+
+        if($request->has('item.unit')){
+            $item_data->unit = $request->input('item.unit'); 
+        }
+
+        $item_data->save();
+
+        return response('', 204,)->header('description', 'Successfully updated item');
     }
 
     /**
-     * Deletes an individual item.
+     * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return Response
+     * @param  \App\Models\Item  $item
+     * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request, $id)
+    public function destroy($id)
     {
-      $item = Item::find($id);
-      $this->authorize('delete', $item);
-      $item->delete();
-      return $item;
-    }
+        if(!is_numeric($id)){
+            return response('', 404)->header('description','The item was not found');
+        }
 
+        $item = Item::where('id', '=', $id)->get();
+        if($item->isEmpty()){
+            return response('', 404)->header('description','The item was not found');
+        }
+
+        $item_data = $item->first();
+
+        $item_data->active = 'false';
+    
+        $item_data->save();
+
+        return response('', 204,)->header('description', 'Successfully deactivated item');
+    }
 }

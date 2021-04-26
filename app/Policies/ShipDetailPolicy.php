@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Item;
+use App\Models\ShipDetail;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ItemPolicy
+class ShipDetailPolicy
 {
     use HandlesAuthorization;
 
@@ -25,12 +25,14 @@ class ItemPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\ShipDetail  $shipDetail
      * @return mixed
      */
-    public function view(User $user, Item $item)
+    public function view(User $user, ShipDetail $shipDetail)
     {
+        FALTA deixar o vendedor tmb ver
         //
+        return $user->id==shipDetail->Client()->id;
     }
 
     /**
@@ -42,53 +44,58 @@ class ItemPolicy
     public function create(User $user)
     {
         //
+        return $user->isClient;
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\ShipDetail  $shipDetail
      * @return mixed
      */
-    public function update(User $user, Item $item)
+    public function update(User $user, ShipDetail $shipDetail)
     {
         //
+        return false;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\ShipDetail  $shipDetail
      * @return mixed
      */
-    public function delete(User $user, Item $item)
+    public function delete(User $user, ShipDetail $shipDetail)
     {
         //
+        return false;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\ShipDetail  $shipDetail
      * @return mixed
      */
-    public function restore(User $user, Item $item)
+    public function restore(User $user, ShipDetail $shipDetail)
     {
         //
+        return false;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\ShipDetail  $shipDetail
      * @return mixed
      */
-    public function forceDelete(User $user, Item $item)
+    public function forceDelete(User $user, ShipDetail $shipDetail)
     {
         //
+        return false;
     }
 }

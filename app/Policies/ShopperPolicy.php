@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Item;
+use App\Models\Shopper;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ItemPolicy
+class ShopperPolicy
 {
     use HandlesAuthorization;
 
@@ -25,12 +25,13 @@ class ItemPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Shopper  $shopper
      * @return mixed
      */
-    public function view(User $user, Item $item)
+    public function view(User $user, Shopper $shopper)
     {
         //
+        return true;
     }
 
     /**
@@ -42,40 +43,43 @@ class ItemPolicy
     public function create(User $user)
     {
         //
+        return true;
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Shopper  $shopper
      * @return mixed
      */
-    public function update(User $user, Item $item)
+    public function update(User $user, Shopper $shopper)
     {
         //
+        return $user->id==$shopper->id;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Shopper  $shopper
      * @return mixed
      */
-    public function delete(User $user, Item $item)
+    public function delete(User $user, Shopper $shopper)
     {
         //
+        return $user->id==$shopper->id || $user->isAdministrator;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Shopper  $shopper
      * @return mixed
      */
-    public function restore(User $user, Item $item)
+    public function restore(User $user, Shopper $shopper)
     {
         //
     }
@@ -84,10 +88,10 @@ class ItemPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Shopper  $shopper
      * @return mixed
      */
-    public function forceDelete(User $user, Item $item)
+    public function forceDelete(User $user, Shopper $shopper)
     {
         //
     }

@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Item;
+use App\Models\Purchase;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ItemPolicy
+class PurchasePolicy
 {
     use HandlesAuthorization;
 
@@ -25,12 +25,14 @@ class ItemPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Purchase  $purchase
      * @return mixed
      */
-    public function view(User $user, Item $item)
+    public function view(User $user, Purchase $purchase)
     {
-        //
+        //only buyer, supplier or admin may see it
+        TÁ MAL 
+        return $user->isAdministrator||$user->id==$purchase->client_id||$user->id==$purchase->item->supplier->id;
     }
 
     /**
@@ -42,53 +44,58 @@ class ItemPolicy
     public function create(User $user)
     {
         //
+        return $user->isClient;
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Purchase  $purchase
      * @return mixed
      */
-    public function update(User $user, Item $item)
+    public function update(User $user, Purchase $purchase)
     {
         //
+        return false;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Purchase  $purchase
      * @return mixed
      */
-    public function delete(User $user, Item $item)
+    public function delete(User $user, Purchase $purchase)
     {
         //
+        return false;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Purchase  $purchase
      * @return mixed
      */
-    public function restore(User $user, Item $item)
+    public function restore(User $user, Purchase $purchase)
     {
         //
+        return false;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Purchase  $purchase
      * @return mixed
      */
-    public function forceDelete(User $user, Item $item)
+    public function forceDelete(User $user, Purchase $purchase)
     {
         //
+        return false;
     }
 }

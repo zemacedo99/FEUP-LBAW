@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Item;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ItemPolicy
+class ProductPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class ItemPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Product  $product
      * @return mixed
      */
-    public function view(User $user, Item $item)
+    public function view(User $user, Product $product)
     {
         //
     }
@@ -48,10 +48,10 @@ class ItemPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Product  $product
      * @return mixed
      */
-    public function update(User $user, Item $item)
+    public function update(User $user, Product $product)
     {
         //
     }
@@ -60,10 +60,10 @@ class ItemPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Product  $product
      * @return mixed
      */
-    public function delete(User $user, Item $item)
+    public function delete(User $user, Product $product)
     {
         //
     }
@@ -72,10 +72,10 @@ class ItemPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Product  $product
      * @return mixed
      */
-    public function restore(User $user, Item $item)
+    public function restore(User $user, Product $product)
     {
         //
     }
@@ -84,10 +84,10 @@ class ItemPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Product  $product
      * @return mixed
      */
-    public function forceDelete(User $user, Item $item)
+    public function forceDelete(User $user, Product $product)
     {
         //
     }
