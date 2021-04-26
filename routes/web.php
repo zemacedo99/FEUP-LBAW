@@ -14,25 +14,12 @@
 use Illuminate\Support\Facades\Route;
 
 
-// Route::view('/', 'pages/misc.home_page');
-// Route::view('/', 'pages/misc.about_us');
-// Route::view('/', 'pages/misc.bundle_detail');
-// Route::view('/', 'pages/misc.product_detail');
-// Route::view('/', 'pages/misc.supplier_detail');
-// Route::view('/', 'pages/misc.products_list');  // melhor mudar para products/stores list?
+Route::view('/about_us', 'pages.about_us')->name('about_us');
+Route::view('/bundle_detail', 'pages.bundleDetail');
+Route::view('/', 'pages.home_page')->name('homepage');
+Route::view('/map', 'pages.site_map')->name('map');
 
-// Route::view('/', 'pages/checkout.add_credit_card');
-// Route::view('/', 'pages/checkout.edit_credit_card');
-// Route::view('/', 'pages/checkout.cart_info');
-// Route::view('/', 'pages/checkout.shipping_payment');
-
-// Route::view('/', 'pages/client.client_profile');
-
-// Route::view('/', 'pages/credentials.register');
-
-// Route::view('/a', 'pages/supplier.supplier_profile');
-// Route::view('/b', 'pages/supplier.all_products');
-// Route::view('/', 'pages/supplier.bundles_and_coupons');
-Route::view('/', 'pages/supplier.create_edit_bundle');
-// Route::view('/', 'pages/supplier.create_edit_coupon');
-// Route::view('/', 'pages/supplier.create_edit_product');
+Route::view('/dashboard', 'pages.admin.dashboard')->name('dashboard');
+Route::view('/dashboard_products', 'pages.admin.products')->name('admin_products');
+Route::view('/dashboard_clients', 'pages.admin.users')->name('admin_users');
+Route::view('/dashboard_requests', 'pages.admin.requests')->name('admin_requests');
