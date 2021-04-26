@@ -1,0 +1,34 @@
+@extends('layouts.app')
+
+@section('content')
+
+
+@include('partials.filters')
+
+<div id="mainContainer" class="container">
+    <div class="row mb-3 mt-5">
+        <div class="col-3">
+            <h3> Products </h3>
+        </div>
+        <div class="col d-inline-flex justify-content-end mb-1">
+            <button id="sidebar-toggler" class="btn bd-sidebar-toggle btn-primary" style="width: max-content;"
+                type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="filters"
+                aria-expanded="false" aria-label="toggle-filters">
+                Filters
+            </button>
+        </div>
+        @include('partials.order_by')
+    </div>
+
+    <div class="row">
+        <?php for ($i = 0; $i < 5; $i++) { ?>
+            @include('partials.cards.product_detail')
+        <?php
+        }
+        ?>
+    </div>
+    @include('partials.page_navigation')
+</div>
+
+
+@endsection

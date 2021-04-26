@@ -3,3 +3,4 @@ docker-compose.yml
 upload_image.sh
 upload_image.bat
 README.md
+.env

@@ -11,22 +11,15 @@
 |
 */
 // Home
-Route::get('/', 'Auth\LoginController@home');
+use Illuminate\Support\Facades\Route;
 
-// Cards
-Route::get('cards', 'CardController@list');
-Route::get('cards/{id}', 'CardController@show');
 
-// API
-Route::put('api/cards', 'CardController@create');
-Route::delete('api/cards/{card_id}', 'CardController@delete');
-Route::put('api/cards/{card_id}/', 'ItemController@create');
-Route::post('api/item/{id}', 'ItemController@update');
-Route::delete('api/item/{id}', 'ItemController@delete');
+Route::view('/about_us', 'pages.about_us')->name('about_us');
+Route::view('/bundle_detail', 'pages.bundleDetail');
+Route::view('/', 'pages.home_page')->name('homepage');
+Route::view('/map', 'pages.site_map')->name('map');
 
-// Authentication
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::get('logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register');
+Route::view('/dashboard', 'pages.admin.dashboard')->name('dashboard');
+Route::view('/dashboard_products', 'pages.admin.products')->name('admin_products');
+Route::view('/dashboard_clients', 'pages.admin.users')->name('admin_users');
+Route::view('/dashboard_requests', 'pages.admin.requests')->name('admin_requests');
