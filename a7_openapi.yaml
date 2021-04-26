@@ -523,32 +523,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/Supplier'
 
-    post:
-      operationId: R602
-      summary: 'R602: Create a Supplier'
-      description: 'Access: ADM, PUB'
-      tags:
-        - 'M01: Authentication and Individual Profile'
-
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Supplier'
-
-      responses:
-        '201':
-          description: 'Created new Supplier'
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-        '400':
-          $ref: '#/components/responses/400Error'
 
   /api/supplier/{id}:
     get:
@@ -644,27 +618,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ClientBasicInfo'
-
-    post: # TODO: Acho que é desnecessário
-      operationId: R607
-      summary: 'R607: Create a Client'
-      description: 'Creates a client. Access: ADM, OWN'
-      tags:
-        - 'M01: Authentication and Individual Profile'
-
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ClientInfo'
-
-      responses:
-        '204':
-          description: 'Created new Client'
-
-        '400':
-          $ref: '#/components/responses/400Error'
 
   /api/client/{id}:
     get:
@@ -1047,16 +1000,19 @@ paths:
                   type: integer
                 price:
                   type: number
+
                 images:
                   type: array
                   items:
                     type: string
                     format: byte
-                    description: Base64-encoded contents of image  # TODO: Como vamos carregar as imagens?
+                    description: Base64-encoded contents of image  
+                
                 tags:
                   type: array
                   items:
                     type: integer
+                
                 bundle:
                   type: boolean
 
@@ -1093,20 +1049,8 @@ paths:
                       type: integer
                     price:
                       type: number
-                    images: # TODO: É necessário mandar as Items? Não devia ser o controller dos Items?
-                      type: array
-                      items:
-                        type: string
-                        format: byte
-                        description: Base64-encoded contents of image
-                    reviews:      # TODO: É necessário mandar as reviews? Não devia ser o controller das reviews?
-                      type: array
-                      items:
-                        type: integer
-                    tags:         # TODO: Devia ser o controller das tags
-                      type: array
-                      items:
-                        type: integer
+                    rating:
+                      type: number
                     bundle:
                       type: boolean
 
@@ -1121,7 +1065,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/json: # TODO: Images e tags não necessárias?
+          application/json:
             schema:
               type: object
               properties:
@@ -1131,16 +1075,6 @@ paths:
                   type: integer
                 price:
                   type: number
-                images:
-                  type: array
-                  items:
-                    type: string
-                    format: byte
-                    description: Base64-encoded contents of image
-                tags:
-                  type: array
-                  items:
-                    type: integer
                 bundle:
                   type: boolean
 
@@ -1379,7 +1313,8 @@ paths:
       responses:
         '200':
           description: 'Deleted tag'
-
+  
+  /api/image:   # TODO:
 
 components:
   schemas:
