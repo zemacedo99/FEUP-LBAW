@@ -2,7 +2,7 @@
 
 @section('content')
 
-<script src={{ asset('js/supplier_profile.js') }}></script>
+<script src={{ asset('js/supplier_profile.js') }} defer></script>
 
 <div class="row d-flex d-lg-none mb-2 mt-2">
     <div class="col-12 d-flex justify-content-center">

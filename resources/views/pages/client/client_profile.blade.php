@@ -2,7 +2,7 @@
 
 @section('content')
 
-<script src={{ asset('js/client_profile.js') }}></script>
+<script src={{ asset('js/client_profile.js') }} defer></script>
 
 <div class="container">
 

@@ -30,9 +30,9 @@ use Illuminate\Support\Facades\Route;
 
 // Route::view('/', 'pages/credentials.register');
 
-Route::view('/', 'pages/supplier.supplier_profile');
-// Route::view('/', 'pages/supplier.all_products');
+// Route::view('/a', 'pages/supplier.supplier_profile');
+// Route::view('/b', 'pages/supplier.all_products');
 // Route::view('/', 'pages/supplier.bundles_and_coupons');
-// Route::view('/', 'pages/supplier.create_edit_bundle');
+Route::view('/', 'pages/supplier.create_edit_bundle');
 // Route::view('/', 'pages/supplier.create_edit_coupon');
 // Route::view('/', 'pages/supplier.create_edit_product');
