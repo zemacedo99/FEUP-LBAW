@@ -41,10 +41,10 @@ class ReviewController extends Controller
      * @param  \App\Models\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request, $id)
+    public function delete(Request $request) //ta a dar erro 500 mas não vi porque, mas apaga
     {
-        $review = Review::find($id);
-        $this->authorize('delete', $review);
+        $review = Review::where('client_id','=',$request->input('client_id'))->where('item_id','=',$request->input('item_id'));
+        //$this->authorize('delete', $review);
         $review->delete();
         return $review;
         //

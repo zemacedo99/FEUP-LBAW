@@ -12,39 +12,42 @@ class PurchaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
         //
+        return Purchase::where('client_id','=',$id)->get();
     }
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request, $id)
     {
 
-        if (!Auth::check()) return redirect('/login');
+        //if (!Auth::check()) return redirect('/login');
 
         //
         $purchase = new Purchase();
 
         $this->authorize('create', $purchase);
-        $purchase->client_id=$request->user_id;
-        //$purchase->paid
+        $purchase->client_id=$id;
+        $purchase->paid=$request->input("paid");
+        $purchase->type=$request->input("type");
         $purchase->purchase_date=Carbon::now()->toDateString();
         $purchase->save();
 
-        $carts=DB::table('carts')->where('client_id', '===', $request->client_id)->get();
+        $carts=DB::table('carts')->where('client_id', '=', $id)->get();
 
         foreach ($carts as $cart){
             $item_purchase = new ItemPurchase();
             $this->authorize('create', $item_purchase);
             $item_purchase->purchase_id=$purchase->id;
             $item_purchase->item_id=$cart->item_id;
-            // $item_purchase->price
-            // $item_purchase->amount
+            $item_purchase->price;
+            $item_purchase->amount;
             $item_purchase->save();
         }
         // $purchase->name = $request->input('name');
@@ -55,59 +58,5 @@ class PurchaseController extends Controller
         
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Purchase  $purchase
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Purchase $purchase)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Purchase  $purchase
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Purchase $purchase)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Purchase  $purchase
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Purchase $purchase)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Purchase  $purchase
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Purchase $purchase)
-    {
-        //
-    }
+    
 }

@@ -159,6 +159,19 @@ paths:
                   description: 'Successful authentication. Redirect to Supplier profile'
                   value: '/supplier/{id}'
 
+/supplier: #Mostra todos os suppliers
+    get:
+      operationId: R106
+      summary: 'R106: Get all suppliers'
+      description: 'Get all suppliers. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+     
+      responses:
+        '200':
+          description: 'Ok. Show [UI06.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/supplier_profile.php)'
+
+
   /supplier/{id}/profile: #Mostra o perfil para editar
     get:
       operationId: R106
@@ -288,6 +301,39 @@ paths:
         '200':
           description: 'Ok. Show [UI10.1](http://lbaw2131-piu.lbaw-prod.fe.up.pt/checkout/cart_info.php)'
 
+    post:
+      operationId: R20x
+      summary: 'R20x - Add a purchase'
+      description: 'Converts products in cart to purchase. Access: OWN'
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - paid
+                - type
+              properties:
+                paid:
+                  type: number
+                type:
+                  type: string
+                  # $ref: '#/components/schemas/Review'
+
+      responses:
+        '204':
+          description: Successfully added review to item
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
+
+         
+
   /client/{id}/checkoutPayment:
     get:
       operationId: R207
@@ -303,6 +349,59 @@ paths:
         '200':
           description: 'Ok. Show [UI10.2](http://lbaw2131-piu.lbaw-prod.fe.up.pt/checkout/shipping_payment.php)'
 
+    post:
+      operationId: R20x
+      summary: 'R20x - Add a shipping address'
+      description: 'creates new shipping data. Access: OWN'
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - first_name
+                - last_name
+                - address
+                - door_n
+                - post_code
+                - district
+                - city
+                - country
+                - phone_n
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                address:
+                  type: string
+                door_n:
+                  type: number
+                floor:
+                  type: string
+                post_code:
+                  type: string
+                district:
+                  type: string
+                city:
+                  type: string
+                country:
+                  type: string
+                phone_n:
+                  type: string
+                  # $ref: '#/components/schemas/Review'
+
+      responses:
+        '204':
+          description: Successfully added review to item
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
 
   /search:
     get:
@@ -740,7 +839,8 @@ paths:
               required:
                 - client_id
                 - item_id
-                - review
+                - rating
+                - description
               properties:
                 client_id:
                   type: integer
@@ -765,8 +865,12 @@ paths:
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
       parameters:
-        - $ref: '#/components/parameters/ID'
         - name: id_client
+          in: query
+          description: the identifier of the client
+          schema:
+            type: integer
+        - name: id_item
           in: query
           description: the identifier of the client
           schema:

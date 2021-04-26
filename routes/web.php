@@ -21,6 +21,26 @@ Route::put('/api/coupon/{couponCode}', 'CouponController@update');
 Route::delete('/api/coupon/{couponCode}', 'CouponController@destroy');
 
 Route::get('/api/review', 'ReviewController@index');
+Route::post('/api/review', 'ReviewController@create');
+Route::delete('/api/review', 'ReviewController@delete');
+//falta put
+
+Route::get('/api/client/{id}/history', 'PurchaseController@index');
+Route::get('/api/client/{id}/periodic', 'PurchaseController@index');//reevaluate
+
+Route::post('/client/{id}/checkoutInfo', 'PurchaseController@create');
+
+//ship details
+Route::get('/client/{id}/checkoutPayment', 'ShipDetailController@index');
+Route::post('/client/{id}/checkoutPayment', 'ShipDetailController@create');
+
+//shoppers
+//maybe get supplier profiles
+Route::get('/api/supplier', 'SupplierController@index');
+Route::get('/supplier', 'SupplierController@index');
+Route::get('/supplier/{id}', 'SupplierController@show');
+
+
 
 
 

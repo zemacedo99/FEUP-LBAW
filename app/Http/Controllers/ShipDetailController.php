@@ -12,9 +12,10 @@ class ShipDetailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
         //
+        return ShipDetail::where('client_id','=',$id)->get();
     }
 
     /**
@@ -22,9 +23,26 @@ class ShipDetailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request, $id)
     {
         //
+        $shipDetail = Review::create([
+            'client_id' => $id,
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'address' => $request->input('address'),
+            'door_n' => $request->input('door_n'),
+            'post_code' => $request->input('post_code'),
+            'district' => $request->input('district'),
+            'city' => $request->input('city'),
+            'country' => $request->input('country'),
+            'phone_n' => $request->input('phone_n')
+        ]);
+        if ($request->has('floor')){
+            $shipDetail->floor=$request->input('floor');
+            $shipDetail->save();
+        }
+        return $shipDetail;
     }
 
     /**

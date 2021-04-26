@@ -125,6 +125,7 @@ CREATE TABLE ship_details (
                               last_name       TEXT        NOT NULL,
                               address         TEXT        NOT NULL,
                               door_n          INTEGER     NOT NULL,
+                              floor           TEXT        DEFAULT NULL,
                               post_code       TEXT        NOT NULL,
                               district        TEXT        NOT NULL,
                               city            TEXT        NOT NULL,
@@ -143,12 +144,13 @@ CREATE TABLE credit_cards (
 );
 
 CREATE TABLE reviews (
+                         id              SERIAL      PRIMARY KEY,
                          client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE,
                          item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE,
                          rating          INTEGER     NOT NULL,
                          description     TEXT        NOT NULL,
-                         CONSTRAINT      rating_ck   CHECK (rating >= 1 AND rating <= 5),
-                         PRIMARY KEY (client_id, item_id)
+                         CONSTRAINT      rating_ck   CHECK (rating >= 1 AND rating <= 5)
+
 );
 
 /**
