@@ -25,5 +25,4 @@ class Item extends Model
     public function purchases() { return $this->belongsToMany('App\Models\Purchase')->withPivot('price', 'amount');}
 
     public function reviews() { return $this->hasMany('App\Models\Review');}
-
 }

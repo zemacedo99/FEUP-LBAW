@@ -11,6 +11,21 @@ class ClientPolicy
     use HandlesAuthorization;
 
     /**
+     * Perform pre-authorization checks.
+     *
+     * @param  \App\Models\User  $user
+     * @param  string  $ability
+     * @return void|bool
+     */
+    public function before(User $user)
+    {
+        if ($user->is_admin === true) {
+            return true;
+        }
+    }
+
+
+    /**
      * Determine whether the user can view any models.
      *
      * @param  \App\Models\User  $user
@@ -18,7 +33,7 @@ class ClientPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return false;
     }
 
     /**
@@ -30,7 +45,7 @@ class ClientPolicy
      */
     public function view(User $user, Client $client)
     {
-        //
+        return $user->id === $client->id;
     }
 
     /**
@@ -41,7 +56,7 @@ class ClientPolicy
      */
     public function create()
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +68,7 @@ class ClientPolicy
      */
     public function update(User $user, Client $client)
     {
-        //
+        return $user->id === $client->id;
     }
 
     /**
@@ -65,7 +80,7 @@ class ClientPolicy
      */
     public function delete(User $user, Client $client)
     {
-        //
+        return $user->id === $client->id;
     }
 
     /**

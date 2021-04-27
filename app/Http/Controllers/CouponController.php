@@ -41,7 +41,9 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {   //Continua com o erro do increment
-        
+
+        $this->authorize('create');
+
         $request->validate([
             'coupon.code' => 'required|string|unique:coupons,code',
             'coupon.name' => 'required|string',
@@ -52,7 +54,7 @@ class CouponController extends Controller
             'coupon.supplierID' => 'required|integer'
         ]);
 
-        $created_coupon = Coupon::create([
+        Coupon::create([
             'code' => $request->input('coupon.code'),
             'name' => $request->input('coupon.name'),
             'description' => $request->input('coupon.description'),
@@ -92,9 +94,10 @@ class CouponController extends Controller
     public function update(Request $request, $couponCode)
     {   //Testado!
         
-
+        
         $collection_coupon = Coupon::where('code', '=', $couponCode)->get();
         
+        $this->authorize('update', $collection_coupon);
         
         if($collection_coupon->isEmpty()){
             return response('', 404)->header('description','Coupon not found');
@@ -133,13 +136,13 @@ class CouponController extends Controller
      *
      * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
-     */
+    */
     public function destroy($couponCode)
     {   //Testado
         $coupon_builder = Coupon::where('code', '=', $couponCode);
+
+        $this->authorize('delete', $coupon_builder->get());
         
-
-
         if($coupon_builder->get()->isEmpty()){
             return response('', 404,)->header('description', 'Coupon not found');
         }

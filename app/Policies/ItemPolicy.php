@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Item;
+use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -41,7 +42,8 @@ class ItemPolicy
      */
     public function create(User $user)
     {
-        //
+        $supplier = Supplier::find($user->id);
+        return $supplier->isNotEmpty();
     }
 
     /**
@@ -53,7 +55,7 @@ class ItemPolicy
      */
     public function update(User $user, Item $item)
     {
-        //
+        return $user->id === $item->supplier_id;
     }
 
     /**
@@ -65,7 +67,7 @@ class ItemPolicy
      */
     public function delete(User $user, Item $item)
     {
-        //
+        return $user->id === $item->supplier_id;
     }
 
     /**

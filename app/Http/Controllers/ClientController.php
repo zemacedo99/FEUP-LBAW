@@ -15,6 +15,7 @@ class ClientController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny');
         return Client::all();
     }
 
@@ -36,6 +37,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
+        
         $request->validate([
             'client.email' => 'required|string',
             'client.password' => 'required|string',
@@ -64,8 +66,15 @@ class ClientController extends Controller
      */
     public function show($id)
     {   
-        //Merge não está a funcionar nao sei pq 
+       
+    }
+
+
+    public function view($id){
         $client = Client::where('id', '=', $id)->get();
+
+        $this->authorize('viewAny', $client);
+
         $user = User::where('id', '=', $id)->get();
 
         $merged = $client->merge($user); 
@@ -93,6 +102,8 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {   // Testado!
+
+
         $request->validate([
             'client.email' => 'string',
             'client.password' => 'string',
@@ -105,6 +116,8 @@ class ClientController extends Controller
         }
 
         $client = Client::where('id', '=', $id)->get();
+        $this->authorize('viewAny', $client);
+        
         $user = User::where('id', '=', $id)->get();
         
         
@@ -146,6 +159,8 @@ class ClientController extends Controller
     public function destroy($id)
     {   //postgres não deixa apagar
         $client = Client::where('id', '=', $id);
+        $this->authorize('viewAny', $client);
+        
         $user = User::where('id', '=', $id);
         
         if($client->get()->isEmpty() || $user->get()->isEmpty()){

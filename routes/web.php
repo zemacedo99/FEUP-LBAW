@@ -23,6 +23,8 @@ Route::view('/dashboard', 'pages.admin.dashboard')->name('dashboard');
 Route::view('/dashboard_products', 'pages.admin.products')->name('admin_products');
 Route::view('/dashboard_clients', 'pages.admin.users')->name('admin_users');
 Route::view('/dashboard_requests', 'pages.admin.requests')->name('admin_requests');
+
+
 // Coupon
 Route::get('/api/coupon', 'CouponController@index');
 Route::post('/api/coupon', 'CouponController@store');
@@ -58,8 +60,8 @@ Route::delete('/api/client/{id}', 'ClientController@destroy');
 
 // Item
 Route::get('/api/item', 'ItemController@index');
-//Route::post('/api/item', 'ClientController@store');
-Route::get('/api/item/{id}', 'ItemController@show');
+Route::post('/api/item', 'ClientController@store');
+Route::get('/api/item/{id}', 'ItemController@view');
 Route::put('/api/item/{id}', 'ItemController@update');
 Route::delete('/api/item/{id}', 'ItemController@destroy');
 
