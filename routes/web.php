@@ -13,10 +13,11 @@
 // Home
 use Illuminate\Support\Facades\Route;
 
+Route::get('/client/{id}', 'ClientController@show');
 
-Route::view('/about_us', 'pages.about_us')->name('about_us');
-Route::view('/bundle_detail', 'pages.bundleDetail');
-Route::view('/', 'pages.home_page')->name('homepage');
+Route::view('/about_us', 'pages.misc.about_us')->name('about_us');
+Route::view('/bundle_detail', 'pages.misc.bundleDetail');
+Route::view('/', 'pages.misc.home_page')->name('homepage');
 Route::view('/map', 'pages.site_map')->name('map');
 
 Route::view('/dashboard', 'pages.admin.dashboard')->name('dashboard');
@@ -54,7 +55,7 @@ Route::get('/supplier/{id}', 'SupplierController@show');
 // Client
 Route::get('/api/client', 'ClientController@index');
 //Route::post('/api/client', 'ClientController@store');
-Route::get('/api/client/{id}', 'ClientController@show');
+Route::get('/api/client/{id}', 'ClientController@get_info');
 Route::put('/api/client/{id}', 'ClientController@update');
 Route::delete('/api/client/{id}', 'ClientController@destroy');
 
