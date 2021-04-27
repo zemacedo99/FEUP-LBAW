@@ -61,7 +61,7 @@ Route::delete('/api/client/{id}', 'ClientController@destroy');
 // Item
 Route::get('/api/item', 'ItemController@index');
 Route::post('/api/item', 'ClientController@store');
-Route::get('/api/item/{id}', 'ItemController@show');
+Route::get('/api/item/{id}', 'ItemController@view');
 Route::put('/api/item/{id}', 'ItemController@update');
 Route::delete('/api/item/{id}', 'ItemController@destroy');
 

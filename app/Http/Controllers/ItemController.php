@@ -37,6 +37,8 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create');
+
         $request->validate([
             'item.supplier_id' => 'required|integer',
             'item.name' => 'required|string',
@@ -95,8 +97,25 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        return Item::where('id', '=', $id)->get();
+
+       
     }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Item  $item
+     * @return \Illuminate\Http\Response
+     */
+    public function view($id)
+    {
+        if(!is_numeric($id)){
+            return response('', 404)->header('description','The item was not found');
+        }
+        return Item::find($id);
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -118,36 +137,43 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!is_numeric($id)){
+            return response('', 404)->header('description','The item was not found');
+        }
+       
         $request->validate([
             'item.description' => 'string',
             'item.quantityAvailable' => 'integer',
             'item.price' => 'numeric',
+            'item.name' => 'string',
         ]);
 
-        if(!is_numeric($id)){
+        
+
+        $item = Item::find($id);
+        $this->authorize('update', $item);
+
+        if($item == null){
             return response('', 404)->header('description','The item was not found');
         }
 
-        $item = Item::where('id', '=', $id)->get();
-        if($item->isEmpty()){
-            return response('', 404)->header('description','The item was not found');
+        if($request->has('item.name')){
+            $item->name = $request->input('item.name'); 
         }
-
-        $item_data = $item->first();
 
         if($request->has('item.description')){
-            $item_data->description = $request->input('item.description'); 
+            $item->description = $request->input('item.description'); 
         }
 
         if($request->has('item.quantityAvailable')){
-            $item_data->stock = $request->input('item.quantityAvailable'); 
+            $item->stock = $request->input('item.quantityAvailable'); 
         }
 
         if($request->has('item.price')){
-            $item_data->price = $request->input('item.price'); 
+            $item->price = $request->input('item.price'); 
         }
 
-        $item_data->save();
+        $item->save();
 
         return response('', 204,)->header('description', 'Successfully updated item');
     }
@@ -164,16 +190,16 @@ class ItemController extends Controller
             return response('', 404)->header('description','The item was not found');
         }
 
-        $item = Item::where('id', '=', $id)->get();
-        if($item->isEmpty()){
+        $item = Item::find($id);
+        $this->authorize('delete', $item);
+
+        if($item == null){
             return response('', 404)->header('description','The item was not found');
         }
 
-        $item_data = $item->first();
-
-        $item_data->active = 'false';
+        $item->active = 'false';
     
-        $item_data->save();
+        $item->save();
 
         return response('', 204,)->header('description', 'Successfully deactivated item');
     }

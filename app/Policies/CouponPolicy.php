@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Coupon;
+use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -41,7 +42,8 @@ class CouponPolicy
      */
     public function create(User $user)
     {
-        //
+        $supplier = Supplier::find($user->id);
+        return $supplier->isNotEmpty();
     }
 
     /**

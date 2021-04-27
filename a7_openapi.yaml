@@ -1016,7 +1016,7 @@ paths:
                 tags:
                   type: array
                   items:
-                    type: integer
+                    type: integer           # TODO: não devia ser strings?
                 
                 bundle:
                   type: boolean
