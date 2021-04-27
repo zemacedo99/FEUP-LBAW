@@ -73,8 +73,9 @@ class ClientController extends Controller
         $image_id = $client->image_id;
 
         
+        
 
-        return view('pages.client.client_profile',['name' => $name ]);
+        return view('pages.client.client_profile',['client' => $client ]);
 
 
     }
