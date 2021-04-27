@@ -64,14 +64,30 @@ class ClientController extends Controller
      */
     public function show($id)
     {   
-        //Merge não está a funcionar nao sei pq 
-        $client = Client::where('id', '=', $id)->get();
-        $user = User::where('id', '=', $id)->get();
 
-        $merged = $client->merge($user); 
+        $client = Client::find($id);
+        
+        $name = $client->name;
+        $image_id = $client->image_id;
 
-        return $merged;
+        
+
+        return view('pages.client.client_profile',['name' => $name ]);
+
+
     }
+
+    public function get_info($id)
+    {
+        //Merge não está a funcionar nao sei pq 
+        // $client = Client::where('id', '=', $id)->get();
+        // $user = User::where('id', '=', $id)->get();
+
+        // $merged = $client->merge($user); 
+
+        // return $merged;
+    }
+
 
     /**
      * Show the form for editing the specified resource.
