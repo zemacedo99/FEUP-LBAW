@@ -14,6 +14,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/client/{id}', 'ClientController@show');
+Route::get('/item/{id}', 'ItemController@show');
 
 Route::view('/about_us', 'pages.misc.about_us')->name('about_us');
 Route::view('/bundle_detail', 'pages.misc.bundleDetail');
@@ -59,7 +60,10 @@ Route::get('/api/client/{id}', 'ClientController@get_info');
 Route::put('/api/client/{id}', 'ClientController@update');
 Route::delete('/api/client/{id}', 'ClientController@destroy');
 
+
+
 // Item
+
 Route::get('/api/item', 'ItemController@index');
 Route::post('/api/item', 'ClientController@store');
 Route::get('/api/item/{id}', 'ItemController@view');

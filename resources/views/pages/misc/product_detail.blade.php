@@ -47,12 +47,16 @@
         </div>
 
         <div class="col-12 col-lg-4 mt-5 mt-lg-0" id="DataContainer">
-            <h2>Green Good Apples</h2>
+            <h2>{{ $name }}</h2>
             <h6 class="text-muted">Only 2 left!</h6>
 
+            
             <br>
-            <h4><b>4,50€/kg</b></h4>
+            <h4><b>{{ $price}}€@isset($unit)/{{ $unit }} @endisset</b></h4>
             <br>
+           
+
+       
 
             <div class="col-6 mb-2">
                 <div class="form">
@@ -78,10 +82,7 @@
     <div class="row justify-content-center">
         <div class="col-12 col-lg-7">
             <p class="border px-1">
-                Fresh and green letuce from the renowned fields of Póvoa do Varzim in Portugal.
-                This lettuce is freshly picked every morning to preserve the essence of its flavour until it reaches
-                your table.
-                Biological food means sustainable food! Eat healthier.
+                {{ $description }}
             </p>
 
         </div>

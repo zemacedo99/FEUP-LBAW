@@ -97,8 +97,29 @@ class ItemController extends Controller
      */
     public function show($id)
     {
+        
+        $item = Item::find($id);
 
-       
+        $data = 
+        [
+            'name' => $item->name,
+            'price' => $item->price,
+            'stock' => $item->stock,
+            'description' => $item->description,
+            'rating' => $item->rating,
+            'is_bundle' => $item->is_bundle,
+             
+        ];
+
+        if(!$item->is_bundle){
+            $product = Product::find($id);
+            $data['unit'] = $product->type;
+        }
+        
+
+        
+        return view('pages.misc.product_detail', $data);
+        
     }
 
 
