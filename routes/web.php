@@ -12,6 +12,12 @@
 */
 // Home
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UploadController;
+
+
+
+Route::view('upload', 'upload');
+Route::post('upload',[UploadController::class,'index']);
 
 Route::get('/client/{id}', 'ClientController@show');
 Route::get('/item/{id}', 'ItemController@show');
