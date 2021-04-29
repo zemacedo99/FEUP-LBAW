@@ -60,7 +60,12 @@
 
         <div class="col-12 col-lg-4 mt-5 mt-lg-0" id="DataContainer">
             <h2>{{ $name }}</h2>
-            <h6 class="text-muted">Only {{ $stock }} left!</h6>
+            @if ($stock <= 10)
+                <h6 class="text-muted">Only {{ $stock }} left!</h6>
+            @else
+                <h6 class="text-muted">{{ $stock }} left!</h6>
+            @endif
+            
             <input type="hidden" id="price"  value="{{ $price}}">
             
             <br>
@@ -75,7 +80,9 @@
                     <label class="form-label" for="quantity">Quantity</label>
                     <div class="input-group">
                         <input type="number" class="form-control" id="quantity" min="0">
-                        <span class="input-group-text">Kg</span>
+                        @isset($unit)
+                        <span class="input-group-text">{{ $unit }} </span>
+                        @endisset
                     </div>
                     <div class="text-muted" id="total" >Total: 0€</div>
 
