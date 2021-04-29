@@ -21,14 +21,14 @@
                     </div>
                     <div class="carousel-inner" style=" width:100%; max-height: 450px !important;">
 
-                        @foreach($images as $image)
-                            @isset($image) 
-                            <div class="carousel-item">
-                                {{-- <img src="{{ asset('images/items/' . $path)}}" class="d-block w-100" alt="..."> --}}
-                                <img src="{{ $path }}" class="d-block w-100" alt="...">
-                            </div>
-                            @endisset
-                        @endforeach
+                        @isset($images) 
+                            @foreach($images as $image)
+                                <div class="carousel-item">
+                                    {{-- <img src="{{ asset('images/items/' . $path)}}" class="d-block w-100" alt="..."> --}}
+                                    <img src="{{ $path }}" class="d-block w-100" alt="...">
+                                </div>
+                            @endforeach
+                        @endisset
 
                         <div class="carousel-item active">
                             <img src="https://www.infoescola.com/wp-content/uploads/2010/11/ma%C3%A7a-verde_312027470.jpg"
@@ -102,11 +102,11 @@
 
         <div class="col-6 col-lg-5" style="min-height: 100px;">
             <div class="d-grid gap-2 d-lg-block  ">
-
-                @foreach($tags as $tag)
-                    @isset($tag) <button class="btn btn-secondary btn-sm">{{ $tag->value }}</button> @endisset
-                @endforeach
-
+                @isset($tags)
+                    @foreach($tags as $tag)
+                        <button class="btn btn-secondary btn-sm">{{ $tag->value }}</button>
+                    @endforeach
+                @endisset
 
                 {{-- <button class="btn btn-secondary btn-sm">Organic</button>
 
@@ -124,25 +124,25 @@
         <h3>What other costumers say:</h3>
     </div>
 
+    
+    @isset($reviews) 
+        @foreach($reviews as $review)
 
-    @foreach($reviews as $review)
-
-        @isset($review) 
-        
             <div class="row mt-3 border">
                 <div class="col">
                     <div class="row">
-                        <h4> {{ $review->client()->Route::get('user', 'UserController@index')->name('user'); }} </h4>
+                        <h4> {{ $review->client()->Route::get('user', 'UserController@index')->name('user') }} </h4>
                     </div>
         
                     <div class="row">
                         <div class="col-12">
 
                             @for ($i = 0; $i < 5; $i++)
-                                @if ($i <= {{ $review->rating }})
-                                    <i class="bi bi-star-fill"></i>
+
+                                @if ($i > $review->rating )
+                                    <i class="bi bi-star"></i>
                                 @endif
-                                <i class="bi bi-star"></i>
+                                <i class="bi bi-star-fill"></i>
                             @endfor
                             
                         </div>
@@ -159,9 +159,9 @@
                 </div>
             </div>
         
-        @endisset
-
-    @endforeach
+            
+        @endforeach
+    @endisset
 
     <div class="row mt-3 border">
         <div class="col">

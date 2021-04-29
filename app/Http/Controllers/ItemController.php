@@ -120,7 +120,7 @@ class ItemController extends Controller
             $product = Product::find($id);
             $data['unit'] = $product->type;
 
-            $data['images'] = $product->images()->get();
+            // $data['images'] = $product->images()->get();
         }
         
 
