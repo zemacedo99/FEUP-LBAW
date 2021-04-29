@@ -2,6 +2,8 @@
 
 @section('content')
 
+<script type="text/javascript" src={{ asset('js/item_details.js') }} defer> </script>
+
 <div class="container">
 
     <div class="row mt-5">
@@ -58,8 +60,8 @@
 
         <div class="col-12 col-lg-4 mt-5 mt-lg-0" id="DataContainer">
             <h2>{{ $name }}</h2>
-            <h6 class="text-muted">Only 2 left!</h6>
-
+            <h6 class="text-muted">Only {{ $stock }} left!</h6>
+            <input type="hidden" id="price"  value="{{ $price}}">
             
             <br>
             <h4><b>{{ $price}}€@isset($unit)/{{ $unit }} @endisset</b></h4>
@@ -75,7 +77,7 @@
                         <input type="number" class="form-control" id="quantity" min="0">
                         <span class="input-group-text">Kg</span>
                     </div>
-                    <div class="text-muted">Total: 9,00€</div>
+                    <div class="text-muted" id="total" >Total: 0€</div>
 
                 </div>
             </div>
@@ -120,18 +122,18 @@
         </div>
     </div>
 
-    <div class="row mt-4">
-        <h3>What other costumers say:</h3>
-    </div>
+    @isset($reviews) 
+        <div class="row mt-4">
+            <h3>What other costumers say:</h3>
+        </div>
 
     
-    @isset($reviews) 
         @foreach($reviews as $review)
 
             <div class="row mt-3 border">
                 <div class="col">
                     <div class="row">
-                        <h4> {{ $review->client()->Route::get('user', 'UserController@index')->name('user') }} </h4>
+                        <h4> {{ $review->client->name }} </h4>
                     </div>
         
                     <div class="row">
@@ -139,10 +141,13 @@
 
                             @for ($i = 0; $i < 5; $i++)
 
-                                @if ($i > $review->rating )
+                                @if ($i <=  $review->rating )
+                                    <i class="bi bi-star-fill"></i>
+
+                                @else
                                     <i class="bi bi-star"></i>
                                 @endif
-                                <i class="bi bi-star-fill"></i>
+                                
                             @endfor
                             
                         </div>
@@ -163,54 +168,6 @@
         @endforeach
     @endisset
 
-    <div class="row mt-3 border">
-        <div class="col">
-            <div class="row">
-                <h4>Alice </h4>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star"></i>
-                </div>
-                <div class="col"></div>
-            </div>
-
-            <div class="row">
-                <div class="text-muted">The lettuce was flavourful, supermarket's lettuce isn't nearly as tasteful</div>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="row mt-3 mb-5 border">
-        <div class="col">
-            <div class="row">
-                <h4>João </h4>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star"></i>
-                    <i class="bi bi-star"></i>
-                    <i class="bi bi-star"></i>
-                    <i class="bi bi-star"></i>
-                </div>
-                <div class="col"></div>
-            </div>
-
-            <div class="row">
-                <div class="text-muted">They call it biological but seeing snails in the lettuce makes me think only in
-                    lack of hygiene.</div>
-            </div>
-
-        </div>
-    </div>
 
 
 </div>

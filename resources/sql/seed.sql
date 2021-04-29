@@ -356,7 +356,7 @@ $BODY$
     LANGUAGE plpgsql;
 
 CREATE TRIGGER item_tag_search_update
-    BEFORE INSERT OR UPDATE ON item_tag
+    AFTER INSERT OR UPDATE ON item_tag
     FOR EACH ROW
 EXECUTE PROCEDURE search_update();
 
