@@ -99,6 +99,9 @@ class ItemController extends Controller
     {
         
         $item = Item::find($id);
+        $tags = $item->tags()->get();
+        $reviews = $item->reviews()->get();
+    
 
         $data = 
         [
@@ -108,16 +111,24 @@ class ItemController extends Controller
             'description' => $item->description,
             'rating' => $item->rating,
             'is_bundle' => $item->is_bundle,
+            'tags' => $tags,
+            'reviews' => $reviews,
              
         ];
 
         if(!$item->is_bundle){
             $product = Product::find($id);
             $data['unit'] = $product->type;
+
+            $data['images'] = $product->images()->get();
         }
         
 
         
+
+
+
+
         return view('pages.misc.product_detail', $data);
         
     }
