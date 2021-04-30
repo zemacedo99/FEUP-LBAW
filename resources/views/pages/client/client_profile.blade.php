@@ -11,7 +11,7 @@
             <div class="col col-sm-1" style="width: 200px;">
                 <img src="../images/img_avatar.png" class="rounded-circle img-fluid">
             </div>
-            <div class="col col-sm-3 col-md-8 col-lg-9 col-xl-9 col-xxl-10 d-flex justify-content-center justify-content-sm-start ps-3 fs-2">André Gomes</div>
+            <div class="col col-sm-3 col-md-8 col-lg-9 col-xl-9 col-xxl-10 d-flex justify-content-center justify-content-sm-start ps-3 fs-2">{{  $client->name }}</div>
         </div>
     </div>
 

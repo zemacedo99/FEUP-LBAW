@@ -159,7 +159,7 @@ paths:
                   description: 'Successful authentication. Redirect to Supplier profile'
                   value: '/supplier/{id}'
 
-/supplier: #Mostra todos os suppliers
+  /supplier: #Mostra todos os suppliers
     get:
       operationId: R106
       summary: 'R106: Get all suppliers'
@@ -955,7 +955,7 @@ paths:
 
       parameters:
         - $ref: '#/components/parameters/Limit'
-        - $ref: '#/components/parameters/Search'
+        - $ref: '#/components/parameters/Search'      # O que é isso?
         - in: query
           name: supplierId
           schema:
@@ -977,7 +977,7 @@ paths:
       summary: 'R623 - Item, tag e coupon'
       description: 'Creates item (description, unit, stock, seller, image). Acess: USR'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
       requestBody:
         required: true
         content:
@@ -985,22 +985,27 @@ paths:
             schema:
               type: object
               required:
-                - sellerid
-                - description
-                - quantityAvailable
+                - supplier_id
+                - name
                 - price
-                - unit
+                - quantityAvailable
+                - description
                 - images
+
               properties:
-                sellerid:
+                supplier_id:
                   type: integer
+                name:
+                  type: string
                 description:
                   type: string
                 quantityAvailable:
                   type: integer
                 price:
                   type: number
-
+                type:
+                  type: string
+                  
                 images:
                   type: array
                   items:
@@ -1011,7 +1016,7 @@ paths:
                 tags:
                   type: array
                   items:
-                    type: integer
+                    type: integer           # TODO: não devia ser strings?
                 
                 bundle:
                   type: boolean
@@ -1027,7 +1032,7 @@ paths:
       summary: 'R624 - Item, tag e coupon'
       description: 'Returns item’s information (description, unit, stock, seller, image) and its reviews and tags. Access: PUB'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
       parameters:
         - $ref: '#/components/parameters/ID'
 
@@ -1059,7 +1064,7 @@ paths:
       summary: 'R625 - Item, tag e coupon'
       description: 'Updates item (description, unit, stock, seller, image) and its reviews and tags. Access: OWN'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
       parameters:
         - $ref: '#/components/parameters/ID'
       requestBody:
@@ -1069,6 +1074,8 @@ paths:
             schema:
               type: object
               properties:
+                name:
+                  type: string
                 description:
                   type: string
                 quantityAvailable:
@@ -1093,7 +1100,7 @@ paths:
       summary: 'R626 - Item, tag e coupon'
       description: 'Removes a seller s item. Access: OWN, ADM'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
 
       parameters:
         - $ref: '#/components/parameters/ID'
@@ -1139,7 +1146,7 @@ paths:
       summary: 'R628 - Item, tag e coupon'
       description: 'Creates coupon data. Access: OWN'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
       requestBody:
         required: true
         content:
@@ -1165,7 +1172,7 @@ paths:
       summary: 'R629 - Item, tag e coupon'
       description: 'Returns coupon information (name, code, discout amount, unit, description, expiration date). Access: PUB'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
       parameters:
         - $ref: '#/components/parameters/couponCode'
 
@@ -1186,7 +1193,7 @@ paths:
       summary: 'R630 - Item, tag e coupon'
       description: 'Updates coupon data. Access: OWN'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
       parameters:
         - $ref: '#/components/parameters/couponCode'
 
@@ -1215,7 +1222,7 @@ paths:
       summary: 'R631 - Item, tag e coupon'
       description: 'Removes a coupon. Access: OWN'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
 
       parameters:
         - $ref: '#/components/parameters/couponCode'
@@ -1236,7 +1243,7 @@ paths:
       summary: 'R632 - Item, tag e coupon'
       description: 'Return all tags. Access: PUB'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
 
       responses:
         '200':
@@ -1254,7 +1261,7 @@ paths:
       summary: 'R633 - Item, tag e coupon. Access: OWN'
       description: 'Creates Tag'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
       requestBody:
         required: true
         content:
@@ -1274,16 +1281,13 @@ paths:
         '404':
           $ref: '#/components/responses/ItemNotFound' #when updating
 
-        '405':
-          description: Method not allowed
-
   /api/tag/{tagName}:
     get:
       operationId: R634
       summary: 'R634 - Item, tag e coupon'
       description: 'Return tag. Access: PUB'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
       parameters:
         - $ref: '#/components/parameters/tagName'
 
@@ -1305,7 +1309,7 @@ paths:
       summary: 'R635 - Item, tag e coupon'
       description: 'Delete tag. Access: ADM'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
 
       parameters:
         - $ref: '#/components/parameters/tagName'
@@ -1316,8 +1320,105 @@ paths:
   
   /api/image:   # TODO:
 
+
+  /api/creditcard: 
+    get:
+      operationId: R635
+      summary: 'R635 - Client Info'
+      description: 'Return Credit Card of client. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: The client ID number
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Successfully returned client credit card
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCard'
+
+    post:
+      operationId: R636
+      summary: 'R636 - Client Info'
+      description: 'Creates Credit Card. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditCard'
+
+      responses:
+        '204':
+          description: Successfully created credit card
+
+        '404':
+          $ref: '#/components/responses/404Error'
+    
+    put:
+      operationId: R636
+      summary: 'R637 - Client Info'
+      description: 'Updates Credit Card. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditCard'
+
+      responses:
+        '204':
+          description: Successfully updated credit card
+
+        '404':
+          $ref: '#/components/responses/404Error'
+
+    delete:
+      operationId: R637
+      summary: 'R635 - Client Info'
+      description: 'Delete Credit Card of client. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - $ref: '#/components/parameters/QID'
+
+      responses:
+        '204':
+          description: Successfully deleted client credit card
+        
+        '404':
+          $ref: '#/components/responses/404Error'
+
+
+
+
 components:
   schemas:
+    CreditCard:
+      type: object
+      properties:
+        card_n:
+          type: string
+        expiration:
+          type: string
+        cvv:
+          type: integer
+        holder:
+          type: string
+        client_id:
+          type: integer
+
     Review:
       type: object
       required:
@@ -1468,7 +1569,13 @@ components:
 
 
   parameters:
-
+    QID:
+      name: id
+      in: query
+      required: true
+      description: The ID number
+      schema:
+        type: integer
 
     ID:
       name: id
@@ -1544,7 +1651,7 @@ components:
             type: string    # path to redirect
 
     404Error:
-      description: 'Could not find request'
+      description: 'Could not find resource'
       content:
         application/json:
           schema:

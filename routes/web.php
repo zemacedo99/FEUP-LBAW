@@ -13,19 +13,19 @@
 // Home
 use Illuminate\Support\Facades\Route;
 
+Route::get('/client/{id}', 'ClientController@show');
+
+Route::view('/about_us', 'pages.misc.about_us')->name('about_us');
+Route::view('/bundle_detail', 'pages.misc.bundleDetail');
 Route::view('/', 'pages.misc.home_page')->name('homepage');
-Route::view('/about_us', 'pages.about_us')->name('about_us');
-Route::view('/bundle_detail', 'pages.bundleDetail');
 Route::view('/map', 'pages.site_map')->name('map');
-
-Route::view('/register', 'auth.register')->name('register');
-Route::view('/login', 'auth.login')->name('login');
-
 
 Route::view('/dashboard', 'pages.admin.dashboard')->name('dashboard');
 Route::view('/dashboard_products', 'pages.admin.products')->name('admin_products');
 Route::view('/dashboard_clients', 'pages.admin.users')->name('admin_users');
 Route::view('/dashboard_requests', 'pages.admin.requests')->name('admin_requests');
+
+
 // Coupon
 Route::get('/api/coupon', 'CouponController@index');
 Route::post('/api/coupon', 'CouponController@store');
@@ -55,14 +55,14 @@ Route::get('/supplier/{id}', 'SupplierController@show');
 // Client
 Route::get('/api/client', 'ClientController@index');
 //Route::post('/api/client', 'ClientController@store');
-Route::get('/api/client/{id}', 'ClientController@show');
+Route::get('/api/client/{id}', 'ClientController@get_info');
 Route::put('/api/client/{id}', 'ClientController@update');
 Route::delete('/api/client/{id}', 'ClientController@destroy');
 
 // Item
 Route::get('/api/item', 'ItemController@index');
-//Route::post('/api/item', 'ClientController@store');
-Route::get('/api/item/{id}', 'ItemController@show');
+Route::post('/api/item', 'ClientController@store');
+Route::get('/api/item/{id}', 'ItemController@view');
 Route::put('/api/item/{id}', 'ItemController@update');
 Route::delete('/api/item/{id}', 'ItemController@destroy');
 

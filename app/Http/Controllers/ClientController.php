@@ -15,6 +15,7 @@ class ClientController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny');
         return Client::all();
     }
 
@@ -36,6 +37,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
+        
         $request->validate([
             'client.email' => 'required|string',
             'client.password' => 'required|string',
@@ -64,14 +66,31 @@ class ClientController extends Controller
      */
     public function show($id)
     {   
-        //Merge não está a funcionar nao sei pq 
-        $client = Client::where('id', '=', $id)->get();
-        $user = User::where('id', '=', $id)->get();
 
-        $merged = $client->merge($user); 
+        $client = Client::find($id);
+        
+        $name = $client->name;
+        $image_id = $client->image_id;
 
-        return $merged;
+        
+        
+
+        return view('pages.client.client_profile',['client' => $client ]);
+
+
     }
+
+    public function get_info($id)
+    {
+        //Merge não está a funcionar nao sei pq 
+        // $client = Client::where('id', '=', $id)->get();
+        // $user = User::where('id', '=', $id)->get();
+
+        // $merged = $client->merge($user); 
+
+        // return $merged;
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -93,6 +112,8 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {   // Testado!
+
+
         $request->validate([
             'client.email' => 'string',
             'client.password' => 'string',
@@ -105,6 +126,8 @@ class ClientController extends Controller
         }
 
         $client = Client::where('id', '=', $id)->get();
+        $this->authorize('viewAny', $client);
+        
         $user = User::where('id', '=', $id)->get();
         
         
@@ -146,6 +169,8 @@ class ClientController extends Controller
     public function destroy($id)
     {   //postgres não deixa apagar
         $client = Client::where('id', '=', $id);
+        $this->authorize('viewAny', $client);
+        
         $user = User::where('id', '=', $id);
         
         if($client->get()->isEmpty() || $user->get()->isEmpty()){
