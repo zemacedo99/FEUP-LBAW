@@ -21,7 +21,7 @@ Route::post('upload',[UploadController::class,'index']);
 
 Route::get('/client/{id}', 'ClientController@show');
 Route::get('/item/{id}', 'ItemController@show');
-Route::view('/1', 'pages.misc.bundle_detail');
+Route::get('/test/{id}', 'ItemController@list');
 
 Route::view('/about_us', 'pages.misc.about_us')->name('about_us');
 Route::view('/bundle_detail', 'pages.misc.bundleDetail');

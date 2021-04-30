@@ -6,19 +6,34 @@
         <div class="col-8 col-md-9 col-lg-10">
             <div class="card-body">
                 <div class="d-flex justify-content-between ">
-                    <h4 class="card-title">test name</h4>
+                    <h4 class="card-title">{{ $name }}</h4>
                     <i class="bi bi-cart-plus ps-md-4"></i>
                 </div>
                 <div class="row row-cols-md-2">
                     <div class="col-10">
-                        <h5 class="card-title ">1.00€/kg</h5>
+                        <h5 class="card-title ">{{ $price}}€@isset($unit)/{{ $unit }}  @endisset</h5>
                         <!-- Isto tem de ser estático -->
+                        
                         <div class="rating justify-content-end"> 
-                            <input type="radio" name="ratinga" value="5" id="5a"><label for="5a">☆</label> 
+                            {{-- <input type="radio" name="ratinga" value="5" id="5a"><label for="5a">☆</label> 
                             <input type="radio" name="ratinga" value="4" id="4a"><label for="4a">☆</label> 
                             <input type="radio" name="ratinga" value="3" id="3a"><label for="3a">☆</label>
                             <input type="radio" name="ratinga" value="2" id="2a"><label for="2a">☆</label>
-                            <input type="radio" name="ratinga" value="1" id="1a"><label for="1a">☆</label>
+                            <input type="radio" name="ratinga" value="1" id="1a"><label for="1a">☆</label> --}}
+
+                            @for ($i = 0; $i < 5; $i++)
+
+                                @if ($i >  $rating )
+                                    <i class="bi bi-star-fill"></i>
+
+                                @else
+                                    <i class="bi bi-star"></i>
+                                @endif
+                                
+                            @endfor
+                            
+
+
                         </div>
                     </div>
                     <div class="col d-none d-md-block d-lg-block text-end sm-5 ">
@@ -26,8 +41,7 @@
                     </div>
                 </div>
 
-                <div class="card-text text-truncate d-none d-md-block order-md-1 col-md-9 col-lg-9">Test Description</div>
-
+                <div class="card-text text-truncate d-none d-md-block order-md-1 col-md-9 col-lg-9">{{ $description }}</div>
             </div>
         </div>
     </div>

@@ -21,8 +21,13 @@
     </div>
 
     <div class="row">
-        <?php for ($i = 0; $i < 5; $i++) { ?>
-            @include('partials.cards.product_detail')
+        <?php for ($i = 1; $i < 5; $i++) { ?>
+            @include('partials.cards.product_detail',[
+                        'name' => $name,
+                        'price' => $price,
+                        'description' => $description,
+                        'rating' => $rating,
+                        ])
         <?php
         }
         ?>

@@ -150,6 +150,32 @@ class ItemController extends Controller
     }
 
 
+    // nao pode ser feito assim, é suposto retornar a vista com todos os items
+    public function list($id)
+    {
+        
+        $item = Item::find($id);
+
+
+        $data = 
+        [
+            'name' => $item->name,
+            'price' => $item->price,
+            'description' => $item->description,
+            'rating' => $item->rating,
+        ];
+
+
+
+
+
+
+
+        return view('pages.misc.products_list', $data);
+        
+    }
+
+
     /**
      * Display the specified resource.
      *
