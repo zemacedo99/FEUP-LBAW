@@ -26,8 +26,8 @@
                         @isset($images) 
                             @foreach($images as $image)
                                 <div class="carousel-item">
-                                    {{-- <img src="{{ asset('images/items/' . $path)}}" class="d-block w-100" alt="..."> --}}
-                                    <img src="{{ $path }}" class="d-block w-100" alt="...">
+                                    <img src="{{ storage_path('app/public/images~/' . $path)}}" class="d-block w-100" alt="...">
+                                    {{-- <img src="{{ $path }}" class="d-block w-100" alt="..."> --}}
                                 </div>
                             @endforeach
                         @endisset
