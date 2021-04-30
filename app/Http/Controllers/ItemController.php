@@ -6,6 +6,7 @@ use App\Models\Image;
 use App\Models\Item;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -24,9 +25,12 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+
+
+        $data = [];
+        return view('pages.supplier.create_edit_bundle', $data);
     }
 
     /**
@@ -114,7 +118,14 @@ class ItemController extends Controller
         if(!$item->is_bundle){
             $product = Product::find($id);
             $data['unit'] = $product->type;
-            // $data['images'] = $product->images()->get();
+
+            $images = [];
+            foreach($product->images as $image){
+                $contents = Storage::disk('public')->get("images/" . $image->path);
+                array_push($images, $contents);
+            }
+
+            $data['images'] = $images;
         }
 
         

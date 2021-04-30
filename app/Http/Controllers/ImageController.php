@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Http\File;
 
 class ImageController extends Controller
 {
@@ -47,6 +48,18 @@ class ImageController extends Controller
     public function show(Image $image)
     {
         //
+    }
+
+/**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Image  $image
+     * @return \Illuminate\Http\Response
+     */
+    public function view($filename)
+    {
+
+
     }
 
     /**

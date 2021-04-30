@@ -10,53 +10,63 @@
 
         <div class="col-12 col-lg-7" id="mainContainer">
 
-            <div id="carrouselContainer" class="container-fluid">
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"
-                    data-bs-interval="false">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                            class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner" style=" width:100%; max-height: 450px !important;">
+        @if ($is_bundle)
+            @include('partials.bundle')
+        
+        @else
 
-                        @isset($images) 
-                            @foreach($images as $image)
-                                <div class="carousel-item">
-                                    <img src="{{ storage_path('app/public/images~/' . $path)}}" class="d-block w-100" alt="...">
-                                    {{-- <img src="{{ $path }}" class="d-block w-100" alt="..."> --}}
-                                </div>
-                            @endforeach
-                        @endisset
+                <div id="carrouselContainer" class="container-fluid">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"
+                        data-bs-interval="false">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                                class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner" style=" width:100%; max-height: 450px !important;">
 
-                        <div class="carousel-item active">
-                            <img src="https://www.infoescola.com/wp-content/uploads/2010/11/ma%C3%A7a-verde_312027470.jpg"
-                                class="d-block w-100" alt="...">
+                            @isset($images)
+                            
+                                @foreach($images as $image)
+                                    <div class="carousel-item">
+                                        <img src="{{ url('storage/public/images/'.$image) }}"  class="d-block w-100" alt="" title="" />  
+
+                                        {{-- <img src="{{ $path }}" class="d-block w-100" alt="..."> --}}
+                                    </div>
+                                @endforeach
+                            @endisset
+
+                            <div class="carousel-item active">
+                                <img src="https://www.infoescola.com/wp-content/uploads/2010/11/ma%C3%A7a-verde_312027470.jpg"
+                                    class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="../images/apples.jpg" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://www.portaldojardim.com/pdj/wp-content/uploads/Ma%C3%A7as-verdes.jpg"
+                                    class="d-block w-100" alt="...">
+                            </div>
                         </div>
-                        <div class="carousel-item">
-                            <img src="../images/apples.jpg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://www.portaldojardim.com/pdj/wp-content/uploads/Ma%C3%A7as-verdes.jpg"
-                                class="d-block w-100" alt="...">
-                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
                 </div>
+                @endif
             </div>
-        </div>
+
+
 
         <div class="col-12 col-lg-4 mt-5 mt-lg-0" id="DataContainer">
             <h2>{{ $name }}</h2>
