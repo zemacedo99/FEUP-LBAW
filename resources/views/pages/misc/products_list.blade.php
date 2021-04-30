@@ -21,16 +21,16 @@
     </div>
 
     <div class="row">
-        <?php for ($i = 1; $i < 5; $i++) { ?>
+        @foreach ( $items as $item)
             @include('partials.cards.product_detail',[
-                        'name' => $name,
-                        'price' => $price,
-                        'description' => $description,
-                        'rating' => $rating,
-                        ])
-        <?php
-        }
-        ?>
+                'name' => $item->name,
+                'price' => $item->price,
+                'description' => $item->description,
+                'rating' => $item->rating,
+                'supplier' => $item->supplier,
+                ])
+        @endforeach
+    
     </div>
     @include('partials.page_navigation')
 </div>

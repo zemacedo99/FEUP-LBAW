@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div class="col d-none d-md-block d-lg-block text-end sm-5 ">
-                        <i class=text-muted>Supplier</i>
+                        <i class=text-muted>{{$supplier->name}}</i>
                     </div>
                 </div>
 
