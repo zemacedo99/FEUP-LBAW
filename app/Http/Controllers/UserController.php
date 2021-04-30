@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Supplier;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class SupplierController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,6 @@ class SupplierController extends Controller
     public function index()
     {
         //
-        return Supplier::all();
     }
 
     /**
@@ -26,40 +25,37 @@ class SupplierController extends Controller
     public function create()
     {
         //
-
     }
 
     /**
-     * Display the specified resource.
+     * Store a newly created resource in storage.
      *
-     * @param  \App\Models\Supplier  $supplier
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function store(Request $request)
     {
-        return Supplier::where('id','=',$id)->get();
         //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Supplier  $supplier
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function searchName(Request $request)
+    public function show(User $user)
     {
-        return Supplier::where('name','like',$request->input('name'));
         //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Supplier  $supplier
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Supplier $supplier)
+    public function edit(User $user)
     {
         //
     }
@@ -68,10 +64,10 @@ class SupplierController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Supplier  $supplier
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Supplier $supplier)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -79,10 +75,10 @@ class SupplierController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Supplier  $supplier
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Supplier $supplier)
+    public function destroy(User $user)
     {
         //
     }

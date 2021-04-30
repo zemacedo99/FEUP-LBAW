@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS images             CASCADE;
 DROP TABLE IF EXISTS tags               CASCADE;
-DROP TABLE IF EXISTS shoppers           CASCADE; -- previously user
+DROP TABLE IF EXISTS "users"           CASCADE; -- previously user
 DROP TABLE IF EXISTS clients            CASCADE;
 DROP TABLE IF EXISTS suppliers          CASCADE;
 DROP TABLE IF EXISTS purchases          CASCADE;
@@ -50,127 +50,127 @@ CREATE TABLE tags (
     search          tsvector    DEFAULT '' NOT NULL
 );
 
-CREATE TABLE shoppers (
+CREATE TABLE "users" (
     id              SERIAL      PRIMARY KEY,
     email           TEXT        NOT NULL CONSTRAINT user_email_uk UNIQUE,
     password        TEXT        NOT NULL,
-    is_admin        boolean     NOT NULL
+    is_admin        boolean     NOT NULL DEFAULT 'false'
 );
 
 CREATE TABLE clients (
-    id              INTEGER     NOT NULL REFERENCES shoppers (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    id              INTEGER     NOT NULL REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE CASCADE,
     name            TEXT        NOT NULL,
     image_id        INTEGER     NOT NULL DEFAULT 1 REFERENCES images (id) ON UPDATE CASCADE ON DELETE SET DEFAULT,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE suppliers (
-                           id              INTEGER     NOT NULL REFERENCES shoppers (id) ON UPDATE CASCADE ON DELETE SET NULL ,
-                           name            TEXT        NOT NULL,
-                           address         TEXT        NOT NULL,
-                           post_code       TEXT        NOT NULL,
-                           city            TEXT        NOT NULL,
-                           description     TEXT        NOT NULL,
-                           accepted        BOOLEAN     NOT NULL,
-                           image_id        INTEGER     NOT NULL DEFAULT 1 REFERENCES images (id) ON UPDATE CASCADE ON DELETE SET DEFAULT ,
-                           search          tsvector    DEFAULT '' NOT NULL,
-                           PRIMARY KEY (id)
+    id              INTEGER     NOT NULL REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE SET NULL ,
+    name            TEXT        NOT NULL,
+    address         TEXT        NOT NULL,
+    post_code       TEXT        NOT NULL,
+    city            TEXT        NOT NULL,
+    description     TEXT        NOT NULL,
+    accepted        BOOLEAN     NOT NULL,
+    image_id        INTEGER     NOT NULL DEFAULT 1 REFERENCES images (id) ON UPDATE CASCADE ON DELETE SET DEFAULT ,
+    search          tsvector    DEFAULT '' NOT NULL,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE purchases (
-                           id              SERIAL              PRIMARY KEY,
-                           client_id       INTEGER             NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-                           paid            DECIMAL             NOT NULL,
-                           purchase_date   DATE                NOT NULL,
-                           type            purchase_type       NOT NULL,
-                           CONSTRAINT      amount_positive_ck  CHECK (paid > 0),
-                           CONSTRAINT      old_date_ck         CHECK (purchase_date <= CURRENT_DATE)
+    id              SERIAL              PRIMARY KEY,
+    client_id       INTEGER             NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    paid            DECIMAL             NOT NULL,
+    purchase_date   DATE                NOT NULL,
+    type            purchase_type       NOT NULL,
+    CONSTRAINT      amount_positive_ck  CHECK (paid > 0),
+    CONSTRAINT      old_date_ck         CHECK (purchase_date <= CURRENT_DATE)
 );
 
 -- BusinessRule: Item either is a bundle, or a product, can't have is_bundle true and be referenced in product
 CREATE TABLE items (
-                       id              SERIAL                  PRIMARY KEY,
-                       supplier_id     INTEGER                 NOT NULL REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE SET NULL ,
-                       name            TEXT                    NOT NULL,
-                       price           DECIMAL                 NOT NULL,
-                       stock           DECIMAL                 NOT NULL,
-                       description     TEXT                    NOT NULL,
-                       active          BOOLEAN                 NOT NULL,
-                       rating          DECIMAL,
-                       is_bundle       BOOLEAN                 NOT NULL,
-                       search          tsvector                DEFAULT '' NOT NULL,
-                       CONSTRAINT      price_positive_ck       CHECK (price > 0),
-                       CONSTRAINT      stock_not_negative_ck   CHECK (stock >= 0)
+    id              SERIAL                  PRIMARY KEY,
+    supplier_id     INTEGER                 NOT NULL REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE SET NULL ,
+    name            TEXT                    NOT NULL,
+    price           DECIMAL                 NOT NULL,
+    stock           DECIMAL                 NOT NULL,
+    description     TEXT                    NOT NULL,
+    active          BOOLEAN                 NOT NULL,
+    rating          DECIMAL,
+    is_bundle       BOOLEAN                 NOT NULL DEFAULT 'false',
+    search          tsvector                DEFAULT '' NOT NULL,
+    CONSTRAINT      price_positive_ck       CHECK (price > 0),
+    CONSTRAINT      stock_not_negative_ck   CHECK (stock >= 0)
 );
 
 CREATE TABLE coupons (
-                         id              SERIAL          PRIMARY KEY,
-                         code            TEXT            NOT NULL UNIQUE,
-                         name            TEXT            NOT NULL,
-                         description     TEXT            NOT NULL,
-                         expiration      DATE            NOT NULL CHECK (expiration > now()),
-                         type            coupon_type     NOT NULL,
-                         amount          DECIMAL         NOT NULL CHECK (amount > 0),
-                         supplier_id     INTEGER         NOT NULL REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id              SERIAL          PRIMARY KEY,
+    code            TEXT            NOT NULL UNIQUE,
+    name            TEXT            NOT NULL,
+    description     TEXT            NOT NULL,
+    expiration      DATE            NOT NULL CHECK (expiration > now()),
+    type            coupon_type     NOT NULL,
+    amount          DECIMAL         NOT NULL CHECK (amount > 0),
+    supplier_id     INTEGER         NOT NULL REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE products (
-                          id              INTEGER     PRIMARY KEY REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-                          type            unit_type   NOT NULL
+    id              INTEGER     PRIMARY KEY REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    type            unit_type   NOT NULL
 );
 
 CREATE TABLE ship_details (
-                              id              SERIAL      PRIMARY KEY,
-                              first_name      TEXT        NOT NULL,
-                              last_name       TEXT        NOT NULL,
-                              address         TEXT        NOT NULL,
-                              door_n          INTEGER     NOT NULL,
-                              post_code       TEXT        NOT NULL,
-                              district        TEXT        NOT NULL,
-                              city            TEXT        NOT NULL,
-                              country         TEXT        NOT NULL,
-                              phone_n         TEXT        NOT NULL,
-                              client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id              SERIAL      PRIMARY KEY,
+    first_name      TEXT        NOT NULL,
+    last_name       TEXT        NOT NULL,
+    address         TEXT        NOT NULL,
+    door_n          INTEGER     NOT NULL,
+    post_code       TEXT        NOT NULL,
+    district        TEXT        NOT NULL,
+    city            TEXT        NOT NULL,
+    country         TEXT        NOT NULL,
+    phone_n         TEXT        NOT NULL,
+    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE credit_cards (
-                              id              SERIAL      PRIMARY KEY,
-                              card_n          text        NOT NULL,
-                              expiration      DATE        NOT NULL,
-                              cvv             INTEGER     NOT NULL,
-                              holder          TEXT        NOT NULL,
-                              client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id              SERIAL      PRIMARY KEY,
+    card_n          text        NOT NULL,
+    expiration      DATE        NOT NULL,
+    cvv             INTEGER     NOT NULL,
+    holder          TEXT        NOT NULL,
+    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE reviews (
-                         client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE SET NULL,
-                         item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE NO ACTION,
-                         rating          INTEGER     NOT NULL,
-                         description     TEXT        NOT NULL,
-                         CONSTRAINT      rating_ck   CHECK (rating >= 1 AND rating <= 5),
-                         PRIMARY KEY (client_id, item_id)
+    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE SET NULL,
+    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE NO ACTION,
+    rating          INTEGER     NOT NULL,
+    description     TEXT        NOT NULL,
+    CONSTRAINT      rating_ck   CHECK (rating >= 1 AND rating <= 5),
+    PRIMARY KEY (client_id, item_id)
 );
 
 /**
   Information about each item in a purchase
  */
 CREATE TABLE item_purchase (
-                               purchase_id     INTEGER     NOT NULL REFERENCES purchases (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-                               item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-                               price           DECIMAL     NOT NULL CHECK ( price > 0 ),
-                               amount          DECIMAL     NOT NULL CHECK ( amount > 0 ),
-                               PRIMARY KEY (purchase_id, item_id)
+    purchase_id     INTEGER     NOT NULL REFERENCES purchases (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    price           DECIMAL     NOT NULL CHECK ( price > 0 ),
+    amount          DECIMAL     NOT NULL CHECK ( amount > 0 ),
+    PRIMARY KEY (purchase_id, item_id)
 );
 
 /*
  Association between products and the item(only bundle) to which they belong
  */
 CREATE TABLE item_product (
-                              item_id         INTEGER             NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE,
-                              product_id      INTEGER             NOT NULL REFERENCES products (id) ON UPDATE CASCADE ON DELETE CASCADE,
-                              quantity        DECIMAL             NOT NULL CHECK ( quantity > 0 ),
-                              constraint      quantity_positive   CHECK ( quantity >= 0),
-                              PRIMARY KEY (item_id, product_id)
+    item_id         INTEGER             NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    product_id      INTEGER             NOT NULL REFERENCES products (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    quantity        DECIMAL             NOT NULL CHECK ( quantity > 0 ),
+    constraint      quantity_positive   CHECK ( quantity >= 0),
+    PRIMARY KEY (item_id, product_id)
 );
 
 /*
@@ -186,28 +186,28 @@ CREATE TABLE item_tag (
  Association between a product and its images
  */
 CREATE TABLE image_product (
-                               product_id      INTEGER     REFERENCES products (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-                               image_id        INTEGER     REFERENCES images (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-                               PRIMARY KEY (product_id, image_id)
+    product_id      INTEGER     REFERENCES products (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    image_id        INTEGER     REFERENCES images (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    PRIMARY KEY (product_id, image_id)
 );
 
 /*
  favorite - Association between a client and their favorite items
  */
 CREATE TABLE client_item (
-                             client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-                             item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE SET NULL ,
-                             PRIMARY KEY (client_id, item_id)
+    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE SET NULL ,
+    PRIMARY KEY (client_id, item_id)
 );
 
 /*
  cart - Association between a client and their cart items
  */
 CREATE TABLE carts (
-                       client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-                       item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE SET NULL ,
-                       quantity        DECIMAL     NOT NULL,
-                       PRIMARY KEY (client_id, item_id)
+    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE SET NULL ,
+    quantity        DECIMAL     NOT NULL,
+    PRIMARY KEY (client_id, item_id)
 );
 
 
@@ -354,7 +354,7 @@ $BODY$
     LANGUAGE plpgsql;
 
 CREATE TRIGGER item_tag_search_update
-    AFTER INSERT OR UPDATE ON item_tag
+    BEFORE INSERT OR UPDATE ON item_tag
     FOR EACH ROW
 EXECUTE PROCEDURE search_update();
 
@@ -446,8 +446,6 @@ CREATE TRIGGER tag_search_update
     FOR EACH ROW
 EXECUTE PROCEDURE tag_search_update();
 
-
---- Populate
 
 insert into images (path) values ('http://dummyimage.com/204x165.png/ff4444/ffffff');
 insert into images (path) values ('http://dummyimage.com/119x205.png/cc0000/ffffff');
@@ -629,83 +627,83 @@ insert into tags (value) values ('ability');
 insert into tags (value) values ('Graphical');
 
 -- password is "1234" for everyone
-insert into shoppers (email, password, is_admin) values ('bshovelbottom0@storify.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('rwhitley1@vistaprint.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('kcantle2@answers.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('tromaint3@livejournal.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('btambling4@guardian.co.uk', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('jpoytheras5@fotki.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('pwilcockes6@irs.gov', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('grameau7@state.tx.us', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('mforseith8@ihg.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('mfuentes9@twitter.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('bbrindleya@paypal.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('flandisb@acquirethisname.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('ebrigdalec@tripod.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('ahennemannd@soup.io', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('gdoggarte@topsy.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('jgoshawkf@squarespace.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('lmanachg@sciencedaily.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('lcazaleth@google.com.br', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('ameindli@netscape.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('aandragj@vimeo.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('aedowesk@php.net', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('devel@opensource.org', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('bverduinm@theguardian.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('sfilern@technorati.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('klaingo@wp.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('kupjohnp@answers.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('jwardaleq@discuz.net', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('mcaseyr@bing.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('aheyburns@mapquest.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('mtabardt@technorati.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('dramstedu@ucsd.edu', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('llufkinv@live.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('ocaddw@cisco.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('tmecchix@ebay.co.uk', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('mashey@gnu.org', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('zmackintoshz@seesaa.net', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('sglennie10@google.nl', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('cgiffkins11@ifeng.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('marington12@w3.org', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('kcorssen13@smh.com.au', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('dpilipets14@goo.gl', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('fcogin15@ucsd.edu', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('hsowrah16@free.fr', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('salforde17@unicef.org', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('lshorton18@prnewswire.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('akikke19@eepurl.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('ceddis1a@bluehost.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('acasseldine1b@usatoday.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('mwoodburne1c@fastcompany.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('fscholer1d@fastcompany.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('lyendle1e@theglobeandmail.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('ckirdsch1f@independent.co.uk', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('fdeppen1g@hhs.gov', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('malleyne1h@t.co', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('etremonte1i@clickbank.net', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('vcaley1j@icq.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('mvertey1k@umn.edu', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('efinkle1l@prlog.org', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('nmosby1m@google.it', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('ibow1n@ibm.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('achasen1o@ucla.edu', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('rmclaughlan1p@zimbio.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('glancetter1q@google.fr', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('gclempton1r@ox.ac.uk', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('bstopher1s@cpanel.net', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('kbacon1t@apache.org', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('cstodhart1u@nytimes.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('abeattie1v@economist.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('cdron1w@gnu.org', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('hcastillou1x@amazonaws.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('rcains1y@businessinsider.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('fmartynikhin1z@moonfruit.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('kmaplesden20@wordpress.org', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('kshorton21@dailymail.co.uk', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('jsimoncello22@soundcloud.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
-insert into shoppers (email, password, is_admin) values ('admin1@admin.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'true');
-insert into shoppers (email, password, is_admin) values ('admin2@admin.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'true');
+insert into "users" (email, password, is_admin) values ('bshovelbottom0@storify.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('rwhitley1@vistaprint.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('kcantle2@answers.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('tromaint3@livejournal.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('btambling4@guardian.co.uk', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('jpoytheras5@fotki.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('pwilcockes6@irs.gov', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('grameau7@state.tx.us', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('mforseith8@ihg.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('mfuentes9@twitter.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('bbrindleya@paypal.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('flandisb@acquirethisname.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('ebrigdalec@tripod.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('ahennemannd@soup.io', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('gdoggarte@topsy.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('jgoshawkf@squarespace.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('lmanachg@sciencedaily.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('lcazaleth@google.com.br', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('ameindli@netscape.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('aandragj@vimeo.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('aedowesk@php.net', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('devel@opensource.org', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('bverduinm@theguardian.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('sfilern@technorati.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('klaingo@wp.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('kupjohnp@answers.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('jwardaleq@discuz.net', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('mcaseyr@bing.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('aheyburns@mapquest.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('mtabardt@technorati.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('dramstedu@ucsd.edu', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('llufkinv@live.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('ocaddw@cisco.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('tmecchix@ebay.co.uk', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('mashey@gnu.org', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('zmackintoshz@seesaa.net', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('sglennie10@google.nl', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('cgiffkins11@ifeng.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('marington12@w3.org', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('kcorssen13@smh.com.au', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('dpilipets14@goo.gl', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('fcogin15@ucsd.edu', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('hsowrah16@free.fr', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('salforde17@unicef.org', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('lshorton18@prnewswire.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('akikke19@eepurl.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('ceddis1a@bluehost.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('acasseldine1b@usatoday.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('mwoodburne1c@fastcompany.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('fscholer1d@fastcompany.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('lyendle1e@theglobeandmail.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('ckirdsch1f@independent.co.uk', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('fdeppen1g@hhs.gov', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('malleyne1h@t.co', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('etremonte1i@clickbank.net', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('vcaley1j@icq.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('mvertey1k@umn.edu', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('efinkle1l@prlog.org', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('nmosby1m@google.it', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('ibow1n@ibm.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('achasen1o@ucla.edu', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('rmclaughlan1p@zimbio.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('glancetter1q@google.fr', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('gclempton1r@ox.ac.uk', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('bstopher1s@cpanel.net', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('kbacon1t@apache.org', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('cstodhart1u@nytimes.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('abeattie1v@economist.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('cdron1w@gnu.org', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('hcastillou1x@amazonaws.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('rcains1y@businessinsider.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('fmartynikhin1z@moonfruit.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('kmaplesden20@wordpress.org', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('kshorton21@dailymail.co.uk', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('jsimoncello22@soundcloud.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
+insert into "users" (email, password, is_admin) values ('admin1@admin.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'true');
+insert into "users" (email, password, is_admin) values ('admin2@admin.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'true');
 
 insert into clients (id, name, image_id) values (1, 'Eudora Jencken', 1);
 insert into clients (id, name, image_id) values (2, 'Marcos Lambdon', 1);

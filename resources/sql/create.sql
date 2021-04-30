@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS images             CASCADE;
 DROP TABLE IF EXISTS tags               CASCADE;
-DROP TABLE IF EXISTS shoppers           CASCADE; -- previously user
+DROP TABLE IF EXISTS "users"           CASCADE; -- previously user
 DROP TABLE IF EXISTS clients            CASCADE;
 DROP TABLE IF EXISTS suppliers          CASCADE;
 DROP TABLE IF EXISTS purchases          CASCADE;
@@ -50,22 +50,22 @@ CREATE TABLE tags (
     search          tsvector    DEFAULT '' NOT NULL
 );
 
-CREATE TABLE shoppers (
+CREATE TABLE "users" (
      id              SERIAL      PRIMARY KEY,
      email           TEXT        NOT NULL CONSTRAINT user_email_uk UNIQUE,
      password        TEXT        NOT NULL,
-     is_admin        boolean     NOT NULL
+     is_admin        boolean     NOT NULL DEFAULT 'false'
 );
 
 CREATE TABLE clients (
-    id              INTEGER     NOT NULL REFERENCES shoppers (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    id              INTEGER     NOT NULL REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE CASCADE,
     name            TEXT        NOT NULL,
     image_id        INTEGER     NOT NULL DEFAULT 1 REFERENCES images (id) ON UPDATE CASCADE ON DELETE SET DEFAULT,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE suppliers (
-    id              INTEGER     NOT NULL REFERENCES shoppers (id) ON UPDATE CASCADE ON DELETE SET NULL ,
+    id              INTEGER     NOT NULL REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE SET NULL ,
     name            TEXT        NOT NULL,
     address         TEXT        NOT NULL,
     post_code       TEXT        NOT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE items (
     description     TEXT                    NOT NULL,
     active          BOOLEAN                 NOT NULL,
     rating          DECIMAL,
-    is_bundle       BOOLEAN                 NOT NULL,
+    is_bundle       BOOLEAN                 NOT NULL DEFAULT 'false',
     search          tsvector                DEFAULT '' NOT NULL,
     CONSTRAINT      price_positive_ck       CHECK (price > 0),
     CONSTRAINT      stock_not_negative_ck   CHECK (stock >= 0)

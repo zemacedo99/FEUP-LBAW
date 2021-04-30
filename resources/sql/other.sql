@@ -5,9 +5,9 @@
 -----------------------------------------
 
 -- SELECT 01 T
-SELECT shoppers.id
-FROM shoppers
-WHERE shoppers.email = $email AND shoppers.password = $password;
+SELECT "users".id
+FROM "users"
+WHERE "users".email = $email AND "users".password = $password;
 
 -- SELECT 02
 -- Search items, suppliers and tags
@@ -94,12 +94,12 @@ WHERE id = $coupon_id;
 
 -- UPDATE 02
 -- Update email
-UPDATE shoppers
+UPDATE "users"
 SET email = $email
 WHERE id = $shopper_id;
 
 -- Update password
-UPDATE shoppers
+UPDATE "users"
 SET password = $password
 WHERE id = $shopper_id;
 
@@ -166,7 +166,7 @@ SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
 DO $$
     DECLARE new_id integer;
     BEGIN
-        INSERT INTO shoppers (email, password, is_admin)
+        INSERT INTO "users" (email, password, is_admin)
         VALUES ($email, $password, 'false') RETURNING id INTO new_id;
 
 
@@ -180,7 +180,7 @@ SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
 DO $$
     DECLARE new_id integer;
     BEGIN
-        INSERT INTO shoppers (email, password, is_admin)
+        INSERT INTO "users" (email, password, is_admin)
         VALUES ($email, $password, 'false') RETURNING id INTO new_id;
 
 
