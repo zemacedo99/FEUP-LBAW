@@ -1,35 +1,40 @@
 @extends('layouts.app')
 @section('content')
     <form method="POST" action="{{ route('register') }}" class="container">
-        {{ csrf_field() }}
-
+        @csrf
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
                 <figure class="figure d-flex justify-content-center mt-3 mb-5">
                     <img class="figure-img img-fluid rounded" src="https://via.placeholder.com/300x200" alt="">
                 </figure>
 
+                @if ($errors->any())
+                    <span class="error"> Fuck Laravel </span>
+                @endif
+
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingName" placeholder="John Doe">
+                    <input type="text" name="name" class="form-control" id="floatingName" required placeholder="John Doe" value="{{ old('name') }}">
                     <label class="text-black-50" for="floatingName">Name</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com">
+                    <input type="email" name="email" class="form-control" id="floatingEmail" required placeholder="name@example.com" value="{{ old('email') }}">
                     <label class="text-black-50" for="floatingEmail">Email address</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <input type="password" name="password" class="form-control" id="floatingPassword" required placeholder="Password">
                     <label class="text-black-50" for="floatingPassword">Password</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingConfirmPassword" placeholder="Confirm Password">
+                    <input type="password" name="password_confirmation" class="form-control" id="floatingConfirmPassword" required placeholder="Confirm Password">
                     <label class="text-black-50" for="floatingConfirmPassword">Confirm Password</label>
                 </div>
+                <!-- TODO Check if password match-->
 
                 <div class="row mt-3 mb-3">
                     <div class="col d-flex justify-content-center">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked data-bs-toggle="collapse" data-bs-target=".collapseOne.show">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
+                                   checked data-bs-toggle="collapse" data-bs-target=".collapseOne.show">
                             <label class="form-check-label" for="flexRadioDefault1">
                                 I'm a Customer
                             </label>
@@ -37,7 +42,8 @@
                     </div>
                     <div class="col d-flex justify-content-center">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" data-bs-toggle="collapse" data-bs-target=".collapseOne:not(.show)">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
+                                   data-bs-toggle="collapse" data-bs-target=".collapseOne:not(.show)">
                             <label class="form-check-label" for="flexRadioDefault2">
                                 I'm a Supplier
                             </label>
@@ -53,23 +59,23 @@
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingAddress" placeholder="Address">
+                            <input type="text" name="address" class="form-control" id="floatingAddress" placeholder="Address">
                             <label class="text-black-50" for="floatingAddress">Address</label>
                         </div>
 
                         <div class="row g-0 mb-3">
                             <div class="col form-floating me-3">
-                                <input type="text" class="form-control" id="floatingPostCode" placeholder="PostCode">
+                                <input type="text" name="post-code" class="form-control" id="floatingPostCode" placeholder="PostCode">
                                 <label class="text-black-50" for="floatingPostCode">Post Code</label>
                             </div>
                             <div class="col form-floating">
-                                <input type="text" class="form-control" id="floatingCity" placeholder="City">
+                                <input type="text" name="city" class="form-control" id="floatingCity" placeholder="City">
                                 <label class="text-black-50" for="floatingCity">City</label>
                             </div>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <textarea class="form-control" placeholder="Leave your description here" id="floatingDescription" style="height: 100px"></textarea>
+                            <textarea class="form-control" name="description" placeholder="Leave your description here" id="floatingDescription" style="height: 100px"></textarea>
                             <label class="text-black-50" for="floatingDescription">Description</label>
                         </div>
                     </div>

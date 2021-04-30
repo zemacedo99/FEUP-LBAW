@@ -177,9 +177,9 @@ CREATE TABLE item_product (
  Association between an item and its tags
  */
 CREATE TABLE item_tag (
-                          tag_id          INTEGER     NOT NULL REFERENCES tags (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-                          item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-                          PRIMARY KEY (tag_id, item_id)
+    tag_id          INTEGER     NOT NULL REFERENCES tags (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    PRIMARY KEY (tag_id, item_id)
 );
 
 /*
@@ -354,7 +354,7 @@ $BODY$
     LANGUAGE plpgsql;
 
 CREATE TRIGGER item_tag_search_update
-    BEFORE INSERT OR UPDATE ON item_tag
+    AFTER INSERT OR UPDATE ON item_tag
     FOR EACH ROW
 EXECUTE PROCEDURE search_update();
 

@@ -24,8 +24,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- FavIcon -->
-    <link rel="shortcut icon" href="../images/favicon.ico" type="image/png">
-    <link rel="icon" href="../images/favicon.ico" type="image/png">
+    <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}" type="image/png">
+    <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/png">
 
     <!-- Self included style and scripts -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
@@ -36,14 +36,15 @@
 
 <body>
 
-  @include('partials.navbar')
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+@include('partials.navbar')
 
   @yield('content')
 
   @include('partials.footer')
 
-  <!-- Bootstrap Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
 </body>
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Shopper;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ShopperController extends Controller
