@@ -35,7 +35,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // TODO Where I left off: Em principio recebe os dados por aqui e decide se cria client ou supplier + user, por ORM ou DB::transaction
     }
 
     /**

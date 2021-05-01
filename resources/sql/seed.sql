@@ -65,13 +65,13 @@ CREATE TABLE clients (
 );
 
 CREATE TABLE suppliers (
-    id              INTEGER     NOT NULL REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE SET NULL ,
+    id              INTEGER     NOT NULL REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE SET NULL,
     name            TEXT        NOT NULL,
     address         TEXT        NOT NULL,
     post_code       TEXT        NOT NULL,
     city            TEXT        NOT NULL,
     description     TEXT        NOT NULL,
-    accepted        BOOLEAN     NOT NULL,
+    accepted        BOOLEAN     NOT NULL DEFAULT 'false',
     image_id        INTEGER     NOT NULL DEFAULT 1 REFERENCES images (id) ON UPDATE CASCADE ON DELETE SET DEFAULT ,
     search          tsvector    DEFAULT '' NOT NULL,
     PRIMARY KEY (id)

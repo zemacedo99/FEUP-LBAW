@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Client;
+use App\Models\Supplier;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use Dotenv\Exception\ValidationException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -57,14 +61,57 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\Models\User
+     * @throws \Exception
      */
     protected function create(array $data)
     {
-        return User::create([
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        DB::beginTransaction();
+
+        try {
+            $newUser = User::create([
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+        } catch (\Exception $e){
+            DB::rollBack();
+            throw $e;
+        }
+
+        if (strcmp($data['type'], "client") == 0){
+            try {
+                Client::create([
+                    'id' => $newUser->id,
+                    'name' => $data['name'],
+                ]);
+            } catch (ValidationException $e) {
+                DB::rollBack();
+            } catch (\Exception $e){
+                DB::rollBack();
+                throw $e;
+            }
+        } elseif (strcmp($data['type'], "supplier") == 0){
+            try {
+                Supplier::create([
+                    'id' => $newUser->id,
+                    'name' => $data['name'],
+                    'address' => $data['address'],
+                    'post_code' => $data['post-code'],
+                    'city' => $data['city'],
+                    'description' => $data['description'],
+                ]);
+            } catch (ValidationException $e) {
+                DB::rollBack();
+            } catch (\Exception $e){
+                DB::rollBack();
+                throw $e;
+            }
+        }
+
+        DB::commit();
+        return $newUser;
     }
 }

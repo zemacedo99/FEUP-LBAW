@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('pagespecificfile')
+    <script src="{{ asset('js/register.js') }}" defer></script>
+@endsection
+
 @section('content')
     <form method="POST" action="{{ route('register') }}" class="container">
         @csrf
@@ -9,7 +14,7 @@
                 </figure>
 
                 @if ($errors->any())
-                    <span class="error"> Fuck Laravel </span>
+                    <span class="error"> Tens erros oh mano, muda isso chavalo </span>
                 @endif
 
                 <div class="form-floating mb-3">
@@ -33,8 +38,8 @@
                 <div class="row mt-3 mb-3">
                     <div class="col d-flex justify-content-center">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
-                                   checked data-bs-toggle="collapse" data-bs-target=".collapseOne.show">
+                            <input class="form-check-input" type="radio" name="type" value="client"
+                                   id="flexRadioDefault1" checked data-bs-toggle="collapse" data-bs-target=".collapseOne.show">
                             <label class="form-check-label" for="flexRadioDefault1">
                                 I'm a Customer
                             </label>
@@ -42,8 +47,8 @@
                     </div>
                     <div class="col d-flex justify-content-center">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
-                                   data-bs-toggle="collapse" data-bs-target=".collapseOne:not(.show)">
+                            <input class="form-check-input" type="radio" name="type" value="supplier"
+                                   id="flexRadioDefault2" data-bs-toggle="collapse" data-bs-target=".collapseOne:not(.show)">
                             <label class="form-check-label" for="flexRadioDefault2">
                                 I'm a Supplier
                             </label>
