@@ -15,7 +15,7 @@ class CardPolicy
     public function show(User $user, Card $card)
     {
       // Only a card owner can see it
-      return $user->id == $card->user_id;
+      return $user->id === $card->user_id;
     }
 
     public function list(User $user)
@@ -33,6 +33,6 @@ class CardPolicy
     public function delete(User $user, Card $card)
     {
       // Only a card owner can delete it
-      return $user->id == $card->user_id;
+      return $user->id === $card->user_id;
     }
 }

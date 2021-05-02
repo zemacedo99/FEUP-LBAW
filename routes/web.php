@@ -33,10 +33,12 @@ Route::get('/api/coupon/{couponCode}', 'CouponController@show');
 Route::put('/api/coupon/{couponCode}', 'CouponController@update');
 Route::delete('/api/coupon/{couponCode}', 'CouponController@destroy');
 
+// review
 Route::get('/api/review', 'ReviewController@index');
 Route::post('/api/review', 'ReviewController@create');
 Route::delete('/api/review', 'ReviewController@delete');
-//falta put
+Route::put('/api/review', 'ReviewController@update');
+
 
 Route::get('/api/client/{id}/history', 'PurchaseController@index');
 Route::get('/api/client/{id}/periodic', 'PurchaseController@index');//reevaluate
@@ -45,6 +47,7 @@ Route::post('/client/{id}/checkoutInfo', 'PurchaseController@create');
 //ship details
 Route::get('/client/{id}/checkoutPayment', 'ShipDetailController@index');
 Route::post('/client/{id}/checkoutPayment', 'ShipDetailController@create');
+Route::put('/client/{id}/checkoutPayment', 'ShipDetailController@update');
 
 //shoppers
 //maybe get supplier profiles
@@ -65,6 +68,12 @@ Route::post('/api/item', 'ClientController@store');
 Route::get('/api/item/{id}', 'ItemController@view');
 Route::put('/api/item/{id}', 'ItemController@update');
 Route::delete('/api/item/{id}', 'ItemController@destroy');
+
+// Tag
+Route::get('/api/tag', 'TagController@index');
+Route::post('/api/tag', 'TagController@create');
+Route::get('/api/tag/{tagName}', 'TagController@getObject');
+Route::delete('/api/tag/{tagName}','TagController@destroy');
 
 // Route::get('/', 'Auth\LoginController@home');
 
