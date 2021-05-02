@@ -89,7 +89,7 @@
                 <div class="d-grid gap-2 col-6 col-sm-5 col-md-7 mx-auto mb-5">
                     <button type="submit" class="btn btn-primary">Sign up</button>
                     <p class="text-muted mb-0 d-flex justify-content-center"> Already have an account? </p>
-                    <a href="#" class="link-secondary d-flex justify-content-center">Sign in</a>
+                    <a href="{{ route('login') }}" class="link-secondary d-flex justify-content-center">Sign in</a>
                 </div>
 
             </div>

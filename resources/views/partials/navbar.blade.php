@@ -43,3 +43,17 @@
         </div>
     </div>
 </nav>
+
+@if (Auth::check())
+    <a class="button" href="{{ url('/logout') }}"> Logout </a>
+    <span>email: {{ Auth::user()->email }}</span>
+    <br>
+    <span>id: {{ \Illuminate\Support\Facades\Auth::id() }}</span>
+    <br>
+    @if(\App\Models\Client::where('id', \Illuminate\Support\Facades\Auth::id())->exists())
+        <span>Client: {{ \App\Models\Client::where('id', \Illuminate\Support\Facades\Auth::id())->get()[0]->name }}</span>
+    @endif
+    @if(\App\Models\Supplier::where('id', \Illuminate\Support\Facades\Auth::id())->exists())
+        <span>Supplier: {{ \App\Models\Supplier::where('id', \Illuminate\Support\Facades\Auth::id())->get()[0]->name }}</span>
+    @endif
+@endif
