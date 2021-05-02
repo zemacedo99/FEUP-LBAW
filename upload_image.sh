@@ -6,7 +6,7 @@ read -p "Press [Enter] key to start backup..."
 set -e
 
 DOCKER_USERNAME=lbaw2131
-IMAGE_NAME=lbaw2131-piu
+IMAGE_NAME=lbaw2131
 
 # Ensure that dependencies are available
 composer install

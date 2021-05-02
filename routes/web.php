@@ -12,8 +12,16 @@
 */
 // Home
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UploadController;
+
+
+
+Route::view('upload', 'upload');
+Route::post('upload',[UploadController::class,'index']);
 
 Route::get('/client/{id}', 'ClientController@show');
+Route::get('/item/{id}', 'ItemController@show');
+Route::view('/1', 'pages.misc.bundle_detail');
 
 Route::view('/about_us', 'pages.misc.about_us')->name('about_us');
 Route::view('/bundle_detail', 'pages.misc.bundleDetail');
@@ -25,6 +33,9 @@ Route::view('/dashboard_products', 'pages.admin.products')->name('admin_products
 Route::view('/dashboard_clients', 'pages.admin.users')->name('admin_users');
 Route::view('/dashboard_requests', 'pages.admin.requests')->name('admin_requests');
 
+Route::get('/supplier/{id}/createBundle', 'ItemController@create');
+Route::get('/supplier/{id}/createProduct', 'ProductController@show');
+Route::get('/supplier/{id}/createCoupon', 'CouponController@create');
 
 // Coupon
 Route::get('/api/coupon', 'CouponController@index');
@@ -62,7 +73,10 @@ Route::get('/api/client/{id}', 'ClientController@get_info');
 Route::put('/api/client/{id}', 'ClientController@update');
 Route::delete('/api/client/{id}', 'ClientController@destroy');
 
+
+
 // Item
+
 Route::get('/api/item', 'ItemController@index');
 Route::post('/api/item', 'ClientController@store');
 Route::get('/api/item/{id}', 'ItemController@view');

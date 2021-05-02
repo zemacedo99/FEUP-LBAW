@@ -13,7 +13,7 @@
 
 </div>
 
-<div class="row">
+{{-- <div class="row">
 
     <div class="col-4">
         <div class="d-flex justify-content-start">Winter Bundle</div>
@@ -27,7 +27,7 @@
         <div class="d-flex justify-content-end">4.5€</div>
     </div>
 
-</div>
+</div> --}}
 
 
 <?php function bundleProductsImage($productname)

@@ -19,7 +19,7 @@
 
       <div class=" col-10 col-sm-6 col-md-4 col-lg-3">
         <label for="file-input">
-          <img src="../images/genericAddImage.png" alt="Add Image" class="img-fluid" style="height: 134px">
+          <img src="../images/genericAddImage.png" alt="Add Product" class="img-fluid" style="height: 134px">
         </label>
         <input id="file-input" type="file" class="invisible">
       </div>

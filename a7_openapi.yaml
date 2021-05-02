@@ -1058,7 +1058,7 @@ paths:
       summary: 'R623 - Item, tag e coupon'
       description: 'Creates item (description, unit, stock, seller, image). Acess: USR'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
       requestBody:
         required: true
         content:
@@ -1113,7 +1113,7 @@ paths:
       summary: 'R624 - Item, tag e coupon'
       description: 'Returns item’s information (description, unit, stock, seller, image) and its reviews and tags. Access: PUB'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
       parameters:
         - $ref: '#/components/parameters/ID'
 
@@ -1145,7 +1145,7 @@ paths:
       summary: 'R625 - Item, tag e coupon'
       description: 'Updates item (description, unit, stock, seller, image) and its reviews and tags. Access: OWN'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
       parameters:
         - $ref: '#/components/parameters/ID'
       requestBody:
@@ -1181,7 +1181,7 @@ paths:
       summary: 'R626 - Item, tag e coupon'
       description: 'Removes a seller s item. Access: OWN, ADM'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
 
       parameters:
         - $ref: '#/components/parameters/ID'
@@ -1227,7 +1227,7 @@ paths:
       summary: 'R628 - Item, tag e coupon'
       description: 'Creates coupon data. Access: OWN'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
       requestBody:
         required: true
         content:
@@ -1253,7 +1253,7 @@ paths:
       summary: 'R629 - Item, tag e coupon'
       description: 'Returns coupon information (name, code, discout amount, unit, description, expiration date). Access: PUB'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
       parameters:
         - $ref: '#/components/parameters/couponCode'
 
@@ -1274,7 +1274,7 @@ paths:
       summary: 'R630 - Item, tag e coupon'
       description: 'Updates coupon data. Access: OWN'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
       parameters:
         - $ref: '#/components/parameters/couponCode'
 
@@ -1303,7 +1303,7 @@ paths:
       summary: 'R631 - Item, tag e coupon'
       description: 'Removes a coupon. Access: OWN'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
 
       parameters:
         - $ref: '#/components/parameters/couponCode'
@@ -1324,7 +1324,7 @@ paths:
       summary: 'R632 - Item, tag e coupon'
       description: 'Return all tags. Access: PUB'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
 
       responses:
         '200':
@@ -1342,7 +1342,7 @@ paths:
       summary: 'R633 - Item, tag e coupon. Access: OWN'
       description: 'Creates Tag'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
       requestBody:
         required: true
         content:
@@ -1368,7 +1368,7 @@ paths:
       summary: 'R634 - Item, tag e coupon'
       description: 'Return tag. Access: PUB'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
       parameters:
         - $ref: '#/components/parameters/tagName'
 
@@ -1390,7 +1390,7 @@ paths:
       summary: 'R635 - Item, tag e coupon'
       description: 'Delete tag. Access: ADM'
       tags:
-        - 'M02: Item'
+        - 'M02: Items'
 
       parameters:
         - $ref: '#/components/parameters/tagName'

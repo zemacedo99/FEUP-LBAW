@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+# set -e
 
 cd /var/www; php artisan config:cache
 env >> /var/www/.env
