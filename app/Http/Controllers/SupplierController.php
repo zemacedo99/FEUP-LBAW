@@ -41,6 +41,14 @@ class SupplierController extends Controller
         //
     }
 
+
+    // nao pode ser feito assim, é suposto retornar a vista com todos os items
+    public function list()
+    {
+        $suppliers = Supplier::get();
+        return view('pages.misc.products_list', ['suppliers' => $suppliers]);
+    }
+
     /**
      * Display the specified resource.
      *
