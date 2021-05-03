@@ -33,8 +33,8 @@
                                     {{-- {{$image->path}} --}}
                                     <div class="carousel-item active">
                                         
-                                        <img src="{{ asset('storage/images/'.$image->path) }}"  class="d-block w-100" alt="" title="" />
-                                        {{-- <img src="{{ asset('storage/images/test.jpg') }}"  class="d-block w-100" alt="" title="" /> --}}
+                                        {{-- <img src="{{ asset('storage/images/'.$image->path) }}"  class="d-block w-100" alt="" title="" /> --}}
+                                        <img src="{{ asset('storage/images/test.jpg') }}"  class="d-block w-100" alt="" title="" />
                                     </div>
                                 @endforeach
                             @endisset
