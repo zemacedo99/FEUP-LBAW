@@ -22,7 +22,7 @@ Route::post('upload',[UploadController::class,'index']);
 Route::get('/client/{id}', 'ClientController@show');
 Route::get('/item/{id}', 'ItemController@show');
 Route::get('/items', 'ItemController@list')->name('items');
-Route::get('/stores', 'SupplierController@list')->name('stores');
+Route::get('/suppliers', 'SupplierController@list')->name('suppliers');
 
 Route::view('/about_us', 'pages.misc.about_us')->name('about_us');
 Route::view('/bundle_detail', 'pages.misc.bundleDetail');
