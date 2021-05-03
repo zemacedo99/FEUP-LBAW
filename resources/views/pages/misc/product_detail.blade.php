@@ -29,17 +29,17 @@
                         <div class="carousel-inner" style=" width:100%; max-height: 450px !important;">
 
                             @isset($images)
-                            
                                 @foreach($images as $image)
-                                    <div class="carousel-item">
-                                        <img src="{{ url('storage/public/images/'.$image) }}"  class="d-block w-100" alt="" title="" />  
-
-                                        {{-- <img src="{{ $path }}" class="d-block w-100" alt="..."> --}}
+                                    {{-- {{$image->path}} --}}
+                                    <div class="carousel-item active">
+                                        
+                                        <img src="{{ asset('storage/images/'.$image->path) }}"  class="d-block w-100" alt="" title="" />
+                                        {{-- <img src="{{ asset('storage/images/test.jpg') }}"  class="d-block w-100" alt="" title="" /> --}}
                                     </div>
                                 @endforeach
                             @endisset
 
-                            <div class="carousel-item active">
+                            {{-- <div class="carousel-item active">
                                 <img src="https://www.infoescola.com/wp-content/uploads/2010/11/ma%C3%A7a-verde_312027470.jpg"
                                     class="d-block w-100" alt="...">
                             </div>
@@ -49,7 +49,7 @@
                             <div class="carousel-item">
                                 <img src="https://www.portaldojardim.com/pdj/wp-content/uploads/Ma%C3%A7as-verdes.jpg"
                                     class="d-block w-100" alt="...">
-                            </div>
+                            </div> --}}
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
                             data-bs-slide="prev">
