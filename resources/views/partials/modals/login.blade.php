@@ -24,7 +24,7 @@
                 <div class="d-grid gap-2 col-6 col-sm-5 col-md-7 mx-auto mb-3">
                     <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Sign in</button>
                     <p class="text-muted mb-0 d-flex justify-content-center"> Don't have an account? </p>
-                    <a href="../credentials/register.php" class="link-secondary d-flex justify-content-center">Sign
+                    <a href="{{ route('register') }}" class="link-secondary d-flex justify-content-center">Sign
                         up</a>
                 </div>
             </div>

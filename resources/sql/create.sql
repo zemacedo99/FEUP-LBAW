@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS images             CASCADE;
 DROP TABLE IF EXISTS tags               CASCADE;
-DROP TABLE IF EXISTS shoppers           CASCADE; -- previously user
+DROP TABLE IF EXISTS "users"           CASCADE; -- previously user
 DROP TABLE IF EXISTS clients            CASCADE;
 DROP TABLE IF EXISTS suppliers          CASCADE;
 DROP TABLE IF EXISTS purchases          CASCADE;
@@ -50,36 +50,36 @@ CREATE TABLE tags (
     search          tsvector    DEFAULT '' NOT NULL
 );
 
-CREATE TABLE shoppers (
+CREATE TABLE "users" (
      id              SERIAL      PRIMARY KEY,
      email           TEXT        NOT NULL CONSTRAINT user_email_uk UNIQUE,
      password        TEXT        NOT NULL,
-     is_admin        boolean     NOT NULL
+     is_admin        boolean     NOT NULL DEFAULT 'false'
 );
 
 CREATE TABLE clients (
-    id              INTEGER     NOT NULL REFERENCES shoppers (id) ON UPDATE CASCADE,
+    id              INTEGER     NOT NULL REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE CASCADE,
     name            TEXT        NOT NULL,
-    image_id        INTEGER     NOT NULL DEFAULT 1 REFERENCES images (id) ON UPDATE CASCADE,
+    image_id        INTEGER     NOT NULL DEFAULT 1 REFERENCES images (id) ON UPDATE CASCADE ON DELETE SET DEFAULT,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE suppliers (
-    id              INTEGER     NOT NULL REFERENCES shoppers (id) ON UPDATE CASCADE,
+    id              INTEGER     NOT NULL REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE SET NULL ,
     name            TEXT        NOT NULL,
     address         TEXT        NOT NULL,
     post_code       TEXT        NOT NULL,
     city            TEXT        NOT NULL,
     description     TEXT        NOT NULL,
-    accepted        BOOLEAN     NOT NULL,
-    image_id        INTEGER     NOT NULL DEFAULT 1 REFERENCES images (id) ON UPDATE CASCADE,
+    accepted        BOOLEAN     NOT NULL DEFAULT 'false',
+    image_id        INTEGER     NOT NULL DEFAULT 1 REFERENCES images (id) ON UPDATE CASCADE ON DELETE SET DEFAULT ,
     search          tsvector    DEFAULT '' NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE purchases (
     id              SERIAL              PRIMARY KEY,
-    client_id       INTEGER             NOT NULL REFERENCES clients (id),
+    client_id       INTEGER             NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE ,
     paid            DECIMAL             NOT NULL,
     purchase_date   DATE                NOT NULL,
     type            purchase_type       NOT NULL,
@@ -90,14 +90,14 @@ CREATE TABLE purchases (
 -- BusinessRule: Item either is a bundle, or a product, can't have is_bundle true and be referenced in product
 CREATE TABLE items (
     id              SERIAL                  PRIMARY KEY,
-    supplier_id     INTEGER                 NOT NULL REFERENCES suppliers (id),
+    supplier_id     INTEGER                 NOT NULL REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE SET NULL ,
     name            TEXT                    NOT NULL,
     price           DECIMAL                 NOT NULL,
     stock           DECIMAL                 NOT NULL,
     description     TEXT                    NOT NULL,
     active          BOOLEAN                 NOT NULL,
     rating          DECIMAL,
-    is_bundle       BOOLEAN                 NOT NULL,
+    is_bundle       BOOLEAN                 NOT NULL DEFAULT 'false',
     search          tsvector                DEFAULT '' NOT NULL,
     CONSTRAINT      price_positive_ck       CHECK (price > 0),
     CONSTRAINT      stock_not_negative_ck   CHECK (stock >= 0)
@@ -111,11 +111,11 @@ CREATE TABLE coupons (
     expiration      DATE            NOT NULL CHECK (expiration > now()),
     type            coupon_type     NOT NULL,
     amount          DECIMAL         NOT NULL CHECK (amount > 0),
-    supplier_id     INTEGER         NOT NULL REFERENCES suppliers (id)
+    supplier_id     INTEGER         NOT NULL REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE products (
-    id              INTEGER     PRIMARY KEY REFERENCES items (id) ON UPDATE CASCADE,
+    id              INTEGER     PRIMARY KEY REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
     type            unit_type   NOT NULL
 );
 
@@ -130,7 +130,7 @@ CREATE TABLE ship_details (
     city            TEXT        NOT NULL,
     country         TEXT        NOT NULL,
     phone_n         TEXT        NOT NULL,
-    client_id       INTEGER     NOT NULL REFERENCES clients (id)
+    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE credit_cards (
@@ -139,12 +139,12 @@ CREATE TABLE credit_cards (
     expiration      DATE        NOT NULL,
     cvv             INTEGER     NOT NULL,
     holder          TEXT        NOT NULL,
-    client_id       INTEGER     NOT NULL REFERENCES clients (id)
+    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE reviews (
-    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE,
-    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE,
+    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE SET NULL,
+    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE NO ACTION,
     rating          INTEGER     NOT NULL,
     description     TEXT        NOT NULL,
     CONSTRAINT      rating_ck   CHECK (rating >= 1 AND rating <= 5),
@@ -155,8 +155,8 @@ CREATE TABLE reviews (
   Information about each item in a purchase
  */
 CREATE TABLE item_purchase (
-    purchase_id     INTEGER     NOT NULL REFERENCES purchases (id),
-    item_id         INTEGER     NOT NULL REFERENCES items (id),
+    purchase_id     INTEGER     NOT NULL REFERENCES purchases (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
     price           DECIMAL     NOT NULL CHECK ( price > 0 ),
     amount          DECIMAL     NOT NULL CHECK ( amount > 0 ),
     PRIMARY KEY (purchase_id, item_id)
@@ -166,8 +166,8 @@ CREATE TABLE item_purchase (
  Association between products and the item(only bundle) to which they belong
  */
 CREATE TABLE item_product (
-    item_id         INTEGER             NOT NULL REFERENCES items (id),
-    product_id      INTEGER             NOT NULL REFERENCES products (id),
+    item_id         INTEGER             NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    product_id      INTEGER             NOT NULL REFERENCES products (id) ON UPDATE CASCADE ON DELETE CASCADE,
     quantity        DECIMAL             NOT NULL CHECK ( quantity > 0 ),
     constraint      quantity_positive   CHECK ( quantity >= 0),
     PRIMARY KEY (item_id, product_id)
@@ -177,8 +177,8 @@ CREATE TABLE item_product (
  Association between an item and its tags
  */
 CREATE TABLE item_tag (
-    tag_id          INTEGER     NOT NULL REFERENCES tags (id) ON UPDATE CASCADE,
-    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE,
+    tag_id          INTEGER     NOT NULL REFERENCES tags (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
     PRIMARY KEY (tag_id, item_id)
 );
 
@@ -186,8 +186,8 @@ CREATE TABLE item_tag (
  Association between a product and its images
  */
 CREATE TABLE image_product (
-    product_id      INTEGER     REFERENCES products (id) ON UPDATE CASCADE,
-    image_id        INTEGER     REFERENCES images (id) ON UPDATE CASCADE,
+    product_id      INTEGER     REFERENCES products (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    image_id        INTEGER     REFERENCES images (id) ON UPDATE CASCADE ON DELETE CASCADE ,
     PRIMARY KEY (product_id, image_id)
 );
 
@@ -195,8 +195,8 @@ CREATE TABLE image_product (
  favorite - Association between a client and their favorite items
  */
 CREATE TABLE client_item (
-    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE,
-    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE,
+    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE SET NULL ,
     PRIMARY KEY (client_id, item_id)
 );
 
@@ -204,8 +204,8 @@ CREATE TABLE client_item (
  cart - Association between a client and their cart items
  */
 CREATE TABLE carts (
-    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE,
-    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE,
+    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE SET NULL ,
     quantity        DECIMAL     NOT NULL,
     PRIMARY KEY (client_id, item_id)
 );
