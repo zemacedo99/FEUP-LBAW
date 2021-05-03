@@ -1,0 +1,1243 @@
+openapi: 3.0.3
+
+info:
+  version: '1.0'
+  title: 'MyGarden API'
+  description: 'Web Resources Specification (A7) for MyGarden'
+
+servers:
+  - url: http://lbaw2131.lbaw-prod.fe.up.pt/
+    description: Production server
+
+externalDocs:
+  description: Find more info here.
+  url: https://git.fe.up.pt/lbaw/lbaw2021/lbaw2131/-/wikis/EAP-Architecture-Specification-and-Prototype
+
+tags:
+  - name: 'M01: Authentication and Individual Profile'
+    description: 'Web resources associated with user authentication and individual profile management, includes the following system features: login/logout, registration, credential recovery, view and edit personal profile information.'
+  - name: 'M02: Items'
+    description: 'Web resources associated with grocery items, includes the following system features: items list and search, view and edit item details, and delete items.'
+  - name: 'M03: Reviews, Favorites, Cart, Periodic, History'
+    description: 'Web resources associated with reviews and wish list, includes the following system features: add review, list reviews and delete reviews; add items to wish list and remove items from the wish list.'
+  - name: 'M04: Static pages'
+    description: 'Web resources with static content are associated with this module: dashboard, about, contact, services and faq.'
+  - name: 'M05: User Administration'
+    description: 'Web resources associates with user management, specifically: view and search users, delete or block user accounts, view and change user information, and view system access details for each user.'
+
+paths:
+  ### André
+  /login:
+    get:
+      operationId: R10X
+      summary: 'R10X Login Form'
+      description: 'Provide login form. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: 'OK, Show [UI07](#)'
+
+    post:
+      operationId: R10X
+      summary: 'R10X: Login Action'
+      description: 'Processes the login form submission. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+
+      responses:
+        '302':
+          description: 'Redirect after processing the login credentials.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Client:
+                  description: 'Successful authentication. Redirect to client profile.'
+                  value: '/users/{id}'
+                302Supplier:
+                  description: 'Successful authentication. Redirect to supplier profile.'
+                  value: '/supplier/{id}'
+                302Admin:
+                  description: 'Successful authentication. Redirect to admin dashboard.'
+                  value: '/dashboard'
+                302Error:
+                  description: 'Failed authentication. Redirect to login form.'
+                  value: '/login'
+
+  /logout:
+    post:
+      operationId: R10X
+      summary: 'R10X: Logout Action'
+      description: 'Logout the current authenticated user. Access: USR, ADM'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '302':
+          description: 'Redirect after processing logout.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful logout. Redirect to Homepage'
+                  value: '/homepage'
+
+  /register:
+    get:
+      operationId: R10X
+      summary: 'R10X: Register Form'
+      description: 'Provide new user registration form. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: 'Ok. Show [UI01](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/home_page.php)'
+
+    post:
+      operationId: R10X
+      summary: 'R10X: Register Action'
+      description: 'Processes the new user registration form submission. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                address:
+                  type: string
+                post_code:
+                  type: string
+                city:
+                  type: string
+                description:
+                  type: string
+              required:
+                - name
+                - email
+                - password
+
+      responses:
+        '302':
+          description: 'Redirect after processing the new user information.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Client:
+                  description: 'Successful authentication. Redirect to Homepage'
+                  value: '/homepage'
+                302Supplier:
+                  description: 'Successful authentication. Redirect to Supplier profile'
+                  value: '/supplier/{id}'
+
+  /supplier:
+    get:
+      operationId: R20X
+      summary: 'R20X: Suppliers list'
+      description: 'Provide a list of Suppliers. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Search'
+
+      responses:
+        '200':
+          description: 'Successfully returned a list of suppliers'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Supplier'
+
+    post:
+      operationId: R10X
+      summary: 'R10X: Create a Supplier'
+      description: 'Access: ADM, PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+
+      responses:
+        '201':
+          description: 'Created new Supplier'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          $ref: '#/components/responses/400Error'
+
+  /supplier/{id}:
+    get:
+      operationId: R20X
+      summary: 'R20X: View supplier profile'
+      description: 'Show the individual supplier profile. Access: USR'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200':
+          description: 'Ok. Show [UI05](http://lbaw2131-piu.lbaw-prod.fe.up.pt/client/client_profile.php)'
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
+
+    post:
+      operationId: R20X
+      summary: 'R20X: Change supplier profile Data'
+      description: 'Alters supplier information. Access: ADM, OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+        
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+
+      responses:
+        '200':
+          description: 'The request has succeeded'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+        '400':
+          $ref: '#/components/responses/400Error'
+
+        '401':
+          $ref: '#/components/responses/401Error'
+
+        '404':
+          $ref: '#/components/responses/404Error'
+
+    delete:
+      operationId: R20X
+      summary: 'R20X: Delete Supplirt'
+      description: 'Deletes a Supplier. Access: ADM, OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200':
+          description: 'Deleted the Supplier'
+
+        '400':
+          $ref: '#/components/responses/400Error'
+
+        '404':
+          $ref: '#/components/responses/404Error'
+
+  /client:
+    get:
+      operationId: R20X
+      summary: 'R20X: Clients list'
+      description: 'Provides a list of Clients'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Search'
+
+      responses:
+        '200':
+          description: 'Successfully returned a list of clients'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'
+
+    post:
+      operationId: R10X
+      summary: 'R10X: Create a Client'
+      description: 'Access: ADM, PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+
+      responses:
+        '201':
+          description: 'Created new Client'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          $ref: '#/components/responses/400Error'
+
+  /homepage:
+    get:
+      operationId: R40X
+      summary: 'R40X: Homepage'
+      description: 'Provide Homepage. Access: PUB'
+      tags:
+        - 'M04: Static pages'
+      responses:
+        '200':
+          description: 'Ok. Show [UI01](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/home_page.php)'
+  ### Ricardo
+
+  # Adding client, delete, get
+
+  /client/{id}/favorite:
+    get:
+      operationId: R204
+      summary: 'R20X - View client favorites'
+      description: Returns the favorite list of a user
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200':
+          description: Successfully returned the favorite list. Show UI05.2
+          content:
+            application/json: # Vamos fazer em JSON?
+              schema:
+                # array with favorite ids
+                type: array
+                items:
+                  type: integer
+
+    post:
+      operationId: R205
+      summary: 'R20X - Add favorite'
+      description: Adds an item to the user favorite list
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - itemid
+              properties:
+                userid:
+                  type: integer
+                itemid:
+                  type: integer
+      responses:
+        # E se o item não existir?
+        # Se o item já estiver na lista, continua a retornar 200Ok?
+        '204':
+          description: Successfully added item to favorite list
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
+
+    delete:
+      operationId: R206
+      summary: 'R206 - Remove favorite'
+      description: Removes an item to the user favorite list
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: id
+          in: query
+          required: true
+          description: The item ID number
+          schema:
+            type: integer
+
+      responses:
+        '204':
+          description: Successfully removed item to favorite list
+
+  /client/{id}/review:
+    get:
+      operationId: R207
+      summary: 'R207 - View product reviews'
+      description: Returns all reviews done by a user
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200':
+          description: Successfully returned all reviews. Show UI12
+          content:
+            application/json:
+              schema:
+                # array with all reviews ids
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+
+    post:
+      operationId: R208
+      summary: 'R208 - Add review'
+      description: Adds a review to a product by a user
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userid
+                - review
+              properties:
+                userid:
+                  type: integer
+                itemid:
+                  $ref: '#/components/schemas/Review'
+
+      responses:
+        '204':
+          description: Successfully added review to item
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
+
+    delete:
+      operationId: R209
+      summary: 'R209 - Remove review'
+      description: Removes a review of a product by a user
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: id_client
+          in: query
+          description: the identifier of the client
+          schema:
+            type: integer
+
+      responses:
+        '204':
+          description: Successfully removed review of item
+        # Necessário 404?
+
+  /client/{id}/cart:
+    get:
+      operationId: R210
+      summary: 'R210 - View client cart'
+      description: Returns all item's carts
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200':
+          description: Successfully returned item's carts. Show UI10.1
+          content:
+            application/json:
+              schema:
+                # array with all the product carts ids
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+
+    post:
+      operationId: R211
+      summary: 'R211 - Add item to cart'
+      description: Puts an item in the cart
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userid
+                - itemid
+                - quantity
+              properties:
+                userid:
+                  type: integer
+                itemid:
+                  type: integer
+                quantity:
+                  type: integer
+
+      responses:
+        '204':
+          description: Successfully putted the item in the cart
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
+
+    delete:
+      operationId: R212
+      summary:  'R212 - Remove item to cart'
+      description: Delete an item in the cart
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: id_item
+          in: query
+          description: the identifier of the item
+          schema:
+            type: integer
+
+      responses:
+        '204':
+          description: Successfully deleted the item in the cart
+
+  /client/{id}/periodic:
+    get:
+      operationId: R213
+      summary: 'R213 - See client history'
+      description: Returns all previous purchase of the client
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200':
+          description: Successfully returned item's carts. Show UI05.3
+          content:
+            application/json:
+              schema:
+                # array with all product history
+                type: array
+                items:
+                  $ref: '#/components/schemas/Purchase'
+
+    # Acho que não vai ser necessário fazer adds e deletes
+
+  ### Luis
+  /client/{id}/history:
+    get:
+      operationId: R214
+      summary: 'R214 - View client history'
+      description: Returns all user’s previous purchases
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200':
+          description: Successfully returned purchase history
+          content:
+            application/json:
+              schema:
+                # array with all the previous purchases ids
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+
+  # VER ERRO E PESQUISA
+
+  /item:
+    get:
+      operationId: R215
+      summary: 'R215: Item List'
+      description: 'Provide a list of Items'
+      tags:
+        - 'M02: Items'
+
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Search'
+        - in: query
+          name: supplierId
+          schema:
+            type: string
+          required: false
+
+      responses:
+        '200':
+          description: 'Successfully returned a list of Items'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemInList'
+
+    post: #add item
+      operationId: R302
+      summary: 'R302 - Item, tag e coupon'
+      description: Creates or updates item (description, unit, stock, seller, image) and its reviews and tags
+      tags:
+        - 'M02: Item'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - sellerid
+              properties:
+                sellerid:
+                  type: integer
+                description:
+                  type: string
+                quantityAvailable:
+                  type: integer
+                price:
+                  type: number
+                unit:
+                  type: string
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: byte
+                    description: Base64-encoded contents of image
+                tags:
+                  type: array
+                  items:
+                    type: integer
+                bundle:
+                  type: boolean
+
+      responses:
+        '204':
+          description: Successfully added/updated item
+
+        '405':
+          description: Method not allowed
+
+  /item/{id}:
+    get:
+      operationId: R301
+      summary: 'R301 - Item, tag e coupon'
+      description: Returns item’s information (description, unit, stock, seller, image) and its reviews and tags
+      tags:
+        - 'M02: Item'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      responses:
+        '200':
+          description: Successfully returned item's data and reviews
+          content:
+            application/json:
+              schema:
+                # tree with all the information needed
+                type: object
+                items:
+                  properties:
+                    sellerID:
+                      type: integer
+                    description:
+                      type: string
+                    quantityAvailable:
+                      type: integer
+                    price:
+                      type: number
+                    unit:
+                      type: string
+                    images:
+                      type: array
+                      items:
+                        type: string
+                        format: byte
+                        description: Base64-encoded contents of image
+                    reviews:
+                      type: array
+                      items:
+                        type: integer
+                    tags:
+                      type: array
+                      items:
+                        type: integer
+                    bundle:
+                      type: boolean
+
+    post: #update item
+      operationId: R303
+      summary: 'R302 - Item, tag e coupon'
+      description: Creates or updates item (description, unit, stock, seller, image) and its reviews and tags
+      tags:
+        - 'M02: Item'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - sellerid
+                - itemid
+              properties:
+                sellerid:
+                  type: integer
+                itemid:
+                  type: integer
+                description:
+                  type: string
+                quantityAvailable:
+                  type: integer
+                price:
+                  type: number
+                unit:
+                  type: string
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: byte
+                    description: Base64-encoded contents of image
+                tags:
+                  type: array
+                  items:
+                    type: integer
+                bundle:
+                  type: boolean
+
+      responses:
+        '204':
+          description: Successfully added/updated item
+
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
+
+        '405':
+          description: Method not allowed
+
+    delete:
+      operationId: R304
+      summary: 'R303 - Item, tag e coupon'
+      description: Removes a seller's item
+      tags:
+        - 'M02: Item'
+
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+
+      responses:
+        '204':
+          description: Successfully removed/deactivated item
+        '405':
+          description: Method not allowed
+
+  /coupon:
+    get:
+      operationId: R305
+      summary: 'R215: Coupon List'
+      description: 'Provide a list of Coupons'
+      tags:
+        - 'M02: Items'
+
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Search'
+        - in: query
+          name: supplierId
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Successfully returned a list of coupons for the respective supplier'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Coupon'
+
+    post: #add COUPON
+      operationId: R306
+      summary: 'R305 - Item, tag e coupon'
+      description: Creates or updates coupon data
+      tags:
+        - 'M02: Item'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - sellerid
+              properties:
+                sellerid:
+                  type: integer
+                name:
+                  type: string
+                discount:
+                  type: number
+                unit:
+                  type: string
+                description:
+                  type: string
+                expirationDate:
+                  type: string
+
+      responses:
+        '204':
+          description: Successfully added/updated item
+
+        '405':
+          description: Method not allowed
+
+        '422':
+          description: Code already in use
+
+        '404':
+          $ref: '#/components/responses/ItemNotFound' #when updating
+
+  /coupon/{couponCode}:
+    get:
+      operationId: R307
+      summary: 'R304 - Item, tag e coupon'
+      description: Returns coupon information (name, code, discout amount, unit, description, expiration date)
+      tags:
+        - 'M02: Item'
+      parameters:
+        - $ref: '#/components/parameters/couponCode'
+
+      responses:
+        '200':
+          description: Successfully returned coupon
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Coupon'
+
+    post: #update COUPON
+      operationId: R308
+      summary: 'R305 - Item, tag e coupon'
+      description: Creates or updates coupon data
+      tags:
+        - 'M02: Item'
+      parameters:
+        - $ref: '#/components/parameters/couponCode'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - sellerid
+              properties:
+                sellerid:
+                  type: integer
+                name:
+                  type: string
+                discount:
+                  type: number
+                unit:
+                  type: string
+                description:
+                  type: string
+                expirationDate:
+                  type: string
+
+      responses:
+        '204':
+          description: Successfully added/updated item
+
+        '405':
+          description: Method not allowed
+
+        '422':
+          description: Code already in use
+
+        '404':
+          $ref: '#/components/responses/ItemNotFound' #when updating
+
+    delete:
+      operationId: R309
+      summary: 'R306 - Item, tag e coupon'
+      description: Removes a seller's item
+      tags:
+        - 'M02: Item'
+
+      parameters:
+        - $ref: '#/components/parameters/couponCode'
+
+      responses:
+        '204':
+          description: Successfully removed/deactivated item
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
+
+  /tag:
+    post: #add TAG
+      operationId: R310
+      summary: 'R308 - Item, tag e coupon'
+      description: Creates Tag
+      tags:
+        - 'M02: Item'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+              required:
+                - tagName
+              properties:
+                tagName:
+                  type: string
+
+      responses:
+        '204':
+          description: Created Tag
+
+        '404':
+          $ref: '#/components/responses/ItemNotFound' #when updating
+
+        '405':
+          description: Method not allowed
+
+  /tag/{tagName}:
+    get:
+      operationId: R311
+      summary: 'R307 - Item, tag e coupon'
+      description: Return tag
+      tags:
+        - 'M02: Item'
+      parameters:
+        - $ref: '#/components/parameters/tagName'
+
+      responses:
+        '200':
+          description: Successfully returned item's data
+          content:
+            application/json:
+              schema:
+                # tree with all the information needed
+                type: object
+                items:
+                  properties:
+                    tagId:
+                      type: integer
+
+  ### Zé
+  /about_us:
+    get:
+      operationId: R401
+      summary: 'R401 About us'
+      description: 'Access about us page. Access: PUB'
+      tags:
+        - 'M04: Static pages'
+      responses:
+        '200':
+          description: 'OK, Show [AboutUs](#)'
+
+  /dashboard:
+    get:
+      operationId: R501
+      summary: 'R501: View dashboard'
+      description: 'Show the admin options. Access: ADM'
+      tags:
+        - 'M05: User Administration'
+      responses:
+        '200':
+          description: 'Ok. Show [Dashboard](...)'
+
+  /dashboard/supplier:
+    get:
+      operationId: R502
+      summary: 'R502: View suppliers'
+      description: 'Show a list with all suppliers. Access: ADM'
+      tags:
+        - 'M05: User Administration'
+      responses:
+        '200':
+          description: 'Ok. Show [Suppliers](...)'
+
+  /dashboard/client:
+    get:
+      operationId: R505
+      summary: 'R505: View clients'
+      description: 'Show a list with all clients. Access: ADM'
+      tags:
+        - 'M05: User Administration'
+      responses:
+        '200':
+          description: 'Ok. Show [Clients](...)'
+
+  /dashboard/item:
+    get:
+      operationId: R507
+      summary: 'R507: View items'
+      description: 'Show a list with all items. Access: ADM'
+      tags:
+        - 'M05: User Administration'
+      responses:
+        '200':
+          description: 'Ok. Show [Items](...)'
+
+components:
+  schemas:
+    Review:
+      type: object
+      required:
+        - id_item
+        - rating
+        - description
+
+      properties:
+        id_item:
+          type: integer
+        rating:
+          type: integer
+        description:
+          type: string
+
+    Product:
+      type: object
+      required:
+        - id_item
+        - quantity
+      properties:
+        id_item:
+          type: integer
+        quantity:
+          type: integer
+
+    Purchase:
+      type: object
+      required:
+        - paid
+        - purchase_date
+        - type
+      properties:
+        paid:
+          type: integer
+        purchase_date:
+          type: string
+        type:
+          type: integer
+
+    Supplier:
+      type: object
+      properties:
+        supplier_id:
+          type: integer
+        name:
+          type: string
+        address:
+          type: string
+        post_code:
+          type: string
+        city:
+          type: string
+        description:
+          type: string
+      required:
+        - supplier_id
+        - name
+        - address
+        - post_code
+        - city
+        - description
+
+    Client:
+      type: object
+      properties:
+        client_id:
+          type: integer
+        name:
+          type: string
+      required:
+        - client_id
+        - name
+
+    ItemInList:
+      type: object
+      properties:
+        item_id:
+          type: integer
+        supplier_id:
+          type: integer
+        supplier_name:
+          type: string
+        supplier_location:
+          type: string
+        item_description:
+          type: string
+        item_price:
+          type: number
+        item_unit:
+          type: string
+        item_picture:
+          type: string
+          format: byte
+
+    Coupon:
+      type: object
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        discount:
+          type: number
+        unit:
+          type: string
+        description:
+          type: string
+        expirationDate:
+          type: string
+        sellerId:
+          type: integer
+
+  parameters:
+    ID:
+      name: id
+      in: path
+      required: true
+      description: The ID number
+      schema:
+        type: integer
+
+    Limit:
+      name: limit
+      in: query
+      description: 'Limits the number of results to return'
+      schema:
+        type: integer
+
+    Search:
+      name: search
+      in: query
+      description: 'Filters results based on search criteria'
+      schema:
+        type: string
+
+    couponCode:
+      name: couponCode
+      in: path
+      required: true
+      description: The coupon code
+      schema:
+        type: string
+
+    tagName:
+      name: tagName
+      in: path
+      required: true
+      description: The tag name
+      schema:
+        type: string
+
+  responses:
+    ItemNotFound:
+      description: The item was not found
+      content:
+        application/json:
+          schema:
+            type: string
+
+    400Error:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+
+    401Error:
+      description: 'The request requires user authentication.'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+
+    404Error:
+      description: 'Could not find request'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
