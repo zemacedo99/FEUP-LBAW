@@ -30,7 +30,8 @@ class CouponController extends Controller
      */
     public function create()
     {
-
+        $data = [];
+        return view('pages.supplier.create_edit_coupon', $data);
     }
 
     /**
@@ -83,6 +84,10 @@ class CouponController extends Controller
         }
         return $coupon;
     }
+
+    
+
+
 
     /**
      * Update the specified resource in storage.

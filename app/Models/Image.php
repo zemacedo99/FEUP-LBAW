@@ -25,5 +25,5 @@ class Image extends Model
      * Each Product has many images
      * But each image belongs to one product
      */
-    public function products() { return $this->belongsTo('App\Models\Product');}
+    public function products() { return $this->belongsToMany('App\Models\Product');}
 }

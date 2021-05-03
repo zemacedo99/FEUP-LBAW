@@ -12,7 +12,7 @@
 
         </div>
         <div id="DataContainer" class="col-md-4">
-            <h2>Winter Bundle</h2>
+            <h2>test</h2>
             <h6 class="text-muted">Only 2 left!</h6>
             <br>
             <p>

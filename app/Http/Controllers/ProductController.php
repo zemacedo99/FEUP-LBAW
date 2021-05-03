@@ -14,7 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+
+        
     }
 
     /**
@@ -46,7 +47,21 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        // $product = Product::find($product);
+
+        // $item = $product->is_part_of;
+
+        // $data = 
+        // [
+        //     'name' => $item->name,
+        //     'price' => $item->price,
+        //     'stock' => $item->stock,
+        //     'description' => $item->description,
+        //     'rating' => $item->rating,
+        // ];
+
+
+        // return view('pages.supplier.create_edit_product');
     }
 
     /**

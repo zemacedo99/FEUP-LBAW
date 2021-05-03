@@ -38,6 +38,14 @@ class UserController extends Controller
         // TODO Where I left off: Em principio recebe os dados por aqui e decide se cria client ou supplier + user, por ORM ou DB::transaction
     }
 
+
+    // nao pode ser feito assim, é suposto retornar a vista com todos os items
+    public function list()
+    {
+        $suppliers = Supplier::get();
+        return view('pages.misc.products_list', ['suppliers' => $suppliers]);
+    }
+
     /**
      * Display the specified resource.
      *
