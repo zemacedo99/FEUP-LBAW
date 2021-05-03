@@ -11,10 +11,11 @@ class ClientController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        // Todo, ver tutorial e ver porque pedidos estão com erro
+
         $this->authorize('viewAny');
         return Client::all();
     }
@@ -37,56 +38,50 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $request->validate([
             'client.email' => 'required|string',
             'client.password' => 'required|string',
             'client.name' => 'required|string',
             'client.image_id' => 'required|integer'
         ]);
-        
+
         $user = User::create([
             'email' => $request->input('client.email'),
-            'password' => $request->input('client.password')        
+            'password' => $request->input('client.password')
         ]);
 
         Client::create([
             'id' => $user->id,
             'name' => $request->input('client.name'),
-            'image_id' => $request->input('client.image_id')        
+            'image_id' => $request->input('client.image_id')
         ]);
 
         return response('', 204)->header('description', 'Successfully created the client');
     }
 
     /**
-     * Display the spePified resource.
+     * Display the specified resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {   
+    {
 
         $client = Client::find($id);
-        
+
         $name = $client->name;
         $image_id = $client->image_id;
 
-        
-        
-
         return view('pages.client.client_profile',['client' => $client ]);
-
-
     }
 
     public function get_info($id)
     {
-        //Merge não está a funcionar nao sei pq 
+        //Merge não está a funcionar nao sei pq
         // $client = Client::where('id', '=', $id)->get();
         // $user = User::where('id', '=', $id)->get();
 
-        // $merged = $client->merge($user); 
+        // $merged = $client->merge($user);
 
         // return $merged;
     }
@@ -127,10 +122,10 @@ class ClientController extends Controller
 
         $client = Client::where('id', '=', $id)->get();
         $this->authorize('viewAny', $client);
-        
+
         $user = User::where('id', '=', $id)->get();
-        
-        
+
+
         if($client->isEmpty()){
             return response('', 404)->header('description','The client was not found');
         }
@@ -139,24 +134,24 @@ class ClientController extends Controller
         $user_data = $user->first();
 
         if($request->has('client.email')){
-            $user_data->email = $request->input('client.email'); 
+            $user_data->email = $request->input('client.email');
         }
 
         if($request->has('client.password')){
-            $user_data->password = $request->input('client.password'); 
+            $user_data->password = $request->input('client.password');
         }
 
         if($request->has('client.name')){
-            $client_data->name = $request->input('client.name'); 
+            $client_data->name = $request->input('client.name');
         }
 
         if($request->has('client.image_id')){
-            $client_data->image_id = $request->input('client.image_id'); 
+            $client_data->image_id = $request->input('client.image_id');
         }
 
         $user_data->save();
         $client_data->save();
-        
+
         return response('', 204,)->header('description', 'Successfully updated client information');
     }
 
@@ -170,9 +165,9 @@ class ClientController extends Controller
     {   //postgres não deixa apagar
         $client = Client::where('id', '=', $id);
         $this->authorize('viewAny', $client);
-        
+
         $user = User::where('id', '=', $id);
-        
+
         if($client->get()->isEmpty() || $user->get()->isEmpty()){
             return response('', 404,)->header('description', 'Client not found');
         }

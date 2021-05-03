@@ -10,6 +10,7 @@ use Dotenv\Exception\ValidationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -113,5 +114,12 @@ class RegisterController extends Controller
 
         DB::commit();
         return $newUser;
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        $user->generateToken();
+
+        return redirect('/');
     }
 }

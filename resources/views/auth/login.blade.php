@@ -1,8 +1,9 @@
+{{--
+This View is not in use, go to resources/views/partials/modals/login.blade.php
+--}}
 @extends('layouts.app')
 
 @section('content')
-    <p>Isto é temporário, depois fica num modal</p>
-
     <form method="POST" action="{{ route('login') }}">
         {{ csrf_field() }}
 
@@ -23,7 +24,7 @@
         <div class="d-grid gap-2 col-6 col-sm-5 col-md-7 mx-auto mb-3">
             <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Sign in</button>
             <p class="text-muted mb-0 d-flex justify-content-center"> Don't have an account? </p>
-            <a href="../credentials/register.php" class="link-secondary d-flex justify-content-center">Sign up</a>
+            <a href="{{ route('register') }}" class="link-secondary d-flex justify-content-center">Sign up</a>
         </div>
     </form>
 

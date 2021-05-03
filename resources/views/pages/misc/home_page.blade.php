@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row mt-5 justify-content-center">
         <div class="col-12 col-md-10">
-            <img class="img-fluid" src="{{ asset('images/garden.jpg') }}" alt="Photo of a garden" height="400px">
+            <img class="img-fluid" src="{{ asset('storage/garden_remake.jpg') }}" alt="Photo of a garden" height="400px">
         </div>
     </div>
 
@@ -38,7 +38,7 @@ function homepage_card()
 ?>
 
     <div class="card customcard bg-white text-dark">
-        <img src="../images/banana.jpg" class="card-img" alt="A banana">
+        <img src="{{ asset('images/banana.jpg') }}" class="card-img" alt="A banana">
         <div class="card-img-overlay">
 
             <div class="row mb-5 me-1">
