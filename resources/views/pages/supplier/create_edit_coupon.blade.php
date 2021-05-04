@@ -2,30 +2,38 @@
 
 @section('content')
 
-<script type="text/javascript" src={{ asset('js/create_coupon.js') }} defer> </script>
+{{-- <script type="text/javascript" src={{ asset('js/create_coupon.js') }} defer> </script> --}}
 
+    @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+    @endforeach
 
     <div class="container">
 
         <div class="pt-4 my-md-5 pt-md-5 border-bottom">
             <h2><b> Create Coupon</b></h2>
         </div>
-        <form action="/api/coupon" method="POST" onsubmit = "return validateForm()" required>
-
+        <form action="/api/coupon" method="POST" id="form" required>
+            <input type="hidden" id="supplierID" value="{{ \Illuminate\Support\Facades\Auth::id() }}">
             <div class="row">
 
                 <div class="col-12 col-lg-3 align-items-center">
 
-                    <label class="text-black" for="coupon_name">Coupon Name</label>
-                    <div class="input-group mb-5 ">
-                        <input type="text" class="form-control" id=coupon_name>
+                    <label class="text-black" for="coupon_name" >Coupon Name</label>
+
+                    
+                    <div class="input-group">
+                        <input type="text" class="form-control" id=coupon_name class="@error('coupon_name') is-invalid @enderror">
                         
                     </div>
                     
+                    @error('coupon_name')
+                        <div class="alert alert-danger alert-dismissible fade show">{{ $message }}</div>
+                    @enderror
 
-                    <label class="text-black" for="coupon_price">Discount</label>
+                    <label class="text-black" for="coupon_amount">Discount</label>
                     <div class="input-group mb-5">
-                        <input type="number" step="0.01" class="form-control" min=0 id="coupon_price">
+                        <input type="number" step="0.01" class="form-control" min=0 id="coupon_amount">
                         <select class="form-select" aria-label="Select type" id="coupon_type">
                             <option selected>%</option>
                             <option value="2">€</option>
@@ -40,8 +48,8 @@
                 <div class="row">
                     <div id="DescriptionContainer" class="col-sm-6">
                         <div class="form-group">
-                            <label for="Description">Description</label>
-                            <textarea class="form-control" id="Description" rows="5"></textarea>
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" rows="5"></textarea>
                         </div>
                     </div>
                     <div id="OtherInformationContainer" class="col-sm-6">

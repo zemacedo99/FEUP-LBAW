@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coupon;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CouponController extends Controller
 {
@@ -28,9 +30,12 @@ class CouponController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
+        $supplier = Supplier::find($id);
+        $this->authorize('create', $supplier);
         $data = [];
+
         return view('pages.supplier.create_edit_coupon', $data);
     }
 
@@ -41,32 +46,36 @@ class CouponController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   //Continua com o erro do increment
+    {   
 
-        $this->authorize('create');
+        
+        
 
         $request->validate([
-            'coupon.code' => 'required|string|unique:coupons,code',
-            'coupon.name' => 'required|string',
-            'coupon.description' => 'required|string',
-            'coupon.amount' => 'required|numeric',
-            'coupon.expirationDate' => 'required|string',
-            'coupon.unit' => 'required|string',
-            'coupon.supplierID' => 'required|integer'
+            // 'code' => 'required|string|unique:coupons,code',
+            'coupon_name' => 'required|string',
+            'description' => 'required|string',
+            'coupon_amount' => 'required|numeric',
+            'date' => 'required|string',
+            'coupon_type' => 'required|string',
+            'supplierID' => 'required|integer'
         ]);
-
-        Coupon::create([
-            'code' => $request->input('coupon.code'),
-            'name' => $request->input('coupon.name'),
-            'description' => $request->input('coupon.description'),
-            'expiration' => $request->input('coupon.expirationDate'),
-            'amount' => $request->input('coupon.amount'),
-            'type' => $request->input('coupon.unit'),
-            'supplier_id' => $request->input('coupon.supplierID'),
         
-        ]);
+        // $supplier = Supplier::find($request->supplierID);
 
-        return response('', 204)->header('description', 'Successfully added item');
+        // $this->authorize('create', $supplier);
+
+        // Coupon::create([
+        //     'code' => $request->code,
+        //     'name' => $request->coupon_name,
+        //     'description' => $request->description,
+        //     'expiration' => $request->date,
+        //     'amount' => $request->coupon_amount,
+        //     'type' => $request->coupon_type,
+        //     'supplier_id' => $request->supplierID,
+        // ]);
+
+        return $request->query('description');
     }
 
     /**

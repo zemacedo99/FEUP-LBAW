@@ -1,45 +1,37 @@
 let hasCodeAlready = null
 let defaultBorderColor = document.getElementById('coupon_name').style.borderColor
 
-function validateForm() {
+let submit= document.getElementById('form')
+
+submit.addEventListener('submit',validateForm)
+
+function validateForm(event) {
 
     let couponCode = document.getElementById("code")
     if (couponCode.value === "") {
         couponCode.style.borderColor = "red";
-        return false;
+        event.preventDefault()
     }
-    sendAjaxRequest('get', 'api/coupon/' + couponCode.value, null, codeHandler)
 
-    let check_empty = ['coupon_name', 'coupon_price', 'coupon_type', 'Description', 'date']
+    sendAjaxRequest('get', 'api/coupon/' + couponCode.value, null, function(){
+        console.log(this.status)
+        if (this.status === 404) 
+            event.preventDefault()
+    })
+
+    let check_empty = ['coupon_name', 'coupon_amount', 'coupon_type', 'description', 'date']
 
     for(let i = 0; i < check_empty.length; i++){
         let input = document.getElementById(check_empty[i]);
         if (input.value === "") {
             input.style.borderColor = "red";
-            return false
+            event.preventDefault()
         }
         input.style.borderColor = defaultBorderColor;
     }
-
-   
-    let i = 0;
-    while (hasCodeAlready === null && i < 1000)
-        i = i + 1
-
-    if (i >= 1000)
-        return false
-
-    return !hasCodeAlready;
 }
 
-function codeHandler() {
-    if (this.status === 404) {
-        hasCodeAlready = false
-    } else if (this.status === 200) {
-        hasCodeAlready = true
-    }
-    return true;
-}
+
 
 function encodeForAjax(data) {
     if (data == null) return null;

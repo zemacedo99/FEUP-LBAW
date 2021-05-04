@@ -309,3 +309,9 @@ label.active {
   width: 100%;
   text-align: left;
 }
+
+
+.alert {
+  height: fit-content;
+  font-weight: 80;    
+}

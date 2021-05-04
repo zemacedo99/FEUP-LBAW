@@ -40,10 +40,9 @@ class CouponPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, Supplier $supplier)
     {
-        $supplier = Supplier::find($user->id);
-        return $supplier->isNotEmpty();
+        return $user->id === $supplier->id; 
     }
 
     /**
