@@ -1,33 +1,44 @@
 let hasCodeAlready = null
-let defaultBorderColor = document.getElementById('coupon_name').style.borderColor
+
 
 let submit= document.getElementById('form')
 
 submit.addEventListener('submit',validateForm)
 
 function validateForm(event) {
-
-    let couponCode = document.getElementById("code")
-    if (couponCode.value === "") {
-        couponCode.style.borderColor = "red";
-        event.preventDefault()
-    }
-
-    sendAjaxRequest('get', 'api/coupon/' + couponCode.value, null, function(){
-        console.log(this.status)
-        if (this.status === 404) 
+    try{
+        let couponCode = document.getElementById("code")
+        if (couponCode.value == "") {
+            document.getElementById("code_alert").innerHTML = "This field cannot be empty"
             event.preventDefault()
-    })
-
-    let check_empty = ['coupon_name', 'coupon_amount', 'coupon_type', 'description', 'date']
-
-    for(let i = 0; i < check_empty.length; i++){
-        let input = document.getElementById(check_empty[i]);
-        if (input.value === "") {
-            input.style.borderColor = "red";
-            event.preventDefault()
+        }else{
+            document.getElementById("code_alert").innerHTML = ""
+            sendAjaxRequest('get', '/api/coupon/' + couponCode.value, null, function(){
+                if (this.status !== 404){
+                    document.getElementById("code_alert").innerHTML = "There is already a coupon with that code"
+                    event.preventDefault()
+                }
+                    
+                
+            })
         }
-        input.style.borderColor = defaultBorderColor;
+
+        let check_empty = ['coupon_name', 'coupon_amount', 'description', 'date']
+
+        for(let i = 0; i < check_empty.length; i++){
+            let input = document.getElementById(check_empty[i]);
+            if (input.value == "") {
+                document.getElementById(check_empty[i] + "_alert").innerHTML = "This field cannot be empty"
+                event.preventDefault()
+            }else{
+                document.getElementById(check_empty[i] + "_alert").innerHTML = ""
+            }
+
+        }
+        
+    }catch(err){
+        //alert(err.message)
+        event.preventDefault()
     }
 }
 
@@ -41,11 +52,10 @@ function encodeForAjax(data) {
 }
 
 function sendAjaxRequest(method, url, data, handler) {
+
     let request = new XMLHttpRequest();
 
-
-
-    request.open(method, url, true);
+    request.open(method, url, false);
     if (method != 'get') {
         request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

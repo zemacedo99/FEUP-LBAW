@@ -48,11 +48,8 @@ class CouponController extends Controller
     public function store(Request $request)
     {   
 
-        
-        
-
         $request->validate([
-            // 'code' => 'required|string|unique:coupons,code',
+            'code' => 'required|string|unique:coupons,code',
             'coupon_name' => 'required|string',
             'description' => 'required|string',
             'coupon_amount' => 'required|numeric',
@@ -61,21 +58,21 @@ class CouponController extends Controller
             'supplierID' => 'required|integer'
         ]);
         
-        // $supplier = Supplier::find($request->supplierID);
+        $supplier = Supplier::find($request->supplierID);
 
-        // $this->authorize('create', $supplier);
+        $this->authorize('create', $supplier);
 
-        // Coupon::create([
-        //     'code' => $request->code,
-        //     'name' => $request->coupon_name,
-        //     'description' => $request->description,
-        //     'expiration' => $request->date,
-        //     'amount' => $request->coupon_amount,
-        //     'type' => $request->coupon_type,
-        //     'supplier_id' => $request->supplierID,
-        // ]);
+        Coupon::create([
+            'code' => $request->code,
+            'name' => $request->coupon_name,
+            'description' => $request->description,
+            'expiration' => $request->date,
+            'amount' => $request->coupon_amount,
+            'type' => $request->coupon_type,
+            'supplier_id' => $request->supplierID,
+        ]);
 
-        return $request->query('description');
+        return redirect('/');
     }
 
     /**
@@ -85,7 +82,8 @@ class CouponController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($couponCode)
-    {   // Testado
+    {   
+
         $coupon = Coupon::where('code', '=', $couponCode)->get();
 
         if($coupon->isEmpty()){
