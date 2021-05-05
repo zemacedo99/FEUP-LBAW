@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class ShopperController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,16 +35,16 @@ class ShopperController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // TODO Where I left off: Em principio recebe os dados por aqui e decide se cria client ou supplier + user, por ORM ou DB::transaction
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Shopper  $shopper
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Shopper $shopper)
+    public function show(User $user)
     {
         //
     }
@@ -52,10 +52,10 @@ class ShopperController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Shopper  $shopper
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Shopper $shopper)
+    public function edit(User $user)
     {
         //
     }
@@ -64,10 +64,10 @@ class ShopperController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Shopper  $shopper
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Shopper $shopper)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -75,10 +75,10 @@ class ShopperController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Shopper  $shopper
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Shopper $shopper)
+    public function destroy(User $user)
     {
         //
     }

@@ -466,6 +466,20 @@ paths:
         '200':
           description: 'Ok. Show [UI11](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/products_list.php)'
 
+  
+  /item: 
+    get:
+      operationId: R210
+      summary: 'R106: Get all items'
+      description: 'Get all items. Access: PUB'
+      tags:
+        - 'M02: Items'
+     
+      responses:
+        '200':
+          description: 'Ok. Show [UI11](http://lbaw2131-piu.lbaw-prod.fe.up.pt/misc/products_list.php)'
+
+
   /item/{id}:
     get:
       operationId: R209

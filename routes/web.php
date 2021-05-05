@@ -15,13 +15,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UploadController;
 
 
-
+Route::get('image/{filename}', 'ItemController@storage_link');
 Route::view('upload', 'upload');
 Route::post('upload',[UploadController::class,'index']);
 
 Route::get('/client/{id}', 'ClientController@show');
 Route::get('/item/{id}', 'ItemController@show');
-Route::view('/1', 'pages.misc.bundle_detail');
+Route::get('/items', 'ItemController@list')->name('items');
+Route::get('/suppliers', 'SupplierController@list')->name('suppliers');
 
 Route::view('/about_us', 'pages.misc.about_us')->name('about_us');
 Route::view('/bundle_detail', 'pages.misc.bundleDetail');
@@ -105,8 +106,8 @@ Route::delete('/api/tag/{tagName}','TagController@destroy');
 // Route::delete('api/item/{id}', 'ItemController@delete');
 
 // // Authentication
-// Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-// Route::post('login', 'Auth\LoginController@login');
-// Route::get('logout', 'Auth\LoginController@logout')->name('logout');
-// Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-// Route::post('register', 'Auth\RegisterController@register');
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('register', 'Auth\RegisterController@register');

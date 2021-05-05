@@ -126,11 +126,11 @@ class ItemController extends Controller
             $product = Product::find($id);
             $data['unit'] = $product->type;
 
-            $images = [];
-            foreach($product->images as $image){
-                $contents = Storage::disk('public')->get("images/" . $image->path);
-                array_push($images, $contents);
-            }
+            $images = $product->images();
+            // foreach($product->images as $image){
+            //     $contents = Storage::disk('public')->get("images/" . $image->path);
+            //     array_push($images, $contents);
+            // }
 
             $data['images'] = $images;
         }
@@ -153,6 +153,55 @@ class ItemController extends Controller
 
 
         return view('pages.misc.product_detail', $data);
+        
+    }
+
+
+    public function storage_link($filename)
+    {
+
+        $path = storage_path('public/' . $filename);
+
+        if (!Image::exists($path)) {
+            abort(404);
+        }
+    
+        $image = Image::get($path);
+        // $type = File::mimeType($path);
+    
+        // $response = Response::make($file, 200);
+        // $response->header("Content-Type", $type);
+    
+        return $image;
+
+    }
+
+    // nao pode ser feito assim, é suposto retornar a vista com todos os items
+    public function list()
+    {
+        
+
+
+
+        $items = Item::get();
+
+
+
+        // $data = 
+        // [
+        //     'name' => $item->name,
+        //     'price' => $item->price,
+        //     'description' => $item->description,
+        //     'rating' => $item->rating,
+        // ];
+
+
+
+
+
+
+
+        return view('pages.misc.products_list', ['items' => $items]);
         
     }
 

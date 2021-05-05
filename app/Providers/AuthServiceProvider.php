@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Coupon;
+use App\Policies\CouponPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -13,19 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-      'App\Models\Card' => 'App\Policies\CardPolicy',
-      'App\Models\Client' => 'App\Policies\ClientPolicy',
-      'App\Models\Coupon' => 'App\Policies\CouponPolicy',
-      'App\Models\CreditCard' => 'App\Policies\CreditCardPolicy',
-      'App\Models\Image' => 'App\Policies\ImagePolicy',
-      'App\Models\Item' => 'App\Policies\ItemPolicy',
-      'App\Models\Product' => 'App\Policies\ProductPolicy',
-      'App\Models\Purchase' => 'App\Policies\PurchasePolicy',
-      'App\Models\Review' => 'App\Policies\ReviewPolicy',
-      'App\Models\ShipDetail' => 'App\Policies\ShipDetailPolicy',
-      'App\Models\Shopper' => 'App\Policies\ShopperPolicy',
-      'App\Models\Supplier' => 'App\Policies\SupplierPolicy',
-      'App\Models\Tag' => 'App\Policies\TagPolicy'
+      Coupon::class => CouponPolicy::class,
       
     ];
 

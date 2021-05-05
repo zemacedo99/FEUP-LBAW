@@ -15,7 +15,12 @@ class SupplierController extends Controller
     public function index()
     {
         //
-        return Supplier::all();
+    }
+
+    public function list()
+    {
+        $suppliers = Supplier::get();
+        return view('pages.misc.products_list', ['suppliers' => $suppliers]);
     }
 
     /**
@@ -26,18 +31,16 @@ class SupplierController extends Controller
     public function create()
     {
         //
-
     }
 
     /**
-     * Display the specified resource.
+     * Store a newly created resource in storage.
      *
-     * @param  \App\Models\Supplier  $supplier
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function store(Request $request)
     {
-        return Supplier::where('id','=',$id)->get();
         //
     }
 
@@ -47,9 +50,8 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function searchName(Request $request)
+    public function show(Supplier $supplier)
     {
-        return Supplier::where('name','like',$request->input('name'));
         //
     }
 
