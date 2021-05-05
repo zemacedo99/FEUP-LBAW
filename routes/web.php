@@ -30,8 +30,8 @@ Route::view('/', 'pages.misc.home_page')->name('homepage');
 Route::view('/map', 'pages.site_map')->name('map');
 
 Route::view('/dashboard', 'pages.admin.dashboard')->name('dashboard');
-Route::get('/dashboard_products', 'ItemController@list')->name('admin_products');
-Route::view('/dashboard_clients', 'pages.admin.users')->name('admin_users');
+Route::get('/dashboard_products', 'ItemController@admin_list')->name('admin_products');
+Route::get('/dashboard_clients', 'UserController@admin_index')->name('admin_users');
 Route::get('/dashboard_requests', 'SupplierController@requests')->name('admin_requests');
 //pages.admin.requests
 

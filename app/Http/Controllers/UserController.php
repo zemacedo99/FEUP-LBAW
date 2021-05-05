@@ -3,18 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Client;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
+use \Illuminate\Pagination\Paginator;
+use \Illuminate\Pagination\LengthAwarePaginator;
+
 
 class UserController extends Controller
 {
+    public function paginate($items, $perPage = 8, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+
+        //$items = $items instanceof Collection ? $items : Collection::make($items);
+
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function admin_index()
     {
-        //
+        $users=User::all();
+        $usersFinal=[];
+        
+        foreach ($users as $user){
+            $temp;
+            
+            
+                // $temp=Client::where('id','=',$user->id)->get();
+                $temp=Client::find($user->id);
+            if ($temp===null){
+                
+                $temp=Supplier::find($user->id);
+            }
+            if ($temp===null){
+                $temp=$user;
+                $temp->name="ADMINISTRATOR ACCOUNT";
+            }
+            array_push($usersFinal,$temp);
+        }
+        
+        $final=$this->paginate(collect($usersFinal));
+        return view('pages.admin.users',['users'=>$final]);
+        
     }
 
     /**

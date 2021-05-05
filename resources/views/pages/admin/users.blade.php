@@ -55,15 +55,13 @@
                         <tbody>
 
                             @php
-                            $i=0;   
-                           @endphp
-
-                        @foreach ($users as $user)
-                            @php
-                             $i+=1;   
+                                $users->setPath("dashboard_clients");
                             @endphp
+
+                        @foreach ($users->items() as $user)
+                            
                             <tr>
-                            <th scope="row">{{$i}}</th>
+                            <th scope="row">#{{$user->id}}</th>
                             <td>
                                 <div class="row">
                                         <div class="col-7">{{$user->name}}</div>
@@ -77,63 +75,12 @@
                             </tr>
                         
                         @endforeach
-                        <tr>
-                            <th scope="row">#1</th>
-                            <td>
-                                <div class="row">
-                                    <div class="col-7">Zé das bananas</div>
-                                    <div class="col-5">
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="1"><i class="bi bi-trash"></i></button>
-                                        <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-info-circle"></i></button>
-                                    </div>
-                                </div>
-                            </td>
-
-                        </tr>
-
-                        <tr>
-                            <th scope="row">#2</th>
-                            <td>
-                                <div class="row">
-                                    <div class="col-7">Luís das beterrabas</div>
-                                    <div class="col-5">
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="2"><i class="bi bi-trash"></i></button>
-                                        <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-info-circle"></i></button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">#3</th>
-                            <td>
-                                <div class="row">
-                                    <div class="col-7">André dos pêssegos</div>
-                                    <div class="col-5">
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="3"><i class="bi bi-trash"></i></button>
-                                        <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-info-circle"></i></button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">#4</th>
-                            <td>
-                                <div class="row">
-                                    <div class="col-7">Ricardo das ananonas</div>
-                                    <div class="col-5">
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="4"><i class="bi bi-trash"></i></button>
-                                        <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-info-circle"></i></button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                        
                         </tbody>
                     </table>
                 </div>
 
-                @include('partials.pages')
+                @include('partials.pages', ['link'=>"dashboard_clients",'paginator'=>$users])
 
                 <div class="row">
                     <div class="col-2">

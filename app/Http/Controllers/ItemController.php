@@ -20,9 +20,9 @@ class ItemController extends Controller
         return Item::all();
     }
 
-    public function list()
+    public function admin_list()
     {
-        $products=Item::paginate(8);
+        $products=Item::orderBy('id','asc')->paginate(8);
 
         return view('pages.admin.products',['items'=>$products->withPath('dashboard_products')]);
     }

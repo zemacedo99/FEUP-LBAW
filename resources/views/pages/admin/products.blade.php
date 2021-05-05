@@ -56,7 +56,7 @@
                         <tbody>
 
                             @php
-                                $i = 0;
+                                $i = $items->count()*($items->currentPage()-1);
                             @endphp
 
                             @foreach ($items as $item)
@@ -64,7 +64,7 @@
                                     $i += 1;
                                 @endphp
                                 <tr>
-                                    <th scope="row">#{{ $i }}</th>
+                                    <th scope="row">#{{ $item->id }}</th>
                                     <td>{{ $item->name }}</td>
                                     <td>
                                         <div class="row">

@@ -56,7 +56,7 @@
                         <tbody>
 
                             @php
-                             $i=0;   
+                                $i = $suppliers->count()*($suppliers->currentPage()-1);
                             @endphp
 
                         @foreach ($suppliers as $supplier)
@@ -64,7 +64,7 @@
                              $i+=1;   
                             @endphp
                             <tr>
-                            <th scope="row">{{$i}}</th>
+                            <th scope="row">#{{$i}}</th>
                             <td>
                                 <div class="row">
                                         <div class="col-7">{{$supplier->name}}</div>
