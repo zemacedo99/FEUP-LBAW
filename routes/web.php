@@ -29,9 +29,10 @@ Route::view('/', 'pages.misc.home_page')->name('homepage');
 Route::view('/map', 'pages.site_map')->name('map');
 
 Route::view('/dashboard', 'pages.admin.dashboard')->name('dashboard');
-Route::view('/dashboard_products', 'pages.admin.products')->name('admin_products');
+Route::get('/dashboard_products', 'ItemController@list')->name('admin_products');
 Route::view('/dashboard_clients', 'pages.admin.users')->name('admin_users');
-Route::view('/dashboard_requests', 'pages.admin.requests')->name('admin_requests');
+Route::get('/dashboard_requests', 'SupplierController@requests')->name('admin_requests');
+//pages.admin.requests
 
 Route::get('/supplier/{id}/createBundle', 'ItemController@create');
 Route::get('/supplier/{id}/createProduct', 'ProductController@show');
@@ -65,6 +66,7 @@ Route::put('/client/{id}/checkoutPayment', 'ShipDetailController@update');
 Route::get('/api/supplier', 'SupplierController@index');
 Route::get('/supplier', 'SupplierController@index');
 Route::get('/supplier/{id}', 'SupplierController@show');
+Route::post('/supplier', 'SupplierController@accept');
 
 // Client
 Route::get('/api/client', 'ClientController@index');

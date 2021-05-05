@@ -53,6 +53,30 @@
                         </tr>
                         </thead>
                         <tbody>
+
+                            @php
+                            $i=0;   
+                           @endphp
+
+                        @foreach ($users as $user)
+                            @php
+                             $i+=1;   
+                            @endphp
+                            <tr>
+                            <th scope="row">{{$i}}</th>
+                            <td>
+                                <div class="row">
+                                        <div class="col-7">{{$user->name}}</div>
+                                        <div class="col-5">
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="1"><i class="bi bi-trash"></i></button>
+                                            <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-info-circle"></i></button>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        
+                        @endforeach
                         <tr>
                             <th scope="row">#1</th>
                             <td>

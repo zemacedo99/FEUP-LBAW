@@ -54,71 +54,39 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">#1</th>
+
+                            @php
+                             $i=0;   
+                            @endphp
+
+                        @foreach ($suppliers as $supplier)
+                            @php
+                             $i+=1;   
+                            @endphp
+                            <tr>
+                            <th scope="row">{{$i}}</th>
                             <td>
                                 <div class="row">
-                                    <div class="col-7">Zé das bananas</div>
-                                    <div class="col-5">
-                                        <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#acceptSupModal" data-bs-whatever="1"><i class="bi bi-check"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#declineSupModal" data-bs-whatever="1"><i class="bi bi-x"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
+                                        <div class="col-7">{{$supplier->name}}</div>
+                                        <div class="col-5">
+                                            <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></button>
+                                            <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#acceptSupModal" request-id={{$i}} data-bs-whatever={{$supplier->id}}><i class="bi bi-check"></i></button>
+                                            <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#declineSupModal" request-id={{$i}} data-bs-whatever={{$supplier->id}}><i class="bi bi-x"></i></button>
+                                            <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
+                                </td>
 
-                        </tr>
+                            </tr>
+                        
+                        @endforeach
 
-                        <tr>
-                            <th scope="row">#2</th>
-                            <td>
-                                <div class="row">
-                                    <div class="col-7">Luís das beterrabas</div>
-                                    <div class="col-5">
-                                        <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#acceptSupModal" data-bs-whatever="2"><i class="bi bi-check"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#declineSupModal" data-bs-whatever="2"><i class="bi bi-x"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">#3</th>
-                            <td>
-                                <div class="row">
-                                    <div class="col-7">André dos pêssegos</div>
-                                    <div class="col-5">
-                                        <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#acceptSupModal" data-bs-whatever="3"><i class="bi bi-check"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#declineSupModal" data-bs-whatever="3"><i class="bi bi-x"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">#4</th>
-                            <td>
-                                <div class="row">
-                                    <div class="col-7">Ricardo das ananonas</div>
-                                    <div class="col-5">
-                                        <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#acceptSupModal" data-bs-whatever="4"><i class="bi bi-check"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#declineSupModal" data-bs-whatever="4"><i class="bi bi-x"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                        
                         </tbody>
                     </table>
                 </div>
 
-                @include('partials.pages')
+                @include('partials.pages',['link'=>"dashboard_products",'paginator'=>$suppliers])
 
                 <div class="row">
                     <div class="col-2">
@@ -144,6 +112,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                     <button type="button" class="btn btn-primary">Yes</button>
+                    
                 </div>
             </div>
         </div>

@@ -20,6 +20,13 @@ class ItemController extends Controller
         return Item::all();
     }
 
+    public function list()
+    {
+        $products=Item::paginate(8);
+
+        return view('pages.admin.products',['items'=>$products->withPath('dashboard_products')]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

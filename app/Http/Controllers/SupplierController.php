@@ -53,6 +53,20 @@ class SupplierController extends Controller
         //
     }
 
+    public function requests(){
+
+        $suppliers=Supplier::where('accepted', false)->paginate(8);
+
+        return view('pages.admin.requests',['suppliers'=>$suppliers]);
+    }
+
+    public function accept(Request $request){
+        $supplier_registry=Supplier::where('id','=',$request->supplier_id);
+        $supplier_registry->accepted=true;
+        $supplier_registry.save();
+        return;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
