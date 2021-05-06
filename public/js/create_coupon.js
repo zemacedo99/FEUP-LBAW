@@ -11,15 +11,14 @@ function validateForm(event) {
         if (couponCode.value == "") {
             document.getElementById("code_alert").innerHTML = "This field cannot be empty"
             event.preventDefault()
-        }else{
+        }else if(document.getElementById('edit') == null){
+
             document.getElementById("code_alert").innerHTML = ""
             sendAjaxRequest('get', '/api/coupon/' + couponCode.value, null, function(){
                 if (this.status !== 404){
                     document.getElementById("code_alert").innerHTML = "There is already a coupon with that code"
                     event.preventDefault()
-                }
-                    
-                
+                } 
             })
         }
 

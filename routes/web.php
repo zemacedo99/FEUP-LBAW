@@ -39,6 +39,9 @@ Route::get('/supplier/{id}/createProduct', 'ProductController@show');
 Route::get('/supplier/{id}/createCoupon', 'CouponController@create');
 
 // Coupon
+
+Route::get('/coupon/{couponCode}', 'CouponController@edit');
+
 Route::get('/api/coupon', 'CouponController@index');
 Route::post('/api/coupon', 'CouponController@store');
 Route::get('/api/coupon/{couponCode}', 'CouponController@show');

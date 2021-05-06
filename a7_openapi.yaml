@@ -285,6 +285,22 @@ paths:
         '200':
           description: 'Ok. Show [UI06.6](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/create_edit_coupon.php)'
 
+  /coupon/{couponCode}:
+    get:
+      operationId: R301
+      summary: 'R301: Coupon edit page'
+      description: ' Show the coupon update page. Access: OWN'
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/couponCode'
+
+      responses:
+        '200':
+          description: 'Ok. Show [UI06.6](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/create_edit_coupon.php)'
+        '403':
+          description: 'Forbidden'
+
 
   /client/{id}/checkoutInfo:
     get:
@@ -422,7 +438,7 @@ paths:
   /item: 
     get:
       operationId: R210
-      summary: 'R106: Get all items'
+      summary: 'R210: Get all items'
       description: 'Get all items. Access: PUB'
       tags:
         - 'M02: Items'
