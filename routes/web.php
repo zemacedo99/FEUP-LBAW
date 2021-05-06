@@ -67,7 +67,7 @@ Route::put('/client/{id}/checkoutPayment', 'ShipDetailController@update');
 Route::get('/api/supplier', 'SupplierController@index');
 Route::get('/supplier', 'SupplierController@index');
 Route::get('/supplier/{id}', 'SupplierController@show');
-Route::post('/supplier', 'SupplierController@accept');
+Route::post('/supplier', 'SupplierController@requestHandling');
 
 // Client
 Route::get('/api/client', 'ClientController@index');

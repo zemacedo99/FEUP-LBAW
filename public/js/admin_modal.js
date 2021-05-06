@@ -1,3 +1,6 @@
+var yesButton;
+var noButton;
+
 // Delete Modal 
 var deleteModal = document.getElementById('deleteModal')
 if (deleteModal != null) {
@@ -30,8 +33,6 @@ if (deleteProdModal != null) {
 
 // Accept request Modal
 var acceptSupModal = document.getElementById('acceptSupModal')
-var yesButton= acceptSupModal.getElementsByClassName('btn btn-primary').item(0);
-var noButton=acceptSupModal.getElementsByClassName('btn btn-secondary').item(0);
 
 if (acceptSupModal != null) {
     acceptSupModal.addEventListener('show.bs.modal', function(event) {
@@ -46,45 +47,32 @@ if (acceptSupModal != null) {
         modalUserID.textContent = 'Request ID: #' + requestId
 
         
-        yesButton.addEventListener('click', function(event) {
-            // Yes Button
-            var button = event.relatedTarget
-                // Extract info from data-bs-* attributes
-
-            $.ajax({
-                type: "POST",
-                url: '/supplier',
-                data: JSON.stringify('supplier_id',supplier_id),
-                success: success,
-                dataType: JSON
-                });
-
-            $.post('/supplier',{'supplier_id':supplier_id}, function(response){
-                console.log(response);
-            })
-    
-            var xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "POST", 'http://localhost/supplier/accept', false ); // false for synchronous request
-            xmlHttp.setRequestHeader('Content-Type', 'application/json');
-            console.log(JSON.stringify({
-                supplier_id
-                }))
-            xmlHttp.send(JSON.stringify({
-                supplier_id
-            }));
-        })
-
-
     })
+
+    yesButton.addEventListener("click", function(event) {
+        // Yes Button
+        var button = event.relatedTarget;
+
+            // Extract info from data-bs-* attributes
+        
+        sendAjaxRequest('POST', '/supplier', {"supplier_id":supplier_id, "accept":1}, function(){
+            location.reload();
+            })
+                
+            
+        });
     
+    };
+
     
-}
+
 
 // Decline request Modal
 var declineSupModal = document.getElementById('declineSupModal')
-var yesButton= declineSupModal.getElementsByClassName('btn btn-primary').item(0);
-var noButton=declineSupModal.getElementsByClassName('btn btn-secondary').item(0);
+
 if (declineSupModal != null) {
+    yesButton=declineSupModal.getElementsByClassName('btn btn-primary').item(0);
+    noButton=declineSupModal.getElementsByClassName('btn btn-secondary').item(0);
     declineSupModal.addEventListener('show.bs.modal', function(event) {
         // Button that triggered the modal
         var button = event.relatedTarget
@@ -96,20 +84,42 @@ if (declineSupModal != null) {
 
         modalUserID.textContent = 'Request ID: #' + requestId
 
-        yesButton.addEventListener('click', function(event) {
-            // Yes Button
-            var button = event.relatedTarget
-                // Extract info from data-bs-* attributes
-    
-            var xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "POST", 'http://localhost/supplier/delete', false ); // false for synchronous request
-            xmlHttp.setRequestHeader('Content-Type', 'application/json');
-            console.log(JSON.stringify({
-                supplier_id
-                }))
-            xmlHttp.send(JSON.stringify({
-                supplier_id
-            }));
-        })
+        
     })
+
+    yesButton.addEventListener("click", function(event) {
+        // Yes Button
+        var button = event.relatedTarget;
+
+            // Extract info from data-bs-* attributes
+
+        sendAjaxRequest('POST', '/supplier', {"supplier_id":supplier_id, "accept":0}, function(){
+            location.reload();
+            })
+                
+            
+        });
+}
+
+
+
+
+function encodeForAjax(data) {
+    if (data == null) return null;
+    return Object.keys(data).map(function(k) {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+    }).join('&');
+}
+function sendAjaxRequest(method, url, data, handler) {
+
+    let request = new XMLHttpRequest();
+
+    request.open(method, url, false);
+    if (method != 'get') {
+        request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    }
+    request.addEventListener('load', handler);
+    request.send(encodeForAjax(data));
+
 }

@@ -14,7 +14,7 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         "/api/review",
         "/client/{id}/checkoutPayment",
-        //
+        "/supplier",
         '/api/coupon',
         '/api/coupon/*',
         '/api/client',

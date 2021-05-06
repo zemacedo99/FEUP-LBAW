@@ -50,9 +50,10 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function show(Supplier $supplier)
+    public function show($id)
     {
         //
+        return Supplier::where('id','=',$id)->get();
     }
 
     public function requests(){
@@ -62,10 +63,13 @@ class SupplierController extends Controller
         return view('pages.admin.requests',['suppliers'=>$suppliers]);
     }
 
-    public function accept(Request $request){
-        $supplier_registry=Supplier::where('id','=',$request->supplier_id);
-        $supplier_registry->accepted=true;
-        $supplier_registry.save();
+    public function requestHandling(Request $request){
+        //return $request;
+        if ($request->accept==="1"){
+            Supplier::where('id','=',$request->supplier_id)->update(['accepted'=>true]);
+        }else{
+            Supplier::where('id','=',$request->supplier_id)->delete();//not working
+        }
         return;
     }
 
