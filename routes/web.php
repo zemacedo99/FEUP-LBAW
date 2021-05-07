@@ -67,7 +67,6 @@ Route::get('/supplier/{id}', 'SupplierController@show');
 // Client
 Route::get('/api/client', 'ClientController@index');
 //Route::post('/api/client', 'ClientController@store');
-Route::get('/api/client/{id}', 'ClientController@get_info');
 Route::put('/api/client/{id}', 'ClientController@update');
 Route::delete('/api/client/{id}', 'ClientController@destroy');
 
@@ -100,3 +99,12 @@ Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
+
+/*
+* API Calls
+*/
+
+Route::prefix('api/')->group(function(){
+    Route::get('client/{client}', 'ClientController@get_info');
+
+});

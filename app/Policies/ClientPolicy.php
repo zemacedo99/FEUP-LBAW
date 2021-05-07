@@ -24,7 +24,6 @@ class ClientPolicy
         }
     }
 
-
     /**
      * Determine whether the user can view any models.
      *
@@ -45,7 +44,7 @@ class ClientPolicy
      */
     public function view(User $user, Client $client)
     {
-        return $user->id === $client->id;
+        return $user->id == $client->id;
     }
 
     /**

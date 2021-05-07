@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Str;
 
 
 class User extends Authenticatable
@@ -23,7 +22,7 @@ class User extends Authenticatable
         'id',
         'email',
         'password',
-        'api_token',
+        'is_admin',
     ];
 
     /**
@@ -35,11 +34,4 @@ class User extends Authenticatable
         'password',
     ];
 
-    public function generateToken()
-    {
-        $this->api_token = Str::random(60);
-        $this->save();
-
-        return $this->api_token;
-    }
 }

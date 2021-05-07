@@ -54,7 +54,6 @@ CREATE TABLE "users" (
     id              SERIAL      PRIMARY KEY,
     email           TEXT        NOT NULL CONSTRAINT user_email_uk UNIQUE,
     password        TEXT        NOT NULL,
-    api_token       TEXT        UNIQUE DEFAULT NULL,
     is_admin        boolean     NOT NULL DEFAULT 'false'
 );
 

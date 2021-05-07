@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -75,17 +76,12 @@ class ClientController extends Controller
         return view('pages.client.client_profile',['client' => $client ]);
     }
 
-    public function get_info($id)
+    public function get_info(Client $client)
     {
-        //Merge não está a funcionar nao sei pq
-        // $client = Client::where('id', '=', $id)->get();
-        // $user = User::where('id', '=', $id)->get();
-
-        // $merged = $client->merge($user);
-
-        // return $merged;
+        $this->authorize('view', $client);
+        $user = User::find($client->id);
+        return array_merge($client->toArray(), $user->toArray());
     }
-
 
     /**
      * Show the form for editing the specified resource.
