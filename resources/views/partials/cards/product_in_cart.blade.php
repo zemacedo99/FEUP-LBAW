@@ -5,12 +5,12 @@
         </div>
         <div class="col-lg-8">
             <div class="card-body">
-                <h4 class="card-title text-center mb-3">bananas</h4>
+                <h4 class="card-title text-center mb-3">{{$name}}</h4>
 
 
                 <div class="row text-center">
                     <div class="col-xl-4">
-                        <h5 class="card-text text-muted">Total: 1</h5>
+                        <h5 class="card-text text-muted">Total: {{$quantity}}</h5>
                     </div>
 
                     <div class="col-xl-4">
@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="col-xl-4">
-                        <h5 class="card-text">2€</h5>
+                        <h5 class="card-text">{{$price}}€</h5>
                     </div>
 
                 </div>

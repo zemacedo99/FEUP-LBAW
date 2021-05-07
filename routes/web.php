@@ -81,6 +81,11 @@ Route::get('/api/item/{id}', 'ItemController@view');
 Route::put('/api/item/{id}', 'ItemController@update');
 Route::delete('/api/item/{id}', 'ItemController@destroy');
 
+// Checkout
+
+Route::get('/client/{id}/checkoutInfo', 'ItemController@checkout');
+
+
 // Route::get('/', 'Auth\LoginController@home');
 
 // // Cards

@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-
+    {{$items}}
     <div class="col-12">
 
         <div class="row">
@@ -27,22 +27,26 @@
                     <h3 style='text-align:left;'>Order Summary</h3>
                 </div>
                 <div class="col-6">
-                    <h3 style='text-align:right;'> XXX items in your cart</h3>
+                    <h3 style='text-align:right;'> {{sizeof($items)}} items in your cart</h3>
                 </div>
             </div>
         </div>
 
         <div class="col order-6">
             <div class="row ">
-                <?php  for ($i = 0; $i < 5; $i++) { ?>
-
+                @foreach ($items as $item)
+                    
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                    @include('partials.cards.product_in_cart')
+                    @include('partials.cards.product_in_cart', [
+                        'name' => $item->name,
+                        'price' => $item->price,
+                        'quantity' => $item->pivot->quantity,
+                        
+                        ])
                     </div>
 
-                <?php
-                }
-                ?>
+                @endforeach
+          
             </div>
         </div>
 
@@ -119,7 +123,7 @@
                 </div>
             </div>
 
-            <!-- Cupons -->
+            <!-- Coupons -->
             <div class="col-12  col-lg-12 order-3">
 
                 <div class="row">

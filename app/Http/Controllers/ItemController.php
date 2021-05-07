@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Image;
 use App\Models\Item;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+
+use function PHPUnit\Framework\isEmpty;
 
 class ItemController extends Controller
 {
@@ -19,6 +21,29 @@ class ItemController extends Controller
     {
         return Item::all();
     }
+
+    public function checkout($id){
+        
+        $client = Client::find($id);
+        $items = $client->item_carts;
+
+        foreach($items as $item){
+            $product = Product::find($item->id);
+            if($product == null) continue;
+
+            $images = $product->images;
+            
+            $item['images'] = $images;
+        }
+
+        $data = [
+
+            'items' => $items,
+
+        ];
+        return view('pages.checkout.cart_info', $data);
+    }
+
 
     /**
      * Show the form for creating a new resource.
