@@ -2,6 +2,8 @@
 
 @section('content')
 
+<script type="text/javascript" src={{ asset('js/checkout.js') }} defer> </script>
+
 <div class="container">
     {{$items}}
     <div class="col-12">
@@ -29,19 +31,19 @@
                 <div class="col-6">
                     <h3 style='text-align:right;'> {{sizeof($items)}} items in your cart</h3>
                 </div>
-            </div>
+            </div>  
         </div>
 
         <div class="col order-6">
             <div class="row ">
                 @foreach ($items as $item)
-                    
+                
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                     @include('partials.cards.product_in_cart', [
                         'name' => $item->name,
                         'price' => $item->price,
                         'quantity' => $item->pivot->quantity,
-                        
+                        'image' => $item->image,
                         ])
                     </div>
 

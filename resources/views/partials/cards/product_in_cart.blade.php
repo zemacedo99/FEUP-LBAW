@@ -1,7 +1,7 @@
 <div class="card m-3">
     <div class="row">
         <div class="col-lg-4">
-            <img src="../images/bananas.jpg" class="rounded mx-auto d-block" alt=bananas style="margin-left:auto; margin-right:auto;width:8em;height:8em;">
+            <img src="{{asset('storage/images/' . $image)}}" class="rounded mx-auto d-block" alt=bananas style="margin-left:auto; margin-right:auto;width:8em;height:8em;">
         </div>
         <div class="col-lg-8">
             <div class="card-body">
@@ -14,8 +14,8 @@
                     </div>
 
                     <div class="col-xl-4">
-                        <button type="button" class="simpleicon" id="simpleiconwhite">add_circle_outline</button>
-                        <button type="button" class="simpleicon" id="simpleiconwhite"> remove_circle_outline</button>
+                        <button type="button" class="simpleicon plusQuantity">add_circle_outline</button>
+                        <button type="button" class="simpleicon minusQuantity"> remove_circle_outline</button>
                     </div>
 
                     <div class="col-xl-4">

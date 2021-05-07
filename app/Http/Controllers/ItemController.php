@@ -23,6 +23,9 @@ class ItemController extends Controller
     }
 
     public function checkout($id){
+
+        if(!is_numeric($id))
+            return response('', 404);
         
         $client = Client::find($id);
         $items = $client->item_carts;
@@ -33,7 +36,7 @@ class ItemController extends Controller
 
             $images = $product->images;
             
-            $item['images'] = $images;
+            $item['image'] = $images[0]->path;
         }
 
         $data = [
