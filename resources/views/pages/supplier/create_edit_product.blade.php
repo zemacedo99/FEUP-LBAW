@@ -6,7 +6,7 @@
 <div class="container">
 
     <div class="row my-5 border-bottom">
-        <h2 class="text-start"> Create Product</h2>
+        <h2 class="text-start"> {{ $title }}</h2>
     </div>
 
 
@@ -36,11 +36,13 @@
                             class="d-block w-100" alt="...">
                     </div>
                 </div>
+
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
                     data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
+
                 <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
                     data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
@@ -52,12 +54,14 @@
         <div class="col-1"></div>
 
         <div class="col-12 col-lg-3">
-            <form action="">
+            <form action="{{$path}}" method="POST" id="form" required>
                 <label class="text-black" for="product_name">Product Name</label>
                 <div class="input-group mb-5 ">
                     <input type="text" class="form-control" id=product_name>
 
                 </div>
+
+                <input type="hidden" name="supplierID" id="supplierID" value="{{ \Illuminate\Support\Facades\Auth::id() }}">
 
                 <label class="text-black" for="product_price">Price</label>
                 <div class="input-group mb-5">

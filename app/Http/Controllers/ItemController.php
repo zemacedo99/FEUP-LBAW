@@ -130,12 +130,11 @@ class ItemController extends Controller
 
         
 
-        if(!empty($item->review)){
-            
+        if(count($item->reviews)>0){
             $data['reviews'] =  $item->reviews;
         }
 
-        if(!empty($item->tags)){
+        if(count($item->tags)>0){
             
             $data['tags'] =  $item->tags;
         }

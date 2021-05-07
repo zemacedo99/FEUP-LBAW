@@ -35,7 +35,7 @@ Route::view('/dashboard_clients', 'pages.admin.users')->name('admin_users');
 Route::view('/dashboard_requests', 'pages.admin.requests')->name('admin_requests');
 
 Route::get('/supplier/{id}/createBundle', 'ItemController@create');
-Route::get('/supplier/{id}/createProduct', 'ProductController@show');
+Route::get('/supplier/{id}/createProduct', 'ProductController@create');
 Route::get('/supplier/{id}/createCoupon', 'CouponController@create');
 
 // Coupon
@@ -52,6 +52,18 @@ Route::get('/api/review', 'ReviewController@index');
 Route::post('/api/review', 'ReviewController@create');
 Route::delete('/api/review', 'ReviewController@delete');
 //falta put
+
+
+// Product
+Route::get('/product/{id}', 'ProductController@edit');
+
+Route::get('/api/product', 'ProductController@index');
+Route::post('/api/product', 'ProductController@store');
+Route::get('/api/product/{id}', 'ProductController@show');
+Route::put('/api/product/{id}', 'ProductController@update');
+Route::delete('/api/product/{id}', 'ProductController@destroy');
+
+
 
 Route::get('/api/client/{id}/history', 'PurchaseController@index');
 Route::get('/api/client/{id}/periodic', 'PurchaseController@index');//reevaluate
