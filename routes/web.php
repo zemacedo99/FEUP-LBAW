@@ -36,10 +36,13 @@ Route::get('/dashboard_requests', 'SupplierController@requests')->name('admin_re
 Route::get('/users/{id}', 'UserController@getProfile');
 
 Route::get('/supplier/{id}/createBundle', 'ItemController@create');
-Route::get('/supplier/{id}/createProduct', 'ProductController@show');
+Route::get('/supplier/{id}/createProduct', 'ProductController@create');
 Route::get('/supplier/{id}/createCoupon', 'CouponController@create');
 
 // Coupon
+
+Route::get('/coupon/{couponCode}', 'CouponController@edit');
+
 Route::get('/api/coupon', 'CouponController@index');
 Route::post('/api/coupon', 'CouponController@store');
 Route::get('/api/coupon/{couponCode}', 'CouponController@show');
@@ -51,6 +54,18 @@ Route::get('/api/review', 'ReviewController@index');
 Route::post('/api/review', 'ReviewController@create');
 Route::delete('/api/review', 'ReviewController@delete');
 Route::put('/api/review', 'ReviewController@update');
+
+
+
+// Product
+Route::get('/product/{id}', 'ProductController@edit');
+
+Route::get('/api/product', 'ProductController@index');
+Route::post('/api/product', 'ProductController@store');
+Route::get('/api/product/{id}', 'ProductController@show');
+Route::put('/api/product/{id}', 'ProductController@update');
+Route::delete('/api/product/{id}', 'ProductController@destroy');
+
 
 
 Route::get('/api/client/{id}/history', 'PurchaseController@index');

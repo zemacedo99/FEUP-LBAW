@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,10 +13,15 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-
+    public function index(Request $request)
+    {   
         
+        $request->validate([
+            'supplierID' => 'required|integer'
+        ]);
+        
+        return Product::where('supplier_id', '=', $request->input("supplierID"))->get();
+
     }
 
     
@@ -24,9 +30,16 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $supplier = Supplier::find($id);
+        $this->authorize('create', $supplier);
+        $data = [
+                    'title' => 'Create Product',
+                    'path' => '/api/product'        
+                ];
+
+        return view('pages.supplier.create_edit_product', $data);
     }
 
     /**
@@ -36,8 +49,32 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+
+        $request->validate([
+            'product_name' => 'required|string',
+            'description' => 'required|string',
+            'product_stock' => 'required|numeric',
+            'product_price' => 'required|numeric',
+            'product_type' => 'required|string',
+            'supplierID' => 'required|integer',
+            // 'sup_img' => '' 
+        ]);
+        
+        $supplier = Supplier::find($request->supplierID);
+
+        $this->authorize('create', $supplier);
+
+        Product::create([
+            'name' => $request->product_name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'type' => $request->product_type,
+            'stock' => $request->stock,
+            'tags' => $request->tags
+        ]);
+
+        return redirect('/');
     }
 
     /**
@@ -48,21 +85,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        // $product = Product::find($product);
-
-        // $item = $product->is_part_of;
-
-        // $data = 
-        // [
-        //     'name' => $item->name,
-        //     'price' => $item->price,
-        //     'stock' => $item->stock,
-        //     'description' => $item->description,
-        //     'rating' => $item->rating,
-        // ];
-
-
-        // return view('pages.supplier.create_edit_product');
+        return $product;
     }
 
     /**
