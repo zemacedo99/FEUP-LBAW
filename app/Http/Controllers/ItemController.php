@@ -288,7 +288,7 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deactivate(Request $id)
     {
         if(!is_numeric($id)){
             return response('', 404)->header('description','The item was not found');

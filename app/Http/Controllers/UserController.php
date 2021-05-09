@@ -52,6 +52,16 @@ class UserController extends Controller
         
     }
 
+    public function getProfile($id){
+        $temp=Client::find($id);
+        
+        if ($temp===null){
+            return app('App\Http\Controllers\SupplierController')->show($id);
+        }else{
+            return app('App\Http\Controllers\ClientController')->show($id);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

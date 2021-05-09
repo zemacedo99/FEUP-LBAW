@@ -64,7 +64,7 @@
                                     $i += 1;
                                 @endphp
                                 <tr>
-                                    <th scope="row">#{{ $item->id }}</th>
+                                    <th scope="row">{{ $item->id }}</th>
                                     <td>{{ $item->name }}</td>
                                     <td>
                                         <div class="row">
@@ -74,7 +74,7 @@
                                                         class="bi bi-gear"></i></button>
                                                 <button class="btn btn-primary btn-sm d-none d-md-inline"
                                                     data-bs-toggle="modal" data-bs-target="#deleteProdModal"
-                                                    data-bs-whatever={{$item}}><i class="bi bi-trash"></i></button>
+                                                    data-bs-whatever={{$item->id}} prodName={{$item->name}}><i class="bi bi-trash"></i></button>
 
                                                 <a href=/item/{{$item->id}} class="btn btn-primary btn-sm d-none d-md-inline"><i
                                                         class="bi bi-info-circle" ></i></a>
@@ -107,7 +107,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteProdModalLabel">Confirming supplier request</h5>
+                    <h5 class="modal-title" id="deleteProdModalLabel">Confirming product request</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

@@ -33,7 +33,7 @@ Route::view('/dashboard', 'pages.admin.dashboard')->name('dashboard');
 Route::get('/dashboard_products', 'ItemController@admin_list')->name('admin_products');
 Route::get('/dashboard_clients', 'UserController@admin_index')->name('admin_users');
 Route::get('/dashboard_requests', 'SupplierController@requests')->name('admin_requests');
-//pages.admin.requests
+Route::get('/users/{id}', 'UserController@getProfile');
 
 Route::get('/supplier/{id}/createBundle', 'ItemController@create');
 Route::get('/supplier/{id}/createProduct', 'ProductController@show');
@@ -84,7 +84,7 @@ Route::get('/api/item', 'ItemController@index');
 Route::post('/api/item', 'ClientController@store');
 Route::get('/api/item/{id}', 'ItemController@view');
 Route::put('/api/item/{id}', 'ItemController@update');
-Route::delete('/api/item/{id}', 'ItemController@destroy');
+Route::delete('/api/item/{id}', 'ItemController@deactivate');
 
 // Tag
 Route::get('/api/tag', 'TagController@index');

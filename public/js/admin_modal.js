@@ -1,40 +1,79 @@
 var yesButton;
 var noButton;
+var id;
 
-// Delete Modal 
-var deleteModal = document.getElementById('deleteModal')
+// Delete User Modal 
+var deleteModal = document.getElementById('deleteUserModal')
 if (deleteModal != null) {
+    yesButton=deleteModal.getElementsByClassName('btn btn-primary').item(0);
+    noButton=deleteModal.getElementsByClassName('btn btn-secondary').item(0);
+
     deleteModal.addEventListener('show.bs.modal', function(event) {
         // Button that triggered the modal
         var button = event.relatedTarget
             // Extract info from data-bs-* attributes
-        var recipient = button.getAttribute('data-bs-whatever')
+        id = button.getAttribute('data-bs-whatever')
+        var name = button.getAttribute('user-name')
 
         var modalUserID = deleteModal.querySelector('#user_id')
 
-        modalUserID.textContent = 'User ID: #' + recipient
+        modalUserID.textContent = 'User ID: #' + id + '\t Name: '+name
     })
+
+    yesButton.addEventListener("click", function(event) {
+        // Yes Button
+        var button = event.relatedTarget;
+
+            // Extract info from data-bs-* attributes
+        
+        sendAjaxRequest('DELETE', '/api/client/'+id, null, function(){
+            //location.reload();
+        })
+                
+            
+    });
 }
 
 // Delete product Modal
 var deleteProdModal = document.getElementById('deleteProdModal')
 if (deleteProdModal != null) {
+    yesButton=deleteProdModal.getElementsByClassName('btn btn-primary').item(0);
+    noButton=deleteProdModal.getElementsByClassName('btn btn-secondary').item(0);
     deleteProdModal.addEventListener('show.bs.modal', function(event) {
         // Button that triggered the modal
         var button = event.relatedTarget
             // Extract info from data-bs-* attributes
-        var recipient = button.getAttribute('data-bs-whatever')
+        id = button.getAttribute('data-bs-whatever')
+        
+        var name = button.getAttribute('prodName')
 
         var modalUserID = deleteProdModal.querySelector('#prod_id')
 
-        modalUserID.textContent = 'Product ID: #' + recipient
+        modalUserID.textContent = 'Product ID: #' + id + '\tName:' + name
     })
-}
+
+    yesButton.addEventListener("click", function(event) {
+        // Yes Button
+        var button = event.relatedTarget;
+
+            // Extract info from data-bs-* attributes
+        
+        sendAjaxRequest('DELETE', '/api/item/'+id, null, function(){
+            //location.reload();
+        })
+                
+            
+    });
+    
+};
+
 
 // Accept request Modal
 var acceptSupModal = document.getElementById('acceptSupModal')
 
 if (acceptSupModal != null) {
+    yesButton=acceptSupModal.getElementsByClassName('btn btn-primary').item(0);
+    noButton=acceptSupModal.getElementsByClassName('btn btn-secondary').item(0);
     acceptSupModal.addEventListener('show.bs.modal', function(event) {
         // Button that triggered the modal
         var button = event.relatedTarget
@@ -121,5 +160,6 @@ function sendAjaxRequest(method, url, data, handler) {
     }
     request.addEventListener('load', handler);
     request.send(encodeForAjax(data));
+    console.log(request.response);
 
 }

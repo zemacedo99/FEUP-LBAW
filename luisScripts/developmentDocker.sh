@@ -1,5 +1,5 @@
 #!/bin/bash
 
 sudo systemctl start docker
-docker-compose up &
+docker-compose up
 
