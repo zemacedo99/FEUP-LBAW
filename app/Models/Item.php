@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Item extends Model
 {
@@ -25,4 +26,11 @@ class Item extends Model
     public function purchases() { return $this->belongsToMany('App\Models\Purchase')->withPivot('price', 'amount');}
 
     public function reviews() { return $this->hasMany('App\Models\Review');}
+
+    public function product() {
+        if ($this->is_bundle == false){
+            return Product::find($this->id);
+        }
+        return null;
+    }
 }

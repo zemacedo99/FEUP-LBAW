@@ -24,6 +24,18 @@
                 </li>
             </ul>
 
+            @if (Auth::check())
+                <a class="button" href="{{ url('/logout') }}"> Logout </a>
+                <span>| email: {{ Auth::user()->email }}</span>
+                <span>| id: {{ \Illuminate\Support\Facades\Auth::id() }}</span>
+                @if(\App\Models\Client::where('id', \Illuminate\Support\Facades\Auth::id())->exists())
+                    <span>| Client: {{ \App\Models\Client::where('id', \Illuminate\Support\Facades\Auth::id())->get()[0]->name }}</span>
+                @endif
+                @if(\App\Models\Supplier::where('id', \Illuminate\Support\Facades\Auth::id())->exists())
+                    <span>| Supplier: {{ \App\Models\Supplier::where('id', \Illuminate\Support\Facades\Auth::id())->get()[0]->name }}</span>
+                @endif
+            @endif
+
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button type="button" id="headericon">search</button>
@@ -43,17 +55,3 @@
         </div>
     </div>
 </nav>
-
-@if (Auth::check())
-    <a class="button" href="{{ url('/logout') }}"> Logout </a>
-    <span>email: {{ Auth::user()->email }}</span>
-    <br>
-    <span>id: {{ \Illuminate\Support\Facades\Auth::id() }}</span>
-    <br>
-    @if(\App\Models\Client::where('id', \Illuminate\Support\Facades\Auth::id())->exists())
-        <span>Client: {{ \App\Models\Client::where('id', \Illuminate\Support\Facades\Auth::id())->get()[0]->name }}</span>
-    @endif
-    @if(\App\Models\Supplier::where('id', \Illuminate\Support\Facades\Auth::id())->exists())
-        <span>Supplier: {{ \App\Models\Supplier::where('id', \Illuminate\Support\Facades\Auth::id())->get()[0]->name }}</span>
-    @endif
-@endif

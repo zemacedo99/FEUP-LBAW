@@ -9,6 +9,19 @@
 
 @include('partials.modals.review')
 
+@foreach ($items as $item)
+    @include('partials.cards.product_in_history',
+            [
+                'name' => $item["name"],
+                'price' => $item["price"],
+                'unit' => $item["type"],
+                'description' => $item["description"],
+                'paid' => $item["pivot"]["price"],
+                'type' => 'cancel'
+            ])
+@endforeach
+
+{{--
 @for ($i = 0; $i < 10; $i++)
     @include('partials.cards.product_in_history',
             [
@@ -20,4 +33,5 @@
                 'type' => 'cancel'
             ])
 @endfor
+--}}
 

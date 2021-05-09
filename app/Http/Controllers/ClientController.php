@@ -64,19 +64,22 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        /* TODO Começar por history, tem de devolver lista de elementos:
-         * - item_id
-         */
         $this->authorize('view', $client);
-        /*foreach ($client->purchases as $purchase){
-            echo 'purchase id: ', $purchase->id, '<br>';
+
+        $item_array = [];
+        foreach ($client->purchases->where('type', 'SingleBuy') as $purchase){
             foreach ($purchase->items as $item){
-                echo '  ', $item->id;
-                echo '<br>';
+                if(!is_null($item->product())){
+                    array_push($item_array, array_merge($item->toArray(), $item->product()->toArray()));
+                } else {
+                    array_push($item_array, array_merge($item->toArray(), ["type" => "Un"]));
+                }
             }
         }
-        die();*/
-        return view('pages.client.client_profile',['client' => $client]);
+        return view('pages.client.client_profile',
+            ['client' => $client,
+             'items' => $item_array,
+            ]);
     }
 
     public function get_info(Client $client)
