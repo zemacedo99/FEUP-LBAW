@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supplier;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -15,6 +16,13 @@ class SupplierController extends Controller
     public function index()
     {
         //
+    }
+
+    public function get_info(Supplier $supplier)
+    {
+        $this->authorize('view', $supplier);
+        $user = User::find($supplier->id);
+        return array_merge($supplier->toArray(), $user->toArray());
     }
 
     public function list()
@@ -75,7 +83,8 @@ class SupplierController extends Controller
      */
     public function update(Request $request, Supplier $supplier)
     {
-        //
+        // TODO - pedido PUT de /api/supplier/{id}
+        abort(501);
     }
 
     /**

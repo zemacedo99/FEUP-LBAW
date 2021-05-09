@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -15,8 +14,6 @@ class ClientController extends Controller
      */
     public function index()
     {
-        // Todo, ver tutorial e ver porque pedidos estão com erro
-
         $this->authorize('viewAny');
         return Client::all();
     }
@@ -65,15 +62,21 @@ class ClientController extends Controller
      * Display the specified resource.
      *
      */
-    public function show($id)
+    public function show(Client $client)
     {
-
-        $client = Client::find($id);
-
-        $name = $client->name;
-        $image_id = $client->image_id;
-
-        return view('pages.client.client_profile',['client' => $client ]);
+        /* TODO Começar por history, tem de devolver lista de elementos:
+         * - item_id
+         */
+        $this->authorize('view', $client);
+        /*foreach ($client->purchases as $purchase){
+            echo 'purchase id: ', $purchase->id, '<br>';
+            foreach ($purchase->items as $item){
+                echo '  ', $item->id;
+                echo '<br>';
+            }
+        }
+        die();*/
+        return view('pages.client.client_profile',['client' => $client]);
     }
 
     public function get_info(Client $client)

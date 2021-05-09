@@ -1,12 +1,11 @@
-<?php
-addModal(
-    "DeletePeriodic",
-    "Confirmation",
-    "Are you sure you want to cancel this periodic purchase?",
-    "Delete",
-    "Cancel"
-);
-?>
+@include('partials.modals.add_modal',
+            ['modalName'=>"DeletePeriodic",
+            'title'=>"Confirmation",
+            'bodyText'=>"Are you sure you want to cancel this periodic purchase?",
+            'buttonPrimary'=>"Delete",
+            'buttonSecondary'=>"Cancel"
+            ]
+         )
 
 @include('partials.modals.periodic_buy')
 

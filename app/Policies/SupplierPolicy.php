@@ -11,6 +11,20 @@ class SupplierPolicy
     use HandlesAuthorization;
 
     /**
+     * Perform pre-authorization checks.
+     *
+     * @param  \App\Models\User  $user
+     * @param  string  $ability
+     * @return void|bool
+     */
+    public function before(User $user)
+    {
+        if ($user->is_admin === true) {
+            return true;
+        }
+    }
+
+    /**
      * Determine whether the user can view any models.
      *
      * @param  \App\Models\User  $user
@@ -30,7 +44,8 @@ class SupplierPolicy
      */
     public function view(User $user, Supplier $supplier)
     {
-        //
+        // TODO maybe será mudado, já que clients tbm podem ver info de suppliers
+        return $user->id == $supplier->id;
     }
 
     /**
@@ -54,8 +69,7 @@ class SupplierPolicy
      */
     public function update(User $user, Supplier $supplier)
     {
-        //
-        return $user->id==$supplier->id || $user->isAdministrator;
+        return $user->id==$supplier->id;
     }
 
     /**
@@ -68,7 +82,7 @@ class SupplierPolicy
     public function delete(User $user, Supplier $supplier)
     {
         //
-        return $user->id==$supplier->id || $user->isAdministrator;
+        return $user->id==$supplier->id;
     }
 
     /**

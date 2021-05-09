@@ -1,12 +1,11 @@
-<?php
-addModal(
-    "DeleteAccount",
-    "Confirmation",
-    "Are you sure you want to delete your account? You will lose all of your data, including your purchase History, Favorites and current Periodic Buys.",
-    "Delete",
-    "Cancel"
-);
-?>
+@include('partials.modals.add_modal',
+            ['modalName'=>"DeleteAccount",
+            'title'=>"Confirmation",
+            'bodyText'=>"Are you sure you want to delete your account? You will lose all of your data, including your purchase History, Favorites and current Periodic Buys.",
+            'buttonPrimary'=>"Delete",
+            'buttonSecondary'=>"Cancel"
+            ]
+         )
 
 <div class="modal fade" id="editCard" tabindex="-1" aria-labelledby="editCardLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -105,7 +104,7 @@ addModal(
         </div>
         <div class="row row-cols-1 row-cols-lg-2 d-flex justify-content-center mb-3">
             <div class="col" style="width: 150px;">
-                <img src="../images/img_avatar.png" class="rounded-circle img-fluid">
+                <img src="{{ asset('images/img_avatar.png') }}" class="rounded-circle img-fluid">
             </div>
             <div class="col mt-2 d-flex align-items-center justify-content-center justify-content-lg-start">
                 <div class="form-floating">

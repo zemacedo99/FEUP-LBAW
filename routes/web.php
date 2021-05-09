@@ -19,7 +19,6 @@ Route::get('image/{filename}', 'ItemController@storage_link');
 Route::view('upload', 'upload');
 Route::post('upload',[UploadController::class,'index']);
 
-Route::get('/client/{id}', 'ClientController@show');
 Route::get('/item/{id}', 'ItemController@show');
 Route::get('/items', 'ItemController@list')->name('items');
 Route::get('/suppliers', 'SupplierController@list')->name('suppliers');
@@ -80,18 +79,6 @@ Route::get('/api/item/{id}', 'ItemController@view');
 Route::put('/api/item/{id}', 'ItemController@update');
 Route::delete('/api/item/{id}', 'ItemController@destroy');
 
-// Route::get('/', 'Auth\LoginController@home');
-
-// // Cards
-// Route::get('cards', 'CardController@list');
-// Route::get('cards/{id}', 'CardController@show');
-
-// // API
-// Route::put('api/cards', 'CardController@create');
-// Route::delete('api/cards/{card_id}', 'CardController@delete');
-// Route::put('api/cards/{card_id}/', 'ItemController@create');
-// Route::post('api/item/{id}', 'ItemController@update');
-// Route::delete('api/item/{id}', 'ItemController@delete');
 
 // // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -100,11 +87,22 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 
+
+// ANDRE - WORKING ON BELOW THIS
+
+Route::get('client/{client:id}/profile', 'ClientController@show');
+
 /*
 * API Calls
 */
 
 Route::prefix('api/')->group(function(){
-    Route::get('client/{client}', 'ClientController@get_info');
+    Route::prefix('client/')->group(function(){
+        Route::get('{client:id}','ClientController@get_info');
+    });
 
+    Route::prefix('supplier/')->group(function(){
+        Route::get('{supplier:id}','SupplierController@get_info');
+        Route::put('{supplier:id}','SupplierController@update');
+    });
 });

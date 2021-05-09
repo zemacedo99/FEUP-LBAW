@@ -17,6 +17,8 @@ class Client extends Model
 
     public function review() { return $this->hasMany('App\Models\Review');}
 
+    public function purchases() { return $this->hasMany('App\Models\Purchase');}
+
     public function ship_detail() { return $this->hasOne('App\Models\ShipDetail');}
 
     public function item_favorites() {return $this->belongsToMany('App\Models\Item');}

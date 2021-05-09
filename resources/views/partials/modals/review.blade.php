@@ -1,4 +1,3 @@
-<!-- WIP: Modal da Review -->
 <div class="modal fade" id="modalReview" tabindex="-1" aria-labelledby="modalReviewLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
