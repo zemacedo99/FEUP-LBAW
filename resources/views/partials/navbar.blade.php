@@ -36,7 +36,7 @@
                 <button type="button" id="headericon" data-bs-toggle="modal"
                         data-bs-target="#loginModal">account_circle
                 </button>
-                <a href="../checkout/cart_info.php">
+                <a href="{{ route('checkout', ['id' => \Illuminate\Support\Facades\Auth::id()]) }}">
                     <button type="button" id="headericon">shopping_cart</button>
                 </a>
             </div>

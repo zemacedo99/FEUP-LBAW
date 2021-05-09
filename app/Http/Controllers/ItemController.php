@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Coupon;
 use App\Models\Image;
 use App\Models\Item;
 use App\Models\Product;
@@ -29,11 +30,15 @@ class ItemController extends Controller
         
         $client = Client::find($id);
         $items = $client->item_carts;
-
+        
+        $total = 0;
         foreach($items as $item){
             $product = Product::find($item->id);
+            $total += $item->price * $item->pivot->quantity;
+            
             if($product == null) continue;
 
+            
             $images = $product->images;
             
             $item['image'] = $images[0]->path;
@@ -42,7 +47,7 @@ class ItemController extends Controller
         $data = [
 
             'items' => $items,
-
+            'total' => $total,
         ];
         return view('pages.checkout.cart_info', $data);
     }

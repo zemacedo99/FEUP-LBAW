@@ -11,6 +11,7 @@
                 <div class="row text-center">
                     <div class="col-xl-4">
                         <h5 class="card-text text-muted">Total: {{$quantity}}</h5>
+                        <input type="hidden" id="quantity_{{$nr}}" name="quantity_{{$nr}}" value="{{$quantity}}">
                     </div>
 
                     <div class="col-xl-4">
@@ -20,6 +21,7 @@
 
                     <div class="col-xl-4">
                         <h5 class="card-text">{{$price}}€</h5>
+                        <input type="hidden" id="price_{{$nr}}" name="price_{{$nr}}" value="{{$price}}">
                     </div>
 
                 </div>

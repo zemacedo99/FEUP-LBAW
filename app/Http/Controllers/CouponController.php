@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Coupon;
 use App\Models\Supplier;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -30,12 +31,15 @@ class CouponController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create(Request $request, $id)
     {
-        $supplier = Supplier::find($id);
-        $this->authorize('create', $supplier);
+        $supplier = Supplier::find($id);    
+        if ($request->user()->cannot('viewCreate', $supplier)) {
+            abort(403);
+        }
         $data = [];
 
+    
         return view('pages.supplier.create_edit_coupon', $data);
     }
 

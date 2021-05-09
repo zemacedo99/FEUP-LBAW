@@ -6,6 +6,7 @@
 
 <div class="container">
     {{$items}}
+    <form id="form" method="GET" action="{{route('payment', ['id' => \Illuminate\Support\Facades\Auth::id()])}}">
     <div class="col-12">
 
         <div class="row">
@@ -36,6 +37,7 @@
 
         <div class="col order-6">
             <div class="row ">
+                <?php $i = 0; ?>
                 @foreach ($items as $item)
                 
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
@@ -44,6 +46,7 @@
                         'price' => $item->price,
                         'quantity' => $item->pivot->quantity,
                         'image' => $item->image,
+                        'nr' => $i++,
                         ])
                     </div>
 
@@ -170,7 +173,7 @@
 
 
         <div class="col-12">
-            <h4 style='text-align:center;'>Total: 8.37 €</h4>
+            <h4 style='text-align:center;' id ="total_price">Total: {{$total}}€</h4>
             <div class="row mb-3"></div>
         </div>
 
@@ -187,7 +190,7 @@
         </div>
 
     </div>
-
+    </form>
 </div>
 
 
