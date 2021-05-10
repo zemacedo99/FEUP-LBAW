@@ -60,6 +60,8 @@
         <div class="row">
 
             <!-- Periodic Buys -->
+            <input type="hidden" id="periodic" value="SingleBuy">
+
             <div class="col-12 col-lg-12 order-2">
                 <div class="row">
 
@@ -77,16 +79,16 @@
 
                             <ul class="nav nav-pills mb-3 d-flex justify-content-evenly" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <label for="male" data-bs-toggle="pill" data-bs-target="#pills-once">Once</label>
+                                    <label for="male" data-bs-toggle="pill" data-bs-target="#pills-once" name="SingleBuy" class="periodic" >Once</label>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <label for="male" data-bs-toggle="pill" data-bs-target="#pills-daily">Daily</label>
+                                    <label for="male" data-bs-toggle="pill" data-bs-target="#pills-daily" name="Day" class="periodic" >Daily</label>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <label for="female" data-bs-toggle="pill" data-bs-target="#pills-weekly">Weekly</label>
+                                    <label for="female" data-bs-toggle="pill" data-bs-target="#pills-weekly" name="Week" class="periodic" >Weekly</label>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <label for="other" data-bs-toggle="pill" data-bs-target="#pills-monthly">Monthly</label>
+                                <li class="nav-item" role="presentation"> 
+                                    <label for="other" data-bs-toggle="pill" data-bs-target="#pills-monthly" name="Month" class="periodic" >Monthly</label>
                                 </li>
                             </ul>
 

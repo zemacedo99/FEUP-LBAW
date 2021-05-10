@@ -1,5 +1,6 @@
 let plus = document.getElementsByClassName('plusQuantity')
 let minus = document.getElementsByClassName('minusQuantity')
+let periodic = document.getElementsByClassName('periodic')
 
 
 
@@ -10,6 +11,11 @@ for(let i = 0; i < plus.length; i++){
 for(let i = 0; i < minus.length; i++){
     minus[i].addEventListener('click', removeQuantity)
 }
+
+for(let i = 0; i < periodic.length; i++){
+    periodic[i].addEventListener('click', updatePeriodic)
+}
+
 
 
 function addQuantity(event){
@@ -49,3 +55,13 @@ function updatePrice(price){
 
     totalPrice.innerHTML = 'Total: ' + (parseFloat(totalPrice.innerHTML.split(' ')[1]) + price).toFixed(2) + '€'
 }
+
+function updatePeriodic(event){
+    let periodicInput = document.getElementById('periodic')
+    console.log(event.target)
+    periodicInput.value = event.target.getAttribute('name')
+}
+
+
+
+
