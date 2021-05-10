@@ -156,7 +156,7 @@
                     <div class="row">
                         <div class="col-12">
 
-                            @for ($i = 0; $i < 5; $i++)
+                            @for ($i = 1; $i <= 5; $i++)
 
                                 @if ($i <=  $review->rating )
                                     <i class="bi bi-star-fill"></i>
