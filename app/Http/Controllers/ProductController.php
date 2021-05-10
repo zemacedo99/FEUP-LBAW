@@ -65,12 +65,16 @@ class ProductController extends Controller
         $this->authorize('create', $supplier);
 
         Product::create([
+            'supplier_id' => $request->supplierID,
             'name' => $request->product_name,
+            'price' => $request->product_price,
+            'stock' => $request->product_stock,
             'description' => $request->description,
-            'price' => $request->price,
+            'active' => true,
+            'rating' => 0,
+            'is_bundle' => false,
             'type' => $request->product_type,
-            'stock' => $request->stock,
-            'tags' => $request->tags
+            'tags' => $request->tags,
         ]);
 
         return redirect('/');

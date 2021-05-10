@@ -5,9 +5,18 @@
 
 <div class="row  justify-content-center">
     <div class="col-12 col-md-4 col-lg-6">
-        <div class="form">
+        {{-- <div class="form">
             <textarea class="form-control" id="Description" rows="5"></textarea>
+        </div> --}}
+
+                    
+        <div class="form-group mb-1">
+            {{-- <label for="description">Description</label> --}}
+            <textarea class="form-control" name="description" id="description" rows="5">@isset($description) {{$description}} @endisset</textarea>
         </div>
+        <small id="description_alert" class="text-danger"></small>
+       
+
     </div>
 
     <div class="col-6 col-lg-6 mt-4 mt-md-0" style="min-height: 100px;">
