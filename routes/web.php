@@ -26,7 +26,7 @@ Route::get('/suppliers', 'SupplierController@list')->name('suppliers');
 
 Route::view('/about_us', 'pages.misc.about_us')->name('about_us');
 Route::view('/bundle_detail', 'pages.misc.bundleDetail');
-Route::view('/', 'pages.misc.home_page')->name('homepage');
+Route::get('/', 'ItemController@homePage')->name('homepage');
 Route::view('/map', 'pages.site_map')->name('map');
 
 Route::view('/dashboard', 'pages.admin.dashboard')->name('dashboard');

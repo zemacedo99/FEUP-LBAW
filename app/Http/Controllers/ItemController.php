@@ -306,4 +306,24 @@ class ItemController extends Controller
 
         return response('', 204,)->header('description', 'Successfully deactivated item');
     }
+
+
+    public function homePage(){
+        $items=[
+            'almostSoldOut'=>Item::orderBy('stock','asc')->get(),
+            'new'=>Item::orderBy('id','desc')->get(),
+            'hot'=>Item::get()
+        ];
+
+        foreach($items as $group){
+            foreach($group as $item){
+                $item->unit=\DB::table('products')->where('id','=',$item->id)->get('type');
+                $item->images=app('App\Http\Controllers\ImageController')->productImages($item->id);
+            }
+        }
+        
+        
+        return view('pages.misc.home_page',['items'=>$items]);
+    }
+
 }

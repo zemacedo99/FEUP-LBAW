@@ -58,7 +58,7 @@ class SupplierController extends Controller
 
     public function requests(){
 
-        $suppliers=Supplier::where('accepted', false)->paginate(8);
+        $suppliers=Supplier::where('accepted', 'false')->paginate(8);
 
         return view('pages.admin.requests',['suppliers'=>$suppliers]);
     }
