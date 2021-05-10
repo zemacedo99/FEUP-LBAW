@@ -22,6 +22,9 @@ class ItemController extends Controller
 
     public function admin_list()
     {
+        if(auth()->user()==null||!auth()->user()->is_admin){
+            return response('', 404)->header('description','Page does not exist');
+        }
         $products=Item::orderBy('id','asc')->paginate(8);
 
         return view('pages.admin.products',['items'=>$products->withPath('dashboard_products')]);
@@ -146,6 +149,11 @@ class ItemController extends Controller
             $data['tags'] =  $item->tags;
         }
 
+        $data['admin']=false;
+        if(auth()->user()!=null){
+            $data['admin'] = auth()->user()->is_admin;
+        }
+        
 
 
 

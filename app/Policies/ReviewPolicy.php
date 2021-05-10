@@ -76,6 +76,7 @@ class ReviewPolicy
      */
     public function delete(User $user, Review $review)
     {
+        return $user;
         //only author and administrator can remove //TODO check if is proper way of user id
         return $user->isAdministrator||$user->id === $review->user_id;
     }

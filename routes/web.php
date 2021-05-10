@@ -29,7 +29,7 @@ Route::view('/bundle_detail', 'pages.misc.bundleDetail');
 Route::get('/', 'ItemController@homePage')->name('homepage');
 Route::view('/map', 'pages.site_map')->name('map');
 
-Route::view('/dashboard', 'pages.admin.dashboard')->name('dashboard');
+Route::get('/dashboard', 'UserController@admin_dashboard')->name('dashboard');
 Route::get('/dashboard_products', 'ItemController@admin_list')->name('admin_products');
 Route::get('/dashboard_clients', 'UserController@admin_index')->name('admin_users');
 Route::get('/dashboard_requests', 'SupplierController@requests')->name('admin_requests');

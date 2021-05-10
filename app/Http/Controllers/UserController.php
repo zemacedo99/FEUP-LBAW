@@ -27,6 +27,9 @@ class UserController extends Controller
      */
     public function admin_index()
     {
+        if(auth()->user()==null||!auth()->user()->is_admin){
+            return response('', 404)->header('description','Page does not exist');
+        }
         $users=User::all();
         $usersFinal=[];
         
@@ -60,6 +63,13 @@ class UserController extends Controller
         }else{
             return app('App\Http\Controllers\ClientController')->show($id);
         }
+    }
+
+    public function admin_dashboard(){
+        if(auth()->user()==null||!auth()->user()->is_admin){
+            return response('', 404)->header('description','Page does not exist');
+        }
+        return view('pages.admin.dashboard');
     }
 
     /**

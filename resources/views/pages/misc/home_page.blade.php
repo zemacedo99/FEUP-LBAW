@@ -25,7 +25,7 @@
     <div class="row my-5">
         <div class="col"></div>
         <div class="col-6 col-md-4 col-lg-3 text-end">
-            <a href="/misc/productList.php" class="link-secondary">See all products<i class="bi bi-arrow-right-short"></i></a>
+            <a href="/items" class="link-secondary">See all products<i class="bi bi-arrow-right-short"></i></a>
         </div>
     </div>
 

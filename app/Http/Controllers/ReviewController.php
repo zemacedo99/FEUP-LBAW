@@ -62,7 +62,8 @@ class ReviewController extends Controller
     public function delete(Request $request)
     {
 
-        $this->authorize('delete');
+        return Auth::check();
+        return ($this->authorize('delete'));
 
         $request->validate([
             'client_id' => 'required|integer',

@@ -141,7 +141,34 @@ if (declineSupModal != null) {
 }
 
 
+// Delete Review Modal 
+var deleteModal = document.getElementById('deleteReviewModal')
+if (deleteModal != null) {
+    yesButton=deleteModal.getElementsByClassName('btn btn-primary').item(0);
+    noButton=deleteModal.getElementsByClassName('btn btn-secondary').item(0);
 
+    deleteModal.addEventListener('show.bs.modal', function(event) {
+        // Button that triggered the modal
+        var button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+        clientId = button.getAttribute('clientId')
+        itemId = button.getAttribute('itemId')
+        
+    })
+
+    yesButton.addEventListener("click", function(event) {
+        // Yes Button
+        var button = event.relatedTarget;
+
+            // Extract info from data-bs-* attributes
+        
+        sendAjaxRequest('DELETE', '/api/review', {'client_id':clientId,'item_id':itemId}, function(){
+            //location.reload();
+        })
+                
+            
+    });
+}
 
 function encodeForAjax(data) {
     if (data == null) return null;
