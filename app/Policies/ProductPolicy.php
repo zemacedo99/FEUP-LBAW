@@ -4,6 +4,8 @@ namespace App\Policies;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Supplier;
+use Faker\Provider\ar_JO\Person;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProductPolicy
@@ -39,10 +41,11 @@ class ProductPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, Supplier $supplier)
     {
-        //
+        return $user->id === $supplier->id; 
     }
+
 
     /**
      * Determine whether the user can update the model.

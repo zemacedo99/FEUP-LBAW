@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
+use App\Models\Coupon;
 use App\Models\Image;
 use App\Models\Item;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+
+use function PHPUnit\Framework\isEmpty;
 
 class ItemController extends Controller
 {
@@ -19,6 +22,51 @@ class ItemController extends Controller
     {
         return Item::all();
     }
+
+    public function admin_list()
+    {
+        if(auth()->user()==null||!auth()->user()->is_admin){
+            return response('', 404)->header('description','Page does not exist');
+        }
+        $products=Item::orderBy('id','asc')->paginate(8);
+
+        return view('pages.admin.products',['items'=>$products->withPath('dashboard_products')]);
+    }
+
+    public function checkout($id){
+
+        if(!is_numeric($id))
+            return response('', 404);
+        
+        $client = Client::find($id);
+        $items = $client->item_carts;
+        
+        $total = 0;
+        foreach($items as $item){
+            $product = Product::find($item->id);
+            $total += $item->price * $item->pivot->quantity;
+            
+            if($product == null) continue;
+
+            
+            $images = $product->images;
+            
+            $item['image'] = $images[0]->path;
+        }
+
+        $data = [
+
+            'items' => $items,
+            'total' => $total,
+        ];
+        return view('pages.checkout.cart_info', $data);
+    }
+
+    public function payment($id){
+        $data = [];
+        return view('pages.checkout.shipping_payment', $data);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -130,16 +178,20 @@ class ItemController extends Controller
 
         
 
-        if(!empty($item->review)){
-            
+        if(count($item->reviews)>0){
             $data['reviews'] =  $item->reviews;
         }
 
-        if(!empty($item->tags)){
+        if(count($item->tags)>0){
             
             $data['tags'] =  $item->tags;
         }
 
+        $data['admin']=false;
+        if(auth()->user()!=null){
+            $data['admin'] = auth()->user()->is_admin;
+        }
+        
 
 
 
@@ -281,7 +333,7 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deactivate(Request $id)
     {
         if(!is_numeric($id)){
             return response('', 404)->header('description','The item was not found');
@@ -300,4 +352,24 @@ class ItemController extends Controller
 
         return response('', 204,)->header('description', 'Successfully deactivated item');
     }
+
+
+    public function homePage(){
+        $items=[
+            'almostSoldOut'=>Item::orderBy('stock','asc')->get(),
+            'new'=>Item::orderBy('id','desc')->get(),
+            'hot'=>Item::get()
+        ];
+
+        foreach($items as $group){
+            foreach($group as $item){
+                $item->unit=\DB::table('products')->where('id','=',$item->id)->get('type');
+                $item->images=app('App\Http\Controllers\ImageController')->productImages($item->id);
+            }
+        }
+        
+        
+        return view('pages.misc.home_page',['items'=>$items]);
+    }
+
 }

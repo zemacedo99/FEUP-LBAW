@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -12,10 +14,15 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-
+    public function index(Request $request)
+    {   
         
+        $request->validate([
+            'supplierID' => 'required|integer'
+        ]);
+        
+        return Product::where('supplier_id', '=', $request->input("supplierID"))->get();
+
     }
 
     /**
@@ -23,9 +30,18 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $supplier = Supplier::find($id);
+        $this->authorize('create', $supplier);
+
+  
+        $data = [
+                    'title' => 'Create Product',
+                    'path' => '/api/product'        
+                ];
+
+        return view('pages.supplier.create_edit_product', $data);
     }
 
     /**
@@ -35,8 +51,36 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+    
+        $request->validate([
+            'product_name' => 'required|string',
+            'description' => 'required|string',
+            'product_stock' => 'required|numeric',
+            'product_price' => 'required|numeric',
+            'product_type' => 'required|string',
+            'supplierID' => 'required|integer',
+            // 'sup_img' => '' 
+        ]);
+        
+        $supplier = Supplier::find($request->supplierID);
+
+        // $this->authorize('create', $supplier);
+
+        Product::create([
+            'supplier_id' => $request->supplierID,
+            'name' => $request->product_name,
+            'price' => $request->product_price,
+            'stock' => $request->product_stock,
+            'description' => $request->description,
+            'active' => true,
+            'rating' => 0,
+            'is_bundle' => false,
+            'type' => $request->product_type,
+            'tags' => $request->tags,
+        ]);
+
+        return redirect('/');
     }
 
     /**
@@ -45,23 +89,14 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        // $product = Product::find($product);
+        $product = Product::find($id);
 
-        // $item = $product->is_part_of;
-
-        // $data = 
-        // [
-        //     'name' => $item->name,
-        //     'price' => $item->price,
-        //     'stock' => $item->stock,
-        //     'description' => $item->description,
-        //     'rating' => $item->rating,
-        // ];
-
-
-        // return view('pages.supplier.create_edit_product');
+        if($product->isEmpty()){
+            return response('', 404)->header('description', 'Product not found');
+        }
+        return $product;
     }
 
     /**

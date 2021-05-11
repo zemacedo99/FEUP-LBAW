@@ -2,6 +2,10 @@
 
 @section('content')
 
+@php
+    $user_id = \Illuminate\Support\Facades\Auth::id();
+@endphp
+
 <div class="container">
 
     <div class="col-12">
@@ -12,7 +16,7 @@
             <div class="d-flex justify-content-center">
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="cart_info.php" style="text-decoration: none; color: black;">Information</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('checkout', ['id' => $user_id ])}}" style="text-decoration: none; color: black;">Information</a></li>
                         <li class="breadcrumb-item active" id="selectedLink" aria-current="page">Shipping / Payment</li>
                     </ol>
                 </nav>

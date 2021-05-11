@@ -309,3 +309,16 @@ label.active {
   width: 100%;
   text-align: left;
 }
+
+
+.alert {
+  height: fit-content;
+  font-weight: 80;    
+}
+
+
+a.customcard,
+a.customcard:hover {
+  color: inherit;
+  text-decoration: inherit;
+}

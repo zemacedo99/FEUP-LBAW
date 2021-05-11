@@ -30,11 +30,28 @@ class ReviewPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, $item_id)
     {
+        //see if user has not already done a review  //TODO see if is the way to catch user_id
+        if (Review::where('client_id','=',$user_id)->where('$item_id','=',$item_id)->exists()){
+            return false;
+        }
+
         //only allow if user as purchased it
-        $purchase=DB::table('purchase')->where('user_id','===',$user->user_id)->get();
-        return sizeof($purchase)==0;
+        $item_purchases_ids=DB::table('item_purchase')->where('item_id','=',$item_id)->get('purchase_id');
+        
+        foreach($item_purchases_ids as $id){
+
+            $client_id=Purchase::where('id','=',$id)->get('client_id');
+            
+            if ($client_id===$user()){//TODO
+                return true;
+            }
+            
+            
+        }
+
+        return false;
     }
 
     /**
@@ -47,7 +64,7 @@ class ReviewPolicy
     public function update(User $user, Review $review)
     {
         //only author
-        return $user->id == $review->user_id;
+        return $user->id === $review->client_id;
     }
 
     /**
@@ -59,8 +76,9 @@ class ReviewPolicy
      */
     public function delete(User $user, Review $review)
     {
-        //only author and administrator can remove
-        return $user->isAdministrator||$user->id == $review->user_id;
+        return $user;
+        //only author and administrator can remove //TODO check if is proper way of user id
+        return $user->isAdministrator||$user->id === $review->user_id;
     }
 
     /**

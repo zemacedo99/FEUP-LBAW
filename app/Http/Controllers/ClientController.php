@@ -72,7 +72,7 @@ class ClientController extends Controller
                 if(!is_null($item->product())){
                     array_push($item_array, array_merge($item->toArray(),
                         $item->product()->toArray(),
-                        ["image" => $item->product()->images[0]->path]));
+                            ["image" => $item->product()->images[0]->path]));
                 } else {
                     array_push($item_array, array_merge($item->toArray(), ["type" => "Un", "image" => "storage/products/bundle.jpg"]));
                 }

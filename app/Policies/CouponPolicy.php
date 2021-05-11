@@ -31,7 +31,7 @@ class CouponPolicy
      */
     public function view(User $user, Coupon $coupon)
     {
-        //
+        
     }
 
     /**
@@ -42,9 +42,14 @@ class CouponPolicy
      */
     public function create(User $user)
     {
-        $supplier = Supplier::find($user->id);
-        return $supplier->isNotEmpty();
+        
     }
+
+    public function viewCreate(User $user, Supplier $supplier)
+    {
+        return $user->id === $supplier->id;
+    }
+
 
     /**
      * Determine whether the user can update the model.
@@ -55,6 +60,7 @@ class CouponPolicy
      */
     public function update(User $user, Coupon $coupon)
     {
+
         return $user->id === $coupon->supplier_id;
     }
 

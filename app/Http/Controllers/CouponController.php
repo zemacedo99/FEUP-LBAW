@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coupon;
+use App\Models\Supplier;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CouponController extends Controller
 {
@@ -28,9 +31,15 @@ class CouponController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request, $id)
     {
+        $supplier = Supplier::find($id);    
+        if ($request->user()->cannot('viewCreate', $supplier)) {
+            abort(403);
+        }
         $data = [];
+
+    
         return view('pages.supplier.create_edit_coupon', $data);
     }
 
@@ -41,32 +50,33 @@ class CouponController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   //Continua com o erro do increment
-
-        $this->authorize('create');
+    {   
 
         $request->validate([
-            'coupon.code' => 'required|string|unique:coupons,code',
-            'coupon.name' => 'required|string',
-            'coupon.description' => 'required|string',
-            'coupon.amount' => 'required|numeric',
-            'coupon.expirationDate' => 'required|string',
-            'coupon.unit' => 'required|string',
-            'coupon.supplierID' => 'required|integer'
+            'code' => 'required|string|unique:coupons,code',
+            'coupon_name' => 'required|string',
+            'description' => 'required|string',
+            'coupon_amount' => 'required|numeric',
+            'date' => 'required|string',
+            'coupon_type' => 'required|string',
+            'supplierID' => 'required|integer'
         ]);
+        
+        $supplier = Supplier::find($request->supplierID);
+
+        $this->authorize('create', $supplier);
 
         Coupon::create([
-            'code' => $request->input('coupon.code'),
-            'name' => $request->input('coupon.name'),
-            'description' => $request->input('coupon.description'),
-            'expiration' => $request->input('coupon.expirationDate'),
-            'amount' => $request->input('coupon.amount'),
-            'type' => $request->input('coupon.unit'),
-            'supplier_id' => $request->input('coupon.supplierID'),
-        
+            'code' => $request->code,
+            'name' => $request->coupon_name,
+            'description' => $request->description,
+            'expiration' => $request->date,
+            'amount' => $request->coupon_amount,
+            'type' => $request->coupon_type,
+            'supplier_id' => $request->supplierID,
         ]);
 
-        return response('', 204)->header('description', 'Successfully added item');
+        return redirect('/');
     }
 
     /**
@@ -76,8 +86,9 @@ class CouponController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($couponCode)
-    {   // Testado
-        $coupon = Coupon::where('code', '=', $couponCode)->get();
+    {   
+
+        $coupon = Coupon::where('code', $couponCode)->get();
 
         if($coupon->isEmpty()){
             return response('', 404)->header('description', 'Coupon not found');
@@ -86,6 +97,31 @@ class CouponController extends Controller
     }
 
     
+    public function edit($couponCode)
+    {   
+        $coupon = Coupon::where('code', $couponCode)->first();
+
+        $this->authorize('update', $coupon);
+
+
+        $data = [
+                    'title' => 'Edit Coupon',
+                    'path' => '/api/coupon/' . $coupon->code,
+                    'code' => $coupon->code,
+                    'description' => $coupon->description,
+                    'name' => $coupon->name,
+                    'expiration' => $coupon->expiration,
+                    'amount' => $coupon->amount,
+                    'type' => $coupon->type,
+        ];
+
+        if($coupon->type === "%"){
+            $data['p'] = true;
+        }else{
+            $data['e'] = true;
+        }
+        return view('pages.supplier.create_edit_coupon', $data);
+    }
 
 
 
@@ -97,12 +133,12 @@ class CouponController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $couponCode)
-    {   //Testado!
+    {   
         
         
-        $collection_coupon = Coupon::where('code', '=', $couponCode)->get();
+        $collection_coupon = Coupon::where('code', $couponCode)->get();
         
-        $this->authorize('update', $collection_coupon);
+        $this->authorize('update', $collection_coupon->first());
         
         if($collection_coupon->isEmpty()){
             return response('', 404)->header('description','Coupon not found');
@@ -111,29 +147,29 @@ class CouponController extends Controller
        
         $coupon = $collection_coupon->first();
 
-        if($request->has('coupon.name')){
-            $coupon->name = $request->input('coupon.name'); 
+        if($request->has('coupon_name')){
+            $coupon->name = $request->input('coupon_name'); 
         }
 
-        if($request->has('coupon.amount')){
-            $coupon->amount = $request->input('coupon.amount'); 
+        if($request->has('coupon_amount')){
+            $coupon->amount = $request->input('coupon_amount'); 
         }
 
-        if($request->has('coupon.unit')){
-            $coupon->type = $request->input('coupon.unit'); 
+        if($request->has('coupon_type')){
+            $coupon->type = $request->input('coupon_type'); 
         }
 
-        if($request->has('coupon.description')){
-            $coupon->description = $request->input('coupon.description'); 
+        if($request->has('description')){
+            $coupon->description = $request->input('description'); 
         }
 
-        if($request->has('coupon.expirationDate')){
-            $coupon->expiration = $request->input('coupon.expirationDate'); 
+        if($request->has('date')){
+            $coupon->expiration = $request->input('date'); 
         }
         
         $coupon->save();
         
-        return response('', 204,)->header('description', 'Successfully updated coupon');
+        return redirect('/');
     }
 
     /**

@@ -2,8 +2,13 @@
 
 @section('content')
 
-<div class="container">
+<script type="text/javascript" src={{ asset('js/checkout.js') }} defer> </script>
+@php
+$user_id = \Illuminate\Support\Facades\Auth::id();
+@endphp
 
+<div class="container">
+    <form id="form" method="GET" action="{{route('payment', ['id' => $user_id ])}}">
     <div class="col-12">
 
         <div class="row">
@@ -13,7 +18,7 @@
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active" id="selectedLink" aria-current="page">Information</li>
-                        <li class="breadcrumb-item"><a href="shipping_payment.php" style="text-decoration: none; color: black;">Shipping / Payment</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('payment', ['id' => $user_id ])}}" style="text-decoration: none; color: black;">Shipping / Payment</a></li>
                     </ol>
                 </nav>
             </div>
@@ -27,22 +32,28 @@
                     <h3 style='text-align:left;'>Order Summary</h3>
                 </div>
                 <div class="col-6">
-                    <h3 style='text-align:right;'> XXX items in your cart</h3>
+                    <h3 style='text-align:right;'> {{sizeof($items)}} items in your cart</h3>
                 </div>
-            </div>
+            </div>  
         </div>
 
         <div class="col order-6">
             <div class="row ">
-                <?php  for ($i = 0; $i < 5; $i++) { ?>
-
+                <?php $i = 0; ?>
+                @foreach ($items as $item)
+                
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                    @include('partials.cards.product_in_cart')
+                    @include('partials.cards.product_in_cart', [
+                        'name' => $item->name,
+                        'price' => $item->price,
+                        'quantity' => $item->pivot->quantity,
+                        'image' => $item->image,
+                        'nr' => $i++,
+                        ])
                     </div>
 
-                <?php
-                }
-                ?>
+                @endforeach
+          
             </div>
         </div>
 
@@ -51,6 +62,8 @@
         <div class="row">
 
             <!-- Periodic Buys -->
+            <input type="hidden" id="periodic" value="SingleBuy">
+
             <div class="col-12 col-lg-12 order-2">
                 <div class="row">
 
@@ -68,16 +81,16 @@
 
                             <ul class="nav nav-pills mb-3 d-flex justify-content-evenly" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <label for="male" data-bs-toggle="pill" data-bs-target="#pills-once">Once</label>
+                                    <label for="male" data-bs-toggle="pill" data-bs-target="#pills-once" name="SingleBuy" class="periodic" >Once</label>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <label for="male" data-bs-toggle="pill" data-bs-target="#pills-daily">Daily</label>
+                                    <label for="male" data-bs-toggle="pill" data-bs-target="#pills-daily" name="Day" class="periodic" >Daily</label>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <label for="female" data-bs-toggle="pill" data-bs-target="#pills-weekly">Weekly</label>
+                                    <label for="female" data-bs-toggle="pill" data-bs-target="#pills-weekly" name="Week" class="periodic" >Weekly</label>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <label for="other" data-bs-toggle="pill" data-bs-target="#pills-monthly">Monthly</label>
+                                <li class="nav-item" role="presentation"> 
+                                    <label for="other" data-bs-toggle="pill" data-bs-target="#pills-monthly" name="Month" class="periodic" >Monthly</label>
                                 </li>
                             </ul>
 
@@ -119,7 +132,7 @@
                 </div>
             </div>
 
-            <!-- Cupons -->
+            <!-- Coupons -->
             <div class="col-12  col-lg-12 order-3">
 
                 <div class="row">
@@ -129,25 +142,26 @@
                     <div class="col-12 col-lg-12">
 
                         <div class="row">
-                            <h3 style='text-align:left;border-bottom:2px solid black;'>Coupons <button type="button" class="simpleicon">redeem</button></h3>
+                            <h3 style='text-align:left;border-bottom:2px solid black;'>Coupons <button type="button" class="simpleicon" >redeem</button></h3>
                         </div>
 
                         <div class="row mt-3"></div>
 
                         <div class="row">
                             <div class="col">
-                                <input type="text" class="form-control" placeholder="CODE">
+                                <input type="text" class="form-control" placeholder="CODE" id="coupon_code">
+                                <small id="coupon_alert" class="text-danger"></small>
                             </div>
                             <div class="col-3 text-center">
-                                <button type="button" class="simpleicon">add</button>
+                                <button type="button" class="simpleicon" id="addCoupon">add</button>
                             </div>
                         </div>
 
                         <div class="row mt-3"></div>
 
-                        <div class="row row-cols-1 row-cols-md-2 g-4">
-                            @include('partials.cards.coupon')
-                            @include('partials.cards.coupon')
+                        <div class="row row-cols-1 row-cols-md-2 g-4" id="coupons_list">
+                            {{-- @include('partials.cards.coupon')
+                            @include('partials.cards.coupon') --}}
                         </div>
 
                         <div class="row m-3"></div>
@@ -164,7 +178,7 @@
 
 
         <div class="col-12">
-            <h4 style='text-align:center;'>Total: 8.37 €</h4>
+            <h4 style='text-align:center;' id ="total_price">Total: {{$total}}€</h4>
             <div class="row mb-3"></div>
         </div>
 
@@ -172,7 +186,7 @@
         <div class="col-12">
             <div class="row">
                 <div class="d-flex justify-content-center">
-                    <a href="../checkout/shipping_payment.php">
+                <a href="{{route('payment', ['id' => $user_id ])}}">
                         <button type="button" class="btn btn-primary"> Continue</button>
                     </a>
                 </div>
@@ -181,7 +195,7 @@
         </div>
 
     </div>
-
+    </form>
 </div>
 
 

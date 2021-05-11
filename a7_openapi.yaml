@@ -285,6 +285,22 @@ paths:
         '200':
           description: 'Ok. Show [UI06.6](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/create_edit_coupon.php)'
 
+  /coupon/{couponCode}:
+    get:
+      operationId: R301
+      summary: 'R301: Coupon edit page'
+      description: ' Show the coupon update page. Access: OWN'
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/couponCode'
+
+      responses:
+        '200':
+          description: 'Ok. Show [UI06.6](http://lbaw2131-piu.lbaw-prod.fe.up.pt/supplier/create_edit_coupon.php)'
+        '403':
+          description: 'Forbidden'
+
 
   /client/{id}/checkoutInfo:
     get:
@@ -399,7 +415,55 @@ paths:
 
       responses:
         '204':
-          description: Successfully added review to item
+          description: Successfully added shipDetail to item
+        '404':
+          $ref: '#/components/responses/ItemNotFound'
+
+    put:
+      operationId: R20x
+      summary: 'R20x - update a shipping address'
+      description: 'update shipping data. Access: OWN'
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+      parameters:
+        - $ref: '#/components/parameters/ID'
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - shipDetail_id
+              properties:
+                shipDetail_id:
+                  type: integer
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                address:
+                  type: string
+                door_n:
+                  type: number
+                floor:
+                  type: string
+                post_code:
+                  type: string
+                district:
+                  type: string
+                city:
+                  type: string
+                country:
+                  type: string
+                phone_n:
+                  type: string
+                  # $ref: '#/components/schemas/Review'
+
+      responses:
+        '204':
+          description: Successfully updated shipDetail
         '404':
           $ref: '#/components/responses/ItemNotFound'
 
@@ -422,7 +486,7 @@ paths:
   /item: 
     get:
       operationId: R210
-      summary: 'R106: Get all items'
+      summary: 'R210: Get all items'
       description: 'Get all items. Access: PUB'
       tags:
         - 'M02: Items'
@@ -843,6 +907,39 @@ paths:
       responses:
         '204':
           description: Successfully removed review of item
+
+    put:
+      operationId: Rxxx
+      summary: 'Rxxx-Update review'
+      description: 'Updates Review. Access: OWN'
+      tags:
+        - 'M03: Reviews, Favorites, Cart, Periodic, History'
+       requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - client_id
+                - item_id
+              properties:
+                client_id:
+                  type: integer
+                item_id:
+                  type: integer
+                rating:
+                  type: integer
+                description:
+                  type: string
+                  # $ref: '#/components/schemas/Review'
+
+      responses:
+        '204':
+          description: Successfully updated review
+
+        '404':
+          $ref: '#/components/responses/404Error'
 
   /api/client/{id}/cart:
     get:

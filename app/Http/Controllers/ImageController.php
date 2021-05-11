@@ -95,4 +95,14 @@ class ImageController extends Controller
     {
         //
     }
+
+    public function productImages($productId){
+        $image_ids=\DB::table('image_product')->where('product_id','=',$productId)->get();
+        $images=[];
+        foreach($image_ids as $i){
+            //array_push($paths,Image::where('id','=',$i->image_id)->path);
+            array_push($images,Image::where('id','=',$i->image_id)->get());
+        }
+        return $images;
+    }
 }

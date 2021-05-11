@@ -14,7 +14,11 @@ class ReviewController extends Controller
      */
     public function index(Request $request)
     {   
+        #$this->authorize('view');//TODO
         // Acho que é com get
+        $request->validate([
+            'item_id' => 'required|integer',
+        ]);
         return Review::where('item_id', "=", $request->input("item_id"))->get();
     }
 
@@ -26,12 +30,26 @@ class ReviewController extends Controller
      */
     public function create(Request $request)
     {
+
+     
+        $request->validate([
+            'client_id' => 'required|integer',
+            'item_id' => 'required|integer',
+            'rating' => 'required|integer',
+            'description' => 'required|string'
+        ]);
+
+
+        $this->authorize('create', $item_id);
+   
+
         $review = Review::create([
             'client_id' => $request->input('client_id'),
             'item_id' => $request->input('item_id'),
             'rating' => $request->input('rating'),
             'description' => $request->input('description'),
         ]);
+
         return $review;
     }
 
@@ -41,12 +59,62 @@ class ReviewController extends Controller
      * @param  \App\Models\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request) //ta a dar erro 500 mas não vi porque, mas apaga
+    public function delete(Request $request)
     {
-        $review = Review::where('client_id','=',$request->input('client_id'))->where('item_id','=',$request->input('item_id'));
-        //$this->authorize('delete', $review);
-        $review->delete();
-        return $review;
-        //
+
+        return Auth::check();
+        return ($this->authorize('delete'));
+
+        $request->validate([
+            'client_id' => 'required|integer',
+            'item_id' => 'required|integer'
+        ]);
+
+        $review = Review::where('client_id','=',$request->input('client_id'))->where('item_id','=',$request->input('item_id'))->delete();
+
+        
+        return $review;//this returns 0 or 1 true or false
+        
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {   //Testado!
+        
+        $request->validate([
+            'client_id' => 'required|integer',
+            'item_id' => 'required|integer'
+        ]);
+
+        
+        $review_collection = Review::where('client_id', '=', $request->input('client_id'))->where('item_id','=',$request->input('item_id'))->get();
+        
+        $this->authorize('update', $review_collection);
+        
+        if($review_collection->isEmpty()){
+            return response('', 404)->header('description','Review not found');
+        }
+
+        $review=$review_collection->first();
+
+        if($request->has('rating')){
+            $review->rating = $request->input('rating'); 
+        }
+
+        if($request->has('description')){
+            $review->description = $request->input('description'); 
+        }
+
+        
+        
+        $review->save();
+        
+        return response('', 204,)->header('description', 'Successfully updated review');
+    }
+
 }

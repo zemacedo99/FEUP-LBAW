@@ -47,79 +47,51 @@
                 <div class="row">
                     <table class="table mt-3">
                         <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Supplier</th>
-                        </tr>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Supplier</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">#1</th>
-                            <td>Bananas amarelinhas</td>
-                            <td>
-                                <div class="row">
-                                    <div class="col-7">Zé das bananas</div>
-                                    <div class="col-5">
-                                        <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#deleteProdModal" data-bs-whatever="1"><i class="bi bi-trash"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
-                                    </div>
-                                </div>
-                            </td>
 
-                        </tr>
+                            @php
+                                $i = $items->count()*($items->currentPage()-1);
+                            @endphp
 
-                        <tr>
-                            <th scope="row">#2</th>
-                            <td>Beterrabas bem boas</td>
-                            <td>
-                                <div class="row">
-                                    <div class="col-7">Luís das beterrabas</div>
-                                    <div class="col-5">
-                                        <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#deleteProdModal" data-bs-whatever="2"><i class="bi bi-trash"></i></button>
+                            @foreach ($items as $item)
+                                @php
+                                    $i += 1;
+                                @endphp
+                                <tr>
+                                    <th scope="row">{{ $item->id }}</th>
+                                    <td>{{ $item->name }}</td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-7">{{ $item->supplier->name }}</div>
+                                            <div class="col-5">
+                                                <button class="btn btn-primary btn-sm d-inline d-md-none"><i
+                                                        class="bi bi-gear"></i></button>
+                                                <button class="btn btn-primary btn-sm d-none d-md-inline"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteProdModal"
+                                                    data-bs-whatever={{$item->id}} prodName={{$item->name}}><i class="bi bi-trash"></i></button>
 
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                                                <a href=/item/{{$item->id}} class="btn btn-primary btn-sm d-none d-md-inline"><i
+                                                        class="bi bi-info-circle" ></i></a>
+                                            </div>
+                                        </div>
+                                    </td>
 
-                        <tr>
-                            <th scope="row">#3</th>
-                            <td>Pessêgos redondos</td>
-                            <td>
-                                <div class="row">
-                                    <div class="col-7">André dos pêssegos</div>
-                                    <div class="col-5">
-                                        <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#deleteProdModal" data-bs-whatever="3"><i class="bi bi-trash"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                                </tr>
 
-                        <tr>
-                            <th scope="row">#4</th>
-                            <td>Anonas bueda doces</td>
-                            <td>
-                                <div class="row">
-                                    <div class="col-7">Ricardo das ananonas</div>
-                                    <div class="col-5">
-                                        <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#deleteProdModal" data-bs-whatever="4"><i class="bi bi-trash"></i></button>
-                                        <button class="btn btn-primary btn-sm d-none d-md-inline"><i class="bi bi-info-circle"></i></button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                            @endforeach
+
+
                         </tbody>
                     </table>
                 </div>
 
-                @include('partials.pages')
+                @include('partials.pages',['paginator'=>$items])
 
                 <div class="row">
                     <div class="col-2">
@@ -135,7 +107,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteProdModalLabel">Confirming supplier request</h5>
+                    <h5 class="modal-title" id="deleteProdModalLabel">Confirming product request</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
