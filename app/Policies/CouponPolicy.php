@@ -31,7 +31,7 @@ class CouponPolicy
      */
     public function view(User $user, Coupon $coupon)
     {
-        //
+        
     }
 
     /**
@@ -40,10 +40,16 @@ class CouponPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function create(User $user, Supplier $supplier)
+    public function create(User $user)
     {
-        return $user->id === $supplier->id; 
+        
     }
+
+    public function viewCreate(User $user, Supplier $supplier)
+    {
+        return $user->id === $supplier->id;
+    }
+
 
     /**
      * Determine whether the user can update the model.
