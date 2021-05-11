@@ -39,7 +39,7 @@ function homepage_card($item)
 
     <a href=/item/{{$item->id}} class="card customcard bg-white text-dark">
        
-        <img src={{$item->images[0][0]->path}} class="card-img" alt={{$item->name}}>
+        <img src={{asset('storage/images/' . $item->images[0][0]->path)}} class="card-img" alt={{$item->name}}>
         <div class="card-img-overlay">
 
             <div class="row mb-5 me-1">

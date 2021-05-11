@@ -909,7 +909,7 @@ insert into products (id, type) values (96, 'Un');
 insert into products (id, type) values (97, 'Un');
 insert into products (id, type) values (98, 'Un');
 insert into products (id, type) values (99, 'Kg');
-insert into products (id, type) values (100, 'Kg')
+insert into products (id, type) values (100, 'Kg');
 
 insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('volutpat', 'habitasse platea dictumst morbi', 'Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.', '2021-11-24 22:35:26', '%', 20, 55);
 insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('ridiculus', 'eu nibh quisque', 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.', '2021-09-03 22:02:34', '%', 99, 75);
