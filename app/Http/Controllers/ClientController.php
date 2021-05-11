@@ -70,9 +70,11 @@ class ClientController extends Controller
         foreach ($client->purchases->where('type', 'SingleBuy') as $purchase){
             foreach ($purchase->items as $item){
                 if(!is_null($item->product())){
-                    array_push($item_array, array_merge($item->toArray(), $item->product()->toArray()));
+                    array_push($item_array, array_merge($item->toArray(),
+                        $item->product()->toArray(),
+                        ["image" => $item->product()->images[0]->path]));
                 } else {
-                    array_push($item_array, array_merge($item->toArray(), ["type" => "Un"]));
+                    array_push($item_array, array_merge($item->toArray(), ["type" => "Un", "image" => "storage/products/bundle.jpg"]));
                 }
             }
         }

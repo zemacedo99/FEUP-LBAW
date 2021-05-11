@@ -104,7 +104,7 @@
         </div>
         <div class="row row-cols-1 row-cols-lg-2 d-flex justify-content-center mb-3">
             <div class="col" style="width: 150px;">
-                <img src="{{ asset('images/img_avatar.png') }}" class="rounded-circle img-fluid">
+                <img src="{{ asset('images/avatar.png') }}" class="rounded-circle img-fluid">
             </div>
             <div class="col mt-2 d-flex align-items-center justify-content-center justify-content-lg-start">
                 <div class="form-floating">

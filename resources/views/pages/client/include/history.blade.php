@@ -17,21 +17,7 @@
                 'unit' => $item["type"],
                 'description' => $item["description"],
                 'paid' => $item["pivot"]["price"],
+                'image' => $item["image"],
                 'type' => 'cancel'
             ])
 @endforeach
-
-{{--
-@for ($i = 0; $i < 10; $i++)
-    @include('partials.cards.product_in_history',
-            [
-                'name' => 'Test',
-                'price' => '5',
-                'unit' => 'Kg',
-                'description' => 'Uma descricao',
-                'paid' => '5',
-                'type' => 'cancel'
-            ])
-@endfor
---}}
-
