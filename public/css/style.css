@@ -315,3 +315,10 @@ label.active {
   height: fit-content;
   font-weight: 80;    
 }
+
+
+a.customcard,
+a.customcard:hover {
+  color: inherit;
+  text-decoration: inherit;
+}

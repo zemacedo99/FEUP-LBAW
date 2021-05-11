@@ -26,13 +26,14 @@ Route::get('/suppliers', 'SupplierController@list')->name('suppliers');
 
 Route::view('/about_us', 'pages.misc.about_us')->name('about_us');
 Route::view('/bundle_detail', 'pages.misc.bundleDetail');
-Route::view('/', 'pages.misc.home_page')->name('homepage');
+Route::get('/', 'ItemController@homePage')->name('homepage');
 Route::view('/map', 'pages.site_map')->name('map');
 
-Route::view('/dashboard', 'pages.admin.dashboard')->name('dashboard');
-Route::view('/dashboard_products', 'pages.admin.products')->name('admin_products');
-Route::view('/dashboard_clients', 'pages.admin.users')->name('admin_users');
-Route::view('/dashboard_requests', 'pages.admin.requests')->name('admin_requests');
+Route::get('/dashboard', 'UserController@admin_dashboard')->name('dashboard');
+Route::get('/dashboard_products', 'ItemController@admin_list')->name('admin_products');
+Route::get('/dashboard_clients', 'UserController@admin_index')->name('admin_users');
+Route::get('/dashboard_requests', 'SupplierController@requests')->name('admin_requests');
+Route::get('/users/{id}', 'UserController@getProfile');
 
 Route::get('/supplier/{id}/createBundle', 'ItemController@create');
 Route::get('/supplier/{id}/createProduct', 'ProductController@create');
@@ -48,10 +49,12 @@ Route::get('/api/coupon/{couponCode}', 'CouponController@show');
 Route::put('/api/coupon/{couponCode}', 'CouponController@update');
 Route::delete('/api/coupon/{couponCode}', 'CouponController@destroy');
 
+// review
 Route::get('/api/review', 'ReviewController@index');
 Route::post('/api/review', 'ReviewController@create');
 Route::delete('/api/review', 'ReviewController@delete');
-//falta put
+Route::put('/api/review', 'ReviewController@update');
+
 
 
 // Product
@@ -72,12 +75,14 @@ Route::post('/client/{id}/checkoutInfo', 'PurchaseController@create');
 //ship details
 Route::get('/client/{id}/checkoutPayment', 'ShipDetailController@index');
 Route::post('/client/{id}/checkoutPayment', 'ShipDetailController@create');
+Route::put('/client/{id}/checkoutPayment', 'ShipDetailController@update');
 
 //shoppers
 //maybe get supplier profiles
 Route::get('/api/supplier', 'SupplierController@index');
 Route::get('/supplier', 'SupplierController@index');
 Route::get('/supplier/{id}', 'SupplierController@show');
+Route::post('/supplier', 'SupplierController@requestHandling');
 
 // Client
 Route::get('/api/client', 'ClientController@index');
@@ -94,7 +99,13 @@ Route::get('/api/item', 'ItemController@index');
 Route::post('/api/item', 'ClientController@store');
 Route::get('/api/item/{id}', 'ItemController@view');
 Route::put('/api/item/{id}', 'ItemController@update');
-Route::delete('/api/item/{id}', 'ItemController@destroy');
+Route::delete('/api/item/{id}', 'ItemController@deactivate');
+
+// Tag
+Route::get('/api/tag', 'TagController@index');
+Route::post('/api/tag', 'TagController@create');
+Route::get('/api/tag/{tagName}', 'TagController@getObject');
+Route::delete('/api/tag/{tagName}','TagController@destroy');
 
 // Route::get('/', 'Auth\LoginController@home');
 

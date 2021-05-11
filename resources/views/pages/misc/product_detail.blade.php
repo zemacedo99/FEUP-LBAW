@@ -150,7 +150,14 @@
             <div class="row mt-3 border">
                 <div class="col">
                     <div class="row">
-                        <h4> {{ $review->client->name }} </h4>
+                        <h4> {{ $review->client->name }}
+                            @if ($admin==true)
+                                <button class="btn btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#deleteReviewModal"
+                                clientId={{$review->client->id}} itemId={{$review->item->id}}><i
+                                    class="bi bi-trash"></i>
+                                </button>
+                            @endif
+                        </h4>
                     </div>
         
                     <div class="row">
@@ -189,5 +196,28 @@
 
 </div>
 
+
+@if ($admin)
+    <script src="{{ asset('js/admin_modal.js') }}" defer></script>
+@endif
+<!-- Modal -->
+<div class="modal fade" id="deleteReviewModal" tabindex="-1" aria-labelledby="deleteReviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteReviewModalLabel">Confirming product request</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure that you want to delete this review?</p>
+                <p id="prod_id" class="fw-bold text-center"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection

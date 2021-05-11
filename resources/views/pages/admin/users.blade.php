@@ -53,63 +53,35 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">#1</th>
+
+                            @php
+                                $users->setPath("dashboard_clients");
+                            @endphp
+
+                        @foreach ($users->items() as $user)
+                            
+                            <tr>
+                            <th scope="row">{{$user->id}}</th>
                             <td>
                                 <div class="row">
-                                    <div class="col-7">Zé das bananas</div>
-                                    <div class="col-5">
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="1"><i class="bi bi-trash"></i></button>
-                                        <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-info-circle"></i></button>
+                                        <div class="col-7">{{$user->name}}</div>
+                                        <div class="col-5">
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteUserModal" data-bs-whatever={{$user->id}} user-name={{$user->name}}><i class="bi bi-trash"></i></button>
+                                            <a href=/users/{{$user->id}} class="btn btn-primary btn-sm d-none d-md-inline"><i
+                                                class="bi bi-info-circle" ></i></a>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
+                                </td>
 
-                        </tr>
-
-                        <tr>
-                            <th scope="row">#2</th>
-                            <td>
-                                <div class="row">
-                                    <div class="col-7">Luís das beterrabas</div>
-                                    <div class="col-5">
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="2"><i class="bi bi-trash"></i></button>
-                                        <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-info-circle"></i></button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">#3</th>
-                            <td>
-                                <div class="row">
-                                    <div class="col-7">André dos pêssegos</div>
-                                    <div class="col-5">
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="3"><i class="bi bi-trash"></i></button>
-                                        <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-info-circle"></i></button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">#4</th>
-                            <td>
-                                <div class="row">
-                                    <div class="col-7">Ricardo das ananonas</div>
-                                    <div class="col-5">
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="4"><i class="bi bi-trash"></i></button>
-                                        <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-info-circle"></i></button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                            </tr>
+                        
+                        @endforeach
+                        
                         </tbody>
                     </table>
                 </div>
 
-                @include('partials.pages')
+                @include('partials.pages', ['link'=>"dashboard_clients",'paginator'=>$users])
 
                 <div class="row">
                     <div class="col-2">
@@ -121,7 +93,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

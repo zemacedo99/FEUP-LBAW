@@ -50,9 +50,30 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function show(Supplier $supplier)
+    public function show($id)
     {
         //
+        return Supplier::where('id','=',$id)->get();
+    }
+
+    public function requests(){
+        if(auth()->user()==null||!auth()->user()->is_admin){
+            return response('', 404)->header('description','Page does not exist');
+        }
+
+        $suppliers=Supplier::where('accepted', 'false')->paginate(8);
+
+        return view('pages.admin.requests',['suppliers'=>$suppliers]);
+    }
+
+    public function requestHandling(Request $request){
+        //return $request;
+        if ($request->accept==="1"){
+            Supplier::where('id','=',$request->supplier_id)->update(['accepted'=>true]);
+        }else{
+            Supplier::where('id','=',$request->supplier_id)->delete();//not working
+        }
+        return;
     }
 
     /**

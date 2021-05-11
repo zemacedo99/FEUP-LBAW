@@ -82,12 +82,60 @@ class ShipDetailController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ShipDetail  $shipDetail
+     * @param  $id  clientId
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ShipDetail $shipDetail)
+    public function update(Request $request, $id)
     {
         //
+        $shipDetail = ShipDetail::where('id', '=', $request->input('shipDetail_id'))->get();
+        
+        $this->authorize('update', $shipDetail);
+        
+        if($shipDetail->isEmpty()){
+            return response('', 404)->header('description','shipDetail not found');
+        }
+
+        if($request->has('first_name')){
+            $shipDetail->first_name = $request->input('first_name'); 
+        }
+
+        if($request->has('last_name')){
+            $shipDetail->last_name = $request->input('last_name'); 
+        }
+
+        if($request->has('address')){
+            $shipDetail->address = $request->input('address'); 
+        }
+
+        if($request->has('door_n')){
+            $shipDetail->door_n = $request->input('door_n'); 
+        }
+
+        if($request->has('post_code')){
+            $shipDetail->post_code = $request->input('post_code'); 
+        }
+
+        if($request->has('district')){
+            $shipDetail->district = $request->input('district'); 
+        }
+
+        if($request->has('city')){
+            $shipDetail->city = $request->input('city'); 
+        }
+
+        if($request->has('country')){
+            $shipDetail->country = $request->input('country'); 
+        }
+
+        if($request->has('phone_n')){
+            $shipDetail->phone_n = $request->input('phone_n'); 
+        }
+        
+        $shipDetail->save();
+        
+        return response('', 204,)->header('description', 'Successfully updated shipDetail');
+
     }
 
     /**

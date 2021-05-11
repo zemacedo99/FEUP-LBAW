@@ -15,6 +15,7 @@ class TagController extends Controller
     public function index()
     {
         //
+        return Tag::all();
     }
 
     /**
@@ -22,9 +23,42 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        $tag = new Tag();
+
+        $this->authorize('create', $tag);
+  
+        $tag->value = $request->input('tagName');
+        $tag->save();
+  
+        return $tag;
+    }
+
+    public function getObject($tagName){
+        return TAG::where('value','=',$tagName);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Tag  $tag
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($tag)
+    {
+        //
+        $tag = Card::find($tag);
+
+        $this->authorize('delete', $tag);
+        $tag->delete();
+
+        return $tag;
+    }
+
+    public function search(){
+        
     }
 
     /**
@@ -72,14 +106,5 @@ class TagController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Tag $tag)
-    {
-        //
-    }
+    
 }
