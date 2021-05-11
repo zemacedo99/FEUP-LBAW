@@ -3,10 +3,12 @@
 @section('content')
 
 <script type="text/javascript" src={{ asset('js/checkout.js') }} defer> </script>
+@php
+$user_id = \Illuminate\Support\Facades\Auth::id();
+@endphp
 
 <div class="container">
-    {{$items}}
-    <form id="form" method="GET" action="{{route('payment', ['id' => \Illuminate\Support\Facades\Auth::id()])}}">
+    <form id="form" method="GET" action="{{route('payment', ['id' => $user_id ])}}">
     <div class="col-12">
 
         <div class="row">
@@ -16,7 +18,7 @@
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active" id="selectedLink" aria-current="page">Information</li>
-                        <li class="breadcrumb-item"><a href="shipping_payment.php" style="text-decoration: none; color: black;">Shipping / Payment</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('payment', ['id' => $user_id ])}}" style="text-decoration: none; color: black;">Shipping / Payment</a></li>
                     </ol>
                 </nav>
             </div>
@@ -140,25 +142,26 @@
                     <div class="col-12 col-lg-12">
 
                         <div class="row">
-                            <h3 style='text-align:left;border-bottom:2px solid black;'>Coupons <button type="button" class="simpleicon">redeem</button></h3>
+                            <h3 style='text-align:left;border-bottom:2px solid black;'>Coupons <button type="button" class="simpleicon" >redeem</button></h3>
                         </div>
 
                         <div class="row mt-3"></div>
 
                         <div class="row">
                             <div class="col">
-                                <input type="text" class="form-control" placeholder="CODE">
+                                <input type="text" class="form-control" placeholder="CODE" id="coupon_code">
+                                <small id="coupon_alert" class="text-danger"></small>
                             </div>
                             <div class="col-3 text-center">
-                                <button type="button" class="simpleicon">add</button>
+                                <button type="button" class="simpleicon" id="addCoupon">add</button>
                             </div>
                         </div>
 
                         <div class="row mt-3"></div>
 
-                        <div class="row row-cols-1 row-cols-md-2 g-4">
-                            @include('partials.cards.coupon')
-                            @include('partials.cards.coupon')
+                        <div class="row row-cols-1 row-cols-md-2 g-4" id="coupons_list">
+                            {{-- @include('partials.cards.coupon')
+                            @include('partials.cards.coupon') --}}
                         </div>
 
                         <div class="row m-3"></div>
@@ -183,7 +186,7 @@
         <div class="col-12">
             <div class="row">
                 <div class="d-flex justify-content-center">
-                    <a href="../checkout/shipping_payment.php">
+                <a href="{{route('payment', ['id' => $user_id ])}}">
                         <button type="button" class="btn btn-primary"> Continue</button>
                     </a>
                 </div>

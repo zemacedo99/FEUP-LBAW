@@ -52,6 +52,11 @@ class ItemController extends Controller
         return view('pages.checkout.cart_info', $data);
     }
 
+    public function payment($id){
+        $data = [];
+        return view('pages.checkout.shipping_payment', $data);
+    }
+
 
     /**
      * Show the form for creating a new resource.

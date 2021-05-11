@@ -84,7 +84,7 @@ Route::delete('/api/item/{id}', 'ItemController@destroy');
 // Checkout
 
 Route::get('/client/{id}/checkoutInfo', 'ItemController@checkout')->name('checkout');
-Route::get('/client/{id}/checkoutPayment', 'ItemController@checkout')->name('payment');
+Route::get('/client/{id}/checkoutPayment', 'ItemController@payment')->name('payment');
 
 // Route::get('/', 'Auth\LoginController@home');
 
