@@ -60,6 +60,7 @@ class CouponPolicy
      */
     public function update(User $user, Coupon $coupon)
     {
+
         return $user->id === $coupon->supplier_id;
     }
 
