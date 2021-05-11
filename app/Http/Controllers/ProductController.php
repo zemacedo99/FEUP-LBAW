@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -24,6 +25,7 @@ class ProductController extends Controller
 
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -33,6 +35,8 @@ class ProductController extends Controller
     {
         $supplier = Supplier::find($id);
         $this->authorize('create', $supplier);
+
+  
         $data = [
                     'title' => 'Create Product',
                     'path' => '/api/product'        
@@ -49,7 +53,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {   
-
+    
         $request->validate([
             'product_name' => 'required|string',
             'description' => 'required|string',
@@ -62,15 +66,19 @@ class ProductController extends Controller
         
         $supplier = Supplier::find($request->supplierID);
 
-        $this->authorize('create', $supplier);
+        // $this->authorize('create', $supplier);
 
         Product::create([
+            'supplier_id' => $request->supplierID,
             'name' => $request->product_name,
+            'price' => $request->product_price,
+            'stock' => $request->product_stock,
             'description' => $request->description,
-            'price' => $request->price,
+            'active' => true,
+            'rating' => 0,
+            'is_bundle' => false,
             'type' => $request->product_type,
-            'stock' => $request->stock,
-            'tags' => $request->tags
+            'tags' => $request->tags,
         ]);
 
         return redirect('/');
@@ -82,8 +90,13 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
+        $product = Product::find($id);
+
+        if($product->isEmpty()){
+            return response('', 404)->header('description', 'Product not found');
+        }
         return $product;
     }
 
