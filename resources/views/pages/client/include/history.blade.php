@@ -9,12 +9,12 @@
 
 @include('partials.modals.review')
 
-@foreach ($items as $item)
+@foreach ($history as $item)
     @include('partials.cards.product_in_history',
             [
                 'name' => $item["name"],
                 'price' => $item["price"],
-                'unit' => $item["type"],
+                'unit' => $item["unit"],
                 'description' => $item["description"],
                 'paid' => $item["pivot"]["price"],
                 'image' => $item["image"],

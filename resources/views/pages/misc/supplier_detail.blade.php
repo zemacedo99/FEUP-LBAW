@@ -6,14 +6,14 @@
 
     <div class="row mt-5 ">
         <div class="col-3" style="width: 15rem;">
-            <img src="../images/batata-amarela.jpg" class="rounded-circle img-fluid">
+            <img src="{{ asset('images/batata-amarela.jpg') }}" class="rounded-circle img-fluid">
         </div>
         <div class="col-8 sm-12">
             <div class="col-9 mt-3">
                 <h3>Quinta do Bill</h3>
-            
+
                 <p class="text-muted"><i>Póvoa do Varzim, Portugal</i></p>
-            
+
                 <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
             </div>
         </div>
@@ -36,8 +36,9 @@
     </div>
 
     <div class="row">
+    {{-- FIXME: Não usar php --}}
         <?php for ($i=0; $i < 5; $i++) {  ?>
-            @include('partials.cards.product_detail')  
+            @include('partials.cards.product_detail')
         <?php } ?>
     </div>
 
