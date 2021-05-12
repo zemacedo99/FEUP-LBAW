@@ -19,13 +19,13 @@
             <div class="col-1"></div>
 
             <div class="col-12 col-lg-3">
-                <form action="{{ $path }}" method="POST" id="form" required>
+                <form action="{{ $path }}" method="POST" id="form"  enctype="multipart/form-data" required>
                     @csrf
                     <label class="text-black" for="product_name">Product Name</label>
 
                     <div class="row" style="margin-left: 0.1em">
-                        <input type="text" class="form-control" id=product_name name=product_name @isset($name) value="{{ $name }}"
-                            @endisset>
+                        <input type="text" class="form-control" id=product_name name=product_name @isset($name)
+                            value="{{ $name }}" @endisset>
 
                         <small id="product_name_alert" class="text-danger"></small>
                     </div>
@@ -39,22 +39,22 @@
 
                     <div class="input-group">
                         <span class="input-group-text">€</span>
-                        <input type="number" step="0.01" class="form-control" min=0 id="product_price" name="product_price"@isset($price)
-                        value="{{ $price }}" @endisset>
-                        <select class="form-select"  name="product_type" aria-label="Select type" id="product_type" >
+                        <input type="number" step="0.01" class="form-control" min=0 id="product_price" name="product_price"
+                            @isset($price) value="{{ $price }}" @endisset>
+                        <select class="form-select" name="product_type" aria-label="Select type" id="product_type">
                             <option @isset($kg) selected @endisset>Kg</option>
                             <option @isset($unit) selected @endisset value='Un'>Unit</option>
                         </select>
                     </div>
                     <div class="row" style="margin-left: 0.1em">
-                    <small id="product_price_alert" class="text-danger"></small>
+                        <small id="product_price_alert" class="text-danger"></small>
                     </div>
                     <div class="row   mb-5"></div>
 
                     <label class="text-black" for="product_stock">Stock</label>
                     <div class="row" style="margin-left: 0.1em">
-                        <input type="number" class="form-control" id="product_stock" name="product_stock"  min="0" @isset($stock)
-                            value="{{ $stock }}" @endisset>
+                        <input type="number" class="form-control" id="product_stock" name="product_stock" min="0"
+                            @isset($stock) value="{{ $stock }}" @endisset>
 
                         <small id="product_stock_alert" class="text-danger"></small>
                     </div>
@@ -62,21 +62,19 @@
 
                     <div class="input-group my-5 justify-content-center">
 
-                        {{-- <form action= "upload" method="POST" enctype="multipart/form-data" >
-                            <label class="btn btn-primary" for="sup_img" name="file">
-                                Add Image
-                            </label>
-                        </form> --}}
 
-                        <form action= "upload" method="POST" enctype="multipart/form-data" >
-                            @csrf
-                            <input type= "file" name = "file"> <br> <br>
-                            <button type = "submit" class="btn btn-primary"> Add Image </button>
-                            
-                        </form>
+                        {{-- <label class="btn btn-primary" for="sup_img" name="file">
+                            Add Image
+                        </label> --}}
+                        {{-- <label for="Image Name" class="btn btn-primary">Add Image (can attach more than one):</label> --}}
 
-                        <input type="file" class="form-control d-none" id="sup_img" name="sup_img"  aria-describedby="sup_img_addon"
-                            aria-label="Upload">
+                        <input type="file" class="btn btn-primary" name="images[]" multiple />
+
+
+
+
+                        <input type="file" class="form-control d-none" id="sup_img" name="sup_img"
+                            aria-describedby="sup_img_addon" aria-label="Upload">
                         <button class="btn btn-danger" type="button" id="sup_img_addon">Clear All</button>
                     </div>
 
