@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Item;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -58,16 +59,15 @@ class ProductController extends Controller
             'description' => 'required|string',
             'product_stock' => 'required|numeric',
             'product_price' => 'required|numeric',
-            'product_type' => 'required|string',
             'supplierID' => 'required|integer',
             // 'sup_img' => '' 
         ]);
         
-        $supplier = Supplier::find($request->supplierID);
+        // $supplier = Supplier::find($request->supplierID);
 
         // $this->authorize('create', $supplier);
 
-        Product::create([
+        $item = Item::create([
             'supplier_id' => $request->supplierID,
             'name' => $request->product_name,
             'price' => $request->product_price,
@@ -76,11 +76,20 @@ class ProductController extends Controller
             'active' => true,
             'rating' => 0,
             'is_bundle' => false,
-            'type' => $request->product_type,
-            'tags' => $request->tags,
+          
+            // 'tags' => $request->tags,
         ]);
 
-        return redirect('/');
+    
+        // dd($item->id);
+
+        Product::create([
+            'id' => $item->id,
+            'type' => $request->product_type,
+        ]);
+        
+
+        return redirect('/items');
     }
 
     /**

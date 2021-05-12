@@ -57,11 +57,11 @@
 
             <div class="col-12 col-lg-3">
                 <form action="{{ $path }}" method="POST" id="form" required>
-
+                    @csrf
                     <label class="text-black" for="product_name">Product Name</label>
 
                     <div class="row" style="margin-left: 0.1em">
-                        <input type="text" class="form-control" id=product_name @isset($name) value="{{ $name }}"
+                        <input type="text" class="form-control" id=product_name name=product_name @isset($name) value="{{ $name }}"
                             @endisset>
 
                         <small id="product_name_alert" class="text-danger"></small>
@@ -76,9 +76,9 @@
 
                     <div class="input-group">
                         <span class="input-group-text">€</span>
-                        <input type="number" step="0.01" class="form-control" min=0 id="product_price" @isset($price)
+                        <input type="number" step="0.01" class="form-control" min=0 id="product_price" name="product_price"@isset($price)
                         value="{{ $price }}" @endisset>
-                        <select class="form-select" aria-label="Select type">
+                        <select class="form-select"  name="product_type" aria-label="Select type" id="product_type" >
                             <option @isset($kg) selected @endisset>Kg</option>
                             <option @isset($unit) selected @endisset value="2">Unit</option>
                         </select>
@@ -90,7 +90,7 @@
 
                     <label class="text-black" for="product_stock">Stock</label>
                     <div class="row" style="margin-left: 0.1em">
-                        <input type="number" class="form-control" id="product_stock" min="0" @isset($stock)
+                        <input type="number" class="form-control" id="product_stock" name="product_stock"  min="0" @isset($stock)
                             value="{{ $stock }}" @endisset>
 
                         <small id="product_stock_alert" class="text-danger"></small>
@@ -102,7 +102,7 @@
                             Add Image
                         </label>
 
-                        <input type="file" class="form-control d-none" id="sup_img" aria-describedby="sup_img_addon"
+                        <input type="file" class="form-control d-none" id="sup_img" name="sup_img"  aria-describedby="sup_img_addon"
                             aria-label="Upload">
                         <button class="btn btn-danger" type="button" id="sup_img_addon">Clear All</button>
                     </div>
