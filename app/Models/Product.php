@@ -16,4 +16,5 @@ class Product extends Model
     public function is_part_of() {return $this->belongsToMany('App\Models\Item')->withPivot('quantity');}
 
     public function images() {return $this->belongsToMany('App\Models\Image');}
+
 }

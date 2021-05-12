@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
-use App\Models\Coupon;
 use App\Models\Image;
 use App\Models\Item;
 use App\Models\Product;
 use Illuminate\Http\Request;
-
-use function PHPUnit\Framework\isEmpty;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
@@ -31,7 +29,45 @@ class ItemController extends Controller
         $products=Item::orderBy('id','asc')->paginate(8);
 
         return view('pages.admin.products',['items'=>$products->withPath('dashboard_products')]);
+    } 
+
+
+    public function save_checkout(Request $request){
+
+        $client_id = Auth::id();
+
+        $client = Client::find($client_id);
+        $items = $client->item_carts;
+
+
+        $request->validate([
+            'n_items' => 'required|integer',
+            
+        ]);
+
+        
+
+        
+        for($i = 0; $i < $request->input('n_items'); $i++){
+            $request->validate([
+                'item_' . $i => 'required|integer',
+                'quantity_' . $i => 'required|integer',
+            ]);
+
+            $id_item = $request->input('item_' . $i);
+            $quantity = $request->input('quantity_' . $i);
+            
+            foreach($items as $item){
+                if($item->id == $id_item){
+                    $item->quantity = $quantity;
+                }
+            }
+
+        }
+        redirect('/');
+        
     }
+   
 
     public function checkout($id){
 
@@ -351,6 +387,7 @@ class ItemController extends Controller
         $item->save();
 
         return response('', 204,)->header('description', 'Successfully deactivated item');
+        
     }
 
 
@@ -363,7 +400,7 @@ class ItemController extends Controller
 
         foreach($items as $group){
             foreach($group as $item){
-                $item->unit=\DB::table('products')->where('id','=',$item->id)->get('type');
+                //$item->unit = DB::table('products')->where('id','=',$item->id)->get('type');
                 $item->images=app('App\Http\Controllers\ImageController')->productImages($item->id);
             }
         }

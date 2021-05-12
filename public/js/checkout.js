@@ -128,7 +128,6 @@ function createCouponCard(coupon){
         </div>
     </div>
 `
-
 }
 
 

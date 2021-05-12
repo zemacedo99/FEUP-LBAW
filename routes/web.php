@@ -111,6 +111,8 @@ Route::delete('/api/tag/{tagName}','TagController@destroy');
 
 Route::get('/client/{id}/checkoutInfo', 'ItemController@checkout')->name('checkout');
 Route::get('/client/{id}/checkoutPayment', 'ItemController@payment')->name('payment');
+Route::post('/api/checkout', 'ItemController@save_checkout');
+
 
 // Route::get('/', 'Auth\LoginController@home');
 

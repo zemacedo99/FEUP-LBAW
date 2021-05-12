@@ -8,7 +8,9 @@ $user_id = \Illuminate\Support\Facades\Auth::id();
 @endphp
 
 <div class="container">
-    <form id="form" method="GET" action="{{route('payment', ['id' => $user_id ])}}">
+   
+    <form action="/api/checkout" method="POST" id="form" required>
+        
     <div class="col-12">
 
         <div class="row">
@@ -26,6 +28,7 @@ $user_id = \Illuminate\Support\Facades\Auth::id();
 
         </div>
 
+        
         <div class="col order-1">
             <div class="row" style='border-bottom:2px solid black;'>
                 <div class="col-6">
@@ -33,7 +36,7 @@ $user_id = \Illuminate\Support\Facades\Auth::id();
                 </div>
                 <div class="col-6">
                     <h3 style='text-align:right;'> {{sizeof($items)}} items in your cart</h3>
-                    <input type="hidden" value="{{sizeof($items)}}" name=n_items>
+                    <input type="hidden" value="{{sizeof($items)}}" name="n_items">
                 </div>
             </div>  
         </div>
@@ -48,6 +51,7 @@ $user_id = \Illuminate\Support\Facades\Auth::id();
                 
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                     @include('partials.cards.product_in_cart', [
+                        'id' => $item->id,
                         'name' => $item->name,
                         'price' => $item->price,
                         'quantity' => $item->pivot->quantity,
@@ -188,17 +192,12 @@ $user_id = \Illuminate\Support\Facades\Auth::id();
 
 
         <div class="col-12">
-            <div class="row">
-                <div class="d-flex justify-content-center">
-                <a href="{{route('payment', ['id' => $user_id ])}}">
-                        <button type="button" class="btn btn-primary"> Continue</button>
-                    </a>
-                </div>
-
-            </div>
+            <div class="d-flex justify-content-center">
+                <input type="submit" class="btn btn-primary" value="Continue"> 
+            </div>            
         </div>
 
-    </div>
+        </div>
     </form>
 </div>
 
