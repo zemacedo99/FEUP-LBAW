@@ -26,6 +26,12 @@ class ProductController extends Controller
 
     }
 
+
+    // function uploadImg(Request $req)
+    // {
+    //     return $req->file('sup_img')->store('public/images');
+    // }
+
     /**
      * Show the form for creating a new resource.
      *

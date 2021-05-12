@@ -14,44 +14,7 @@
 
         <div class="row mb-4">
 
-            <!-- Carrousel -->
-            <div id="mainContainer" class="col-12 col-lg-6 mb-5 mb-lg-0">
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                            class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner" style=" width:100%; max-height: 400px !important;">
-                        <div class="carousel-item active">
-                            <img src="https://www.infoescola.com/wp-content/uploads/2010/11/ma%C3%A7a-verde_312027470.jpg"
-                                class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="../images/green_apple2.jpg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://www.portaldojardim.com/pdj/wp-content/uploads/Ma%C3%A7as-verdes.jpg"
-                                class="d-block w-100" alt="...">
-                        </div>
-                    </div>
-
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
+            @include('partials.carousel_img')
 
             <div class="col-1"></div>
 
@@ -80,7 +43,7 @@
                         value="{{ $price }}" @endisset>
                         <select class="form-select"  name="product_type" aria-label="Select type" id="product_type" >
                             <option @isset($kg) selected @endisset>Kg</option>
-                            <option @isset($unit) selected @endisset value="2">Unit</option>
+                            <option @isset($unit) selected @endisset value='Un'>Unit</option>
                         </select>
                     </div>
                     <div class="row" style="margin-left: 0.1em">
@@ -98,9 +61,19 @@
 
 
                     <div class="input-group my-5 justify-content-center">
-                        <label class="btn btn-primary" for="sup_img">
-                            Add Image
-                        </label>
+
+                        {{-- <form action= "upload" method="POST" enctype="multipart/form-data" >
+                            <label class="btn btn-primary" for="sup_img" name="file">
+                                Add Image
+                            </label>
+                        </form> --}}
+
+                        <form action= "upload" method="POST" enctype="multipart/form-data" >
+                            @csrf
+                            <input type= "file" name = "file"> <br> <br>
+                            <button type = "submit" class="btn btn-primary"> Add Image </button>
+                            
+                        </form>
 
                         <input type="file" class="form-control d-none" id="sup_img" name="sup_img"  aria-describedby="sup_img_addon"
                             aria-label="Upload">
