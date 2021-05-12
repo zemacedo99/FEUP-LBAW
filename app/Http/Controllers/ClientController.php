@@ -70,7 +70,7 @@ class ClientController extends Controller
         $favorite_items = [];
         $periodic_items = [];
 
-
+        // Retrieve History and Periodic
         foreach ($client->purchases as $purchase){
             if ($purchase->type == 'SingleBuy'){
                 foreach ($purchase->items as $item){
@@ -97,7 +97,6 @@ class ClientController extends Controller
             }
 
         }
-
 
         // Retrieve Favorite items
         foreach ($client->item_favorites as $fav){
