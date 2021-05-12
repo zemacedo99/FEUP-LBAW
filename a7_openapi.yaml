@@ -914,7 +914,7 @@ paths:
       description: 'Updates Review. Access: OWN'
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
-       requestBody:
+      requestBody:
         required: true
         content:
           application/json:
