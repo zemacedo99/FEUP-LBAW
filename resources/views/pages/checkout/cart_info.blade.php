@@ -33,13 +33,17 @@ $user_id = \Illuminate\Support\Facades\Auth::id();
                 </div>
                 <div class="col-6">
                     <h3 style='text-align:right;'> {{sizeof($items)}} items in your cart</h3>
+                    <input type="hidden" value="{{sizeof($items)}}" name=n_items>
                 </div>
             </div>  
         </div>
 
         <div class="col order-6">
             <div class="row ">
-                <?php $i = 0; ?>
+                @php
+                    $i = 0;
+                @endphp
+
                 @foreach ($items as $item)
                 
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">

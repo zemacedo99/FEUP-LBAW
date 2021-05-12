@@ -101,7 +101,6 @@ function sendAjaxRequest(method, url, data, handler) {
 }
 
 function createCouponCard(coupon){
-    console.log(coupon)
     return `
     <div class="col-lg-4 col-10 mx-auto">
         <div class="p-3">

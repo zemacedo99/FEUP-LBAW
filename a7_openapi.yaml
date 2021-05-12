@@ -914,7 +914,7 @@ paths:
       description: 'Updates Review. Access: OWN'
       tags:
         - 'M03: Reviews, Favorites, Cart, Periodic, History'
-       requestBody:
+      requestBody:
         required: true
         content:
           application/json:
@@ -1431,6 +1431,27 @@ paths:
   
   /api/image:   # TODO:
 
+
+  /api/checkout:
+    post:
+      operationId: R636
+      summary: 'R636 - Client Info'
+      description: 'Creates Credit Card. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditCard'
+
+      responses:
+        '204':
+          description: Successfully created credit card
+
+        '404':
+          $ref: '#/components/responses/404Error'
 
   /api/creditcard: 
     get:
