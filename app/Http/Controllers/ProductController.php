@@ -6,6 +6,7 @@ use App\Models\Image;
 use App\Models\Product;
 use App\Models\Item;
 use App\Models\Supplier;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -42,10 +43,12 @@ class ProductController extends Controller
         $supplier = Supplier::find($id);
         $this->authorize('create', $supplier);
 
+        $tags = Tag::get();
 
         $data = [
             'title' => 'Create Product',
-            'path' => '/api/product'
+            'path' => '/api/product',
+            'tags' => $tags,
         ];
 
         return view('pages.supplier.create_edit_product', $data);
@@ -102,30 +105,10 @@ class ProductController extends Controller
             'supplierID' => 'required|integer',
             // 'images' => 'required',            // 'sup_img' => '' 
         ]);
-
-
-
-
-        if ($request->has('images')) {
-
-            // dd($request->file('images'));
-            foreach ($request->file('images') as $image) {
-                $filename = $image->getClientOriginalName();
-                // dd($filename);
-                // dd($image);
-                $image->store('public/images');
-
-                Image::create([
-                    'path' => $filename
-                ]);
-            }
-        }
-
         // $request->file('image')->store('public/images');
 
 
         // $supplier = Supplier::find($request->supplierID);
-
         // $this->authorize('create', $supplier);
 
         $item = Item::create([
@@ -138,16 +121,53 @@ class ProductController extends Controller
             'rating' => 0,
             'is_bundle' => false,
 
-            // 'tags' => $request->tags,
+
         ]);
 
+        // foreach($request->tags as $tagvalue)
+        // {}
+        $tags = Tag::where('value', $request->tags)->get();  //$request->tags is a singular tag value, in the future we will have more tags, need to change
 
-        // dd($item->id);
+        if (count($tags) > 0) {
 
-        Product::create([
+            foreach ($tags as $t) {
+                $item->tags()->attach($t);
+            }
+        }
+        else
+        {
+            
+            foreach($request->tags as $tagvalue)
+            {
+                $tag = Tag::create([
+                    'value' => $tagvalue,
+                ]);
+                $item->tags()->attach($tag);
+            }
+
+        }
+
+        $product = Product::create([
             'id' => $item->id,
             'type' => $request->product_type,
         ]);
+
+
+        if ($request->has('images')) {
+
+            // dd($request->file('images'));
+            foreach ($request->file('images') as $image) {
+
+                // dd($filename);
+                // dd($image);
+                $filename = $image->store('public/images');
+                $img = Image::create([
+                    'path' => $filename
+                ]);
+
+                $img->products()->attach($product);
+            }
+        }
 
 
         return redirect('/items');

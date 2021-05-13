@@ -14,12 +14,13 @@
 
         <div class="row mb-4">
 
-            @include('partials.carousel_img')
+            {{-- @include('partials.carousel_img') --}}
 
-            <div class="col-1"></div>
+            <div class="col-4"></div>
 
-            <div class="col-12 col-lg-3">
-                <form action="{{ $path }}" method="POST" id="form"  enctype="multipart/form-data" required>
+
+            <div class="col-12 col-lg-4 justify-content-center">
+                <form action="{{ $path }}" method="POST" id="form" enctype="multipart/form-data" required>
                     @csrf
                     <label class="text-black" for="product_name">Product Name</label>
 
@@ -30,7 +31,7 @@
                         <small id="product_name_alert" class="text-danger"></small>
                     </div>
 
-                    <div class="row   mb-5"></div>
+                    <div class="row mb-3"></div>
 
                     <input type="hidden" name="supplierID" id="supplierID"
                         value="{{ \Illuminate\Support\Facades\Auth::id() }}">
@@ -49,7 +50,7 @@
                     <div class="row" style="margin-left: 0.1em">
                         <small id="product_price_alert" class="text-danger"></small>
                     </div>
-                    <div class="row   mb-5"></div>
+                    <div class="row mb-3"></div>
 
                     <label class="text-black" for="product_stock">Stock</label>
                     <div class="row" style="margin-left: 0.1em">
@@ -60,30 +61,37 @@
                     </div>
 
 
-                    <div class="input-group my-5 justify-content-center">
 
-
-                        {{-- <label class="btn btn-primary" for="sup_img" name="file">
+                    {{-- <div class="input-group my-5 justify-content-center">
+                        <label class="btn btn-primary" for="sup_img" name="file">
                             Add Image
-                        </label> --}}
-                        {{-- <label for="Image Name" class="btn btn-primary">Add Image (can attach more than one):</label> --}}
-
-                        <input type="file" class="btn btn-primary" name="images[]" multiple />
-
-
-
-
+                        </label>
+                        <label for="Image Name" class="btn btn-primary">Add Image (can attach more than one):</label>
                         <input type="file" class="form-control d-none" id="sup_img" name="sup_img"
                             aria-describedby="sup_img_addon" aria-label="Upload">
                         <button class="btn btn-danger" type="button" id="sup_img_addon">Clear All</button>
+                    </div> --}}
+
+
+
+                    <div class="row justify-content-center">
+                        <div class="row mb-3 "></div>
+                        <input type="file" class="btn btn-primary" name="images[]" multiple />
+                        <div class="row mb-1 "></div>
+                        <input type="file" class="btn btn-primary" name="images[]" multiple />
+                        <div class="row mb-1 "></div>
+                        <input type="file" class="btn btn-primary" name="images[]" multiple />
                     </div>
-
-
+                    
 
             </div>
-            <div class="col"></div>
+
+
+
+            {{-- <div class="col"></div> --}}
         </div>
 
+        
         @include('partials.description_and_tags')
 
         <div class="row my-5">

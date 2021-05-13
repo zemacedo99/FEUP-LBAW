@@ -9,20 +9,33 @@
             <textarea class="form-control" id="Description" rows="5"></textarea>
         </div> --}}
 
-                    
+
         <div class="form-group mb-1">
             {{-- <label for="description">Description</label> --}}
-            <textarea class="form-control" name="description" id="description" rows="5">@isset($description) {{$description}} @endisset</textarea>
+            <textarea class="form-control" name="description" id="description"
+                rows="5">@isset($description) {{ $description }} @endisset</textarea>
         </div>
         <small id="description_alert" class="text-danger"></small>
-       
+
 
     </div>
+
+
 
     <div class="col-6 col-lg-6 mt-4 mt-md-0" style="min-height: 100px;">
         <div class="d-grid gap-2 d-lg-block  ">
 
-            <button class="btn btn-primary btn-sm">Add+</button>
+            <label for="tags">
+                Add tag:
+                <input id="tags" name="tags[]" list="tag" multiple>
+                <datalist id="tag">
+                    @foreach ($tags as $tag)
+                        <option value={{$tag->value}}></option>
+                    @endforeach
+                </datalist>
+            </label>
+
+            {{-- <button class="btn btn-primary btn-sm">Add+</button>
 
             <button class="btn btn-secondary btn-sm">Organic X</button>
 
@@ -30,7 +43,7 @@
 
             <button class="btn btn-secondary btn-sm">Fresh X</button>
 
-            <button class="btn btn-secondary btn-sm">Vegetable X</button>
+            <button class="btn btn-secondary btn-sm">Vegetable X</button> --}}
         </div>
 
     </div>
