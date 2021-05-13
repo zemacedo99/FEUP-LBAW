@@ -13,7 +13,6 @@
 // Home
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UploadController;
-use App\Models\CreditCard;
 
 Route::get('image/{filename}', 'ItemController@storage_link');
 Route::view('upload', 'upload');
@@ -72,10 +71,11 @@ Route::get('/api/client/{id}/history', 'PurchaseController@index');
 Route::get('/api/client/{id}/periodic', 'PurchaseController@index');//reevaluate
 Route::post('/client/{id}/checkoutInfo', 'PurchaseController@create');
 
-//ship details
-Route::get('/client/{id}/checkoutPayment', 'ShipDetailController@index');
-Route::post('/client/{id}/checkoutPayment', 'ShipDetailController@create');
-Route::put('/client/{id}/checkoutPayment', 'ShipDetailController@update');
+// Credit Card
+Route::post('/api/creditcard', 'CreditCardController@create');
+
+// Ship Details
+Route::post('/api/shipdetails', 'ShipDetailController@create');
 
 //shoppers
 //maybe get supplier profiles
@@ -91,7 +91,6 @@ Route::get('/api/client/{id}', 'ClientController@get_info');
 Route::put('/api/client/{id}', 'ClientController@update');
 Route::delete('/api/client/{id}', 'ClientController@destroy');
 
-Route::post('/api/creditcard', 'CreditCardController@create');
 
 
 

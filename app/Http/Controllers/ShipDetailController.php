@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ShipDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ShipDetailController extends Controller
 {
@@ -23,11 +24,27 @@ class ShipDetailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $id)
-    {
-        //
-        $shipDetail = Review::create([
-            'client_id' => $id,
+    public function create(Request $request)
+    {   //Ainda não testado
+
+        ShipDetail::where('client_id', Auth::id())->delete();
+
+
+        $request->validate([
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'address' => 'required|string',
+            'door_n' => 'required|integer',
+            'post_code' => 'required|string',
+            'district' => 'required|string',
+            'city' => 'required|string',
+            'country' => 'required|string',
+            'phone_n' => 'required|string'
+        ]);
+
+
+        ShipDetail::create([
+            'client_id' => Auth::id(),
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
             'address' => $request->input('address'),
@@ -38,11 +55,9 @@ class ShipDetailController extends Controller
             'country' => $request->input('country'),
             'phone_n' => $request->input('phone_n')
         ]);
-        if ($request->has('floor')){
-            $shipDetail->floor=$request->input('floor');
-            $shipDetail->save();
-        }
-        return $shipDetail;
+
+
+        return response('', 200);
     }
 
     /**

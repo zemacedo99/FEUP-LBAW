@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\CreditCard;
 use App\Models\Image;
 use App\Models\Item;
 use App\Models\Product;
+use App\Models\ShipDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -99,7 +101,17 @@ class ItemController extends Controller
     }
 
     public function payment($id){
-        $data = [];
+        $ccs = CreditCard::where('client_id', $id)->get();
+        $ship_det = ShipDetail::where('client_id', $id)->get();
+
+        $data = [
+            'ccs' => $ccs,
+        ];
+
+        if($ship_det != []){
+            $data['sd'] = $ship_det->first();
+        }
+
         return view('pages.checkout.shipping_payment', $data);
     }
 
@@ -260,13 +272,7 @@ class ItemController extends Controller
     // nao pode ser feito assim, é suposto retornar a vista com todos os items
     public function list()
     {
-        
-
-
-
         $items = Item::get();
-
-
 
         // $data = 
         // [
@@ -275,12 +281,6 @@ class ItemController extends Controller
         //     'description' => $item->description,
         //     'rating' => $item->rating,
         // ];
-
-
-
-
-
-
 
         return view('pages.misc.products_list', ['items' => $items]);
         

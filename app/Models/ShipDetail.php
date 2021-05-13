@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShipDetail extends Model
 {
+    protected $table = 'ship_details';
     public $timestamps  = false;
     protected $fillable = ['first_name', 'last_name', 'address', 'door_n', 'post_code', 'district', 'city', 'country', 'phone_n', 'client_id'];
 

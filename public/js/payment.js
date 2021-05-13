@@ -6,19 +6,37 @@ add_cc.addEventListener('click', addCC)
 
 function validateForm(event) {
     try{
-        let check_empty = ['first_name', 'last_name', 'address', 'door', 'zip_code', 'district', 'city', 'country', 'phone']
-
+        let check_empty = ['first_name', 'last_name', 'address', 'door_n', 'post_code', 'district', 'city', 'country', 'phone_n']
+        let correct = true
+        let sd = {}
 
         for(let i = 0; i < check_empty.length; i++){
             let input = document.getElementById(check_empty[i]);
             if (input.value == "") {
                 document.getElementById(check_empty[i] + "_alert").innerHTML = "This field cannot be empty"
-                event.preventDefault()
+                correct = false
+                
             }else{
                 document.getElementById(check_empty[i] + "_alert").innerHTML = ""
+                sd[check_empty[i]] = input.value
             }
 
         }
+        if(!correct){
+            event.preventDefault()
+            return
+        }
+
+        sendAjaxRequest('post', '/api/shipdetails', sd, function(){
+            if (this.status !== 200){
+                alert(this.status)
+
+            }
+            event.preventDefault()
+        }, false)
+
+
+        
 
     }catch(err){
         alert(err.message)
@@ -52,7 +70,7 @@ function addCC(event){
                 document.getElementById('addCard').modal('hide')
 
             } 
-        })
+        }, true)
 
 
 
@@ -95,11 +113,11 @@ function encodeForAjax(data) {
     }).join('&');
 }
 
-function sendAjaxRequest(method, url, data, handler) {
+function sendAjaxRequest(method, url, data, handler, async) {
 
     let request = new XMLHttpRequest();
 
-    request.open(method, url, true);
+    request.open(method, url, async);
     if (method != 'get') {
         request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

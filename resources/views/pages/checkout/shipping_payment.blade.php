@@ -50,14 +50,14 @@
                     <div class="row mb-3">
                         <div class="col">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="FirstName">
+                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="FirstName" value=@isset($sd) {{$sd->first_name}} @endisset>
                                 <label for="first_name">First Name</label>
                             </div>
                             <small id="first_name_alert" class="text-danger"></small>
                         </div>
                         <div class="col">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="LastName">
+                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="LastName" value=@isset($sd) {{$sd->last_name}} @endisset>
                                 <label for="last_name">Last Name</label>
                             </div>
                             <small id="last_name_alert" class="text-danger"></small>
@@ -67,38 +67,38 @@
                     <div class="row mb-3">
                         <div class="col-8">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="address" name="address" placeholder="FirstName">
+                                <input type="text" class="form-control" id="address" name="address" placeholder="Address" value=@isset($sd) {{$sd->address}} @endisset>
                                 <label for="address">Address</label>
                             </div>
                             <small id="address_alert" class="text-danger"></small>
                         </div>
                         <div class="col-4">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="door" name="door" placeholder="LastName">
+                                <input type="text" class="form-control" id="door_n" name="door_n" placeholder="Door N" value=@isset($sd) {{$sd->door_n}} @endisset>
                                 <label for="door">Door Nº</label>
                             </div>
-                            <small id="door_alert" class="text-danger"></small>
+                            <small id="door_n_alert" class="text-danger"></small>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-4">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="zip_code" name="zip_code" placeholder="FirstName">
+                                <input type="text" class="form-control" id="post_code" name="post_code" placeholder="Zip Code" value=@isset($sd) {{$sd->post_code}} @endisset>
                                 <label for="zip_code">Zip Code</label>
                             </div>
-                            <small id="zip_code_alert" class="text-danger"></small>
+                            <small id="post_code_alert" class="text-danger"></small>
                         </div>
                         <div class="col-4">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="district" name="district" placeholder="LastName">
+                                <input type="text" class="form-control" id="district" name="district" placeholder="District" value=@isset($sd) {{$sd->district}} @endisset>
                                 <label for="district">District</label>
                             </div>
                             <small id="district_alert" class="text-danger"></small>
                         </div>
                         <div class="col-4">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="city" name="city" placeholder="LastName">
+                                <input type="text" class="form-control" id="city" name="city" placeholder="City" value=@isset($sd) {{$sd->city}} @endisset>
                                 <label for="city">City</label>
                             </div>
                             <small id="city_alert" class="text-danger"></small>
@@ -108,7 +108,7 @@
                     <div class="row mb-3">
                         <div class="col-12">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="country" name="country" placeholder="FirstName">
+                                <input type="text" class="form-control" id="country" name="country" placeholder="Country" value=@isset($sd) {{$sd->country}} @endisset>
                                 <label for="country">Country</label>
                             </div>
                             <small id="country_alert" class="text-danger"></small>
@@ -118,10 +118,10 @@
                     <div class="row mb-3">
                         <div class="col-12">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="phone" name="phone" placeholder="FirstName">
+                                <input type="text" class="form-control" id="phone_n" name="phone_n" placeholder="Phone Number" value=@isset($sd) {{$sd->phone_n}} @endisset>
                                 <label for="phone">Phone Number</label>
                             </div>
-                            <small id="phone_alert" class="text-danger"></small>
+                            <small id="phone_n_alert" class="text-danger"></small>
                         </div>
                     </div>
 
@@ -184,9 +184,11 @@
                     <div class="col-12">
                         <h3 class="mb-3 " style='text-align:left;border-bottom:2px solid black;'>Payment Information</h3>
 
-                        @include('partials.cards.credit_card')
+                        @include('partials.cards.credit_card', ['ccs' => $ccs])
 
-                        
+                        @include('partials.modals.edit_credit_card')
+
+
                         <div class="card mb-3 d-flex justify-content-center align-items-center" style="height: 60px;">
                             <a href="#" class="stretched-link" data-bs-toggle="modal" data-bs-target="#addCard"></a>
                             <p class="card-text">Add new Card <i class="bi bi-plus"></i></p>

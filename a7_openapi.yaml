@@ -1453,6 +1453,28 @@ paths:
         '404':
           $ref: '#/components/responses/404Error'
 
+  /api/shipdetails: 
+    post:
+      operationId: R636
+      summary: 'R636 - Client Info'
+      description: 'Creates Shipping Details. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShipDetails'
+
+      responses:
+        '200':
+          description: Successfully created credit card
+
+        '404':
+          $ref: '#/components/responses/404Error'
+
+
   /api/creditcard: 
     get:
       operationId: R635
@@ -1490,7 +1512,7 @@ paths:
               $ref: '#/components/schemas/CreditCard'
 
       responses:
-        '204':
+        '200':
           description: Successfully created credit card
 
         '404':
@@ -1699,6 +1721,27 @@ components:
         image_id:
           type: integer
 
+    ShipDetails:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        address:
+          type: string
+        door_n:
+          type: integer
+        post_code:
+          type: string
+        district:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        phone_n:
+          type: string
 
   parameters:
     QID:
