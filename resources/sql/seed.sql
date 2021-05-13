@@ -137,7 +137,7 @@ CREATE TABLE ship_details (
 CREATE TABLE credit_cards (
     id              SERIAL      PRIMARY KEY,
     card_n          text        NOT NULL,
-    expiration      DATE        NOT NULL,
+    expiration      text        NOT NULL,
     cvv             INTEGER     NOT NULL,
     holder          TEXT        NOT NULL,
     client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE
@@ -1120,51 +1120,51 @@ insert into item_product (item_id, product_id, quantity) values (96, 14, 11);
 insert into item_product (item_id, product_id, quantity) values (78, 14, 34);
 insert into item_product (item_id, product_id, quantity) values (98, 12, 50);
 
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (1, '0429 8595 0058 4305', '2022-06-30', '556', 'Philbert Lismore', 1);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (2, '6843 1070 8852 4478', '2021-03-10', '073', 'Silvester Paintain', 2);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (3, '8631 5740 5944 6226', '2022-10-14', '788', 'Mimi Wernham', 3);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (4, '8097 0603 4546 4807', '2021-12-20', '582', 'Deonne Mundwell', 4);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (5, '3488 8305 0435 2596', '2021-11-13', '852', 'Stearn Mulgrew', 5);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (6, '3086 3220 3921 2420', '2022-08-31', '113', 'Mendel Marran', 6);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (7, '5035 2738 6245 7578', '2022-10-31', '020', 'Merle Boatwright', 7);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (8, '4713 6329 2571 1371', '2021-11-05', '848', 'Garry Mantram', 8);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (9, '6681 7251 3968 9683', '2021-08-29', '163', 'Alix Beneyto', 9);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (10, '6315 6024 1876 8474', '2021-09-08', '570', 'Simone Perrelli', 10);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (11, '8256 6642 2280 8335', '2021-08-20', '249', 'Janice Sikorsky', 11);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (12, '0388 8988 2527 0369', '2021-12-20', '303', 'Myranda Orchart', 12);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (13, '5856 2739 1266 6342', '2022-11-12', '623', 'Herrick Tudgay', 13);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (14, '9364 9941 3870 7807', '2022-03-26', '285', 'Lutero Thompkins', 14);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (15, '6226 4896 5932 7086', '2022-12-07', '880', 'Ford Pearman', 15);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (16, '3644 1786 3994 8511', '2022-06-18', '180', 'Alejoa Craigmyle', 16);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (17, '2846 9288 0548 5463', '2021-11-14', '739', 'Cecilio Duberry', 17);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (18, '8686 0069 0096 5460', '2022-05-10', '301', 'Othello Paniman', 18);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (19, '5288 1563 4605 2297', '2022-04-24', '792', 'Adair Halling', 19);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (20, '5271 2973 6888 1819', '2021-07-28', '209', 'Phelia Saer', 20);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (21, '2509 5004 7475 1396', '2022-05-21', '684', 'Zara Elvish', 21);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (22, '3132 2699 1375 7617', '2021-07-20', '177', 'Bel Losselyong', 22);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (23, '0041 2335 4609 7594', '2023-02-18', '866', 'Liane Dahlbom', 23);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (24, '3257 4941 7297 1609', '2021-03-13', '681', 'Livia Herculeson', 24);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (25, '0010 5918 5476 8531', '2021-08-11', '118', 'Ulberto Miquelet', 25);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (26, '1192 5967 4519 6982', '2022-09-28', '920', 'Esta Bento', 26);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (27, '7008 2417 1877 7451', '2023-01-26', '517', 'Britteny Grigoroni', 27);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (28, '9726 7193 2070 2920', '2021-06-14', '620', 'Jeramie Mullinder', 28);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (29, '3280 6866 7409 4867', '2021-07-02', '787', 'Linn Griggs', 29);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (30, '1678 3109 7509 7179', '2021-10-08', '320', 'Simone Callard', 30);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (31, '3731 0785 6657 7549', '2022-08-12', '724', 'Phylis Gable', 31);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (32, '3115 1778 1810 0952', '2022-06-02', '148', 'Marcelo Mapston', 32);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (33, '8087 0855 8522 3183', '2022-08-03', '201', 'Brenda Jedrzaszkiewicz', 33);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (34, '0248 3168 5863 7445', '2022-04-13', '479', 'Gwendolyn Davley', 34);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (35, '2327 2919 8319 6840', '2021-04-29', '678', 'Hortensia Wands', 35);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (36, '8188 5779 6796 1484', '2022-09-11', '786', 'Gabbi Matchett', 36);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (37, '5422 6122 0805 6047', '2021-09-03', '197', 'Marv Spencelayh', 37);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (38, '8237 7455 8098 6797', '2022-07-29', '461', 'Arney Bockh', 38);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (39, '3453 3275 0458 3189', '2021-12-12', '145', 'Bili Blench', 39);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (40, '3354 2451 5019 1085', '2022-08-04', '180', 'Bertram Hinnerk', 40);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (41, '7873 6762 9644 4906', '2022-09-27', '927', 'Philippine Kippax', 41);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (42, '0869 9624 3275 0323', '2021-07-28', '974', 'Mirelle Tschursch', 42);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (43, '5637 5744 8787 0991', '2021-04-23', '133', 'Manuel Duxbarry', 43);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (44, '4769 1873 8041 0937', '2021-04-06', '615', 'Shanan Kirsz', 44);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (45, '7612 4201 1143 6932', '2021-09-06', '143', 'Pincas Issard', 45);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('0429 8595 0058 4305', '2022-06-30', '556', 'Philbert Lismore', 1);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('6843 1070 8852 4478', '2021-03-10', '073', 'Silvester Paintain', 2);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('8631 5740 5944 6226', '2022-10-14', '788', 'Mimi Wernham', 3);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('8097 0603 4546 4807', '2021-12-20', '582', 'Deonne Mundwell', 4);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('3488 8305 0435 2596', '2021-11-13', '852', 'Stearn Mulgrew', 5);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('3086 3220 3921 2420', '2022-08-31', '113', 'Mendel Marran', 6);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('5035 2738 6245 7578', '2022-10-31', '020', 'Merle Boatwright', 7);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('4713 6329 2571 1371', '2021-11-05', '848', 'Garry Mantram', 8);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('6681 7251 3968 9683', '2021-08-29', '163', 'Alix Beneyto', 9);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '6315 6024 1876 8474', '2021-09-08', '570', 'Simone Perrelli', 10);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '8256 6642 2280 8335', '2021-08-20', '249', 'Janice Sikorsky', 11);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '0388 8988 2527 0369', '2021-12-20', '303', 'Myranda Orchart', 12);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '5856 2739 1266 6342', '2022-11-12', '623', 'Herrick Tudgay', 13);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '9364 9941 3870 7807', '2022-03-26', '285', 'Lutero Thompkins', 14);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '6226 4896 5932 7086', '2022-12-07', '880', 'Ford Pearman', 15);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '3644 1786 3994 8511', '2022-06-18', '180', 'Alejoa Craigmyle', 16);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '2846 9288 0548 5463', '2021-11-14', '739', 'Cecilio Duberry', 17);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '8686 0069 0096 5460', '2022-05-10', '301', 'Othello Paniman', 18);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '5288 1563 4605 2297', '2022-04-24', '792', 'Adair Halling', 19);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '5271 2973 6888 1819', '2021-07-28', '209', 'Phelia Saer', 20);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '2509 5004 7475 1396', '2022-05-21', '684', 'Zara Elvish', 21);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '3132 2699 1375 7617', '2021-07-20', '177', 'Bel Losselyong', 22);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '0041 2335 4609 7594', '2023-02-18', '866', 'Liane Dahlbom', 23);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '3257 4941 7297 1609', '2021-03-13', '681', 'Livia Herculeson', 24);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '0010 5918 5476 8531', '2021-08-11', '118', 'Ulberto Miquelet', 25);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '1192 5967 4519 6982', '2022-09-28', '920', 'Esta Bento', 26);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '7008 2417 1877 7451', '2023-01-26', '517', 'Britteny Grigoroni', 27);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '9726 7193 2070 2920', '2021-06-14', '620', 'Jeramie Mullinder', 28);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '3280 6866 7409 4867', '2021-07-02', '787', 'Linn Griggs', 29);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '1678 3109 7509 7179', '2021-10-08', '320', 'Simone Callard', 30);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '3731 0785 6657 7549', '2022-08-12', '724', 'Phylis Gable', 31);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '3115 1778 1810 0952', '2022-06-02', '148', 'Marcelo Mapston', 32);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '8087 0855 8522 3183', '2022-08-03', '201', 'Brenda Jedrzaszkiewicz', 33);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '0248 3168 5863 7445', '2022-04-13', '479', 'Gwendolyn Davley', 34);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '2327 2919 8319 6840', '2021-04-29', '678', 'Hortensia Wands', 35);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '8188 5779 6796 1484', '2022-09-11', '786', 'Gabbi Matchett', 36);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '5422 6122 0805 6047', '2021-09-03', '197', 'Marv Spencelayh', 37);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '8237 7455 8098 6797', '2022-07-29', '461', 'Arney Bockh', 38);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '3453 3275 0458 3189', '2021-12-12', '145', 'Bili Blench', 39);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '3354 2451 5019 1085', '2022-08-04', '180', 'Bertram Hinnerk', 40);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '7873 6762 9644 4906', '2022-09-27', '927', 'Philippine Kippax', 41);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '0869 9624 3275 0323', '2021-07-28', '974', 'Mirelle Tschursch', 42);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '5637 5744 8787 0991', '2021-04-23', '133', 'Manuel Duxbarry', 43);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '4769 1873 8041 0937', '2021-04-06', '615', 'Shanan Kirsz', 44);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '7612 4201 1143 6932', '2021-09-06', '143', 'Pincas Issard', 45);
 
 insert into item_tag (tag_id, item_id) values (1, 5);
 insert into item_tag (tag_id, item_id) values (1, 36);

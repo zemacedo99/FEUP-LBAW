@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\CreditCard;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CreditCardController extends Controller
 {
@@ -25,9 +26,23 @@ class CreditCardController extends Controller
      */
     public function create(Request $request)
     {
-        $creditCard = CreditCard::create([
-            
+        $request->validate([
+            'card_number' => 'required',
+            'valid_until' => 'required',
+            'cvv' => 'required|integer',
+            'holder_name' => 'required'
+
         ]);
+        
+        CreditCard::create([
+            'card_n' => $request->input('card_number'),
+            'expiration' => $request->input('valid_until'),
+            'cvv' => $request->input('cvv'),
+            'holder' => $request->input('holder_name'),
+            'client_id' => Auth::id(),
+        ]);
+
+        return response('', 200);
     }
 
     /**

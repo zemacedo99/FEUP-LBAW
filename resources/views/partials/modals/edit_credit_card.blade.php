@@ -8,33 +8,33 @@
             <div class="modal-body">
                 <div class="col-12">
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="floatingInput" placeholder="**** **** **** ****">
-                        <label for="floatingInput">Card number</label>
+                        <input class="form-control" id="card_number_e" name="card_number">
+                        <label for="card_number">Card number</label>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col">
                         <div class="form-floating">
-                            <input type="month" class="form-control" id="floatingFirstName" placeholder="Valid until">
-                            <label for="floatingFirstName">Valid until</label>
+                            <input type="month" class="form-control" id="valid_until_e" name="valid_until" placeholder="Valid until">
+                            <label for="valid_until">Valid until</label>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-floating">
-                            <input type="number" class="form-control" id="floatingLastName" placeholder="CVV">
-                            <label for="floatingLastName">CVV</label>
+                            <input type="number" class="form-control" id="cvv_e" name="cvv" placeholder="CVV">
+                            <label for="cvv">CVV</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-12">
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="floatingInput" placeholder="Your name and surname">
-                        <label for="floatingInput">Card holder</label>
+                        <input class="form-control" id="holder_name_e" name="holder_name">
+                        <label for="holder_name_e">Card holder</label>
                     </div>
                 </div>
-
+                
                 <div class="d-flex justify-content-center">
                     <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i> Delete this card</button>
                 </div>

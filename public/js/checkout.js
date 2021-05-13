@@ -3,6 +3,7 @@ let minus = document.getElementsByClassName('minusQuantity')
 let periodic = document.getElementsByClassName('periodic')
 let addCouponBtn = document.getElementById('addCoupon')
 
+
 for(let i = 0; i < plus.length; i++){
     plus[i].addEventListener('click', addQuantity)
 }

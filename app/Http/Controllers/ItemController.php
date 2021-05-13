@@ -400,7 +400,7 @@ class ItemController extends Controller
 
         foreach($items as $group){
             foreach($group as $item){
-                //$item->unit = DB::table('products')->where('id','=',$item->id)->get('type');
+                $item->unit = \DB::table('products')->where('id','=',$item->id)->get('type');
                 $item->images=app('App\Http\Controllers\ImageController')->productImages($item->id);
             }
         }

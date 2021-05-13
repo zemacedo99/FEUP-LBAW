@@ -13,7 +13,7 @@
 // Home
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UploadController;
-
+use App\Models\CreditCard;
 
 Route::get('image/{filename}', 'ItemController@storage_link');
 Route::view('upload', 'upload');
@@ -90,6 +90,8 @@ Route::get('/api/client', 'ClientController@index');
 Route::get('/api/client/{id}', 'ClientController@get_info');
 Route::put('/api/client/{id}', 'ClientController@update');
 Route::delete('/api/client/{id}', 'ClientController@destroy');
+
+Route::post('/api/creditcard', 'CreditCardController@create');
 
 
 
