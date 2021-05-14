@@ -120,8 +120,6 @@ class ProductController extends Controller
             'active' => true,
             'rating' => 0,
             'is_bundle' => false,
-
-
         ]);
 
 
@@ -135,9 +133,16 @@ class ProductController extends Controller
             foreach($request->tags as $tagsValue)
             {
                 // dd($tagsValue);
-                $tags = Tag::where('value', $tagsValue)->get();  //$request->tags is a singular tag value, in the future we will have more tags, need to change
+                if( is_null($tagsValue))
+                {
+                    break;
+                }
 
+
+                $tags = Tag::where('value', $tagsValue)->get();
                 // dd($tags);
+
+
                 if (count($tags) > 0) {                     //if the tagvalue exist 
         
                     foreach ($tags as $tag) {
