@@ -22,19 +22,36 @@
 
 
 
+
     <div class="col-6 col-lg-6 mt-4 mt-md-0" style="min-height: 100px;">
         <div class="d-grid gap-2 d-lg-block  ">
 
-            <label for="tags">
+            {{-- <label for="tags">
                 Add tag:
                 <input id="tags" name="tags[]" list="tag" multiple>
                 <datalist id="tag">
                     @foreach ($tags as $tag)
-                        <option value={{$tag->value}}></option>
+                        <option value={{ $tag->value }}></option>
                     @endforeach
                 </datalist>
-            </label>
+            </label> --}}
 
+            
+            <div class="container1">
+                <button class="add_form_field">Add tag: &nbsp;
+                    <span style="font-size:16px;">+ </span>
+                </button>
+                <div>
+                {{-- <input type="text" name="tags[]"> --}}
+                <input id="tags" name="tags[]" list="tag" multiple>
+                <datalist id="tag">
+                    @foreach ($tags as $tag)
+                        <option value={{ $tag->value }}></option>
+                    @endforeach
+                </datalist>
+                <a href="#" class="delete">Delete</a>
+            </div>
+            </div>
             {{-- <button class="btn btn-primary btn-sm">Add+</button>
 
             <button class="btn btn-secondary btn-sm">Organic X</button>
@@ -48,3 +65,34 @@
 
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var max_fields = 5;
+        var wrapper = $(".container1");
+        var add_button = $(".add_form_field");
+
+        var x = 0;
+        $(add_button).click(function(e) {
+            e.preventDefault();
+            if (x < max_fields) {
+                x++;
+                // $(wrapper).append(
+                //     '<div><input type="text" name="mytext[]"/><a href="#" class="delete">Delete</a></div>'
+                // ); //add input box
+                $(wrapper).append(
+                    '  <div><input id="tags" name="tags[]" list="tag" multiple><datalist id="tag">   @foreach ($tags as $tag)  <option value={{ $tag->value }}></option>@endforeach</datalist><a href="#" class="delete">Delete</a></div>'); //add input box
+            } else {
+                alert('You Reached the limits')
+            }
+        });
+
+        $(wrapper).on("click", ".delete", function(e) {
+            e.preventDefault();
+            $(this).parent('div').remove();
+            x--;
+        })
+    });
+
+</script>

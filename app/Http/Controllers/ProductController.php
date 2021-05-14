@@ -161,6 +161,8 @@ class ProductController extends Controller
                 // dd($filename);
                 // dd($image);
                 $filename = $image->store('public/images');
+                //$upload_success = $image->move(storage_path('app/public/banners'), $image->getClientOriginalName());
+
                 $img = Image::create([
                     'path' => $filename
                 ]);
@@ -170,7 +172,7 @@ class ProductController extends Controller
         }
 
 
-        return redirect('/items');
+        return redirect('/items'); //todo: change for the same pag, but add a buton so see all supplier products
     }
 
     /**

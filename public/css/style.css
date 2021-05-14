@@ -322,3 +322,20 @@ a.customcard:hover {
   color: inherit;
   text-decoration: inherit;
 }
+
+
+.add_form_field {
+  background-color: var(--main-color);
+  border-color: var(--main-color);
+}
+
+.add_form_field:hover {
+  background-color: var(--main-color);
+  border-color: var(--main-color);
+}
+
+.add_form_field:focus {
+  background-color: var(--main-color);
+  border-color: var(--main-color);
+  box-shadow: 0 0 0 0.25rem var(--main-color-shadow);
+}
