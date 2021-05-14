@@ -124,28 +124,43 @@ class ProductController extends Controller
 
         ]);
 
-        // foreach($request->tags as $tagvalue)
-        // {}
-        $tags = Tag::where('value', $request->tags)->get();  //$request->tags is a singular tag value, in the future we will have more tags, need to change
 
-        if (count($tags) > 0) {
-
-            foreach ($tags as $t) {
-                $item->tags()->attach($t);
-            }
+        if(is_null($request->tags))
+        {
+            dd("error here");
+            dd($request->tags);
         }
         else
         {
-            
-            foreach($request->tags as $tagvalue)
+            foreach($request->tags as $tagsValue)
             {
-                $tag = Tag::create([
-                    'value' => $tagvalue,
-                ]);
-                $item->tags()->attach($tag);
-            }
+                // dd($tagsValue);
+                $tags = Tag::where('value', $tagsValue)->get();  //$request->tags is a singular tag value, in the future we will have more tags, need to change
 
+                // dd($tags);
+                if (count($tags) > 0) {                     //if the tagvalue exist 
+        
+                    foreach ($tags as $tag) {
+                        $item->tags()->attach($tag);          // associate the tag to the item
+                    }
+                }
+                else                                        // if the tagvalue is new
+                {
+                    
+                    foreach($request->tags as $tagvalue)
+                    {
+                        $tag = Tag::create([                //create new tag
+                            'value' => $tagvalue,   
+                        ]);
+                        $item->tags()->attach($tag);        // associate the tag to the item
+                    }
+                }
+        
+            }
         }
+
+
+
 
         $product = Product::create([
             'id' => $item->id,

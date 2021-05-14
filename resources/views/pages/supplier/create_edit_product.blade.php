@@ -20,7 +20,7 @@
 
 
             <div class="col-12 col-lg-4 justify-content-center">
-                <form action="{{ $path }}" method="POST" id="form" enctype="multipart/form-data" required class="dropzone">
+                <form action="{{ $path }}" method="POST" id="form" enctype="multipart/form-data" required>
                     @csrf
                     <label class="text-black" for="product_name">Product Name</label>
 
@@ -76,7 +76,7 @@
 
                     <div class="row justify-content-center">
                         <div class="row mb-3 "></div>
-                        <input type="file" class="btn btn-primary" name="images[]" multiple />
+                        <input type="file" class="btn btn-primary" name="images[]" multiple accept="image/x-png,image/gif,image/jpeg"  />
                         {{-- <div class="row mb-1 "></div>
                         <input type="file" class="btn btn-primary" name="images[]" multiple />
                         <div class="row mb-1 "></div>
@@ -103,12 +103,5 @@
 
     </div>
     </form>
-
-@endsection
-@section('css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css">
-@endsection
-@section('js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
 
 @endsection

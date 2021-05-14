@@ -49,9 +49,11 @@
                         <option value={{ $tag->value }}></option>
                     @endforeach
                 </datalist>
-                <a href="#" class="delete">Delete</a>
+                <a href="#" class="delete"><i class="bi bi-trash"></i></a>
+                </div>
             </div>
-            </div>
+
+            
             {{-- <button class="btn btn-primary btn-sm">Add+</button>
 
             <button class="btn btn-secondary btn-sm">Organic X</button>
@@ -66,6 +68,7 @@
     </div>
 </div>
 
+{{-- credits to : https://stackoverflow.com/questions/14853779/adding-input-elements-dynamically-to-form--}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -73,7 +76,7 @@
         var wrapper = $(".container1");
         var add_button = $(".add_form_field");
 
-        var x = 0;
+        var x = 1;
         $(add_button).click(function(e) {
             e.preventDefault();
             if (x < max_fields) {
@@ -81,8 +84,7 @@
                 // $(wrapper).append(
                 //     '<div><input type="text" name="mytext[]"/><a href="#" class="delete">Delete</a></div>'
                 // ); //add input box
-                $(wrapper).append(
-                    '  <div><input id="tags" name="tags[]" list="tag" multiple><datalist id="tag">   @foreach ($tags as $tag)  <option value={{ $tag->value }}></option>@endforeach</datalist><a href="#" class="delete">Delete</a></div>'); //add input box
+                $(wrapper).append('<div><input type="text" id="tags" name="tags[]" list="tag" ><datalist id="tag">   @foreach ($tags as $tag)  <option value={{ $tag->value }}></option>@endforeach</datalist><a href="#" class="delete"> <i class="bi bi-trash"> </i></a></div>'); //add input box
             } else {
                 alert('You Reached the limits')
             }
