@@ -85,9 +85,45 @@ class CreditCardController extends Controller
      * @param  \App\Models\CreditCard  $creditCard
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CreditCard $creditCard)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'card_n' => 'string',
+            'expiration' => 'string',
+            'cvv' => 'integer',
+            'holder' => 'string',
+            'id' => 'required|integer',
+        ]);
+
+        $collection_cc = CreditCard::where('id', $request->input('id'))->get();
+        
+        
+        if($collection_cc->isEmpty()){
+            return response('', 404)->header('description','Coupon not found');
+        }
+
+       
+        $cc = $collection_cc->first();
+
+        if($request->has('card_n')){
+            $cc->card_n = $request->input('card_n'); 
+        }
+
+        if($request->has('expiration')){
+            $cc->expiration = $request->input('expiration'); 
+        }
+
+        if($request->has('cvv')){
+            $cc->cvv = $request->input('cvv'); 
+        }
+
+        if($request->has('holder')){
+            $cc->holder = $request->input('holder'); 
+        }
+        
+        $cc->save();
+        
+        return response('', 200);
     }
 
     /**

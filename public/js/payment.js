@@ -1,8 +1,15 @@
 let submit= document.getElementById('form')
 let add_cc= document.getElementById('add_cc')
+let editButtons = document.getElementsByClassName('edit')
 
 submit.addEventListener('submit', validateForm)
+
 add_cc.addEventListener('click', addCC)
+
+for(let i = 0; i < editButtons.length; i++){
+    editButtons[i].addEventListener('click', editCC)
+}
+
 
 function validateForm(event) {
     try{
@@ -20,12 +27,18 @@ function validateForm(event) {
                 document.getElementById(check_empty[i] + "_alert").innerHTML = ""
                 sd[check_empty[i]] = input.value
             }
-
         }
+
         if(!correct){
             event.preventDefault()
             return
         }
+        if(document.getElementById('save_ship_info').checked){
+            sd['to_save'] = true;
+        }else{
+            sd['to_save'] = false;
+        }
+
 
         sendAjaxRequest('post', '/api/shipdetails', sd, function(){
             if (this.status !== 200){
@@ -104,6 +117,47 @@ function createCreditCard(card_holder, cc_n){
     </div>`
 }
 
+function editCC(event){
+    let i = event.target.getAttribute('id').split(':')[1]
+    let id = document.getElementById('cc_id:' + i).value
+    let card_n = document.getElementById('card_number:' + i).value
+    let expiration = document.getElementById('valid_until:' + i).value
+    let cvv = document.getElementById('cvv:' + i).value
+    let holder = document.getElementById('holder_name:' + i).value
+
+    
+    cc = {}
+    cc['id'] = id
+
+    if(card_n !== '')
+        cc['card_n'] = card_n
+    
+    if(expiration !== '')
+        cc['expiration'] = expiration
+
+    if(cvv !== '')
+        cc['cvv'] = cvv
+    
+    if(holder !== '')
+        cc['holder'] = holder
+
+    
+    sendAjaxRequest('put', '/api/creditcard/', cc, function(){
+        if (this.status !== 200){
+            alert(this.status)
+        }
+        updateCV(i, cc)
+    }, false)
+}
+
+function updateCV(i, cc){
+    if(cc['card_n'] !== '')
+        document.getElementById('card_n_prev:' + i).innerHTML = "Visa car Ending in **" + cc['card_n'].substr(-2)
+    
+    if(cc['holder'] !== '')
+        document.getElementById('holder_prev:' + i).innerHTML = cc['holder']
+    
+}
 
 
 function encodeForAjax(data) {

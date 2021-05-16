@@ -73,6 +73,7 @@ Route::post('/client/{id}/checkoutInfo', 'PurchaseController@create');
 
 // Credit Card
 Route::post('/api/creditcard', 'CreditCardController@create');
+Route::put('/api/creditcard', 'CreditCardController@update');
 
 // Ship Details
 Route::post('/api/shipdetails', 'ShipDetailController@create');

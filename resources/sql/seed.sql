@@ -131,7 +131,8 @@ CREATE TABLE ship_details (
     city            TEXT        NOT NULL,
     country         TEXT        NOT NULL,
     phone_n         TEXT        NOT NULL,
-    client_id       INTEGER     NOT NULL UNIQUE REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE
+    client_id       INTEGER     NOT NULL UNIQUE REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    to_save         BOOLEAN     NOT NULL DEFAULT 'true'
 );
 
 CREATE TABLE credit_cards (

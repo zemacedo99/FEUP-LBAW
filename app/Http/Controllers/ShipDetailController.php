@@ -39,7 +39,8 @@ class ShipDetailController extends Controller
             'district' => 'required|string',
             'city' => 'required|string',
             'country' => 'required|string',
-            'phone_n' => 'required|string'
+            'phone_n' => 'required|string',
+            'to_save' => 'required|boolean',
         ]);
 
 
@@ -53,7 +54,8 @@ class ShipDetailController extends Controller
             'district' => $request->input('district'),
             'city' => $request->input('city'),
             'country' => $request->input('country'),
-            'phone_n' => $request->input('phone_n')
+            'phone_n' => $request->input('phone_n'),
+            'to_save' => $request->input('to_save'),
         ]);
 
 

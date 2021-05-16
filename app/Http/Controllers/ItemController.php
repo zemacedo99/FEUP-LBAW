@@ -100,9 +100,11 @@ class ItemController extends Controller
         return view('pages.checkout.cart_info', $data);
     }
 
+
     public function payment($id){
         $ccs = CreditCard::where('client_id', $id)->get();
-        $ship_det = ShipDetail::where('client_id', $id)->get();
+        $ship_det = ShipDetail::where('client_id', $id)
+                    ->where('to_save', true)->get();
 
         $data = [
             'ccs' => $ccs,
