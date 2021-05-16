@@ -1,4 +1,4 @@
-<div class="modal fade" id="editCard" tabindex="-1" aria-labelledby="editCardLabel" aria-hidden="true">
+<div class="modal fade" id="editCard_{{$i}}" tabindex="-1" aria-labelledby="editCardLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -37,13 +37,13 @@
                 </div>
                 
                 <div class="d-flex justify-content-center">
-                    <button type="button" id="delete:{{$i}}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Delete this card</button>
+                    <button type="button" id="delete:{{$i}}" class="btn btn-danger btn-sm delete"  data-bs-dismiss="modal"><i class="bi bi-trash"></i> Delete this card</button>
                 </div>
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" id="edit:{{$i}}"  class="btn btn-primary edit">Edit Card</button>
+                <button type="button" id="edit:{{$i}}"  data-bs-dismiss="modal" class="btn btn-primary edit">Edit Card</button>
             </div>
         </div>
     </div>

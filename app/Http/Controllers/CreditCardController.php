@@ -34,7 +34,7 @@ class CreditCardController extends Controller
 
         ]);
         
-        CreditCard::create([
+        $cc = CreditCard::create([
             'card_n' => $request->input('card_number'),
             'expiration' => $request->input('valid_until'),
             'cvv' => $request->input('cvv'),
@@ -42,7 +42,7 @@ class CreditCardController extends Controller
             'client_id' => Auth::id(),
         ]);
 
-        return response('', 200);
+        return $cc;
     }
 
     /**
@@ -132,8 +132,18 @@ class CreditCardController extends Controller
      * @param  \App\Models\CreditCard  $creditCard
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CreditCard $creditCard)
+    public function destroy(Request $request)
     {
-        //
+        // $request->validate([
+        //     'id' => 'required|integer|unique:credit_cards,id'
+        // ]);
+
+        $cc_builder = CreditCard::where('id', $request->input('id'));
+
+        // $this->authorize('delete', $coupon_builder->get());
+
+        $cc_builder->delete();
+
+        return response('', 200,)->header('description', 'Successfully removed creditcard');
     }
 }

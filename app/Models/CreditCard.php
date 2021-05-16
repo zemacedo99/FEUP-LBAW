@@ -9,6 +9,7 @@ class CreditCard extends Model
 {
     public $timestamps  = false;
     protected $fillable = ['cc_id', 'card_n', 'expiration', 'cvv', 'holder', 'client_id'];
+    protected $table = "credit_cards";
 
     use HasFactory;
 
