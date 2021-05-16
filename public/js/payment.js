@@ -43,9 +43,9 @@ function validateForm(event) {
             return
         }
         if(document.getElementById('save_ship_info').checked){
-            sd['to_save'] = true;
+            sd['to_save'] = true
         }else{
-            sd['to_save'] = false;
+            sd['to_save'] = false
         }
 
 
@@ -86,11 +86,20 @@ function addCC(event){
         }
         if(!save) return;
 
+        if(document.getElementById('save_cc').checked){
+            cc['to_save'] = true
+        }else{
+            cc['to_save'] = false
+        }
+
+
         sendAjaxRequest('post', '/api/creditcard/', cc, function(){
+            
+            console.log(this.status)
+            console.log(this.responseText)
             if (this.status === 201){
-                
                 createCreditCard(JSON.parse(this.responseText))
-            } 
+            }
         }, true)
 
 

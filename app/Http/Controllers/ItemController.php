@@ -102,9 +102,13 @@ class ItemController extends Controller
 
 
     public function payment($id){
-        $ccs = CreditCard::where('client_id', $id)->get();
+        // Falta validação
+
+        $ccs = CreditCard::where('client_id', $id)
+                ->where('to_save', true)->get();
+        
         $ship_det = ShipDetail::where('client_id', $id)
-                    ->where('to_save', true)->get();
+                ->where('to_save', true)->get();
 
         $data = [
             'ccs' => $ccs,

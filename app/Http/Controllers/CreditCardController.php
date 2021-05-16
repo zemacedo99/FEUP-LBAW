@@ -30,8 +30,8 @@ class CreditCardController extends Controller
             'card_number' => 'required',
             'valid_until' => 'required',
             'cvv' => 'required|integer',
-            'holder_name' => 'required'
-
+            'holder_name' => 'required',
+            'to_save' => 'required',
         ]);
         
         $cc = CreditCard::create([
@@ -40,6 +40,7 @@ class CreditCardController extends Controller
             'cvv' => $request->input('cvv'),
             'holder' => $request->input('holder_name'),
             'client_id' => Auth::id(),
+            'to_save' => $request->input('to_save'),
         ]);
 
         return $cc;
@@ -134,9 +135,9 @@ class CreditCardController extends Controller
      */
     public function destroy(Request $request)
     {
-        // $request->validate([
-        //     'id' => 'required|integer|unique:credit_cards,id'
-        // ]);
+        $request->validate([
+            'id' => 'required|integer|exists:credit_cards,id'
+        ]);
 
         $cc_builder = CreditCard::where('id', $request->input('id'));
 

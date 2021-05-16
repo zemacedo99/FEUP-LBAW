@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CreditCard extends Model
 {
     public $timestamps  = false;
-    protected $fillable = ['cc_id', 'card_n', 'expiration', 'cvv', 'holder', 'client_id'];
+    protected $fillable = ['id', 'card_n', 'expiration', 'cvv', 'holder', 'client_id', 'to_save'];
     protected $table = "credit_cards";
 
     use HasFactory;

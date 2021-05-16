@@ -141,7 +141,9 @@ CREATE TABLE credit_cards (
     expiration      text        NOT NULL,
     cvv             INTEGER     NOT NULL,
     holder          TEXT        NOT NULL,
-    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE
+    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    to_save         BOOLEAN     NOT NULL DEFAULT 'true'
+
 );
 
 CREATE TABLE reviews (

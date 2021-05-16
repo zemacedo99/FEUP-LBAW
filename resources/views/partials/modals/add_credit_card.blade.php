@@ -44,7 +44,7 @@
                 <div class="d-flex justify-content-center">
                     <div class="form-check form-switch">
                         <label class="form-check-label" for="flexSwitchCheckChecked">Save data for future purchases</label>
-                        <input class="form-check-input" type="checkbox" id="save_credit_card">
+                        <input class="form-check-input" type="checkbox" id="save_cc">
                     </div>
                 </div>
             </div>
