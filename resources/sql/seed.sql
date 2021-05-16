@@ -448,7 +448,7 @@ EXECUTE PROCEDURE tag_search_update();
 
 
 insert into images (path) values ('storage/users/avatar.png');
-insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/bundle.jpg');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');

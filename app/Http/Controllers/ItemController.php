@@ -37,20 +37,20 @@ class ItemController extends Controller
 
         if(!is_numeric($id))
             return response('', 404);
-        
+
         $client = Client::find($id);
         $items = $client->item_carts;
-        
+
         $total = 0;
         foreach($items as $item){
             $product = Product::find($item->id);
             $total += $item->price * $item->pivot->quantity;
-            
+
             if($product == null) continue;
 
-            
+
             $images = $product->images;
-            
+
             $item['image'] = $images[0]->path;
         }
 
@@ -109,7 +109,7 @@ class ItemController extends Controller
             'active' => 'true',
             'is_bundle' => $request->input('item.bundle'),
         ]);
-        
+
         // Não sei se está certo
         if($request->has('item.tags')){
             $tags = $request->input('item.tags');
@@ -117,28 +117,28 @@ class ItemController extends Controller
         }
 
         if($request->input('item.bundle') == false){
-        
+
             $product = Product::create([
                 'type' => $request->input('item.type')
             ]);
 
-        
+
             if($request->has('item.images')){
                 $paths = [];
                 foreach($request->file('imageFile') as $image)
                 {
-                    $path = $image->store('/public/images'); 
+                    $path = $image->store('/public/images');
                     array_push($paths, $path);
-    
+
                     Image::create([
                         'path' => $path
                     ]);
-    
+
                 }
                 $product->images = $paths;
             }
         }
-        
+
     }
 
     /**
@@ -149,11 +149,11 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        
+
         $item = Item::find($id);
 
 
-        $data = 
+        $data =
         [
             'name' => $item->name,
             'price' => $item->price,
@@ -176,14 +176,14 @@ class ItemController extends Controller
             $data['images'] = $images;
         }
 
-        
+
 
         if(count($item->reviews)>0){
             $data['reviews'] =  $item->reviews;
         }
 
         if(count($item->tags)>0){
-            
+
             $data['tags'] =  $item->tags;
         }
 
@@ -191,14 +191,14 @@ class ItemController extends Controller
         if(auth()->user()!=null){
             $data['admin'] = auth()->user()->is_admin;
         }
-        
+
 
 
 
 
 
         return view('pages.misc.product_detail', $data);
-        
+
     }
 
 
@@ -210,13 +210,13 @@ class ItemController extends Controller
         if (!Image::exists($path)) {
             abort(404);
         }
-    
+
         $image = Image::get($path);
         // $type = File::mimeType($path);
-    
+
         // $response = Response::make($file, 200);
         // $response->header("Content-Type", $type);
-    
+
         return $image;
 
     }
@@ -224,7 +224,7 @@ class ItemController extends Controller
     // nao pode ser feito assim, é suposto retornar a vista com todos os items
     public function list()
     {
-        
+
 
 
 
@@ -232,7 +232,7 @@ class ItemController extends Controller
 
 
 
-        // $data = 
+        // $data =
         // [
         //     'name' => $item->name,
         //     'price' => $item->price,
@@ -247,7 +247,7 @@ class ItemController extends Controller
 
 
         return view('pages.misc.products_list', ['items' => $items]);
-        
+
     }
 
 
@@ -289,7 +289,7 @@ class ItemController extends Controller
         if(!is_numeric($id)){
             return response('', 404)->header('description','The item was not found');
         }
-       
+
         $request->validate([
             'item.description' => 'string',
             'item.quantityAvailable' => 'integer',
@@ -297,7 +297,7 @@ class ItemController extends Controller
             'item.name' => 'string',
         ]);
 
-        
+
 
         $item = Item::find($id);
         $this->authorize('update', $item);
@@ -307,19 +307,19 @@ class ItemController extends Controller
         }
 
         if($request->has('item.name')){
-            $item->name = $request->input('item.name'); 
+            $item->name = $request->input('item.name');
         }
 
         if($request->has('item.description')){
-            $item->description = $request->input('item.description'); 
+            $item->description = $request->input('item.description');
         }
 
         if($request->has('item.quantityAvailable')){
-            $item->stock = $request->input('item.quantityAvailable'); 
+            $item->stock = $request->input('item.quantityAvailable');
         }
 
         if($request->has('item.price')){
-            $item->price = $request->input('item.price'); 
+            $item->price = $request->input('item.price');
         }
 
         $item->save();
@@ -347,7 +347,7 @@ class ItemController extends Controller
         }
 
         $item->active = 'false';
-    
+
         $item->save();
 
         return response('', 204,)->header('description', 'Successfully deactivated item');
@@ -363,12 +363,20 @@ class ItemController extends Controller
 
         foreach($items as $group){
             foreach($group as $item){
-                $item->unit=\DB::table('products')->where('id','=',$item->id)->get('type');
+                if($item->is_bundle) {
+                    $item->unit=\DB::table('products')->get('type')->first();
+                    $temp=$item->unit;
+                    $temp->type="Un"; //it is required to create a temp variable to make the change
+                    $item->unit = $temp;
+                }else{
+                    $item->unit=\DB::table('products')->where('id','=',$item->id)->get('type')->first();
+                }
                 $item->images=app('App\Http\Controllers\ImageController')->productImages($item->id);
             }
+
         }
-        
-        
+
+
         return view('pages.misc.home_page',['items'=>$items]);
     }
 
