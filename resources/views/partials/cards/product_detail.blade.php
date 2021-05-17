@@ -12,18 +12,20 @@
                 <div class="row row-cols-md-2">
                     <div class="col-10">
                         <h5 class="card-title ">{{ $price}}€@isset($unit)/{{ $unit }}  @endisset</h5>
-                        <!-- Isto tem de ser estático -->
                         
-                        <div class="rating justify-content-end"> 
+                        
+                        {{-- <div class="rating justify-content-end">  --}}
+                            <!-- Isto tem de ser estático -->
                             {{-- <input type="radio" name="ratinga" value="5" id="5a"><label for="5a">☆</label> 
                             <input type="radio" name="ratinga" value="4" id="4a"><label for="4a">☆</label> 
                             <input type="radio" name="ratinga" value="3" id="3a"><label for="3a">☆</label>
                             <input type="radio" name="ratinga" value="2" id="2a"><label for="2a">☆</label>
                             <input type="radio" name="ratinga" value="1" id="1a"><label for="1a">☆</label> --}}
 
-                            @for ($i = 0; $i < 5; $i++)
+                            
+                            @for ($i = 1; $i <= 5; $i++)
 
-                                @if ($i >  $rating )
+                                @if ($i <=  $rating )
                                     <i class="bi bi-star-fill"></i>
 
                                 @else
@@ -31,10 +33,9 @@
                                 @endif
                                 
                             @endfor
-                            
 
 
-                        </div>
+                        {{-- </div> --}}
                     </div>
                     <div class="col d-none d-md-block d-lg-block text-end sm-5 ">
                         <i class=text-muted>{{$supplier->name}}</i>

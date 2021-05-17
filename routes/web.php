@@ -36,7 +36,7 @@ Route::get('/dashboard_requests', 'SupplierController@requests')->name('admin_re
 Route::get('/users/{id}', 'UserController@getProfile');
 
 Route::get('/supplier/{id}/createBundle', 'ItemController@create');
-Route::get('/supplier/{id}/createProduct', 'ProductController@create');
+Route::get('/supplier/{id}/createProduct', 'ProductController@create')->name('create_product');
 Route::get('/supplier/{id}/createCoupon', 'CouponController@create');
 
 // Coupon
@@ -66,8 +66,6 @@ Route::get('/api/product/{id}', 'ProductController@show');
 Route::put('/api/product/{id}', 'ProductController@update');
 Route::delete('/api/product/{id}', 'ProductController@destroy');
 
-
-
 Route::get('/api/client/{id}/history', 'PurchaseController@index');
 Route::get('/api/client/{id}/periodic', 'PurchaseController@index');//reevaluate
 Route::post('/client/{id}/checkoutInfo', 'PurchaseController@create');
@@ -81,7 +79,8 @@ Route::put('/client/{id}/checkoutPayment', 'ShipDetailController@update');
 //maybe get supplier profiles
 Route::get('/api/supplier', 'SupplierController@index');
 Route::get('/supplier', 'SupplierController@index');
-Route::get('/supplier/{id}', 'SupplierController@show');
+Route::get('/supplier/{id}', 'SupplierController@show')->name('supplierProfile');
+Route::get('/supplier/{id}/allproducts', 'SupplierController@allProducts')->name('supplier_all_products');
 Route::post('/supplier', 'SupplierController@requestHandling');
 
 // Client

@@ -167,7 +167,7 @@ class ItemController extends Controller
             $product = Product::find($id);
             $data['unit'] = $product->type;
 
-            $images = $product->images();
+            $images = $product->images()->get();
             // foreach($product->images as $image){
             //     $contents = Storage::disk('public')->get("images/" . $image->path);
             //     array_push($images, $contents);

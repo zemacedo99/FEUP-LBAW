@@ -4,16 +4,30 @@
 
 <script src={{ asset('js/supplier_profile.js') }} defer></script>
 
+@php
+    $data = 
+    [
+        'name' => $name,
+        'address' => $address,
+        'post_code' =>$post_code,
+        'city' => $city,
+        'description' => $description,
+        'items' => $items,
+    ];
+
+        
+@endphp
+
 <div class="row d-flex d-lg-none mb-2 mt-2">
     <div class="col-12 d-flex justify-content-center">
         <div class="position-relative">
-            <img src="../images/img_avatar.png" class="rounded-circle img-fluid d-flex justify-content-center" style="width: 150px;"></img>
+            <img src="../images/img_avatar.png" class="rounded-circle img-fluid d-flex justify-content-center" style="width: 150px;">
             <span class="badge rounded-pill bg-primary" style="transform:translate(120px,-40px)"><i class="bi bi-pencil"></i></span>
         </div>
     </div>
     <div class="col-12 d-flex justify-content-center mb-2">
         <div class="form-floating">
-            <input type="text" class="form-control" id="ClientName" placeholder="Name" value="André Gomes">
+            <input type="text" class="form-control" id="ClientName" placeholder="Name" value="test">
             <label for="ClientName">Name</label>
         </div>
     </div>
@@ -32,8 +46,8 @@
 @include('partials.modals.add_modal')
 
 <div class="tab-content" id="SupplierTabContent">
-    <div class="tab-pane fade col-lg-6 show active" id="supplierProfile" role="tabpanel" aria-labelledby="supplierProfile-tab">@include('pages.supplier.include.edit_profile')</div>
-    <div class="tab-pane fade col-lg-6" id="products" role="tabpanel" aria-labelledby="products-tab">@include('pages.supplier.include.product_overview')</div>
+    <div class="tab-pane fade col-lg-6 show active" id="supplierProfile" role="tabpanel" aria-labelledby="supplierProfile-tab">@include('pages.supplier.include.edit_profile',$data)</div>
+    <div class="tab-pane fade col-lg-6" id="products" role="tabpanel" aria-labelledby="products-tab">@include('pages.supplier.include.product_overview',$data)</div>
 </div>
 
 @endsection
