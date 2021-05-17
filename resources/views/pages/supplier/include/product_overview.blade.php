@@ -10,9 +10,38 @@
         </div>
     </div>
 
-    <?php for ($i = 0; $i < 4; $i++) { ?>
-        @include('partials.cards.product_detail_supplier_overview')
-    <?php } ?>
+
+
+    @php
+        $max = 4;
+    @endphp
+
+
+    @foreach ($items as $item)
+        
+        @php
+            $data = 
+            [
+                'name' => $item[0]->name,
+                'price' => $item[0]->price,
+                'description' => $item[0]->description,
+                'unit' => $item[1],
+                'images' => $item[2],
+            ];
+        @endphp
+        @include('partials.cards.product_detail_supplier_overview',$data)
+
+        @php
+            if($max == 1)
+            {
+                break;
+            }
+
+            $max--;
+        @endphp
+        
+
+    @endforeach
 
     <div class="row">
         <a href="{{ route('supplier_all_products'  , ['id' => \Illuminate\Support\Facades\Auth::id()]) }}" class="link-dark">See all Products</a>

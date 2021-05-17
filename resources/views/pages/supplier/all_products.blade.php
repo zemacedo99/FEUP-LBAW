@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center justify-content-lg-start">
                     <p class="col-md-auto text-decoration-underline text-center">
-                    <h3>Quinta do Bill</h3>
+                    <h3>{{$name}}</h3>
                     </p>
                 </div>
             </div>

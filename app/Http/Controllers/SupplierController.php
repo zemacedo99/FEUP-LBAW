@@ -94,6 +94,20 @@ class SupplierController extends Controller
         $email = auth()->user()->email;
         $password =  auth()->user()->password;
 
+        $items =  $supplier->items()->get();
+        $all = [];
+
+        $i = 0;
+        foreach($items as $item)
+        {
+            $product = Product::find($item->id);
+        
+            $all[$i] = [$item,$product->type,$product->images()->get()];
+            
+            $i++;
+        }
+
+
         $data = 
         [
             'name' => $supplier->name,
@@ -103,7 +117,7 @@ class SupplierController extends Controller
             'post_code' =>$supplier->post_code,
             'city' => $supplier->city,
             'description' => $supplier->description,
-            'items' => $supplier->items(),
+            'items' => $all,
         ];
 
 
