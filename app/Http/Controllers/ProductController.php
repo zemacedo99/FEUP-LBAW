@@ -187,7 +187,7 @@ class ProductController extends Controller
         }
 
 
-        return redirect('/items'); //todo: change for the same pag, but add a buton so see all supplier products
+        return redirect(route('create_product'  , ['id' => $request->supplierID]) ); //todo: change for the same pag, but add a buton so see all supplier products
     }
 
     /**

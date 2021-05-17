@@ -77,11 +77,15 @@ addModal(
         </div>
     </div> --}}
 
+    <input type="hidden" name="supplierID" id="supplierID"
+    value="{{ \Illuminate\Support\Facades\Auth::id() }}">
+
     <div class="col-12 col-lg-12 d-flex justify-content-center mb-4">
         <label class="btn btn-primary" for="sup_img">
             Profile Pic
         </label>
-        <input type="file" class="form-control d-none" id="sup_img" aria-describedby="sup_img_addon" aria-label="Upload">
+        {{-- <input type="file" class="form-control d-none" id="sup_img" aria-describedby="sup_img_addon" aria-label="Upload"> --}}
+        <input type="file" class="form-control d-none" id="sup_img"  name="images[]" aria-describedby="sup_img_addon" aria-label="Upload" multiple accept="image/x-png,image/gif,image/jpeg" >
     </div>
 
     <div class="col-12 col-lg-12 d-flex justify-content-center mb-4">

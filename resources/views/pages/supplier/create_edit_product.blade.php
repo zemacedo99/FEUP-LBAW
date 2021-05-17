@@ -7,10 +7,19 @@
 
     <div class="container">
 
-        <div class="row my-5 border-bottom">
-            <h2 class="text-start"> {{ $title }}</h2>
+        <div class="col order-1">
+            <div class="row" style='border-bottom:2px solid black;'>
+                <div class="col-10">
+                    <h2 class="text-start"> {{ $title }}</h2>
+                </div>
+                <div class="col-2">
+                    <a href="{{ route('supplier_all_products'  , ['id' => \Illuminate\Support\Facades\Auth::id()]) }}" class="link-dark" style='text-align:right;'>See all Products</a>
+                </div>
+            </div>  
         </div>
 
+
+        <div class="row mb-5"></div>
 
         <div class="row mb-4">
 

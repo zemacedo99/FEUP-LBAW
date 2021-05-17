@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supplier;
+use App\Models\Image;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -22,6 +23,13 @@ class SupplierController extends Controller
         $suppliers = Supplier::get();
         return view('pages.misc.products_list', ['suppliers' => $suppliers]);
     }
+
+
+    public function allProducts()
+    {
+        return view('pages.supplier.all_products');
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -67,6 +75,7 @@ class SupplierController extends Controller
             'post_code' =>$supplier->post_code,
             'city' => $supplier->city,
             'description' => $supplier->description,
+            'items' => $supplier->items(),
         ];
 
 
@@ -101,9 +110,25 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function edit(Supplier $supplier)
+    public function edit(Request $request)
     {
-        //
+        //WIP
+
+        $image = $request->image;
+
+        $supplier = Supplier::find($request->supplierID);
+
+              
+        $filename = $image->store('public/images');
+                
+
+        $img = Image::create([
+            'path' => $filename
+        ]);
+
+        $img->supplier()->attach($supplier);
+            
+        
     }
 
     /**
