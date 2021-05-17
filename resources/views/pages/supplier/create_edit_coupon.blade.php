@@ -4,10 +4,6 @@
 
 <script type="text/javascript" src={{ asset('js/create_coupon.js') }} defer> </script>
 
-    @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-    @endforeach
-
     <div class="container">
 
         <div class="pt-4 my-md-5 pt-md-5 border-bottom">
@@ -87,7 +83,7 @@
             <div class="row my-5">
                 <span class="text-center">
                     <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i> Delete Coupon</button>
-                    <input type="submit" class="btn btn-primary" value="Confirmar">
+                    <input type="submit" class="btn btn-primary" value="Confirm">
                 </span>
             </div>
         </form>

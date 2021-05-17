@@ -6,7 +6,7 @@
         <div class="col-lg-8">
             <div class="card-body">
                 <h4 class="card-title text-center mb-3">{{$name}}</h4>
-
+                <input type="hidden" value="{{$id}}" name="item_{{$nr}}">
 
                 <div class="row text-center">
                     <div class="col-xl-4">

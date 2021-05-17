@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Purchase extends Model
 {
-    public $timestamps  = false;
-    protected $fillable = ['client_id', 'paid', 'purchase_date', 'type'];
+    public $timestamps  = true;
+    protected $fillable = ['id', 'client_id', 'paid', 'purchase_date', 'type'];
 
     use HasFactory;
 

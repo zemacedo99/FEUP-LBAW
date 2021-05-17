@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Supplier;
 use App\Models\User;
+use App\Models\Image;
+use App\Models\Item;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -30,6 +33,39 @@ class SupplierController extends Controller
         $suppliers = Supplier::get();
         return view('pages.misc.products_list', ['suppliers' => $suppliers]);
     }
+
+
+    public function allProducts($id)
+    {
+        $supplier = Supplier::find($id);
+
+        $image = Image::find($supplier->image_id);
+        $items = Item::where('supplier_id', '=', $id)->get();
+
+
+        $all = [];
+
+        $i = 0;
+        foreach($items as $item)
+        {
+            $product = Product::find($item->id);
+        
+            $all[$i] = [$item,$product->type,$product->images()->get()];
+            
+            $i++;
+        }
+
+        $data = 
+        [
+            'name' => $supplier->name,
+            'items' => $all,
+            'image' =>$image,
+        ];
+
+
+        return view('pages.supplier.all_products',$data);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -60,8 +96,42 @@ class SupplierController extends Controller
      */
     public function show($id)
     {
-        //
-        return Supplier::where('id','=',$id)->get();
+        $supplier = Supplier::find($id);
+
+        //todo: verificar questões de segurança
+        $email = auth()->user()->email;
+        $password =  auth()->user()->password;
+
+        $items =  $supplier->items()->get();
+        $all = [];
+
+        $i = 0;
+        foreach($items as $item)
+        {
+            $product = Product::find($item->id);
+        
+            $all[$i] = [$item,$product->type,$product->images()->get()];
+            
+            $i++;
+        }
+
+
+        $data = 
+        [
+            'name' => $supplier->name,
+            'email' => $email,
+            'password' =>$password,
+            'address' => $supplier->address,
+            'post_code' =>$supplier->post_code,
+            'city' => $supplier->city,
+            'description' => $supplier->description,
+            'items' => $all,
+        ];
+
+
+
+
+        return view('pages.supplier.supplier_profile',$data);
     }
 
     public function requests(){
@@ -91,9 +161,25 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function edit(Supplier $supplier)
+    public function edit(Request $request)
     {
-        //
+        //WIP
+
+        $image = $request->image;
+
+        $supplier = Supplier::find($request->supplierID);
+
+              
+        $filename = $image->store('public/images');
+                
+
+        $img = Image::create([
+            'path' => $filename
+        ]);
+
+        $img->supplier()->attach($supplier);
+            
+        
     }
 
     /**
