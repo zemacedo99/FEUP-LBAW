@@ -1,37 +1,60 @@
-<div id="mainContainer" class="col-12 col-lg-6 mb-5 mb-lg-0">
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                aria-label="Slide 3"></button>
+@isset($images)
+    <div id="mainContainer" class="col-12 col-lg-6 mb-5 mb-lg-0">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
+            <div class="carousel-indicators">
+                @php
+                    $count = 0;
+                @endphp
+                @foreach ($images as $image)
+                
+                    @if ($count == 0)
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{$count}}" class="active" aria-current="true" aria-label="Slide {{$count}}"></button>
+                    @else
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{$count}}" aria-label="Slide {{$count}}"></button>
+                    @endif
+
+                    @php
+                        $count++;
+                    @endphp
+                
+                @endforeach
+            </div>
+            <div class="carousel-inner" style=" width:100%; max-height: 400px !important;">
+
+
+                @php
+                    $count = 0;
+                @endphp
+                @foreach ($images as $image)
+                
+                    @if ($count == 0)
+                        <div class="carousel-item active">
+                            <img src="{{ asset('storage/images/' . $image->path) }}" class="d-block w-100" alt="...">
+                        </div>
+                    @else
+                        <div class="carousel-item ">
+                            <img src="{{ asset('storage/images/' . $image->path) }}" class="d-block w-100" alt="...">
+                        </div>
+                    @endif
+
+                    @php
+                        $count++;
+                    @endphp
+                
+                @endforeach
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        <div class="carousel-inner" style=" width:100%; max-height: 400px !important;">
-            <div class="carousel-item active">
-                <img src="{{ asset('storage/images/test.jpg') }}" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item ">
-                <img src="{{ asset('storage/images/test.jpg') }}" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="{{ asset('storage/images/test.jpg') }}" class="d-block w-100" alt="...">
-            </div>
-
-
-        </div>
-
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
     </div>
-</div>
+@endisset
