@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Supplier;
 use App\Models\Image;
+use App\Models\Item;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -25,9 +27,35 @@ class SupplierController extends Controller
     }
 
 
-    public function allProducts()
+    public function allProducts($id)
     {
-        return view('pages.supplier.all_products');
+        $supplier = Supplier::find($id);
+
+        $image = Image::find($supplier->image_id);
+        $items = Item::where('supplier_id', '=', $id)->get();
+
+
+        $all = [];
+
+        $i = 0;
+        foreach($items as $item)
+        {
+            $product = Product::find($item->id);
+        
+            $all[$i] = [$item,$product->type,$product->images()->get()];
+            
+            $i++;
+        }
+
+        $data = 
+        [
+            'name' => $supplier->name,
+            'items' => $all,
+            'image' =>$image,
+        ];
+
+
+        return view('pages.supplier.all_products',$data);
     }
 
 

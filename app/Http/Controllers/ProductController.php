@@ -175,9 +175,12 @@ class ProductController extends Controller
 
                 // dd($filename);
                 // dd($image);
-                $filename = $image->store('public/images');
                 //$upload_success = $image->move(storage_path('app/public/banners'), $image->getClientOriginalName());
+                $image->store('public/images');
 
+                $filename = $image->hashName();
+
+                
                 $img = Image::create([
                     'path' => $filename
                 ]);
