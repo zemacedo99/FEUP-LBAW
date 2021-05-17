@@ -19,7 +19,7 @@ addModal(
             </div>
             <div class="col fs-5">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="ClientName" placeholder="Name" value="André Gomes">
+                    <input type="text" class="form-control" id="ClientName" placeholder="Name" value="{{$name}}">
                     <label for="ClientName">Name</label>
                 </div>
             </div>
@@ -28,27 +28,29 @@ addModal(
 
     <div class="col-12 mb-3">
         <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value="{{$email}}">
             <label for="floatingInput">Email</label>
         </div>
     </div>
     <div class="col-12 mb-3">
         <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" value="{{$password}}">
             <label for="floatingPassword">Password</label>
         </div>
     </div>
 
-    <div class="col-12 mb-3">
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave your description here" id="floatingDescription" style="height: 100px"></textarea>
-            <label for="floatingDescription">Description</label>
-        </div>
-    </div>
 
     <div class="col-12 mb-3">
         <div class="form-floating">
-            <input type="text" class="form-control" id="floatingAddress" placeholder="Address">
+            <textarea class="form-control" placeholder="Leave your description here" id="floatingDescription" style="height: 100px" >{{$description}}</textarea>
+            <label for="floatingDescription">Description</label>
+        </div>
+    </div>
+        
+
+    <div class="col-12 mb-3">
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingAddress" placeholder="Address" value="{{$address}}">
             <label for="floatingAddress">Address</label>
         </div>
     </div>
@@ -56,24 +58,24 @@ addModal(
     <div class="row mb-3">
         <div class="col-6">
             <div class="form-floating">
-                <input type="text" class="form-control" id="floatingPostCode" placeholder="floatingPostCode">
+                <input type="text" class="form-control" id="floatingPostCode" placeholder="floatingPostCode" value="{{$post_code}}">
                 <label for="floatingPostCode">Post Code</label>
             </div>
         </div>
         <div class="col-6">
             <div class="form-floating">
-                <input type="text" class="form-control" id="floatingCity" placeholder="City">
+                <input type="text" class="form-control" id="floatingCity" placeholder="City"value="{{$city}}">
                 <label for="floatingCity">City</label>
             </div>
         </div>
     </div>
 
-    <div class="col-12 mb-3">
+    {{-- <div class="col-12 mb-3">
         <div class="form-floating">
             <input type="text" class="form-control" id="floatingNIF" placeholder="NIF">
             <label for="floatingNIF">NIF</label>
         </div>
-    </div>
+    </div> --}}
 
     <div class="col-12 col-lg-12 d-flex justify-content-center mb-4">
         <label class="btn btn-primary" for="sup_img">

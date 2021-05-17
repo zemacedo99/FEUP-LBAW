@@ -52,8 +52,27 @@ class SupplierController extends Controller
      */
     public function show($id)
     {
-        //
-        return Supplier::where('id','=',$id)->get();
+        $supplier = Supplier::find($id);
+
+        //todo: verificar questões de segurança
+        $email = auth()->user()->email;
+        $password =  auth()->user()->password;
+
+        $data = 
+        [
+            'name' => $supplier->name,
+            'email' => $email,
+            'password' =>$password,
+            'address' => $supplier->address,
+            'post_code' =>$supplier->post_code,
+            'city' => $supplier->city,
+            'description' => $supplier->description,
+        ];
+
+
+
+
+        return view('pages.supplier.supplier_profile',$data);
     }
 
     public function requests(){

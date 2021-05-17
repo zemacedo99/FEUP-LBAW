@@ -144,21 +144,16 @@ class ProductController extends Controller
 
 
                 if (count($tags) > 0) {                     //if the tagvalue exist 
-        
                     foreach ($tags as $tag) {
                         $item->tags()->attach($tag);          // associate the tag to the item
                     }
                 }
                 else                                        // if the tagvalue is new
                 {
-                    
-                    foreach($request->tags as $tagvalue)
-                    {
-                        $tag = Tag::create([                //create new tag
-                            'value' => $tagvalue,   
-                        ]);
-                        $item->tags()->attach($tag);        // associate the tag to the item
-                    }
+                    $tag = Tag::create([                //create new tag
+                        'value' => $tagsValue,   
+                    ]);
+                    $item->tags()->attach($tag);        // associate the tag to the item
                 }
         
             }

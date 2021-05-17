@@ -4,7 +4,7 @@
 </div>
 
 <div class="row  justify-content-center">
-    <div class="col-12 col-md-4 col-lg-6">
+    <div class="col-12 col-lg-6">
         {{-- <div class="form">
             <textarea class="form-control" id="Description" rows="5"></textarea>
         </div> --}}
@@ -38,12 +38,11 @@
 
             
             <div class="container1">
-                <button class="add_form_field">Add tag: &nbsp;
-                    <span style="font-size:16px;">+ </span>
+                <button class="add_form_field">Add tag &nbsp;
                 </button>
                 <div>
                 {{-- <input type="text" name="tags[]"> --}}
-                <input id="tags" name="tags[]" list="tag" multiple>
+                <input id="tags" name="tags[]" list="tag" size="13" maxlength="13" multiple>
                 <datalist id="tag">
                     @foreach ($tags as $tag)
                         <option value={{ $tag->value }}></option>
@@ -84,7 +83,7 @@
                 // $(wrapper).append(
                 //     '<div><input type="text" name="mytext[]"/><a href="#" class="delete">Delete</a></div>'
                 // ); //add input box
-                $(wrapper).append('<div><input type="text" id="tags" name="tags[]" list="tag" ><datalist id="tag">   @foreach ($tags as $tag)  <option value={{ $tag->value }}></option>@endforeach</datalist><a href="#" class="delete"> <i class="bi bi-trash"> </i></a></div>'); //add input box
+                $(wrapper).append('<div><input id="tags" name="tags[]" list="tag" size="13" maxlength="13" multiple><datalist id="tag">   @foreach ($tags as $tag)  <option value={{ $tag->value }}></option>@endforeach</datalist><a href="#" class="delete"> <i class="bi bi-trash"> </i></a></div>'); //add input box
             } else {
                 alert('You Reached the limits')
             }

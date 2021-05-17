@@ -76,13 +76,22 @@
 
                     <div class="row justify-content-center">
                         <div class="row mb-3 "></div>
-                        <input type="file" class="btn btn-primary" name="images[]" multiple accept="image/x-png,image/gif,image/jpeg"  />
+                        <div class="col-12 col-lg-12 d-flex justify-content-center mb-4">
+                            <label class="btn btn-primary" for="sup_img">
+                                Add pictures
+                            </label>
+                            {{-- para ter feedback tirar class="form-control d-none" --}}
+                            <input type="file" class="form-control d-none" id="sup_img"  name="images[]" aria-describedby="sup_img_addon" aria-label="Upload" multiple accept="image/x-png,image/gif,image/jpeg" >
+                        </div>
+
+         
                         {{-- <div class="row mb-1 "></div>
                         <input type="file" class="btn btn-primary" name="images[]" multiple />
                         <div class="row mb-1 "></div>
                         <input type="file" class="btn btn-primary" name="images[]" multiple /> --}}
                     </div>
                     
+                    @include('partials.description_and_tags')
 
             </div>
 
@@ -92,12 +101,11 @@
         </div>
 
         
-        @include('partials.description_and_tags')
 
         <div class="row my-5">
             <span class="text-center">
                 <input type="submit" class="btn btn-primary" value="Confirmar">
-                <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i> Delete Product</button>
+                {{-- <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i> Delete Product</button> --}}
             </span>
         </div>
 
