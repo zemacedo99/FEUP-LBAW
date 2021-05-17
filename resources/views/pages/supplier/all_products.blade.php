@@ -19,8 +19,11 @@
                     <p class="col-md-auto text-decoration-underline text-center">
                     <h3>{{$name}}</h3>
                     </p>
+                    
                 </div>
+
             </div>
+            <a href="{{ route('supplierProfile'  , ['id' => \Illuminate\Support\Facades\Auth::id()]) }}" class="link-dark" style='text-align:right;'>Back to profile</a>
 
         </div>
     </div>
@@ -53,6 +56,8 @@
         @endforeach
 
     </div>
+
+    
 
 </div>
 
