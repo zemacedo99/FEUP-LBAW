@@ -14,7 +14,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UploadController;
 
-
 Route::get('image/{filename}', 'ItemController@storage_link');
 Route::view('upload', 'upload');
 Route::post('upload',[UploadController::class,'index']);
@@ -70,10 +69,13 @@ Route::get('/api/client/{id}/history', 'PurchaseController@index');
 Route::get('/api/client/{id}/periodic', 'PurchaseController@index');//reevaluate
 Route::post('/client/{id}/checkoutInfo', 'PurchaseController@create');
 
-//ship details
-Route::get('/client/{id}/checkoutPayment', 'ShipDetailController@index');
-Route::post('/client/{id}/checkoutPayment', 'ShipDetailController@create');
-Route::put('/client/{id}/checkoutPayment', 'ShipDetailController@update');
+// Credit Card
+Route::post('/api/creditcard', 'CreditCardController@create');
+Route::put('/api/creditcard', 'CreditCardController@update');
+Route::delete('/api/creditcard', 'CreditCardController@destroy');
+
+// Ship Details
+Route::post('/api/shipdetails', 'ShipDetailController@create');
 
 //shoppers
 //maybe get supplier profiles
@@ -89,6 +91,7 @@ Route::get('/api/client', 'ClientController@index');
 Route::get('/api/client/{id}', 'ClientController@get_info');
 Route::put('/api/client/{id}', 'ClientController@update');
 Route::delete('/api/client/{id}', 'ClientController@destroy');
+
 
 
 
@@ -110,6 +113,9 @@ Route::delete('/api/tag/{tagName}','TagController@destroy');
 
 Route::get('/client/{id}/checkoutInfo', 'ItemController@checkout')->name('checkout');
 Route::get('/client/{id}/checkoutPayment', 'ItemController@payment')->name('payment');
+Route::post('/api/checkout', 'ItemController@save_checkout');
+Route::post('/api/payment', 'ItemController@do_payment');
+
 
 // Route::get('/', 'Auth\LoginController@home');
 

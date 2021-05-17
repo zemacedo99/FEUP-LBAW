@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Coupon;
+use App\Models\CreditCard;
 use App\Models\Image;
 use App\Models\Item;
 use App\Models\Product;
+use App\Models\Purchase;
+use App\Models\ShipDetail;
+use App\Models\TempPurchase;
 use Illuminate\Http\Request;
-
-use function PHPUnit\Framework\isEmpty;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
@@ -31,7 +34,75 @@ class ItemController extends Controller
         $products=Item::orderBy('id','asc')->paginate(8);
 
         return view('pages.admin.products',['items'=>$products->withPath('dashboard_products')]);
+    } 
+
+
+    public function save_checkout(Request $request){
+
+        $client_id = Auth::id();
+
+        $client = Client::find($client_id);
+
+        // $items = $client->item_carts;
+        
+
+        $request->validate([
+            'n_items' => 'required|integer',
+            'periodic' => 'required',
+            'all_coupons' => 'required',
+        ]);
+
+
+        $coupons_str = explode(' ', $request->input('all_coupons'));
+        $coupons = [];
+
+        foreach($coupons_str as $coupon){
+            array_push($coupons, Coupon::find($coupons_str));
+        }
+    
+        //Update quantities
+        $total = 0;
+
+        for($i = 0; $i < $request->input('n_items'); $i++){
+            $request->validate([
+                'item_' . $i => 'required|integer',
+                'quantity_' . $i => 'required|integer',
+            ]);
+
+            $id_item = $request->input('item_' . $i);
+            $quantity = $request->input('quantity_' . $i);
+            
+            // foreach($items as $item){
+            //     if($item->id == $id_item){
+            //         $item->quantity = $quantity;
+            //         break;
+            //     }
+            // }
+
+            $item = Item::find($id_item);
+
+            $item_tot_price = $item->price * $quantity;
+
+            foreach($coupons as $coupon){
+                if($coupon->supplier_id === $item->supplier_id){
+                    if($coupon->type === '%'){
+                        $total +=  (1 - $coupon->amount/100) * $item_tot_price;
+                    }else{
+                        $total +=  max(0, $item_tot_price - $coupon->amount);   
+                    }
+                }
+            }
+        }
+
+        TempPurchase::create([
+            'client_id' => $client_id,
+            'total' => $total,
+            'type' => $request->input('periodic'),
+        ]);
+
+        redirect()->route('payment');
     }
+   
 
     public function checkout($id){
 
@@ -62,9 +133,53 @@ class ItemController extends Controller
         return view('pages.checkout.cart_info', $data);
     }
 
+
     public function payment($id){
-        $data = [];
+        // Falta validação
+
+        $ccs = CreditCard::where('client_id', $id)
+                ->where('to_save', true)->get();
+        
+        $ship_det = ShipDetail::where('client_id', $id)
+                ->where('to_save', true)->get();
+
+        $data = [
+            'ccs' => $ccs,
+        ];
+
+        if($ship_det != []){
+            $data['sd'] = $ship_det->first();
+        }
+
         return view('pages.checkout.shipping_payment', $data);
+    }
+
+    public function do_payment(Request $request){
+
+        $request->validate([
+            'cc_id' => 'required|integer|exists:credit_cards,id',
+            'sd_id' => 'required|integer|exists:ship_details,id',
+        ]);
+
+        $client_id = Auth::id();
+
+        $temp_builder = TempPurchase::where('client_id', $client_id);
+
+        $temp = $temp_builder->get()->first();
+        
+        //Deleting carts
+        Client::find(Auth::id())->item_carts->newPivotStatement()->where('client_id', $client_id)->delete();
+
+        $purchase = Purchase::create([
+            'client_id' => $client_id,
+            'paid' => $temp->total,
+            'sd_id' => $request->input('sd_id'),
+            'cc_id' => $request->input('cc_id'),
+            'type' => $temp->type,
+        ]);
+        
+        $temp_builder->delete();
+        redirect('/');
     }
 
 
@@ -224,13 +339,7 @@ class ItemController extends Controller
     // nao pode ser feito assim, é suposto retornar a vista com todos os items
     public function list()
     {
-        
-
-
-
         $items = Item::get();
-
-
 
         // $data = 
         // [
@@ -239,12 +348,6 @@ class ItemController extends Controller
         //     'description' => $item->description,
         //     'rating' => $item->rating,
         // ];
-
-
-
-
-
-
 
         return view('pages.misc.products_list', ['items' => $items]);
         
@@ -351,6 +454,7 @@ class ItemController extends Controller
         $item->save();
 
         return response('', 204,)->header('description', 'Successfully deactivated item');
+        
     }
 
 
@@ -363,7 +467,7 @@ class ItemController extends Controller
 
         foreach($items as $group){
             foreach($group as $item){
-                $item->unit=\DB::table('products')->where('id','=',$item->id)->get('type');
+                $item->unit = \DB::table('products')->where('id','=',$item->id)->get('type');
                 $item->images=app('App\Http\Controllers\ImageController')->productImages($item->id);
             }
         }
