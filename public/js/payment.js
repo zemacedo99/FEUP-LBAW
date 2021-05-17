@@ -7,6 +7,7 @@ function addAllListeners(){
     let add_cc= document.getElementById('add_cc')
     let editButtons = document.getElementsByClassName('edit')
     let deleteButtons = document.getElementsByClassName('delete')
+    let selectButtons = document.getElementsByClassName('select')
     
     submit.addEventListener('submit', validateForm)
     
@@ -15,6 +16,7 @@ function addAllListeners(){
     for(let i = 0; i < editButtons.length; i++){
         editButtons[i].addEventListener('click', editCC)
         deleteButtons[i].addEventListener('click', deleteCC)
+        selectButtons[i].addEventListener('click', selectCC)
     }
     last_i = editButtons.length - 1
 
@@ -48,23 +50,45 @@ function validateForm(event) {
             sd['to_save'] = false
         }
 
-
+        let sp_id = -1
         sendAjaxRequest('post', '/api/shipdetails', sd, function(){
-            if (this.status !== 200){
-                alert(this.status)
-
+            if (this.status === 201){
+                sp_id = JSON.parse(this.responseText).id
+            }else{
+                event.preventDefault()
+                sp_id = -2
             }
-            event.preventDefault()
         }, false)
 
+        while(sp_id == -1)
+            continue
+        if(sp_id == -2){
+            console.log("Error in shipdetail")
+        }
 
+        let cc_id =  document.getElementById('selected_id').value
         
+        
+        // event.preventDefault()
+        sendAjaxRequest('post', '/api/payment', {"cc_id": cc_id, "sp_id": sp_id}, function(){
+            
+            
+        }, false)
 
     }catch(err){
         alert(err.message)
         event.preventDefault()
     }
 }
+
+function selectCC(event){
+    let i = event.target.getAttribute('id').split(':')[1]
+    let id = document.getElementById('cc_id:' + i).value
+
+    document.getElementById('selected_id').value = id
+}
+
+
 
 function addCC(event){
     try{

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Coupon;
 use App\Models\CreditCard;
 use App\Models\Image;
 use App\Models\Item;
 use App\Models\Product;
+use App\Models\Purchase;
 use App\Models\ShipDetail;
+use App\Models\TempPurchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,17 +42,27 @@ class ItemController extends Controller
         $client_id = Auth::id();
 
         $client = Client::find($client_id);
-        $items = $client->item_carts;
 
+        // $items = $client->item_carts;
+        
 
         $request->validate([
             'n_items' => 'required|integer',
-            
+            'periodic' => 'required',
+            'all_coupons' => 'required',
         ]);
 
-        
 
-        
+        $coupons_str = explode(' ', $request->input('all_coupons'));
+        $coupons = [];
+
+        foreach($coupons_str as $coupon){
+            array_push($coupons, Coupon::find($coupons_str));
+        }
+    
+        //Update quantities
+        $total = 0;
+
         for($i = 0; $i < $request->input('n_items'); $i++){
             $request->validate([
                 'item_' . $i => 'required|integer',
@@ -59,15 +72,35 @@ class ItemController extends Controller
             $id_item = $request->input('item_' . $i);
             $quantity = $request->input('quantity_' . $i);
             
-            foreach($items as $item){
-                if($item->id == $id_item){
-                    $item->quantity = $quantity;
+            // foreach($items as $item){
+            //     if($item->id == $id_item){
+            //         $item->quantity = $quantity;
+            //         break;
+            //     }
+            // }
+
+            $item = Item::find($id_item);
+
+            $item_tot_price = $item->price * $quantity;
+
+            foreach($coupons as $coupon){
+                if($coupon->supplier_id === $item->supplier_id){
+                    if($coupon->type === '%'){
+                        $total +=  (1 - $coupon->amount/100) * $item_tot_price;
+                    }else{
+                        $total +=  max(0, $item_tot_price - $coupon->amount);   
+                    }
                 }
             }
-
         }
-        redirect('/');
-        
+
+        TempPurchase::create([
+            'client_id' => $client_id,
+            'total' => $total,
+            'type' => $request->input('periodic'),
+        ]);
+
+        redirect()->route('payment');
     }
    
 
@@ -119,6 +152,34 @@ class ItemController extends Controller
         }
 
         return view('pages.checkout.shipping_payment', $data);
+    }
+
+    public function do_payment(Request $request){
+
+        $request->validate([
+            'cc_id' => 'required|integer|exists:credit_cards,id',
+            'sd_id' => 'required|integer|exists:ship_details,id',
+        ]);
+
+        $client_id = Auth::id();
+
+        $temp_builder = TempPurchase::where('client_id', $client_id);
+
+        $temp = $temp_builder->get()->first();
+        
+        //Deleting carts
+        Client::find(Auth::id())->item_carts->newPivotStatement()->where('client_id', $client_id)->delete();
+
+        $purchase = Purchase::create([
+            'client_id' => $client_id,
+            'paid' => $temp->total,
+            'sd_id' => $request->input('sd_id'),
+            'cc_id' => $request->input('cc_id'),
+            'type' => $temp->type,
+        ]);
+        
+        $temp_builder->delete();
+        redirect('/');
     }
 
 

@@ -42,6 +42,7 @@
 
             </div>
             <div class="modal-footer">
+                <button type="button" id="select:{{$i}}" class="btn btn-primary select" data-bs-dismiss="modal">Select Card</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <button type="button" id="edit:{{$i}}"  data-bs-dismiss="modal" class="btn btn-primary edit">Edit Card</button>
             </div>

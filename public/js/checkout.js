@@ -3,6 +3,8 @@ let minus = document.getElementsByClassName('minusQuantity')
 let periodic = document.getElementsByClassName('periodic')
 let addCouponBtn = document.getElementById('addCoupon')
 
+let form = document.getElementById('form')
+
 
 for(let i = 0; i < plus.length; i++){
     plus[i].addEventListener('click', addQuantity)
@@ -18,7 +20,12 @@ for(let i = 0; i < periodic.length; i++){
 
 addCouponBtn.addEventListener('click', addCoupon)
 
+form.addEventListener('submit', submitForm)
 
+
+function submitForm(event){
+    alert("submit")
+}
 
 function addQuantity(event){
     
@@ -73,8 +80,9 @@ function addCoupon(event){
             
         }else{
             let couponsList = document.getElementById('coupons_list')
-            let coupon = JSON.parse(this.responseText);
+            let coupon = JSON.parse(this.responseText)
             couponsList.innerHTML += createCouponCard(coupon[0])
+            document.getElementById('all_coupons').value += coupon[0].id + " "
         }
     })
 }

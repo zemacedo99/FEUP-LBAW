@@ -1,4 +1,5 @@
 <div id="all_credit_cards">
+    <input type="hidden" id="selected_id" value="-1">
     @php
         $i=0
     @endphp

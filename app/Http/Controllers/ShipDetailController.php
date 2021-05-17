@@ -44,7 +44,7 @@ class ShipDetailController extends Controller
         ]);
 
 
-        ShipDetail::create([
+        $shipDetail = ShipDetail::create([
             'client_id' => Auth::id(),
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
@@ -59,7 +59,7 @@ class ShipDetailController extends Controller
         ]);
 
 
-        return response('', 200);
+        return $shipDetail;
     }
 
     /**
