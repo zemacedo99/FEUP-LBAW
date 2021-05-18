@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS images             CASCADE;
 DROP TABLE IF EXISTS tags               CASCADE;
-DROP TABLE IF EXISTS "users"           CASCADE; -- previously user
+DROP TABLE IF EXISTS "users"            CASCADE; -- previously user
 DROP TABLE IF EXISTS clients            CASCADE;
 DROP TABLE IF EXISTS suppliers          CASCADE;
 DROP TABLE IF EXISTS purchases          CASCADE;
@@ -10,12 +10,13 @@ DROP TABLE IF EXISTS products           CASCADE;
 DROP TABLE IF EXISTS ship_details       CASCADE;
 DROP TABLE IF EXISTS credit_cards       CASCADE;
 DROP TABLE IF EXISTS reviews            CASCADE;
+DROP TABLE IF EXISTS temp_purchases     CASCADE;
 DROP TABLE IF EXISTS item_purchase      CASCADE;
 DROP TABLE IF EXISTS item_product       CASCADE;
 DROP TABLE IF EXISTS item_tag           CASCADE;
 DROP TABLE IF EXISTS image_product      CASCADE;
 DROP TABLE IF EXISTS client_item        CASCADE;
-DROP TABLE IF EXISTS carts               CASCADE;
+DROP TABLE IF EXISTS carts              CASCADE;
 
 DROP MATERIALIZED VIEW IF EXISTS fts_view_weights;
 
@@ -72,19 +73,49 @@ CREATE TABLE suppliers (
     city            TEXT        NOT NULL,
     description     TEXT        NOT NULL,
     accepted        BOOLEAN     NOT NULL DEFAULT 'false',
-    image_id        INTEGER     NOT NULL DEFAULT 1 REFERENCES images (id) ON UPDATE CASCADE ON DELETE SET DEFAULT ,
+    image_id        INTEGER     NOT NULL DEFAULT 1 REFERENCES images (id) ON UPDATE CASCADE ON DELETE SET DEFAULT,
     search          tsvector    DEFAULT '' NOT NULL,
     PRIMARY KEY (id)
 );
 
+CREATE TABLE ship_details (
+    id              SERIAL      PRIMARY KEY,
+    first_name      TEXT        NOT NULL,
+    last_name       TEXT        NOT NULL,
+    address         TEXT        NOT NULL,
+    door_n          INTEGER     NOT NULL,
+    post_code       TEXT        NOT NULL,
+    district        TEXT        NOT NULL,
+    city            TEXT        NOT NULL,
+    country         TEXT        NOT NULL,
+    phone_n         TEXT        NOT NULL,
+    client_id       INTEGER     NOT NULL UNIQUE REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    to_save         BOOLEAN     NOT NULL DEFAULT 'true'
+);
+
+CREATE TABLE credit_cards (
+    id              SERIAL      PRIMARY KEY,
+    card_n          text        NOT NULL,
+    expiration      text        NOT NULL,
+    cvv             INTEGER     NOT NULL,
+    holder          TEXT        NOT NULL,
+    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    to_save         BOOLEAN     NOT NULL DEFAULT 'true'
+
+);
+
+
 CREATE TABLE purchases (
     id              SERIAL              PRIMARY KEY,
-    client_id       INTEGER             NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    client_id       INTEGER             NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE,
     paid            DECIMAL             NOT NULL,
-    purchase_date   DATE                NOT NULL,
+    created_at      DATE                NOT NULL,
+    updated_at      DATE                DEFAULT NULL,
+    sd_id           INTEGER             REFERENCES ship_details (id) ON UPDATE CASCADE ON DELETE SET NULL,
+    cc_id           INTEGER             REFERENCES credit_cards (id) ON UPDATE CASCADE ON DELETE SET NULL,
     type            purchase_type       NOT NULL,
-    CONSTRAINT      amount_positive_ck  CHECK (paid > 0),
-    CONSTRAINT      old_date_ck         CHECK (purchase_date <= CURRENT_DATE)
+    CONSTRAINT      amount_positive_ck  CHECK (paid > 0)
+    -- CONSTRAINT      old_date_ck         CHECK (purchase_date <= CURRENT_DATE)
 );
 
 -- BusinessRule: Item either is a bundle, or a product, can't have is_bundle true and be referenced in product
@@ -119,28 +150,6 @@ CREATE TABLE products (
     unit            unit_type   NOT NULL
 );
 
-CREATE TABLE ship_details (
-    id              SERIAL      PRIMARY KEY,
-    first_name      TEXT        NOT NULL,
-    last_name       TEXT        NOT NULL,
-    address         TEXT        NOT NULL,
-    door_n          INTEGER     NOT NULL,
-    post_code       TEXT        NOT NULL,
-    district        TEXT        NOT NULL,
-    city            TEXT        NOT NULL,
-    country         TEXT        NOT NULL,
-    phone_n         TEXT        NOT NULL,
-    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE credit_cards (
-    id              SERIAL      PRIMARY KEY,
-    card_n          text        NOT NULL,
-    expiration      DATE        NOT NULL,
-    cvv             INTEGER     NOT NULL,
-    holder          TEXT        NOT NULL,
-    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE
-);
 
 CREATE TABLE reviews (
     client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE SET NULL,
@@ -150,6 +159,14 @@ CREATE TABLE reviews (
     CONSTRAINT      rating_ck   CHECK (rating >= 1 AND rating <= 5),
     PRIMARY KEY (client_id, item_id)
 );
+
+CREATE TABLE temp_purchases(
+    id              SERIAL              PRIMARY KEY,
+    client_id       INTEGER             NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE SET NULL,
+    total           DECIMAL             NOT NULL,
+    type            purchase_type       NOT NULL
+);
+
 
 /**
   Information about each item in a purchase
@@ -448,7 +465,7 @@ EXECUTE PROCEDURE tag_search_update();
 
 
 insert into images (path) values ('storage/users/avatar.png');
-insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/bundle.jpg');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
@@ -984,46 +1001,46 @@ insert into coupons ( code, name, description, expiration, type, amount, supplie
 insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'tellas', 'tellus semper interdum', 'Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.', '2022-01-14 18:37:19', '€', 23.82, 68);
 insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'erat', 'quis turpis eget elit', 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.', '2021-07-09 08:11:46', '€', 95.14, 68);
 
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (1, 'Kayla', 'Wilden', '2 Thierer Park', '95879', '0657-937', 'Braga', 'Picoto', 'Portugal', '954062263', 1);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (2, 'Clair', 'Lacky', '0336 Russell Hill', '6', '5207-497', 'Lisboa', 'Aldeia de Juzo', 'Portugal', '984172568', 2);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (3, 'Berkley', 'McKeller', '6 Prentice Trail', '869', '5408-251', 'Lisboa', 'Baratã', 'Portugal', '969012311', 3);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (4, 'Dorotea', 'Aburrow', '8 Barnett Junction', '181', '0354-935', 'Viana do Castelo', 'Vila', 'Portugal', '963987023', 4);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (5, 'Lurleen', 'Dougharty', '0624 Memorial Plaza', '33636', '7993-891', 'Lisboa', 'Fonte Boa dos Nabos', 'Portugal', '929769432', 5);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (6, 'Andree', 'Prothero', '60455 Burning Wood Pass', '32', '5297-645', 'Vila Real', 'Amieiro', 'Portugal', '904425126', 6);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (7, 'Yvonne', 'Delacroux', '503 Arkansas Drive', '095', '3942-555', 'Porto', 'Quintão', 'Portugal', '920538418', 7);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (8, 'Dominica', 'Litherland', '41904 Sunnyside Plaza', '76328', '0710-514', 'Leiria', 'Granja', 'Portugal', '951483947', 8);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (9, 'Vincents', 'Blaine', '4 Melody Road', '45', '4795-955', 'Porto', 'Cimo de Vila', 'Portugal', '951772486', 9);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (10, 'Netty', 'Snelgrove', '16884 Upham Point', '99', '8556-118', 'Braga', 'Guardizela', 'Portugal', '928800427', 10);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (11, 'Stacy', 'Elleray', '5698 Kings Lane', '80010', '5418-528', 'Guarda', 'Sabugal', 'Portugal', '942218399', 11);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (12, 'Gage', 'Dermot', '8 Atwood Lane', '44', '8758-635', 'Leiria', 'Arrabal', 'Portugal', '948140820', 12);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (13, 'Mendie', 'Kunze', '2789 Algoma Street', '3196', '4033-709', 'Lisboa', 'Arruda dos Vinhos', 'Portugal', '951171848', 13);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (14, 'Lizzie', 'Bigly', '5 Bunker Hill Alley', '3', '0182-954', 'Braga', 'Celorico de Basto', 'Portugal', '922741993', 14);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (15, 'Wyatan', 'McCullagh', '9 Hazelcrest Drive', '035', '9556-804', 'Lisboa', 'Casal da Serra', 'Portugal', '901741328', 15);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (16, 'Sebastian', 'Godart', '30311 Village Lane', '77576', '8079-362', 'Lisboa', 'Sabugo', 'Portugal', '962628258', 16);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (17, 'Adan', 'Davidsen', '4925 Crest Line Plaza', '3718', '3818-104', 'Lisboa', 'Prior Velho', 'Portugal', '939522458', 17);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (18, 'Trudy', 'Luckey', '6097 High Crossing Lane', '51970', '8056-849', 'Viseu', 'Portela', 'Portugal', '977842544', 18);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (19, 'Kahlil', 'Mayoh', '4 West Circle', '01', '1304-316', 'Santarém', 'Fontaínhas', 'Portugal', '955629289', 19);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (20, 'Clea', 'Jedrachowicz', '043 Vermont Point', '05', '2250-124', 'Lisboa', 'Casa Nova', 'Portugal', '959134487', 20);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (21, 'Gladys', 'Tremolieres', '0673 Grayhawk Drive', '779', '7898-998', 'Porto', 'Baguim do Monte', 'Portugal', '996755760', 21);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (22, 'Colene', 'Szimon', '13 Troy Lane', '171', '6911-938', 'Braga', 'Telhado', 'Portugal', '976813872', 22);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (23, 'Dotty', 'Ridwood', '6409 Mccormick Crossing', '8', '0015-936', 'Porto', 'Sardoal', 'Portugal', '951581293', 23);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (24, 'Christi', 'Jellico', '9 Jay Way', '071', '1655-325', 'Coimbra', 'Vilarinho', 'Portugal', '978251649', 24);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (25, 'Nikolia', 'Ossulton', '3605 Bunting Hill', '0529', '1144-044', 'Leiria', 'Trabulheira', 'Portugal', '918804130', 25);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (26, 'Rutherford', 'Thompson', '68869 Oriole Way', '27944', '1256-209', 'Leiria', 'Souto do Meio', 'Portugal', '902064745', 26);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (27, 'Melania', 'Ramsey', '958 Mcguire Plaza', '275', '2910-117', 'Lisboa', 'Camarate', 'Portugal', '957015595', 27);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (28, 'Devinne', 'Rainger', '7797 Magdeline Road', '4', '7117-655', 'Lisboa', 'Antas', 'Portugal', '965823386', 28);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (29, 'Lynn', 'Couling', '59 Anniversary Junction', '74903', '7842-125', 'Bragança', 'Poiares', 'Portugal', '935451450', 29);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (30, 'Kingsly', 'Ledner', '568 Valley Edge Terrace', '3230', '2811-917', 'Braga', 'Abade de Vermoim', 'Portugal', '966126681', 30);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (31, 'Bryon', 'Lehmann', '7 Nova Street', '90', '8407-082', 'Lisboa', 'Campelos', 'Portugal', '946100409', 31);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (32, 'Torrance', 'Cason', '6 Golf Junction', '14844', '2007-318', 'Lisboa', 'São João das Lampas', 'Portugal', '953764610', 32);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (33, 'Flynn', 'Ruddell', '54850 International Parkway', '354', '5403-612', 'Viana do Castelo', 'Eirado', 'Portugal', '924900987', 33);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (34, 'Brooke', 'Moultrie', '8743 Oneill Avenue', '17', '7517-074', 'Viana do Castelo', 'Boucinha', 'Portugal', '928935964', 34);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (35, 'Traci', 'Allicock', '15 Sage Place', '758', '2880-090', 'Faro', 'Martinlongo', 'Portugal', '900886795', 35);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (36, 'Cissy', 'Oyley', '77965 Maryland Circle', '838', '4477-769', 'Braga', 'Arnoia', 'Portugal', '996170444', 36);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (37, 'Dianne', 'Alessandrucci', '99 Brickson Park Avenue', '8729', '3854-599', 'Guarda', 'Fornos de Algodres', 'Portugal', '998177122', 37);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (38, 'Ford', 'Theriot', '066 Graedel Junction', '48637', '1263-478', 'Guarda', 'Figueira Castelo Rodrigo', 'Portugal', '903740924', 38);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (39, 'Lari', 'Soot', '16 Monica Trail', '71590', '5743-061', 'Porto', 'Boavista', 'Portugal', '921182466', 39);
-insert into ship_details (id, first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values (40, 'Launce', 'Scotcher', '72953 Aberg Court', '259', '9584-221', 'Santarém', 'São Miguel do Rio Torto', 'Portugal', '975221498', 40);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ('Kayla', 'Wilden', '2 Thierer Park', '95879', '0657-937', 'Braga', 'Picoto', 'Portugal', '954062263', 1);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ('Clair', 'Lacky', '0336 Russell Hill', '6', '5207-497', 'Lisboa', 'Aldeia de Juzo', 'Portugal', '984172568', 2);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ('Berkley', 'McKeller', '6 Prentice Trail', '869', '5408-251', 'Lisboa', 'Baratã', 'Portugal', '969012311', 3);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ('Dorotea', 'Aburrow', '8 Barnett Junction', '181', '0354-935', 'Viana do Castelo', 'Vila', 'Portugal', '963987023', 4);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ('Lurleen', 'Dougharty', '0624 Memorial Plaza', '33636', '7993-891', 'Lisboa', 'Fonte Boa dos Nabos', 'Portugal', '929769432', 5);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ('Andree', 'Prothero', '60455 Burning Wood Pass', '32', '5297-645', 'Vila Real', 'Amieiro', 'Portugal', '904425126', 6);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ('Yvonne', 'Delacroux', '503 Arkansas Drive', '095', '3942-555', 'Porto', 'Quintão', 'Portugal', '920538418', 7);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ('Dominica', 'Litherland', '41904 Sunnyside Plaza', '76328', '0710-514', 'Leiria', 'Granja', 'Portugal', '951483947', 8);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ('Vincents', 'Blaine', '4 Melody Road', '45', '4795-955', 'Porto', 'Cimo de Vila', 'Portugal', '951772486', 9);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Netty', 'Snelgrove', '16884 Upham Point', '99', '8556-118', 'Braga', 'Guardizela', 'Portugal', '928800427', 10);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Stacy', 'Elleray', '5698 Kings Lane', '80010', '5418-528', 'Guarda', 'Sabugal', 'Portugal', '942218399', 11);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Gage', 'Dermot', '8 Atwood Lane', '44', '8758-635', 'Leiria', 'Arrabal', 'Portugal', '948140820', 12);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Mendie', 'Kunze', '2789 Algoma Street', '3196', '4033-709', 'Lisboa', 'Arruda dos Vinhos', 'Portugal', '951171848', 13);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Lizzie', 'Bigly', '5 Bunker Hill Alley', '3', '0182-954', 'Braga', 'Celorico de Basto', 'Portugal', '922741993', 14);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Wyatan', 'McCullagh', '9 Hazelcrest Drive', '035', '9556-804', 'Lisboa', 'Casal da Serra', 'Portugal', '901741328', 15);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Sebastian', 'Godart', '30311 Village Lane', '77576', '8079-362', 'Lisboa', 'Sabugo', 'Portugal', '962628258', 16);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Adan', 'Davidsen', '4925 Crest Line Plaza', '3718', '3818-104', 'Lisboa', 'Prior Velho', 'Portugal', '939522458', 17);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Trudy', 'Luckey', '6097 High Crossing Lane', '51970', '8056-849', 'Viseu', 'Portela', 'Portugal', '977842544', 18);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Kahlil', 'Mayoh', '4 West Circle', '01', '1304-316', 'Santarém', 'Fontaínhas', 'Portugal', '955629289', 19);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Clea', 'Jedrachowicz', '043 Vermont Point', '05', '2250-124', 'Lisboa', 'Casa Nova', 'Portugal', '959134487', 20);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Gladys', 'Tremolieres', '0673 Grayhawk Drive', '779', '7898-998', 'Porto', 'Baguim do Monte', 'Portugal', '996755760', 21);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Colene', 'Szimon', '13 Troy Lane', '171', '6911-938', 'Braga', 'Telhado', 'Portugal', '976813872', 22);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Dotty', 'Ridwood', '6409 Mccormick Crossing', '8', '0015-936', 'Porto', 'Sardoal', 'Portugal', '951581293', 23);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Christi', 'Jellico', '9 Jay Way', '071', '1655-325', 'Coimbra', 'Vilarinho', 'Portugal', '978251649', 24);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Nikolia', 'Ossulton', '3605 Bunting Hill', '0529', '1144-044', 'Leiria', 'Trabulheira', 'Portugal', '918804130', 25);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Rutherford', 'Thompson', '68869 Oriole Way', '27944', '1256-209', 'Leiria', 'Souto do Meio', 'Portugal', '902064745', 26);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Melania', 'Ramsey', '958 Mcguire Plaza', '275', '2910-117', 'Lisboa', 'Camarate', 'Portugal', '957015595', 27);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Devinne', 'Rainger', '7797 Magdeline Road', '4', '7117-655', 'Lisboa', 'Antas', 'Portugal', '965823386', 28);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Lynn', 'Couling', '59 Anniversary Junction', '74903', '7842-125', 'Bragança', 'Poiares', 'Portugal', '935451450', 29);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Kingsly', 'Ledner', '568 Valley Edge Terrace', '3230', '2811-917', 'Braga', 'Abade de Vermoim', 'Portugal', '966126681', 30);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Bryon', 'Lehmann', '7 Nova Street', '90', '8407-082', 'Lisboa', 'Campelos', 'Portugal', '946100409', 31);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Torrance', 'Cason', '6 Golf Junction', '14844', '2007-318', 'Lisboa', 'São João das Lampas', 'Portugal', '953764610', 32);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Flynn', 'Ruddell', '54850 International Parkway', '354', '5403-612', 'Viana do Castelo', 'Eirado', 'Portugal', '924900987', 33);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Brooke', 'Moultrie', '8743 Oneill Avenue', '17', '7517-074', 'Viana do Castelo', 'Boucinha', 'Portugal', '928935964', 34);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Traci', 'Allicock', '15 Sage Place', '758', '2880-090', 'Faro', 'Martinlongo', 'Portugal', '900886795', 35);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Cissy', 'Oyley', '77965 Maryland Circle', '838', '4477-769', 'Braga', 'Arnoia', 'Portugal', '996170444', 36);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Dianne', 'Alessandrucci', '99 Brickson Park Avenue', '8729', '3854-599', 'Guarda', 'Fornos de Algodres', 'Portugal', '998177122', 37);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Ford', 'Theriot', '066 Graedel Junction', '48637', '1263-478', 'Guarda', 'Figueira Castelo Rodrigo', 'Portugal', '903740924', 38);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Lari', 'Soot', '16 Monica Trail', '71590', '5743-061', 'Porto', 'Boavista', 'Portugal', '921182466', 39);
+insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ( 'Launce', 'Scotcher', '72953 Aberg Court', '259', '9584-221', 'Santarém', 'São Miguel do Rio Torto', 'Portugal', '975221498', 40);
 
 insert into item_product (item_id, product_id, quantity) values (100, 7, 3);
 insert into item_product (item_id, product_id, quantity) values (97, 8, 19);
@@ -1172,51 +1189,51 @@ insert into item_product (item_id, product_id, quantity) values (96, 14, 11);
 insert into item_product (item_id, product_id, quantity) values (78, 14, 34);
 insert into item_product (item_id, product_id, quantity) values (98, 12, 50);
 
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (1, '0429 8595 0058 4305', '2022-06-30', '556', 'Philbert Lismore', 1);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (2, '6843 1070 8852 4478', '2021-03-10', '073', 'Silvester Paintain', 2);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (3, '8631 5740 5944 6226', '2022-10-14', '788', 'Mimi Wernham', 3);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (4, '8097 0603 4546 4807', '2021-12-20', '582', 'Deonne Mundwell', 4);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (5, '3488 8305 0435 2596', '2021-11-13', '852', 'Stearn Mulgrew', 5);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (6, '3086 3220 3921 2420', '2022-08-31', '113', 'Mendel Marran', 6);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (7, '5035 2738 6245 7578', '2022-10-31', '020', 'Merle Boatwright', 7);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (8, '4713 6329 2571 1371', '2021-11-05', '848', 'Garry Mantram', 8);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (9, '6681 7251 3968 9683', '2021-08-29', '163', 'Alix Beneyto', 9);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (10, '6315 6024 1876 8474', '2021-09-08', '570', 'Simone Perrelli', 10);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (11, '8256 6642 2280 8335', '2021-08-20', '249', 'Janice Sikorsky', 11);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (12, '0388 8988 2527 0369', '2021-12-20', '303', 'Myranda Orchart', 12);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (13, '5856 2739 1266 6342', '2022-11-12', '623', 'Herrick Tudgay', 13);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (14, '9364 9941 3870 7807', '2022-03-26', '285', 'Lutero Thompkins', 14);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (15, '6226 4896 5932 7086', '2022-12-07', '880', 'Ford Pearman', 15);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (16, '3644 1786 3994 8511', '2022-06-18', '180', 'Alejoa Craigmyle', 16);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (17, '2846 9288 0548 5463', '2021-11-14', '739', 'Cecilio Duberry', 17);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (18, '8686 0069 0096 5460', '2022-05-10', '301', 'Othello Paniman', 18);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (19, '5288 1563 4605 2297', '2022-04-24', '792', 'Adair Halling', 19);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (20, '5271 2973 6888 1819', '2021-07-28', '209', 'Phelia Saer', 20);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (21, '2509 5004 7475 1396', '2022-05-21', '684', 'Zara Elvish', 21);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (22, '3132 2699 1375 7617', '2021-07-20', '177', 'Bel Losselyong', 22);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (23, '0041 2335 4609 7594', '2023-02-18', '866', 'Liane Dahlbom', 23);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (24, '3257 4941 7297 1609', '2021-03-13', '681', 'Livia Herculeson', 24);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (25, '0010 5918 5476 8531', '2021-08-11', '118', 'Ulberto Miquelet', 25);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (26, '1192 5967 4519 6982', '2022-09-28', '920', 'Esta Bento', 26);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (27, '7008 2417 1877 7451', '2023-01-26', '517', 'Britteny Grigoroni', 27);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (28, '9726 7193 2070 2920', '2021-06-14', '620', 'Jeramie Mullinder', 28);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (29, '3280 6866 7409 4867', '2021-07-02', '787', 'Linn Griggs', 29);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (30, '1678 3109 7509 7179', '2021-10-08', '320', 'Simone Callard', 30);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (31, '3731 0785 6657 7549', '2022-08-12', '724', 'Phylis Gable', 31);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (32, '3115 1778 1810 0952', '2022-06-02', '148', 'Marcelo Mapston', 32);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (33, '8087 0855 8522 3183', '2022-08-03', '201', 'Brenda Jedrzaszkiewicz', 33);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (34, '0248 3168 5863 7445', '2022-04-13', '479', 'Gwendolyn Davley', 34);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (35, '2327 2919 8319 6840', '2021-04-29', '678', 'Hortensia Wands', 35);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (36, '8188 5779 6796 1484', '2022-09-11', '786', 'Gabbi Matchett', 36);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (37, '5422 6122 0805 6047', '2021-09-03', '197', 'Marv Spencelayh', 37);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (38, '8237 7455 8098 6797', '2022-07-29', '461', 'Arney Bockh', 38);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (39, '3453 3275 0458 3189', '2021-12-12', '145', 'Bili Blench', 39);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (40, '3354 2451 5019 1085', '2022-08-04', '180', 'Bertram Hinnerk', 40);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (41, '7873 6762 9644 4906', '2022-09-27', '927', 'Philippine Kippax', 41);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (42, '0869 9624 3275 0323', '2021-07-28', '974', 'Mirelle Tschursch', 42);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (43, '5637 5744 8787 0991', '2021-04-23', '133', 'Manuel Duxbarry', 43);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (44, '4769 1873 8041 0937', '2021-04-06', '615', 'Shanan Kirsz', 44);
-insert into credit_cards (id, card_n, expiration, cvv, holder, client_id) values (45, '7612 4201 1143 6932', '2021-09-06', '143', 'Pincas Issard', 45);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('0429 8595 0058 4305', '2022-06-30', '556', 'Philbert Lismore', 1);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('6843 1070 8852 4478', '2021-03-10', '073', 'Silvester Paintain', 2);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('8631 5740 5944 6226', '2022-10-14', '788', 'Mimi Wernham', 3);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('8097 0603 4546 4807', '2021-12-20', '582', 'Deonne Mundwell', 4);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('3488 8305 0435 2596', '2021-11-13', '852', 'Stearn Mulgrew', 5);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('3086 3220 3921 2420', '2022-08-31', '113', 'Mendel Marran', 6);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('5035 2738 6245 7578', '2022-10-31', '020', 'Merle Boatwright', 7);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('4713 6329 2571 1371', '2021-11-05', '848', 'Garry Mantram', 8);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ('6681 7251 3968 9683', '2021-08-29', '163', 'Alix Beneyto', 9);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '6315 6024 1876 8474', '2021-09-08', '570', 'Simone Perrelli', 10);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '8256 6642 2280 8335', '2021-08-20', '249', 'Janice Sikorsky', 11);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '0388 8988 2527 0369', '2021-12-20', '303', 'Myranda Orchart', 12);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '5856 2739 1266 6342', '2022-11-12', '623', 'Herrick Tudgay', 13);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '9364 9941 3870 7807', '2022-03-26', '285', 'Lutero Thompkins', 14);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '6226 4896 5932 7086', '2022-12-07', '880', 'Ford Pearman', 15);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '3644 1786 3994 8511', '2022-06-18', '180', 'Alejoa Craigmyle', 16);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '2846 9288 0548 5463', '2021-11-14', '739', 'Cecilio Duberry', 17);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '8686 0069 0096 5460', '2022-05-10', '301', 'Othello Paniman', 18);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '5288 1563 4605 2297', '2022-04-24', '792', 'Adair Halling', 19);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '5271 2973 6888 1819', '2021-07-28', '209', 'Phelia Saer', 20);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '2509 5004 7475 1396', '2022-05-21', '684', 'Zara Elvish', 21);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '3132 2699 1375 7617', '2021-07-20', '177', 'Bel Losselyong', 22);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '0041 2335 4609 7594', '2023-02-18', '866', 'Liane Dahlbom', 23);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '3257 4941 7297 1609', '2021-03-13', '681', 'Livia Herculeson', 24);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '0010 5918 5476 8531', '2021-08-11', '118', 'Ulberto Miquelet', 25);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '1192 5967 4519 6982', '2022-09-28', '920', 'Esta Bento', 26);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '7008 2417 1877 7451', '2023-01-26', '517', 'Britteny Grigoroni', 27);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '9726 7193 2070 2920', '2021-06-14', '620', 'Jeramie Mullinder', 28);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '3280 6866 7409 4867', '2021-07-02', '787', 'Linn Griggs', 29);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '1678 3109 7509 7179', '2021-10-08', '320', 'Simone Callard', 30);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '3731 0785 6657 7549', '2022-08-12', '724', 'Phylis Gable', 31);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '3115 1778 1810 0952', '2022-06-02', '148', 'Marcelo Mapston', 32);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '8087 0855 8522 3183', '2022-08-03', '201', 'Brenda Jedrzaszkiewicz', 33);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '0248 3168 5863 7445', '2022-04-13', '479', 'Gwendolyn Davley', 34);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '2327 2919 8319 6840', '2021-04-29', '678', 'Hortensia Wands', 35);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '8188 5779 6796 1484', '2022-09-11', '786', 'Gabbi Matchett', 36);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '5422 6122 0805 6047', '2021-09-03', '197', 'Marv Spencelayh', 37);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '8237 7455 8098 6797', '2022-07-29', '461', 'Arney Bockh', 38);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '3453 3275 0458 3189', '2021-12-12', '145', 'Bili Blench', 39);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '3354 2451 5019 1085', '2022-08-04', '180', 'Bertram Hinnerk', 40);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '7873 6762 9644 4906', '2022-09-27', '927', 'Philippine Kippax', 41);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '0869 9624 3275 0323', '2021-07-28', '974', 'Mirelle Tschursch', 42);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '5637 5744 8787 0991', '2021-04-23', '133', 'Manuel Duxbarry', 43);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '4769 1873 8041 0937', '2021-04-06', '615', 'Shanan Kirsz', 44);
+insert into credit_cards (card_n, expiration, cvv, holder, client_id) values ( '7612 4201 1143 6932', '2021-09-06', '143', 'Pincas Issard', 45);
 
 insert into item_tag (tag_id, item_id) values (1, 5);
 insert into item_tag (tag_id, item_id) values (1, 36);
@@ -2079,106 +2096,160 @@ insert into image_product (product_id, image_id) values (73, 75);
 insert into image_product (product_id, image_id) values (74, 76);
 insert into image_product (product_id, image_id) values (75, 77);
 
-insert into purchases (id, client_id, paid, purchase_date, type) values (1, 1, 21.4, '2020-08-14', 'SingleBuy');
-insert into purchases (id, client_id, paid, purchase_date, type) values (2, 2, 39.2, '2020-08-02', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (3, 3, 47.4, '2020-07-26', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (4, 4, 27.3, '2020-09-24', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (5, 5, 38.9, '2020-09-17', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (6, 6, 46.1, '2020-05-31', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (7, 7, 15.1, '2020-08-16', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (8, 8, 14.9, '2020-04-26', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (9, 9, 8.1, '2020-05-10', 'SingleBuy');
-insert into purchases (id, client_id, paid, purchase_date, type) values (10, 10, 5.6, '2020-04-06', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (11, 11, 25.7, '2021-02-15', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (12, 12, 32.2, '2020-11-13', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (13, 13, 17.8, '2020-07-16', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (14, 14, 21.3, '2020-07-10', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (15, 15, 39.4, '2020-11-26', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (16, 16, 6.8, '2020-06-04', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (17, 17, 50.0, '2020-10-16', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (18, 18, 22.4, '2020-09-05', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (19, 19, 17.2, '2021-01-10', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (20, 20, 28.0, '2020-04-14', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (21, 21, 41.6, '2020-06-13', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (22, 22, 13.6, '2020-08-05', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (23, 23, 33.5, '2021-03-07', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (24, 24, 23.0, '2020-10-07', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (25, 25, 29.1, '2020-08-12', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (26, 26, 12.7, '2020-10-14', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (27, 27, 9.3, '2020-08-12', 'SingleBuy');
-insert into purchases (id, client_id, paid, purchase_date, type) values (28, 28, 48.4, '2020-11-02', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (29, 29, 11.4, '2020-04-10', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (30, 30, 17.5, '2020-06-20', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (31, 31, 23.8, '2020-10-01', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (32, 32, 37.9, '2020-04-17', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (33, 33, 12.6, '2021-02-07', 'SingleBuy');
-insert into purchases (id, client_id, paid, purchase_date, type) values (34, 34, 36.8, '2020-11-06', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (35, 35, 9.9, '2020-11-26', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (36, 36, 19.1, '2020-05-02', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (37, 37, 14.7, '2020-06-09', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (38, 38, 41.9, '2020-10-04', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (39, 39, 25.4, '2020-10-05', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (40, 40, 15.2, '2020-11-11', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (41, 41, 49.7, '2021-01-25', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (42, 42, 22.4, '2020-04-13', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (43, 43, 18.1, '2020-12-23', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (44, 44, 16.4, '2020-04-29', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (45, 45, 42.3, '2020-12-24', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (46, 46, 43.0, '2021-03-05', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (47, 47, 26.3, '2020-05-07', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (48, 48, 47.3, '2020-07-16', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (49, 49, 24.8, '2020-03-25', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (50, 50, 34.8, '2020-06-07', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (51, 1, 12.4, '2020-04-23', 'SingleBuy');
-insert into purchases (id, client_id, paid, purchase_date, type) values (52, 2, 35.4, '2020-04-19', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (53, 3, 37.1, '2020-07-31', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (54, 4, 42.3, '2020-08-19', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (55, 5, 13.8, '2020-09-20', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (56, 6, 36.4, '2020-05-02', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (57, 7, 34.3, '2021-02-08', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (58, 8, 18.8, '2020-10-27', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (59, 9, 11.3, '2020-12-25', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (60, 10, 29.3, '2020-05-11', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (61, 11, 35.8, '2020-10-17', 'SingleBuy');
-insert into purchases (id, client_id, paid, purchase_date, type) values (62, 12, 28.5, '2021-02-20', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (63, 13, 22.6, '2020-08-26', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (64, 14, 34.0, '2020-05-15', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (65, 15, 43.6, '2020-07-19', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (66, 16, 15.2, '2020-07-07', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (67, 17, 43.1, '2020-04-30', 'SingleBuy');
-insert into purchases (id, client_id, paid, purchase_date, type) values (68, 18, 15.0, '2020-10-14', 'SingleBuy');
-insert into purchases (id, client_id, paid, purchase_date, type) values (69, 19, 6.1, '2021-03-02', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (70, 20, 42.3, '2020-08-25', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (71, 21, 9.8, '2020-07-06', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (72, 22, 48.6, '2020-07-13', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (73, 23, 23.5, '2020-12-27', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (74, 24, 26.1, '2020-12-23', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (75, 25, 8.3, '2020-04-25', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (76, 26, 24.4, '2021-02-08', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (77, 27, 29.3, '2020-09-19', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (78, 28, 37.4, '2020-12-23', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (79, 29, 49.9, '2020-12-25', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (80, 30, 40.5, '2020-07-21', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (81, 31, 44.9, '2020-06-18', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (82, 32, 17.2, '2020-06-13', 'SingleBuy');
-insert into purchases (id, client_id, paid, purchase_date, type) values (83, 33, 24.5, '2020-12-07', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (84, 34, 40.9, '2020-03-23', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (85, 35, 45.6, '2021-02-17', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (86, 36, 25.8, '2020-07-22', 'SingleBuy');
-insert into purchases (id, client_id, paid, purchase_date, type) values (87, 37, 47.1, '2021-01-29', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (88, 38, 18.4, '2020-05-13', 'SingleBuy');
-insert into purchases (id, client_id, paid, purchase_date, type) values (89, 39, 40.9, '2021-03-19', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (90, 40, 45.9, '2021-01-10', 'SingleBuy');
-insert into purchases (id, client_id, paid, purchase_date, type) values (91, 41, 49.8, '2020-04-27', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (92, 42, 26.3, '2021-03-05', 'Day');
-insert into purchases (id, client_id, paid, purchase_date, type) values (93, 43, 17.7, '2021-01-17', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (94, 44, 49.2, '2020-12-25', 'SingleBuy');
-insert into purchases (id, client_id, paid, purchase_date, type) values (95, 45, 39.8, '2020-11-08', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (96, 46, 35.6, '2020-10-06', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (97, 47, 34.5, '2020-06-10', 'Month');
-insert into purchases (id, client_id, paid, purchase_date, type) values (98, 48, 42.9, '2020-06-29', 'Week');
-insert into purchases (id, client_id, paid, purchase_date, type) values (99, 49, 37.7, '2021-03-04', 'SingleBuy');
-insert into purchases (id, client_id, paid, purchase_date, type) values (100, 50, 18.7, '2020-08-18', 'Month');
+-- insert into temp_purchases (client_id, total, type) values (1, 100, 
+-- insert into temp_purchases (client_id, total, type) values (2, 100, 
+-- insert into temp_purchases (client_id, total, type) values (3, 100, 
+-- insert into temp_purchases (client_id, total, type) values (4, 100, 
+-- insert into temp_purchases (client_id, total, type) values (5, 100, 
+-- insert into temp_purchases (client_id, total, type) values (6, 100, 
+-- insert into temp_purchases (client_id, total, type) values (7, 100, 
+-- insert into temp_purchases (client_id, total, type) values (8, 100, 
+-- insert into temp_purchases (client_id, total, type) values (9, 100, 
+-- insert into temp_purchases (client_id, total, type) values (10
+-- insert into temp_purchases (client_id, total, type) values (11
+-- insert into temp_purchases (client_id, total, type) values (12
+-- insert into temp_purchases (client_id, total, type) values (13
+-- insert into temp_purchases (client_id, total, type) values (14
+-- insert into temp_purchases (client_id, total, type) values (15
+-- insert into temp_purchases (client_id, total, type) values (16
+-- insert into temp_purchases (client_id, total, type) values (17
+-- insert into temp_purchases (client_id, total, type) values (18
+-- insert into temp_purchases (client_id, total, type) values (19
+-- insert into temp_purchases (client_id, total, type) values (20
+-- insert into temp_purchases (client_id, total, type) values (21
+-- insert into temp_purchases (client_id, total, type) values (22
+-- insert into temp_purchases (client_id, total, type) values (23
+-- insert into temp_purchases (client_id, total, type) values (24
+-- insert into temp_purchases (client_id, total, type) values (25
+-- insert into temp_purchases (client_id, total, type) values (27
+-- insert into temp_purchases (client_id, total, type) values (28
+-- insert into temp_purchases (client_id, total, type) values (29
+-- insert into temp_purchases (client_id, total, type) values (30
+-- insert into temp_purchases (client_id, total, type) values (31
+-- insert into temp_purchases (client_id, total, type) values (32
+-- insert into temp_purchases (client_id, total, type) values (33
+-- insert into temp_purchases (client_id, total, type) values (34
+-- insert into temp_purchases (client_id, total, type) values (35
+-- insert into temp_purchases (client_id, total, type) values (36
+-- insert into temp_purchases (client_id, total, type) values (37
+-- insert into temp_purchases (client_id, total, type) values (38
+-- insert into temp_purchases (client_id, total, type) values (39
+-- insert into temp_purchases (client_id, total, type) values (39
+-- insert into temp_purchases (client_id, total, type) values (40
+-- insert into temp_purchases (client_id, total, type) values (40
+-- insert into temp_purchases (client_id, total, type) values (41
+-- insert into temp_purchases (client_id, total, type) values (42
+-- insert into temp_purchases (client_id, total, type) values (43
+-- insert into temp_purchases (client_id, total, type) values (44
+-- insert into temp_purchases (client_id, total, type) values (45
+-- insert into temp_purchases (client_id, total, type) values (46
+-- insert into temp_purchases (client_id, total, type) values (461
+-- insert into temp_purchases (client_id, total, type) values (47
+-- insert into temp_purchases (client_id, total, type) values (48
+-- insert into temp_purchases (client_id, total, type) values (49
+-- insert into temp_purchases (client_id, total, type) values (50
+
+
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (1, 21.4, '2020-08-14', 1, 1, 'SingleBuy');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (2, 39.2, '2020-08-02', 2, 2, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (3, 47.4, '2020-07-26', 3, 3, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (4, 27.3, '2020-09-24', 4, 4, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (5, 38.9, '2020-09-17', 5, 5, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (6, 46.1, '2020-05-31', 6, 6, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (7, 15.1, '2020-08-16', 7, 7, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (8, 14.9, '2020-04-26', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (9, 8.1, '2020-05-10', 9, 9, 'SingleBuy');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (10, 5.6, '2020-04-06', 10, 10, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (11, 25.7, '2021-02-15', 11, 11, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (12, 32.2, '2020-11-13', 12, 12, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (13, 17.8, '2020-07-16', 13, 13, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (14, 21.3, '2020-07-10', 14, 14, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (15, 39.4, '2020-11-26', 15, 15, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (16, 6.8, '2020-06-04', 16, 16, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (17, 50.0, '2020-10-16', 17, 17, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (18, 22.4, '2020-09-05', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (19, 17.2, '2021-01-10', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (20, 28.0, '2020-04-14', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (21, 41.6, '2020-06-13', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (22, 13.6, '2020-08-05', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (23, 33.5, '2021-03-07', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (24, 23.0, '2020-10-07', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (25, 29.1, '2020-08-12', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (26, 12.7, '2020-10-14', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (27, 9.3, '2020-08-12',  8, 8,'SingleBuy');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (28, 48.4, '2020-11-02', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (29, 11.4, '2020-04-10', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (30, 17.5, '2020-06-20', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (31, 23.8, '2020-10-01', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (32, 37.9, '2020-04-17', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (33, 12.6, '2021-02-07', 8, 8, 'SingleBuy');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (34, 36.8, '2020-11-06', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (35, 9.9, '2020-11-26',  8, 8,'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (36, 19.1, '2020-05-02', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (37, 14.7, '2020-06-09', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (38, 41.9, '2020-10-04', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (39, 25.4, '2020-10-05', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (40, 15.2, '2020-11-11', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (41, 49.7, '2021-01-25', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (42, 22.4, '2020-04-13', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (43, 18.1, '2020-12-23', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (44, 16.4, '2020-04-29', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (45, 42.3, '2020-12-24', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (46, 43.0, '2021-03-05', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (47, 26.3, '2020-05-07', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (48, 47.3, '2020-07-16', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (49, 24.8, '2020-03-25', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (50, 34.8, '2020-06-07', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (1, 12.4, '2020-04-23',  8, 8,'SingleBuy');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (2, 35.4, '2020-04-19',  8, 8,'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (3, 37.1, '2020-07-31',  8, 8,'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (4, 42.3, '2020-08-19',  8, 8,'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (5, 13.8, '2020-09-20',  8, 8,'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (6, 36.4, '2020-05-02',  8, 8,'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (7, 34.3, '2021-02-08',  8, 8,'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (8, 18.8, '2020-10-27',  8, 8,'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (9, 11.3, '2020-12-25',  8, 8,'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (10, 29.3, '2020-05-11', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (11, 35.8, '2020-10-17', 8, 8, 'SingleBuy');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (12, 28.5, '2021-02-20', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (13, 22.6, '2020-08-26', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (14, 34.0, '2020-05-15', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (15, 43.6, '2020-07-19', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (16, 15.2, '2020-07-07', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (17, 43.1, '2020-04-30', 8, 8, 'SingleBuy');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (18, 15.0, '2020-10-14', 8, 8, 'SingleBuy');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (19, 6.1, '2021-03-02',  8, 8,'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (20, 42.3, '2020-08-25', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (21, 9.8, '2020-07-06',  8, 8,'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (22, 48.6, '2020-07-13', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (23, 23.5, '2020-12-27', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (24, 26.1, '2020-12-23', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (25, 8.3, '2020-04-25',  8, 8,'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (26, 24.4, '2021-02-08', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (27, 29.3, '2020-09-19', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (28, 37.4, '2020-12-23', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (29, 49.9, '2020-12-25', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (30, 40.5, '2020-07-21', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (31, 44.9, '2020-06-18', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (32, 17.2, '2020-06-13', 8, 8, 'SingleBuy');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (33, 24.5, '2020-12-07', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (34, 40.9, '2020-03-23', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (35, 45.6, '2021-02-17', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (36, 25.8, '2020-07-22', 8, 8, 'SingleBuy');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (37, 47.1, '2021-01-29', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (38, 18.4, '2020-05-13', 8, 8, 'SingleBuy');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (39, 40.9, '2021-03-19', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (40, 45.9, '2021-01-10', 8, 8, 'SingleBuy');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (41, 49.8, '2020-04-27', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (42, 26.3, '2021-03-05', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (43, 17.7, '2021-01-17', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (44, 49.2, '2020-12-25', 8, 8, 'SingleBuy');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (45, 39.8, '2020-11-08', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (46, 35.6, '2020-10-06', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (47, 34.5, '2020-06-10', 8, 8, 'Month');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (48, 42.9, '2020-06-29', 8, 8, 'Week');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (49, 37.7, '2021-03-04', 8, 8, 'SingleBuy');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values ( 50, 18.7, '2020-08-18', 8, 8, 'Month');
 
 insert into item_purchase (purchase_id, item_id, price, amount) values (1, 1, 12, 10);
 insert into item_purchase (purchase_id, item_id, price, amount) values (1, 31, 79.91, 67);

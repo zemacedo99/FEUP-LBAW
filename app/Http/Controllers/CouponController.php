@@ -33,13 +33,13 @@ class CouponController extends Controller
      */
     public function create(Request $request, $id)
     {
-        $supplier = Supplier::find($id);    
-        if ($request->user()->cannot('viewCreate', $supplier)) {
-            abort(403);
-        }
-        $data = [];
+        //$supplier = Supplier::find($id);
+        //$this->authorize('create', $supplier);
+        $data = [
+                    'title' => 'Create Coupon',
+                    'path' => '/api/coupon'        
+                ];
 
-    
         return view('pages.supplier.create_edit_coupon', $data);
     }
 

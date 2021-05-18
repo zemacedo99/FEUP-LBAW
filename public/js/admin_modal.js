@@ -2,7 +2,7 @@ var yesButton;
 var noButton;
 var id;
 
-// Delete User Modal 
+// Delete User Modal
 var deleteModal = document.getElementById('deleteUserModal')
 if (deleteModal != null) {
     yesButton=deleteModal.getElementsByClassName('btn btn-primary').item(0);
@@ -25,12 +25,12 @@ if (deleteModal != null) {
         var button = event.relatedTarget;
 
             // Extract info from data-bs-* attributes
-        
+
         sendAjaxRequest('DELETE', '/api/client/'+id, null, function(){
             //location.reload();
         })
-                
-            
+
+
     });
 }
 
@@ -44,7 +44,7 @@ if (deleteProdModal != null) {
         var button = event.relatedTarget
             // Extract info from data-bs-* attributes
         id = button.getAttribute('data-bs-whatever')
-        
+
         var name = button.getAttribute('prodName')
 
         var modalUserID = deleteProdModal.querySelector('#prod_id')
@@ -57,20 +57,19 @@ if (deleteProdModal != null) {
         var button = event.relatedTarget;
 
             // Extract info from data-bs-* attributes
-        
+
         sendAjaxRequest('DELETE', '/api/item/'+id, null, function(){
             //location.reload();
         })
-                
-            
+
+
     });
-    
+
 };
 
 
 // Accept request Modal
 var acceptSupModal = document.getElementById('acceptSupModal')
-
 if (acceptSupModal != null) {
     yesButton=acceptSupModal.getElementsByClassName('btn btn-primary').item(0);
     noButton=acceptSupModal.getElementsByClassName('btn btn-secondary').item(0);
@@ -85,7 +84,7 @@ if (acceptSupModal != null) {
 
         modalUserID.textContent = 'Request ID: #' + requestId
 
-        
+
     })
 
     yesButton.addEventListener("click", function(event) {
@@ -93,17 +92,16 @@ if (acceptSupModal != null) {
         var button = event.relatedTarget;
 
             // Extract info from data-bs-* attributes
-        
-        sendAjaxRequest('POST', '/supplier', {"supplier_id":supplier_id, "accept":1}, function(){
-            location.reload();
-            })
-                
-            
-        });
-    
-    };
 
-    
+        sendAjaxRequest('POST', '/supplier', {"supplier_id":supplier_id, "accept":1}, function(){
+            // location.reload();
+            })
+
+
+        });
+
+};
+
 
 
 // Decline request Modal
@@ -123,7 +121,7 @@ if (declineSupModal != null) {
 
         modalUserID.textContent = 'Request ID: #' + requestId
 
-        
+
     })
 
     yesButton.addEventListener("click", function(event) {
@@ -133,15 +131,15 @@ if (declineSupModal != null) {
             // Extract info from data-bs-* attributes
 
         sendAjaxRequest('POST', '/supplier', {"supplier_id":supplier_id, "accept":0}, function(){
-            location.reload();
+            //location.reload();
             })
-                
-            
+
+
         });
 }
 
 
-// Delete Review Modal 
+// Delete Review Modal
 var deleteModal = document.getElementById('deleteReviewModal')
 if (deleteModal != null) {
     yesButton=deleteModal.getElementsByClassName('btn btn-primary').item(0);
@@ -153,7 +151,7 @@ if (deleteModal != null) {
             // Extract info from data-bs-* attributes
         clientId = button.getAttribute('clientId')
         itemId = button.getAttribute('itemId')
-        
+
     })
 
     yesButton.addEventListener("click", function(event) {
@@ -161,12 +159,12 @@ if (deleteModal != null) {
         var button = event.relatedTarget;
 
             // Extract info from data-bs-* attributes
-        
+
         sendAjaxRequest('DELETE', '/api/review', {'client_id':clientId,'item_id':itemId}, function(){
             //location.reload();
         })
-                
-            
+
+
     });
 }
 

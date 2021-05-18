@@ -8,19 +8,13 @@ submit.addEventListener('submit',validateForm)
 function validateForm(event) {
     try{
 
-        let check_empty = ['product_name', 'product_price' , 'product_stock', 'description', 'product_type' ]
+        let check_empty = ['product_name', 'product_price' , 'product_stock', 'description']
 
         for(let i = 0; i < check_empty.length; i++){
             let input = document.getElementById(check_empty[i]);
             if (input.value == "") {
                 document.getElementById(check_empty[i] + "_alert").innerHTML = "This field cannot be empty"
                 event.preventDefault()
-            }else{
-                sendAjaxRequest('get', '/api/product/' + productID.value, null, function(){
-                    if (this.status !== 404){
-                        event.preventDefault()
-                    } 
-                })
             }
 
         }

@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Coupon;
+use App\Models\CreditCard;
 use App\Models\Image;
 use App\Models\Item;
 use App\Models\Product;
+use App\Models\Purchase;
+use App\Models\ShipDetail;
+use App\Models\TempPurchase;
 use Illuminate\Http\Request;
-
-use function PHPUnit\Framework\isEmpty;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
@@ -31,26 +34,94 @@ class ItemController extends Controller
         $products=Item::orderBy('id','asc')->paginate(8);
 
         return view('pages.admin.products',['items'=>$products->withPath('dashboard_products')]);
+    } 
+
+
+    public function save_checkout(Request $request){
+
+        $client_id = Auth::id();
+
+        $client = Client::find($client_id);
+
+        // $items = $client->item_carts;
+        
+
+        $request->validate([
+            'n_items' => 'required|integer',
+            'periodic' => 'required',
+            'all_coupons' => 'required',
+        ]);
+
+
+        $coupons_str = explode(' ', $request->input('all_coupons'));
+        $coupons = [];
+
+        foreach($coupons_str as $coupon){
+            array_push($coupons, Coupon::find($coupons_str));
+        }
+    
+        //Update quantities
+        $total = 0;
+
+        for($i = 0; $i < $request->input('n_items'); $i++){
+            $request->validate([
+                'item_' . $i => 'required|integer',
+                'quantity_' . $i => 'required|integer',
+            ]);
+
+            $id_item = $request->input('item_' . $i);
+            $quantity = $request->input('quantity_' . $i);
+            
+            // foreach($items as $item){
+            //     if($item->id == $id_item){
+            //         $item->quantity = $quantity;
+            //         break;
+            //     }
+            // }
+
+            $item = Item::find($id_item);
+
+            $item_tot_price = $item->price * $quantity;
+
+            foreach($coupons as $coupon){
+                if($coupon->supplier_id === $item->supplier_id){
+                    if($coupon->type === '%'){
+                        $total +=  (1 - $coupon->amount/100) * $item_tot_price;
+                    }else{
+                        $total +=  max(0, $item_tot_price - $coupon->amount);   
+                    }
+                }
+            }
+        }
+
+        TempPurchase::create([
+            'client_id' => $client_id,
+            'total' => $total,
+            'type' => $request->input('periodic'),
+        ]);
+
+        redirect()->route('payment');
     }
+   
 
     public function checkout($id){
 
         if(!is_numeric($id))
             return response('', 404);
-        
+
         $client = Client::find($id);
         $items = $client->item_carts;
-        
+
         $total = 0;
         foreach($items as $item){
             $product = Product::find($item->id);
             $total += $item->price * $item->pivot->quantity;
-            
+
             if($product == null) continue;
 
-            
+
             $images = $product->images;
-            
+
             $item['image'] = $images[0]->path;
         }
 
@@ -62,9 +133,53 @@ class ItemController extends Controller
         return view('pages.checkout.cart_info', $data);
     }
 
+
     public function payment($id){
-        $data = [];
+        // Falta validação
+
+        $ccs = CreditCard::where('client_id', $id)
+                ->where('to_save', true)->get();
+        
+        $ship_det = ShipDetail::where('client_id', $id)
+                ->where('to_save', true)->get();
+
+        $data = [
+            'ccs' => $ccs,
+        ];
+
+        if($ship_det != []){
+            $data['sd'] = $ship_det->first();
+        }
+
         return view('pages.checkout.shipping_payment', $data);
+    }
+
+    public function do_payment(Request $request){
+
+        $request->validate([
+            'cc_id' => 'required|integer|exists:credit_cards,id',
+            'sd_id' => 'required|integer|exists:ship_details,id',
+        ]);
+
+        $client_id = Auth::id();
+
+        $temp_builder = TempPurchase::where('client_id', $client_id);
+
+        $temp = $temp_builder->get()->first();
+        
+        //Deleting carts
+        Client::find(Auth::id())->item_carts->newPivotStatement()->where('client_id', $client_id)->delete();
+
+        $purchase = Purchase::create([
+            'client_id' => $client_id,
+            'paid' => $temp->total,
+            'sd_id' => $request->input('sd_id'),
+            'cc_id' => $request->input('cc_id'),
+            'type' => $temp->type,
+        ]);
+        
+        $temp_builder->delete();
+        redirect('/');
     }
 
 
@@ -109,7 +224,7 @@ class ItemController extends Controller
             'active' => 'true',
             'is_bundle' => $request->input('item.bundle'),
         ]);
-        
+
         // Não sei se está certo
         if($request->has('item.tags')){
             $tags = $request->input('item.tags');
@@ -117,28 +232,28 @@ class ItemController extends Controller
         }
 
         if($request->input('item.bundle') == false){
-        
+
             $product = Product::create([
                 'type' => $request->input('item.type')
             ]);
 
-        
+
             if($request->has('item.images')){
                 $paths = [];
                 foreach($request->file('imageFile') as $image)
                 {
-                    $path = $image->store('/public/images'); 
+                    $path = $image->store('/public/images');
                     array_push($paths, $path);
-    
+
                     Image::create([
                         'path' => $path
                     ]);
-    
+
                 }
                 $product->images = $paths;
             }
         }
-        
+
     }
 
     /**
@@ -149,11 +264,11 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        
+
         $item = Item::find($id);
 
 
-        $data = 
+        $data =
         [
             'name' => $item->name,
             'price' => $item->price,
@@ -167,7 +282,7 @@ class ItemController extends Controller
             $product = Product::find($id);
             $data['unit'] = $product->type;
 
-            $images = $product->images();
+            $images = $product->images()->get();
             // foreach($product->images as $image){
             //     $contents = Storage::disk('public')->get("images/" . $image->path);
             //     array_push($images, $contents);
@@ -176,14 +291,14 @@ class ItemController extends Controller
             $data['images'] = $images;
         }
 
-        
+
 
         if(count($item->reviews)>0){
             $data['reviews'] =  $item->reviews;
         }
 
         if(count($item->tags)>0){
-            
+
             $data['tags'] =  $item->tags;
         }
 
@@ -191,14 +306,14 @@ class ItemController extends Controller
         if(auth()->user()!=null){
             $data['admin'] = auth()->user()->is_admin;
         }
-        
+
 
 
 
 
 
         return view('pages.misc.product_detail', $data);
-        
+
     }
 
 
@@ -210,13 +325,13 @@ class ItemController extends Controller
         if (!Image::exists($path)) {
             abort(404);
         }
-    
+
         $image = Image::get($path);
         // $type = File::mimeType($path);
-    
+
         // $response = Response::make($file, 200);
         // $response->header("Content-Type", $type);
-    
+
         return $image;
 
     }
@@ -224,13 +339,7 @@ class ItemController extends Controller
     // nao pode ser feito assim, é suposto retornar a vista com todos os items
     public function list()
     {
-        
-
-
-
         $items = Item::get();
-
-
 
         // $data = 
         // [
@@ -240,14 +349,8 @@ class ItemController extends Controller
         //     'rating' => $item->rating,
         // ];
 
-
-
-
-
-
-
         return view('pages.misc.products_list', ['items' => $items]);
-        
+
     }
 
 
@@ -289,7 +392,7 @@ class ItemController extends Controller
         if(!is_numeric($id)){
             return response('', 404)->header('description','The item was not found');
         }
-       
+
         $request->validate([
             'item.description' => 'string',
             'item.quantityAvailable' => 'integer',
@@ -297,7 +400,7 @@ class ItemController extends Controller
             'item.name' => 'string',
         ]);
 
-        
+
 
         $item = Item::find($id);
         $this->authorize('update', $item);
@@ -307,19 +410,19 @@ class ItemController extends Controller
         }
 
         if($request->has('item.name')){
-            $item->name = $request->input('item.name'); 
+            $item->name = $request->input('item.name');
         }
 
         if($request->has('item.description')){
-            $item->description = $request->input('item.description'); 
+            $item->description = $request->input('item.description');
         }
 
         if($request->has('item.quantityAvailable')){
-            $item->stock = $request->input('item.quantityAvailable'); 
+            $item->stock = $request->input('item.quantityAvailable');
         }
 
         if($request->has('item.price')){
-            $item->price = $request->input('item.price'); 
+            $item->price = $request->input('item.price');
         }
 
         $item->save();
@@ -347,10 +450,11 @@ class ItemController extends Controller
         }
 
         $item->active = 'false';
-    
+
         $item->save();
 
         return response('', 204,)->header('description', 'Successfully deactivated item');
+        
     }
 
 
@@ -363,12 +467,20 @@ class ItemController extends Controller
 
         foreach($items as $group){
             foreach($group as $item){
-                $item->unit=\DB::table('products')->where('id','=',$item->id)->get('type');
+                if($item->is_bundle) {
+                    $item->unit=\DB::table('products')->get('type')->first();
+                    $temp=$item->unit;
+                    $temp->type="Un"; //it is required to create a temp variable to make the change
+                    $item->unit = $temp;
+                }else{
+                    $item->unit=\DB::table('products')->where('id','=',$item->id)->get('type')->first();
+                }
                 $item->images=app('App\Http\Controllers\ImageController')->productImages($item->id);
             }
+
         }
-        
-        
+
+
         return view('pages.misc.home_page',['items'=>$items]);
     }
 

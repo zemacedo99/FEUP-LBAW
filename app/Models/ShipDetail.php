@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShipDetail extends Model
 {
+    protected $table = 'ship_details';
     public $timestamps  = false;
     protected $fillable = [ 'first_name',
                             'last_name',
@@ -17,7 +18,8 @@ class ShipDetail extends Model
                             'city',
                             'country',
                             'phone_n',
-                            'client_id'];
+                            'client_id',
+                            'to_save'];
 
     use HasFactory;
 

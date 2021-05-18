@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Image;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
 
@@ -97,11 +98,15 @@ class ImageController extends Controller
     }
 
     public function productImages($productId){
-        $image_ids=\DB::table('image_product')->where('product_id','=',$productId)->get();
+        if(!Item::find($productId)->is_bundle) {
+            $image_ids = \DB::table('image_product')->where('product_id', '=', $productId)->get();
+        }else{//if is bundle return generic image
+            return [Image::where('id','=',2)->get()->first()];//bundle image
+        }
         $images=[];
         foreach($image_ids as $i){
             //array_push($paths,Image::where('id','=',$i->image_id)->path);
-            array_push($images,Image::where('id','=',$i->image_id)->get());
+            array_push($images,Image::where('id','=',$i->image_id)->get()->first());
         }
         return $images;
     }
