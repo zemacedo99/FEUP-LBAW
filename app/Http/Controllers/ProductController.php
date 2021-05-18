@@ -180,9 +180,13 @@ class ProductController extends Controller
 
                 $filename = $image->hashName();
 
+                $path = "storage/images/";
+                $path = $path . $filename;
+
+                dd($path);
                 
                 $img = Image::create([
-                    'path' => $filename
+                    'path' => $path
                 ]);
 
                 $img->products()->attach($product);
