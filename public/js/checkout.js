@@ -73,6 +73,7 @@ function updatePeriodic(event){
 
 function addCoupon(event){
     let couponCode = document.getElementById('coupon_code')
+    if(couponCode.value == "") return
 
     sendAjaxRequest('get', '/api/coupon/' + couponCode.value, null, function(){
         if (this.status === 404){
