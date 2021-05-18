@@ -1,13 +1,3 @@
-<?php
-addModal(
-    "DeleteSupplierAccount",
-    "Confirmation",
-    "Are you sure you want to delete your Store account? You will lose all of your data, including control off your products, Cupons and Bundles.",
-    "Delete",
-    "Cancel"
-);
-?>
-
 <div class="container-sm col-sm-10">
 
     <div class="col d-flex justify-content-center d-none d-lg-flex mt-3 fs-3">Profile</div>
