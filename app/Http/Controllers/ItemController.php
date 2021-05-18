@@ -457,31 +457,26 @@ class ItemController extends Controller
 
     }
 
-
     public function homePage(){
         $items=[
-            'almostSoldOut'=>Item::orderBy('stock','asc')->get(),
-            'new'=>Item::orderBy('id','desc')->get(),
-            'hot'=>Item::get()
+            'almostSoldOut'=>Item::orderBy('stock','asc')->take(5)->get(),
+            'new'=>Item::orderBy('id','desc')->take(5)->get(),
+            'hot'=>Item::take(5)->get()
         ];
 
         foreach($items as $group){
             foreach($group as $item){
-                if($item->is_bundle) {
-                    $item->unit=\DB::table('products')->get('type')->first();
-                    $temp=$item->unit;
-                    $temp->type="Un"; //it is required to create a temp variable to make the change
-                    $item->unit = $temp;
-                }else{
-                    $item->unit=\DB::table('products')->where('id','=',$item->id)->get('type')->first();
+                $product = $item->product();
+                if ($product){
+                    $item->unit = $product->unit;
+                    $item->image = $product->images[0]->path;
+                } else {
+                    $item->unit = "Un";
+                    $item->image = "storage/products/bundle.jpg";
                 }
-                $item->images=app('App\Http\Controllers\ImageController')->productImages($item->id);
             }
-
         }
 
-
-        return view('pages.misc.home_page',['items'=>$items]);
+        return view('pages.misc.home_page',['items' => $items]);
     }
-
 }

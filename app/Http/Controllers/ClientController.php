@@ -74,7 +74,7 @@ class ClientController extends Controller
         foreach ($client->purchases as $purchase){
             if ($purchase->type == 'SingleBuy'){
                 foreach ($purchase->items as $item){
-                    if(!is_null($item->product())){
+                    if($item->product()){
                         array_push($history_items, array_merge($item->toArray(),
                             $item->product()->toArray(),
                             ["image" => $item->product()->images[0]->path]));
