@@ -15,7 +15,7 @@
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title">{{$name}}</h5>
-                    <p class="card-text"><small class="text-muted">{{$price}}€/{{$unit}}</small></p>
+                    <p class="card-text"><small class="text-muted">{{$price}}€@isset($unit)/{{$unit}}@endisset</small></p>
                     <p class="card-text">{{$description}}</p>
                 </div>
             </div>
