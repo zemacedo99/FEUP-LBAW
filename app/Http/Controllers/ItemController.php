@@ -55,9 +55,12 @@ class ItemController extends Controller
 
         if($request->input('all_coupons') !== null){
             foreach($coupons_str as $coupon){
-                array_push($coupons, Coupon::find($coupons_str));
+                $ret_coupon = Coupon::find($coupon);
+               
+                array_push($coupons, $ret_coupon);
             }
         }
+   
         
         //Update quantities
         $total = 0;
@@ -88,7 +91,7 @@ class ItemController extends Controller
                     if($coupon->type === '%'){
                         $total += (1 - $coupon->amount/100) * $item_tot_price;
                     }else if($coupon->type === '€'){
-                        $total += max(0, $item_tot_price - $coupon->amount);   
+                        $total += max(0, $item_tot_price - $coupon->amount);
                     }
                     $already = true;
                     break;
@@ -121,6 +124,10 @@ class ItemController extends Controller
 
         $client = Client::find($id);
         $items = $client->item_carts;
+        
+        if($items->isEmpty()){
+            return redirect()->route('items');
+        }
 
         $total = 0;
         foreach($items as $item){
@@ -157,7 +164,7 @@ class ItemController extends Controller
 
         $data = [
             'ccs' => $ccs,
-            'total' => $temp->total,
+            'total' => round($temp->total, 2),
         ];
 
         if($ship_det != []){

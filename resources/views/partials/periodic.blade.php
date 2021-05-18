@@ -17,16 +17,16 @@
 
                                 <ul class="nav nav-pills mb-3 d-flex justify-content-evenly" id="pills-tab" role="tablist">
                                     <li class="nav-item" role="presentation">
-                                        <label data-bs-toggle="pill" data-bs-target="#pills-once"  class="periodic" >Once</label>
+                                        <label data-bs-toggle="pill" data-bs-target="#pills-once"  class="periodic" id="SingleBuy" >Once</label>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <label data-bs-toggle="pill" data-bs-target="#pills-daily" class="periodic" >Daily</label>
+                                        <label data-bs-toggle="pill" data-bs-target="#pills-daily" class="periodic" id="Day" >Daily</label>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <label data-bs-toggle="pill" data-bs-target="#pills-weekly" class="periodic" >Weekly</label>
+                                        <label data-bs-toggle="pill" data-bs-target="#pills-weekly" class="periodic" id="Week" >Weekly</label>
                                     </li>
-                                    <li class="nav-item" role="presentation"> 
-                                        <label data-bs-toggle="pill" data-bs-target="#pills-monthly" class="periodic" >Monthly</label>
+                                    <li class="nav-item" role="presentation">  
+                                        <label data-bs-toggle="pill" data-bs-target="#pills-monthly" class="periodic" id="Month" >Monthly</label>
                                     </li>
                                 </ul>
 

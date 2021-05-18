@@ -7,9 +7,7 @@
 $user_id = \Illuminate\Support\Facades\Auth::id();
 @endphp
 
-@foreach ($errors as $error)
-    {{$error}}
-@endforeach
+
 
 <div class="container">
    
@@ -24,7 +22,7 @@ $user_id = \Illuminate\Support\Facades\Auth::id();
                     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item active" id="selectedLink" aria-current="page">Information</li>
-                            <li class="breadcrumb-item"> <a href="{{route('payment', ['id' => $user_id ])}}" style="text-decoration: none; color: black;">Shipping / Payment</a></li>
+                            <li class="breadcrumb-item" style="text-decoration: none; color: black;"> Shipping / Payment</li>
                         </ol>
                     </nav>
                 </div>

@@ -98,15 +98,30 @@ function addCC(event){
             let input = document.getElementById(check_empty[i]);
             if (input.value == "") {
                 document.getElementById(check_empty[i] + "_alert").innerHTML = "This field cannot be empty"
-                save = false;
+                save = false
             }else{
-                document.getElementById(check_empty[i] + "_alert").innerHTML = ""
-                cc[check_empty[i]] = input.value
+                if(check_empty[i] === 'cvv' && verifyIfNumber(input, 3)){
+                    document.getElementById(check_empty[i] + "_alert").innerHTML = "CVV is invalid"
+                    save = false
+
+                }else if(check_empty[i] === 'card_number' && verifyIfNumber(input, 16)){
+                    document.getElementById(check_empty[i] + "_alert").innerHTML = "Card number is invalid"
+                    save = false
+                
+                }else{
+                    document.getElementById(check_empty[i] + "_alert").innerHTML = ""
+                    cc[check_empty[i]] = input.value
+                }
+                
             }
            
 
         }
-        if(!save) return;
+        if(!save){
+            event.preventDefault()
+            return;
+        } 
+            
 
         if(document.getElementById('save_cc').checked){
             cc['to_save'] = true
@@ -131,6 +146,10 @@ function addCC(event){
         event.preventDefault()
     }
 
+}
+
+function verifyIfNumber(input, desLength){
+    return !Number.isInteger(input) && input.toString().replace(" ", "").length !== desLength
 }
 
 function createCreditCard(cc){

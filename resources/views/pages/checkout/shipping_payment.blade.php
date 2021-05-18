@@ -18,7 +18,7 @@
             <div class="d-flex justify-content-center">
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{route('checkout', ['id' => $user_id ])}}" style="text-decoration: none; color: black;">Information</a></li>
+                        <li class="breadcrumb-item" style="text-decoration: none; color: black;">Information</li>
                         <li class="breadcrumb-item active" id="selectedLink" aria-current="page">Shipping / Payment</li>
                     </ol>
                 </nav>

@@ -60,7 +60,7 @@ function updatePrice(price){
 function updatePeriodic(event){
     let periodicInput = document.getElementById('periodic')
     console.log(event.target)
-    periodicInput.value = event.target.getAttribute('name')
+    periodicInput.value = event.target.getAttribute('id')
 }
 
 function addCoupon(event){
