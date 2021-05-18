@@ -55,6 +55,10 @@ class RegisterController extends Controller
             'name' => 'required|string',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'address' => 'exclude_if:type,client|required|string',
+            'post-code' => 'exclude_if:type,client|required|string',
+            'city' => 'exclude_if:type,client|required|string',
+            'description' => 'exclude_if:type,client|required|string',
         ]);
     }
 

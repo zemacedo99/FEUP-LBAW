@@ -66,21 +66,55 @@ class ClientController extends Controller
     {
         $this->authorize('view', $client);
 
-        $item_array = [];
-        foreach ($client->purchases->where('type', 'SingleBuy') as $purchase){
-            foreach ($purchase->items as $item){
-                if(!is_null($item->product())){
-                    array_push($item_array, array_merge($item->toArray(),
-                        $item->product()->toArray(),
+        $history_items = [];
+        $favorite_items = [];
+        $periodic_items = [];
+
+        // Retrieve History and Periodic
+        foreach ($client->purchases as $purchase){
+            if ($purchase->type == 'SingleBuy'){
+                foreach ($purchase->items as $item){
+                    if($item->product()){
+                        array_push($history_items, array_merge($item->toArray(),
+                            $item->product()->toArray(),
                             ["image" => $item->product()->images[0]->path]));
-                } else {
-                    array_push($item_array, array_merge($item->toArray(), ["type" => "Un", "image" => "storage/products/bundle.jpg"]));
+                    } else {
+                        array_push($history_items, array_merge($item->toArray(), ["unit" => "Un",
+                            "image" => "storage/products/bundle.jpg"]));
+                    }
+                }
+            } else {
+                foreach ($purchase->items as $item){
+                    if(!is_null($item->product())){
+                        array_push($periodic_items, array_merge($item->toArray(),
+                            $item->product()->toArray(),
+                            ["image" => $item->product()->images[0]->path, "type" => $purchase->type]));
+                    } else {
+                        array_push($periodic_items, array_merge($item->toArray(), ["unit" => "Un",
+                            "image" => "storage/products/bundle.jpg", "type" => $purchase->type]));
+                    }
                 }
             }
+
         }
+
+        // Retrieve Favorite items
+        foreach ($client->item_favorites as $fav){
+            if(!is_null($fav->product())){
+                array_push($favorite_items, array_merge($fav->toArray(),
+                    $fav->product()->toArray(),
+                    ["image" => $fav->product()->images[0]->path]));
+            } else {
+                array_push($favorite_items, array_merge($fav->toArray(), ["unit" => "Un",
+                    "image" => "storage/products/bundle.jpg"]));
+            }
+        }
+
         return view('pages.client.client_profile',
             ['client' => $client,
-             'items' => $item_array,
+             'history' => $history_items,
+             'favorites' => $favorite_items,
+             'periodic' => $periodic_items
             ]);
     }
 

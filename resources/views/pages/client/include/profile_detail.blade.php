@@ -104,24 +104,24 @@
         </div>
         <div class="row row-cols-1 row-cols-lg-2 d-flex justify-content-center mb-3">
             <div class="col" style="width: 150px;">
-                <img src="{{ asset('images/avatar.png') }}" class="rounded-circle img-fluid">
+                <img src="{{ asset($client->image->path) }}" class="rounded-circle img-fluid">
             </div>
             <div class="col mt-2 d-flex align-items-center justify-content-center justify-content-lg-start">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="ClientName" placeholder="Name" value="André Gomes">
+                    <input type="text" class="form-control" id="ClientName" placeholder="Name" value="{{ $client->name }}">
                     <label for="ClientName">Name</label>
                 </div>
             </div>
         </div>
         <div class="col-12">
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value="up201806224@fe.up.pt">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value="{{ $client->user()->email }}">
                 <label for="floatingInput">Email address</label>
             </div>
         </div>
         <div class="col-12 mb-5">
             <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" value="olátudobem?">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" value="">
                 <label for="floatingPassword">Password</label>
             </div>
         </div>
@@ -144,13 +144,13 @@
         <div class="row mb-3">
             <div class="col">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingFirstName" placeholder="FirstName">
+                    <input type="text" class="form-control" id="floatingFirstName" placeholder="FirstName" value="{{ $client->ship_detail->first_name }}">
                     <label for="floatingFirstName">First Name</label>
                 </div>
             </div>
             <div class="col">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingLastName" placeholder="LastName">
+                    <input type="text" class="form-control" id="floatingLastName" placeholder="LastName" value="{{ $client->ship_detail->last_name }}">
                     <label for="floatingLastName">Last Name</label>
                 </div>
             </div>
@@ -159,13 +159,13 @@
         <div class="row mb-3">
             <div class="col-8">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingAddress" placeholder="FirstName">
+                    <input type="text" class="form-control" id="floatingAddress" placeholder="Address" value="{{ $client->ship_detail->address }}">
                     <label for="floatingAddress">Address</label>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingDoor" placeholder="LastName">
+                    <input type="text" class="form-control" id="floatingDoor" placeholder="Door Nº" value="{{ $client->ship_detail->door_n }}">
                     <label for="floatingDoor">Door Nº</label>
                 </div>
             </div>
@@ -174,19 +174,19 @@
         <div class="row mb-3">
             <div class="col-4">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingZipcode" placeholder="FirstName">
+                    <input type="text" class="form-control" id="floatingZipcode" placeholder="Zip Code" value="{{ $client->ship_detail->post_code }}">
                     <label for="floatingZipcode">Zip Code</label>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingDistrict" placeholder="LastName">
+                    <input type="text" class="form-control" id="floatingDistrict" placeholder="District" value="{{ $client->ship_detail->district }}">
                     <label for="floatingDistrict">District</label>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingCity" placeholder="LastName">
+                    <input type="text" class="form-control" id="floatingCity" placeholder="City" value="{{ $client->ship_detail->city }}">
                     <label for="floatingCity">City</label>
                 </div>
             </div>
@@ -195,7 +195,7 @@
         <div class="row mb-3">
             <div class="col-12">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingCountry" placeholder="FirstName">
+                    <input type="text" class="form-control" id="floatingCountry" placeholder="Country" value="{{ $client->ship_detail->country }}">
                     <label for="floatingCountry">Country</label>
                 </div>
             </div>
@@ -204,7 +204,7 @@
         <div class="row mb-3">
             <div class="col-12">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingPhone" placeholder="FirstName">
+                    <input type="text" class="form-control" id="floatingPhone" placeholder="Phone Number" value="{{ $client->ship_detail->phone_n }}">
                     <label for="floatingPhone">Phone Number</label>
                 </div>
             </div>
@@ -222,7 +222,7 @@
                         <div class="card-body">
                             <a href="#" class="stretched-link" data-bs-toggle="modal" data-bs-target="#editCard"></a>
                             <h6 class="card-title">Card Holder</h6>
-                            <p class="card-text">Visa car Ending in **69</p>
+                            <p class="card-text">Visa card Ending in **69</p>
                         </div>
                     </div>
                 </div>
@@ -234,7 +234,6 @@
             </div>
 
         </div>
-
 
     </div>
 
