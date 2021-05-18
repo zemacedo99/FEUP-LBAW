@@ -27,7 +27,7 @@ if (deleteModal != null) {
             // Extract info from data-bs-* attributes
 
         sendAjaxRequest('DELETE', '/api/client/'+id, null, function(){
-            //location.reload();
+            location.reload();
         })
 
 
@@ -59,7 +59,7 @@ if (deleteProdModal != null) {
             // Extract info from data-bs-* attributes
 
         sendAjaxRequest('DELETE', '/api/item/'+id, null, function(){
-            //location.reload();
+            location.reload();
         })
 
 
@@ -94,7 +94,7 @@ if (acceptSupModal != null) {
             // Extract info from data-bs-* attributes
 
         sendAjaxRequest('POST', '/supplier', {"supplier_id":supplier_id, "accept":1}, function(){
-            // location.reload();
+             location.reload();
             })
 
 
@@ -131,7 +131,7 @@ if (declineSupModal != null) {
             // Extract info from data-bs-* attributes
 
         sendAjaxRequest('POST', '/supplier', {"supplier_id":supplier_id, "accept":0}, function(){
-            //location.reload();
+            location.reload();
             })
 
 
@@ -161,7 +161,7 @@ if (deleteModal != null) {
             // Extract info from data-bs-* attributes
 
         sendAjaxRequest('DELETE', '/api/review', {'client_id':clientId,'item_id':itemId}, function(){
-            //location.reload();
+            location.reload();
         })
 
 
@@ -185,6 +185,6 @@ function sendAjaxRequest(method, url, data, handler) {
     }
     request.addEventListener('load', handler);
     request.send(encodeForAjax(data));
-    console.log(request.response);
+    //console.log(request.response);
 
 }

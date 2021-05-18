@@ -56,7 +56,7 @@
                         <tbody>
 
                             @php
-                                $i = $suppliers->count()*($suppliers->currentPage()-1);
+                                $i = $suppliers->count()*($suppliers->perPage()-1);
                             @endphp
 
                         @foreach ($suppliers as $supplier)

@@ -9,5 +9,5 @@ function changeTotal(event) {
 
     let totalDiv = document.querySelector('#total')
 
-    totalDiv.innerHTML = "Total: " + event.target.value * price.value + "€"
+    totalDiv.innerHTML = "Total: " + Number(event.target.value * price.value).toFixed(2);  + "€"
 }

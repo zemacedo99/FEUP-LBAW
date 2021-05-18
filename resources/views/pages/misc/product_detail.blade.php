@@ -32,7 +32,7 @@
                 <input type="hidden" id="price" value="{{ $price }}">
 
                 <br>
-                <h4><b>{{ $price }}€@isset($unit)/{{ $unit }} @endisset</b></h4>
+                <h4><b>{{ number_format ( $price , 2) }}€@isset($unit)/{{ $unit }} @endisset</b></h4>
                 <br>
 
 
@@ -52,7 +52,9 @@
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-primary"><i>Buy </i><i class="bi bi-basket"></i></button>
+                @if ($admin != true)
+                    <button type="button" class="btn btn-primary"><i>Buy </i><i class="bi bi-basket"></i></button>
+                @endif
 
             </div>
         </div>
