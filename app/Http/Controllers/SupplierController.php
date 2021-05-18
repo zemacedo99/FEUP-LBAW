@@ -50,7 +50,15 @@ class SupplierController extends Controller
         {
             $product = Product::find($item->id);
         
-            $all[$i] = [$item,$product->type,$product->images()->get()];
+            if(is_null($product))       // item is a bundle
+            {
+                $all[$i] = [$item,null,null];
+            }
+            else
+            {
+                $all[$i] = [$item,$product->type,$product->images()->get()];
+            }
+            
             
             $i++;
         }
