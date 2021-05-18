@@ -34,7 +34,7 @@ class ItemController extends Controller
         $products=Item::orderBy('id','asc')->paginate(8);
 
         return view('pages.admin.products',['items'=>$products->withPath('dashboard_products')]);
-    } 
+    }
 
 
     public function save_checkout(Request $request){
@@ -44,7 +44,7 @@ class ItemController extends Controller
         $client = Client::find($client_id);
 
         // $items = $client->item_carts;
-        
+
 
         $request->validate([
             'n_items' => 'required|integer',
@@ -59,7 +59,7 @@ class ItemController extends Controller
         foreach($coupons_str as $coupon){
             array_push($coupons, Coupon::find($coupons_str));
         }
-    
+
         //Update quantities
         $total = 0;
 
@@ -71,7 +71,7 @@ class ItemController extends Controller
 
             $id_item = $request->input('item_' . $i);
             $quantity = $request->input('quantity_' . $i);
-            
+
             // foreach($items as $item){
             //     if($item->id == $id_item){
             //         $item->quantity = $quantity;
@@ -88,7 +88,7 @@ class ItemController extends Controller
                     if($coupon->type === '%'){
                         $total +=  (1 - $coupon->amount/100) * $item_tot_price;
                     }else{
-                        $total +=  max(0, $item_tot_price - $coupon->amount);   
+                        $total +=  max(0, $item_tot_price - $coupon->amount);
                     }
                 }
             }
@@ -102,7 +102,7 @@ class ItemController extends Controller
 
         redirect()->route('payment');
     }
-   
+
 
     public function checkout($id){
 
@@ -139,7 +139,7 @@ class ItemController extends Controller
 
         $ccs = CreditCard::where('client_id', $id)
                 ->where('to_save', true)->get();
-        
+
         $ship_det = ShipDetail::where('client_id', $id)
                 ->where('to_save', true)->get();
 
@@ -166,7 +166,7 @@ class ItemController extends Controller
         $temp_builder = TempPurchase::where('client_id', $client_id);
 
         $temp = $temp_builder->get()->first();
-        
+
         //Deleting carts
         Client::find(Auth::id())->item_carts->newPivotStatement()->where('client_id', $client_id)->delete();
 
@@ -177,7 +177,7 @@ class ItemController extends Controller
             'cc_id' => $request->input('cc_id'),
             'type' => $temp->type,
         ]);
-        
+
         $temp_builder->delete();
         redirect('/');
     }
@@ -341,7 +341,7 @@ class ItemController extends Controller
     {
         $items = Item::get();
 
-        // $data = 
+        // $data =
         // [
         //     'name' => $item->name,
         //     'price' => $item->price,
@@ -454,7 +454,7 @@ class ItemController extends Controller
         $item->save();
 
         return response('', 204,)->header('description', 'Successfully deactivated item');
-        
+
     }
 
 

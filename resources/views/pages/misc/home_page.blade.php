@@ -11,7 +11,7 @@
         </div>
 
         <?php
-        product_row("Almost Sold Out", "clock",$items["almostSoldOut"]);
+        product_row("Almost Sold Out", "clock", $items["almostSoldOut"]);
         ?>
 
         <?php
@@ -85,9 +85,7 @@
 
     <?php
     }
-
     function product_row($name, $icon, $item){
-
     ?>
     <div class="row mt-5 ms-4 ms-md-0">
         <div class="col-6 text-start">
@@ -107,7 +105,6 @@
     </div>
     <?php
     }
-
     ?>
 
 @endsection
