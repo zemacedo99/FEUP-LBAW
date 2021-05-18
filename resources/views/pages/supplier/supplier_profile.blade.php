@@ -43,7 +43,19 @@
     </li>
 </ul>
 
-@include('partials.modals.add_modal')
+@php
+    $modal_data =
+    [
+        'modalName'=>"DeleteSupplierAccount",
+        'title'=>"Confirmation",
+        'bodyText'=>"Are you sure you want to delete your Store account? You will lose all of your data, including control off your products, Cupons and Bundles.",
+        'buttonPrimary'=>"Delete",
+        'buttonSecondary'=>"Cancel",
+    ]
+@endphp
+
+
+@include('partials.modals.add_modal',$modal_data)
 
 <div class="tab-content" id="SupplierTabContent">
     <div class="tab-pane fade col-lg-6 show active" id="supplierProfile" role="tabpanel" aria-labelledby="supplierProfile-tab">@include('pages.supplier.include.edit_profile',$data)</div>
