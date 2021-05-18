@@ -26,6 +26,7 @@
             <div class="row m-3"></div>
 
             <form action="/api/payment" method="POST" id="form">
+                @csrf
             <div class="row">
 
                 <!-- <div class="col"></div> -->
@@ -39,40 +40,6 @@
                 <!-- ****************** Right Side ****************** -->
                 <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
 
-                    {{-- <div class="row mt-3"></div>
-                    <div class="row mt-3"></div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <h3 style='text-align:left;border-bottom:2px solid black;'>Payment Method</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-3"></div>
-                    <div class="row mt-3"></div>
-                    <div class="row mt-3"></div>
-
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-
-                        <div class="row">
-
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <input type="radio" class="btn-check " name="PayPal" id="PayPal" autocomplete="off" checked>
-                                <label class="btn btn-primary d-flex justify-content-center align-items-center mb-1" id="simple-btt" for="PayPalOption" style="height: 60px;">PayPal</label>
-                            </div>
-
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <input type="radio" class="btn-check " name="CreditCard" id="CreditCard" autocomplete="off" checked>
-                                <label class="btn btn-primary d-flex justify-content-center align-items-center mb-1" id="simple-btt" for="CreditOption" style="height: 60px;">Credit</label>
-                            </div>
-
-                        </div>
-                    </div> --}}
-
-                    {{-- <div class="row mt-3"></div>
-                    <div class="row mt-3"></div> --}}
                     <div class="row mt-3"></div>
                     <div class="row mt-3"></div>
 
@@ -89,7 +56,7 @@
                         @include('partials.modals.add_credit_card')
 
                     </div>
-
+                    <small id="cc_alert" class="text-danger"></small>
                 </div>
             </div>
 
@@ -97,7 +64,7 @@
             
             <div class="col-12">
 
-                <h4 style='text-align:center;'>Total: 8.37 €</h4>
+                <h4 style='text-align:center;'>Total: {{$total}}€</h4>
                 <div class="row mb-3"></div>
         
             </div>

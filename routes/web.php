@@ -124,6 +124,8 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register');
 
 
+Route::get('success', 'ItemController@success')->name('sucess');
+
 // ANDRE - WORKING ON BELOW THIS
 
 Route::get('client/{client:id}/profile', 'ClientController@show');

@@ -1,5 +1,5 @@
 <div class="col-12  col-lg-12 order-3">
-    <input type="hidden" id="all_coupons" value= "">
+    <input type="hidden" id="all_coupons" name="all_coupons" value= "">
     <div class="row">
 
         <div class="col"></div>

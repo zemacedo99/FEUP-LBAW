@@ -38,28 +38,27 @@ class ItemController extends Controller
 
 
     public function save_checkout(Request $request){
-
+    
         $client_id = Auth::id();
-
-        $client = Client::find($client_id);
 
         // $items = $client->item_carts;
         
-
+        
         $request->validate([
             'n_items' => 'required|integer',
             'periodic' => 'required',
-            'all_coupons' => 'required',
         ]);
-
+       
 
         $coupons_str = explode(' ', $request->input('all_coupons'));
         $coupons = [];
 
-        foreach($coupons_str as $coupon){
-            array_push($coupons, Coupon::find($coupons_str));
+        if($request->input('all_coupons') !== null){
+            foreach($coupons_str as $coupon){
+                array_push($coupons, Coupon::find($coupons_str));
+            }
         }
-    
+        
         //Update quantities
         $total = 0;
 
@@ -82,17 +81,28 @@ class ItemController extends Controller
             $item = Item::find($id_item);
 
             $item_tot_price = $item->price * $quantity;
-
+            
+            $already = false;
             foreach($coupons as $coupon){
                 if($coupon->supplier_id === $item->supplier_id){
                     if($coupon->type === '%'){
-                        $total +=  (1 - $coupon->amount/100) * $item_tot_price;
-                    }else{
-                        $total +=  max(0, $item_tot_price - $coupon->amount);   
+                        $total += (1 - $coupon->amount/100) * $item_tot_price;
+                    }else if($coupon->type === '€'){
+                        $total += max(0, $item_tot_price - $coupon->amount);   
                     }
+                    $already = true;
+                    break;
                 }
             }
+
+            if(!$already){
+                $total += $item_tot_price;
+            }
+
+
         }
+
+        TempPurchase::where('client_id', $client_id)->delete();
 
         TempPurchase::create([
             'client_id' => $client_id,
@@ -100,12 +110,12 @@ class ItemController extends Controller
             'type' => $request->input('periodic'),
         ]);
 
-        redirect()->route('payment');
+        return redirect('client/' . $client_id . '/checkoutPayment');
     }
    
 
     public function checkout($id){
-
+        
         if(!is_numeric($id))
             return response('', 404);
 
@@ -143,8 +153,11 @@ class ItemController extends Controller
         $ship_det = ShipDetail::where('client_id', $id)
                 ->where('to_save', true)->get();
 
+        $temp = TempPurchase::where('client_id', $id)->get()->first();
+
         $data = [
             'ccs' => $ccs,
+            'total' => $temp->total,
         ];
 
         if($ship_det != []){
@@ -155,22 +168,24 @@ class ItemController extends Controller
     }
 
     public function do_payment(Request $request){
-
+        
         $request->validate([
             'cc_id' => 'required|integer|exists:credit_cards,id',
             'sd_id' => 'required|integer|exists:ship_details,id',
         ]);
 
+        
         $client_id = Auth::id();
 
         $temp_builder = TempPurchase::where('client_id', $client_id);
 
         $temp = $temp_builder->get()->first();
         
-        //Deleting carts
-        Client::find(Auth::id())->item_carts->newPivotStatement()->where('client_id', $client_id)->delete();
+        //Deleting carts ERRADO
+        \DB::table('carts')->where("client_id", $client_id)->delete();
 
-        $purchase = Purchase::create([
+
+        Purchase::create([
             'client_id' => $client_id,
             'paid' => $temp->total,
             'sd_id' => $request->input('sd_id'),
@@ -179,7 +194,15 @@ class ItemController extends Controller
         ]);
         
         $temp_builder->delete();
-        redirect('/');
+        return redirect('success');
+    }
+
+    /**
+     * 
+     */
+    public function success(){
+
+        return view('pages.misc.success');
     }
 
 

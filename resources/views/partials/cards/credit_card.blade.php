@@ -1,5 +1,5 @@
 <div id="all_credit_cards">
-    <input type="hidden" id="selected_id" value="-1">
+    <input type="hidden" id="selected_id" name="cc_id" value="-1">
     @php
         $i=0
     @endphp
@@ -22,5 +22,6 @@
             </div>
         </div>
         @include('partials.modals.edit_credit_card', ['cc' => $cc, 'i' => $i++])
-    @endforeach    
+    @endforeach
+    
 </div>

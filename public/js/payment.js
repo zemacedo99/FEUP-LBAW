@@ -24,6 +24,15 @@ function addAllListeners(){
 
 function validateForm(event) {
     try{
+
+        let cc_id =  document.getElementById('selected_id').value
+
+        if(cc_id  <= 0){
+            document.getElementById("cc_alert").innerHTML = "You must select a credit card"
+            event.preventDefault()
+        }else {
+            document.getElementById("cc_alert").innerHTML = ""
+        }
         let check_empty = ['first_name', 'last_name', 'address', 'door_n', 'post_code', 'district', 'city', 'country', 'phone_n']
         let correct = true
         let sd = {}
@@ -53,30 +62,19 @@ function validateForm(event) {
         let sp_id = -1
         sendAjaxRequest('post', '/api/shipdetails', sd, function(){
             if (this.status === 201){
-                sp_id = JSON.parse(this.responseText).id
+                document.getElementById('sd_id').value = JSON.parse(this.responseText).id
             }else{
                 event.preventDefault()
                 sp_id = -2
             }
         }, false)
 
-        while(sp_id == -1)
-            continue
         if(sp_id == -2){
             console.log("Error in shipdetail")
         }
 
-        let cc_id =  document.getElementById('selected_id').value
-        
-        
-        // event.preventDefault()
-        sendAjaxRequest('post', '/api/payment', {"cc_id": cc_id, "sp_id": sp_id}, function(){
-            
-            
-        }, false)
-
     }catch(err){
-        alert(err.message)
+        console.log(err.message)
         event.preventDefault()
     }
 }

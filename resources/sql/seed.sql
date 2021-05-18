@@ -163,7 +163,7 @@ CREATE TABLE reviews (
 
 CREATE TABLE temp_purchases(
     id              SERIAL              PRIMARY KEY,
-    client_id       INTEGER             NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE SET NULL,
+    client_id       INTEGER             NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE,
     total           DECIMAL             NOT NULL,
     type            purchase_type       NOT NULL
 );
