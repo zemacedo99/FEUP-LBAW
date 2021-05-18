@@ -165,8 +165,8 @@ class SupplierController extends Controller
             Supplier::where('id','=',$request->supplier_id)->update(['accepted'=>"true"]);
         }else{
             //return Supplier::where('id','=',$request->supplier_id)->get();
-            Supplier::find('id','=',$request->supplier_id)->delete();//not working
-            //User::where('id','=',$request->supplier_id)->delete();//not working
+            Supplier::where('id','=',$request->supplier_id)->delete();//not working
+            User::where('id','=',$request->supplier_id)->delete();//not working
         }
 
     }

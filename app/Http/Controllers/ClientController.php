@@ -168,7 +168,7 @@ class ClientController extends Controller
     public function destroy($id)
     {   //postgres não deixa apagar
         $client = Client::where('id', '=', $id);
-        $this->authorize('viewAny', $client);
+        //$this->authorize('viewAny', $client);
 
         $user = User::where('id', '=', $id);
 

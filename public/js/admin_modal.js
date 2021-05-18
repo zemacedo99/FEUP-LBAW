@@ -15,6 +15,7 @@ if (deleteModal != null) {
         id = button.getAttribute('data-bs-whatever')
         var name = button.getAttribute('user-name')
 
+
         var modalUserID = deleteModal.querySelector('#user_id')
 
         modalUserID.textContent = 'User ID: #' + id + '\t Name: '+name
@@ -27,7 +28,7 @@ if (deleteModal != null) {
             // Extract info from data-bs-* attributes
 
         sendAjaxRequest('DELETE', '/api/client/'+id, null, function(){
-            location.reload();
+            //location.reload();
         })
 
 
@@ -59,7 +60,7 @@ if (deleteProdModal != null) {
             // Extract info from data-bs-* attributes
 
         sendAjaxRequest('DELETE', '/api/item/'+id, null, function(){
-            location.reload();
+            //location.reload();
         })
 
 
@@ -94,7 +95,7 @@ if (acceptSupModal != null) {
             // Extract info from data-bs-* attributes
 
         sendAjaxRequest('POST', '/supplier', {"supplier_id":supplier_id, "accept":1}, function(){
-             location.reload();
+             //location.reload();
             })
 
 
@@ -131,7 +132,7 @@ if (declineSupModal != null) {
             // Extract info from data-bs-* attributes
 
         sendAjaxRequest('POST', '/supplier', {"supplier_id":supplier_id, "accept":0}, function(){
-            location.reload();
+            //location.reload();
             })
 
 
@@ -140,12 +141,12 @@ if (declineSupModal != null) {
 
 
 // Delete Review Modal
-var deleteModal = document.getElementById('deleteReviewModal')
-if (deleteModal != null) {
-    yesButton=deleteModal.getElementsByClassName('btn btn-primary').item(0);
-    noButton=deleteModal.getElementsByClassName('btn btn-secondary').item(0);
+var deleteReviewModal = document.getElementById('deleteReviewModal')
+if (deleteReviewModal != null) {
+    yesButton=deleteReviewModal.getElementsByClassName('btn btn-primary').item(0);
+    noButton=deleteReviewModal.getElementsByClassName('btn btn-secondary').item(0);
 
-    deleteModal.addEventListener('show.bs.modal', function(event) {
+    deleteReviewModal.addEventListener('show.bs.modal', function(event) {
         // Button that triggered the modal
         var button = event.relatedTarget
             // Extract info from data-bs-* attributes
@@ -161,7 +162,7 @@ if (deleteModal != null) {
             // Extract info from data-bs-* attributes
 
         sendAjaxRequest('DELETE', '/api/review', {'client_id':clientId,'item_id':itemId}, function(){
-            location.reload();
+            //location.reload();
         })
 
 
