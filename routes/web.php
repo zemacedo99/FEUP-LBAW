@@ -109,10 +109,10 @@ Route::delete('/api/tag/{tagName}','TagController@destroy');
 
 // Checkout
 
-Route::get('/client/{id}/checkoutInfo', 'ItemController@checkout')->name('checkout');
-Route::get('/client/{id}/checkoutPayment', 'ItemController@payment')->name('payment');
-Route::post('/api/checkout', 'ItemController@save_checkout');
-Route::post('/api/payment', 'ItemController@do_payment');
+Route::get('/client/{id}/checkoutInfo', 'ClientController@checkout')->name('checkout');
+Route::get('/client/{id}/checkoutPayment', 'ClientController@payment')->name('payment');
+Route::post('/api/checkout', 'ClientController@save_checkout');
+Route::post('/api/payment', 'ClientController@do_payment');
 
 
 
@@ -124,7 +124,7 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register');
 
 
-Route::get('success', 'ItemController@success')->name('sucess');
+Route::view('/success', 'pages.misc.success')->name('sucess');
 
 // ANDRE - WORKING ON BELOW THIS
 
