@@ -301,6 +301,8 @@ class ClientController extends Controller
 
     public function checkout($id){
 
+        $this->authorize('view', Client::find($id));
+
         $client = Client::find($id);
         
         $items = $client->item_carts;
@@ -333,6 +335,8 @@ class ClientController extends Controller
 
     public function payment($id){
         // Falta validação
+
+        $this->authorize('view', Client::find($id));
         
         $client = Client::find($id);
         
