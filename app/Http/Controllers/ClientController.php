@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Item;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -74,41 +75,30 @@ class ClientController extends Controller
         foreach ($client->purchases as $purchase){
             if ($purchase->type == 'SingleBuy'){
                 foreach ($purchase->items as $item){
-                    if($item->product()){
-                        array_push($history_items, array_merge($item->toArray(),
-                            $item->product()->toArray(),
-                            ["image" => $item->product()->images[0]->path]));
-                    } else {
-                        array_push($history_items, array_merge($item->toArray(), ["unit" => "Un",
-                            "image" => "storage/products/bundle.jpg"]));
-                    }
+                    $this->check_product($item, $history_items);
                 }
             } else {
                 foreach ($purchase->items as $item){
-                    if(!is_null($item->product())){
-                        array_push($periodic_items, array_merge($item->toArray(),
-                            $item->product()->toArray(),
-                            ["image" => $item->product()->images[0]->path, "type" => $purchase->type]));
+                    $product = $item->product();
+                    if($product){
+                        $item->unit = $product->unit;
+                        $item->image = $product->images[0]->path;
                     } else {
-                        array_push($periodic_items, array_merge($item->toArray(), ["unit" => "Un",
-                            "image" => "storage/products/bundle.jpg", "type" => $purchase->type]));
+                        $item->unit = "Un";
+                        $item->image = "storage/products/bundle.jpg";
                     }
+                    $item->purchase_type = $purchase->type;
+                    array_push($periodic_items, $item);
                 }
             }
-
         }
 
         // Retrieve Favorite items
         foreach ($client->item_favorites as $fav){
-            if(!is_null($fav->product())){
-                array_push($favorite_items, array_merge($fav->toArray(),
-                    $fav->product()->toArray(),
-                    ["image" => $fav->product()->images[0]->path]));
-            } else {
-                array_push($favorite_items, array_merge($fav->toArray(), ["unit" => "Un",
-                    "image" => "storage/products/bundle.jpg"]));
-            }
+            $this->check_product($fav, $favorite_items);
         }
+
+        // dd($client, $history_items, $favorite_items, $periodic_items);
 
         return view('pages.client.client_profile',
             ['client' => $client,
@@ -116,6 +106,18 @@ class ClientController extends Controller
              'favorites' => $favorite_items,
              'periodic' => $periodic_items
             ]);
+    }
+
+    private function check_product(Item $item, &$arr){
+        $product = $item->product();
+        if($product){
+            $item->unit = $product->unit;
+            $item->image = $product->images[0]->path;
+        } else {
+            $item->unit = "Un";
+            $item->image = "storage/products/bundle.jpg";
+        }
+        array_push($arr, $item);
     }
 
     public function get_info(Client $client)

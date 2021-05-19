@@ -59,7 +59,7 @@
                             @endphp
 
                         @foreach ($users->items() as $user)
-                            
+
                             <tr>
                             <th scope="row">{{$user->id}}</th>
                             <td>
@@ -67,16 +67,16 @@
                                         <div class="col-7">{{$user->name}}</div>
                                         <div class="col-5">
                                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteUserModal" data-bs-whatever={{$user->id}} user-name={{$user->name}}><i class="bi bi-trash"></i></button>
-                                            <a href=/users/{{$user->id}} class="btn btn-primary btn-sm d-none d-md-inline"><i
+                                            <a href="/users/{{$user->id}}" class="btn btn-primary btn-sm d-none d-md-inline"><i
                                                 class="bi bi-info-circle" ></i></a>
                                         </div>
                                     </div>
                                 </td>
 
                             </tr>
-                        
+
                         @endforeach
-                        
+
                         </tbody>
                     </table>
                 </div>

@@ -12,12 +12,7 @@
 @foreach ($history as $item)
     @include('partials.cards.product_in_history',
             [
-                'name' => $item["name"],
-                'price' => $item["price"],
-                'unit' => $item["unit"],
-                'description' => $item["description"],
-                'paid' => $item["pivot"]["price"],
-                'image' => $item["image"],
+                'item' => $item,
                 'type' => 'cancel'
             ])
 @endforeach

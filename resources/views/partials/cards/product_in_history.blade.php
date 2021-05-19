@@ -1,19 +1,19 @@
 <div class="card mb-3">
     <div class="row g-0">
         <div class="col-4 col-md-3 col-lg-2 col-xl-2">
-            <img src="{{ asset($image) }}" alt="...">
+            <img src="{{ asset( $item->image) }}" alt="...">
         </div>
         <div class="col-8 col-md-9 col-lg-10 col-xl-10">
             <div class="card-body">
                 <div class="d-flex justify-content-between justify-content-md-start">
-                    <h4 class="card-title text-truncate">{{ $name }}</h4>
+                    <h4 class="card-title text-truncate">{{ $item->name }}</h4>
                     <i class="bi bi-cart-plus ps-md-4"></i>
                 </div>
-                <h6 class="card-subtitle text-muted">{{ $price }}€/{{ $unit }}</h6>
+                <h6 class="card-subtitle text-muted">{{ $item->price }}€/{{ $item->unit }}</h6>
 
                 <div class="row row-cols-1 row-cols-md-2">
-                    <p class="card-text text-truncate d-none d-md-block order-md-1 col-md-9 col-lg-9"> {{ $description }} </p>
-                    <h4 class="card-title text-end text-md-start order-md-3">{{ $paid }}€</h4>
+                    <p class="card-text text-truncate d-none d-md-block order-md-1 col-md-9 col-lg-9"> {{ $item->description }} </p>
+                    <h4 class="card-title text-end text-md-start order-md-3">{{ $item->getOriginal('pivot_price') }}€</h4>
                     <div class="text-center order-md-2 col-md-3 col-lg-3 overdiv">
                         @switch($type)
                             @case('cancel')
@@ -33,8 +33,7 @@
                         @endswitch
                     </div>
                 </div>
-                {{-- ToDo pôr este link a apontar para o produto correto --}}
-                <a href="{{ url('/misc/product_detail') }}" class="stretched-link"></a>
+                <a href="{{ url("/item/$item->id") }}" class="stretched-link"></a>
             </div>
         </div>
     </div>
