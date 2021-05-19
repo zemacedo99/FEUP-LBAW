@@ -116,7 +116,7 @@ CREATE TABLE coupons (
 
 CREATE TABLE products (
     id              INTEGER     PRIMARY KEY REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-    type            unit_type   NOT NULL
+    unit            unit_type   NOT NULL
 );
 
 CREATE TABLE ship_details (

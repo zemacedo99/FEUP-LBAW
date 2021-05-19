@@ -9,14 +9,14 @@
 
 @include('partials.modals.periodic_buy')
 
-@for ($i = 0; $i < 10; $i++)
+@foreach($periodic as $per)
     @include('partials.cards.product_in_periodic',
             [
-                'name' => 'Test',
-                'price' => '5',
-                'unit' => 'Kg',
-                'description' => 'Uma descricao',
-                'paying' => '5',
-                'periodicity' => 'Weekly on Mondays'
+                'name' => $per['name'],
+                'price' => $per['price'],
+                'unit' => $per['unit'],
+                'description' => $per['description'],
+                'paying' => $per['pivot']['price'],
+                'periodicity' => $per['type']
             ])
-@endfor
+@endforeach

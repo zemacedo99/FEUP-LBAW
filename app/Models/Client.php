@@ -27,4 +27,6 @@ class Client extends Model
         ->withPivot('quantity');}
 
     public function image(){return $this->belongsTo('App\Models\Image');}
+
+    public function user(){return User::find($this->id); }
 }
