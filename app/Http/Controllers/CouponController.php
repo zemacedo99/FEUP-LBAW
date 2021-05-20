@@ -31,16 +31,9 @@ class CouponController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $id)
+    public function create()
     {
-        //$supplier = Supplier::find($id);
-        //$this->authorize('create', $supplier);
-        $data = [
-                    'title' => 'Create Coupon',
-                    'path' => '/api/coupon'        
-                ];
-
-        return view('pages.supplier.create_edit_coupon', $data);
+        //
     }
 
     /**
@@ -102,7 +95,6 @@ class CouponController extends Controller
         $coupon = Coupon::where('code', $couponCode)->first();
 
         $this->authorize('update', $coupon);
-
 
         $data = [
                     'title' => 'Edit Coupon',
@@ -179,10 +171,10 @@ class CouponController extends Controller
      * @return \Illuminate\Http\Response
     */
     public function destroy($couponCode)
-    {   //Testado
+    {   
         $coupon_builder = Coupon::where('code', '=', $couponCode);
 
-        $this->authorize('delete', $coupon_builder->get());
+        $this->authorize('delete', $coupon_builder->first());
         
         if($coupon_builder->get()->isEmpty()){
             return response('', 404,)->header('description', 'Coupon not found');
