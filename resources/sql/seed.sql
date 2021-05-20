@@ -466,7 +466,7 @@ EXECUTE PROCEDURE tag_search_update();
 
 insert into images (path) values ('storage/users/avatar.png');
 insert into images (path) values ('storage/products/bundle.jpg');
-insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/apple_test.jpg');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
@@ -2096,15 +2096,15 @@ insert into image_product (product_id, image_id) values (73, 75);
 insert into image_product (product_id, image_id) values (74, 76);
 insert into image_product (product_id, image_id) values (75, 77);
 
--- insert into temp_purchases (client_id, total, type) values (1, 100, 
--- insert into temp_purchases (client_id, total, type) values (2, 100, 
--- insert into temp_purchases (client_id, total, type) values (3, 100, 
--- insert into temp_purchases (client_id, total, type) values (4, 100, 
--- insert into temp_purchases (client_id, total, type) values (5, 100, 
--- insert into temp_purchases (client_id, total, type) values (6, 100, 
--- insert into temp_purchases (client_id, total, type) values (7, 100, 
--- insert into temp_purchases (client_id, total, type) values (8, 100, 
--- insert into temp_purchases (client_id, total, type) values (9, 100, 
+-- insert into temp_purchases (client_id, total, type) values (1, 100,
+-- insert into temp_purchases (client_id, total, type) values (2, 100,
+-- insert into temp_purchases (client_id, total, type) values (3, 100,
+-- insert into temp_purchases (client_id, total, type) values (4, 100,
+-- insert into temp_purchases (client_id, total, type) values (5, 100,
+-- insert into temp_purchases (client_id, total, type) values (6, 100,
+-- insert into temp_purchases (client_id, total, type) values (7, 100,
+-- insert into temp_purchases (client_id, total, type) values (8, 100,
+-- insert into temp_purchases (client_id, total, type) values (9, 100,
 -- insert into temp_purchases (client_id, total, type) values (10
 -- insert into temp_purchases (client_id, total, type) values (11
 -- insert into temp_purchases (client_id, total, type) values (12

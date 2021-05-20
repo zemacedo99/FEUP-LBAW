@@ -1,9 +1,9 @@
 <div class="card mb-3">
     <div class="row g-0">
-        <div class="col-4 col-md-3 col-lg-2 col-xl-2">
+        <div class="col-4 col-md-3 col-lg-2">
             <img src="{{ asset( $item->image) }}" alt="...">
         </div>
-        <div class="col-8 col-md-9 col-lg-10 col-xl-10">
+        <div class="col-8 col-md-9 col-lg-10">
             <div class="card-body">
                 <div class="d-flex justify-content-between justify-content-md-start">
                     <h4 class="card-title text-truncate">{{ $item->name }}</h4>
