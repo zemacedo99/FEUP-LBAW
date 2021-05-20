@@ -224,6 +224,29 @@ class ClientController extends Controller
         return response('', 204,)->header('description', 'Successfully deleted the client');
     }
 
+    
+    public function add_to_cart(Request $request){
+        $request->validate([
+            'client_id' => 'required|integer|exists:clients,id',
+            'quantity' => 'required|integer|gt:0',
+            'item_id' => 'required|integer|exists:items,id',
+            
+        ]);
+        
+        $client_id = $request->input('client_id');
+        $client = Client::find($client_id);
+
+        $this->authorize('view', $client);
+        
+        $client->item_carts()->detach($request->input('item_id'));
+        $client->item_carts()->attach($request->input('item_id'), ['quantity' => $request->input('quantity')]);
+    
+        
+        $client->save();
+        
+        return response('', 201);
+    }
+
 
 
     public function save_checkout(Request $request){
@@ -234,7 +257,7 @@ class ClientController extends Controller
         
         
         $request->validate([
-            'n_items' => 'required|integer',
+            'n_items' => 'required|integer|gte:0',
             'periodic' => 'required',
         ]);
        
@@ -256,8 +279,8 @@ class ClientController extends Controller
 
         for($i = 0; $i < $request->input('n_items'); $i++){
             $request->validate([
-                'item_' . $i => 'required|integer',
-                'quantity_' . $i => 'required|integer',
+                'item_' . $i => 'required|integer|exists:items,id',
+                'quantity_' . $i => 'required|integer|gte:0',
             ]);
 
             $id_item = $request->input('item_' . $i);
