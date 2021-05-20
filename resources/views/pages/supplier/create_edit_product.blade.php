@@ -9,18 +9,18 @@
 
         <div class="col order-1">
             <div class="row" style='border-bottom:2px solid black;'>
+                <div class="row mb-3"></div>
                 <div class="col-10">
                     <h2 class="text-start"> {{ $title }}</h2>
                 </div>
                 <div class="col-2">
-                    <a href="{{ route('supplier_all_products'  , ['id' => \Illuminate\Support\Facades\Auth::id()]) }}" class="link-dark" style='text-align:right;'>See all Products</a>
+                    <a href="{{ route('supplier_all_products', ['id' => \Illuminate\Support\Facades\Auth::id()]) }}"
+                        class="link-dark" style='text-align:right;'>See all Products</a>
                 </div>
-            </div>  
+            </div>
         </div>
 
-
         <div class="row mb-5"></div>
-
         <div class="row mb-4">
 
             {{-- @include('partials.carousel_img') --}}
@@ -90,16 +90,18 @@
                                 Add pictures
                             </label>
                             {{-- para ter feedback tirar class="form-control d-none" --}}
-                            <input type="file" class="form-control d-none" id="sup_img"  name="images[]" aria-describedby="sup_img_addon" aria-label="Upload" multiple accept="image/x-png,image/gif,image/jpeg" >
+                            <input type="file" class="form-control d-none" id="sup_img" name="images[]"
+                                aria-describedby="sup_img_addon" aria-label="Upload" multiple
+                                accept="image/x-png,image/gif,image/jpeg">
                         </div>
 
-         
+
                         {{-- <div class="row mb-1 "></div>
                         <input type="file" class="btn btn-primary" name="images[]" multiple />
                         <div class="row mb-1 "></div>
                         <input type="file" class="btn btn-primary" name="images[]" multiple /> --}}
                     </div>
-                    
+
                     @include('partials.description_and_tags')
 
             </div>
@@ -109,7 +111,7 @@
             {{-- <div class="col"></div> --}}
         </div>
 
-        
+
 
         <div class="row my-5">
             <span class="text-center">
@@ -117,6 +119,47 @@
                 {{-- <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i> Delete Product</button> --}}
             </span>
         </div>
+
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+        <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+            <!-- Position it -->
+            <div style="position: absolute; top: 0; right: 0;">
+          
+              <!-- Then put toasts within -->
+              <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+                <div class="toast-header">
+                  <img src="..." class="rounded mr-2" alt="...">
+                  <strong class="mr-auto">Bootstrap</strong>
+                  <small class="text-muted">just now</small>
+                  <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="toast-body">
+                  See? Just like this.
+                </div>
+              </div>
+          
+              <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+                <div class="toast-header">
+                  <img src="..." class="rounded mr-2" alt="...">
+                  <strong class="mr-auto">Bootstrap</strong>
+                  <small class="text-muted">2 seconds ago</small>
+                  <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="toast-body">
+                  Heads up, toasts will stack automatically
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
 
     </div>
     </form>

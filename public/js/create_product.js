@@ -45,3 +45,5 @@ function sendAjaxRequest(method, url, data, handler) {
     request.send(encodeForAjax(data));
 
 }
+
+$('.toast').toast('show')
