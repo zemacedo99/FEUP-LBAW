@@ -1,11 +1,25 @@
-@include('partials.modals.add_modal',
-            ['modalName'=>"DeleteAccount",
-            'title'=>"Confirmation",
-            'bodyText'=>"Are you sure you want to delete your account? You will lose all of your data, including your purchase History, Favorites and current Periodic Buys.",
-            'buttonPrimary'=>"Delete",
-            'buttonSecondary'=>"Cancel"
-            ]
-         )
+<div class="modal fade" id="modalDeleteAccount" tabindex="-1" aria-labelledby="modalDeleteAccountLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDeleteAccountLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete your account? You will lose all of your data, including your purchase History, Favorites and current Periodic Buys.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form action="{{ route('client.delete', ['client' => $client->id]) }}" method="POST">
+                    @method('delete')
+                    @csrf
+                    <button type="submit" class="btn btn-primary">Delete Account</button>
+                </form>
+                {{--<a href="{{ route('client.delete', ['client' => $client->id]) }}" type="button" class="btn btn-primary">Delete</a>--}}
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="editCard" tabindex="-1" aria-labelledby="editCardLabel" aria-hidden="true">
     <div class="modal-dialog">

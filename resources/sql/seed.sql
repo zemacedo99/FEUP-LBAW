@@ -152,7 +152,7 @@ CREATE TABLE products (
 
 
 CREATE TABLE reviews (
-    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE SET NULL,
+    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE,
     item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE NO ACTION,
     rating          INTEGER     NOT NULL,
     description     TEXT        NOT NULL,

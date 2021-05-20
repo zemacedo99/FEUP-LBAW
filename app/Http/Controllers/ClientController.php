@@ -201,20 +201,18 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {   //postgres não deixa apagar
-        $client = Client::where('id', '=', $id);
-        $this->authorize('viewAny', $client);
+    public function destroy(Client $client)
+    {   // FIXME postgres não deixa apagar <- let's see se ainda está assim
+        $this->authorize('view', $client);
 
-        $user = User::where('id', '=', $id);
+        $user = User::find($client->id);
 
-        if($client->get()->isEmpty() || $user->get()->isEmpty()){
+        if(is_null($client) || is_null($user)){
             return response('', 404,)->header('description', 'Client not found');
         }
-
         $client->delete();
         $user-> delete();
 
-        return response('', 204,)->header('description', 'Successfully deleted the client');
+        return redirect()->route('homepage');
     }
 }

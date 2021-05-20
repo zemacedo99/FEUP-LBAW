@@ -88,7 +88,7 @@ Route::post('/supplier', 'SupplierController@requestHandling');
 Route::get('/api/client', 'ClientController@index');
 //Route::post('/api/client', 'ClientController@store');
 Route::put('/api/client/{id}', 'ClientController@update');
-Route::delete('/api/client/{id}', 'ClientController@destroy');
+// Route::delete('/api/client/{id}', 'ClientController@destroy');
 
 
 
@@ -134,6 +134,7 @@ Route::get('client/{client:id}/profile', 'ClientController@show');
 
 Route::prefix('api/')->group(function(){
     Route::prefix('client/')->group(function(){
+        Route::delete('{client:id}','ClientController@destroy')->name('client.delete');
         Route::get('{client:id}','ClientController@get_info');
     });
 

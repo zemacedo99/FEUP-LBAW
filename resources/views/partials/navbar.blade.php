@@ -49,8 +49,8 @@
                         data-bs-target="#loginModal">account_circle
                 </button>
                 <a href="
-                @auth 
-                    {{ route('checkout'  , ['id' => \Illuminate\Support\Facades\Auth::id()]) }}
+                @auth
+                {{ route('checkout'  , ['id' => \Illuminate\Support\Facades\Auth::id()]) }}
                 @endauth
                 @guest
                 {{ route('register') }}
