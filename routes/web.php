@@ -35,7 +35,7 @@ Route::get('/users/{id}', 'UserController@getProfile');
 
 Route::get('/supplier/{id}/createBundle', 'ItemController@create');
 Route::get('/supplier/{id}/createProduct', 'ProductController@create')->name('create_product');
-Route::get('/supplier/{id}/createCoupon', 'CouponController@create');
+Route::get('/supplier/{id}/createCoupon', 'SupplierController@create_coupon');
 
 // Coupon
 
