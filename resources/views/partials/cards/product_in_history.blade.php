@@ -1,7 +1,7 @@
 <div class="card mb-3">
     <div class="row g-0">
         <div class="col-4 col-md-3 col-lg-2" style="max-height:160px; max-width:160px;">
-            <img src="{{ asset( $item->image) }}" alt="Product image" style="max-height:100%; max-width:100%; object-fit: cover">
+            <img src="{{ asset( $item->image) }}" alt="Product image" style="height:100%; width:100%">
         </div>
         <div class="col-8 col-md-9 col-lg-10">
             <div class="card-body">
