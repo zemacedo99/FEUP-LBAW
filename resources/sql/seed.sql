@@ -496,7 +496,7 @@ insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
-insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/kiwi_test.jpg');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
