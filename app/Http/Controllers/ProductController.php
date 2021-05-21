@@ -196,7 +196,7 @@ class ProductController extends Controller
         session()->flash('message','Product created successfully!');
 
 
-        return redirect(route('create_product'  , ['id' => $request->supplierID]) ); //todo: change for the same pag, but add a buton so see all supplier products
+        return redirect(route('create_product'  , ['id' => $request->supplierID]) );
     }
 
     /**
