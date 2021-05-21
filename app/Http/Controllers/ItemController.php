@@ -214,6 +214,7 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        
 
         $request->validate([
             'bundle_name' => 'required|string',
@@ -222,7 +223,6 @@ class ItemController extends Controller
             'bundle_price' => 'required|numeric',
             'supplierID' => 'required|integer',
         ]);
-
 
         $item = Item::create([
             'supplier_id' => $request->supplierID,
@@ -234,6 +234,7 @@ class ItemController extends Controller
             'rating' => 0,
             'is_bundle' => true,
         ]);
+
 
 
         if(is_null($request->tags))

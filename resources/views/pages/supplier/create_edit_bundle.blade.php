@@ -4,6 +4,9 @@
 
     <script type="text/javascript" src={{ asset('js/create_bundle.js') }} defer> </script>
 
+
+
+
     <div class="container">
 
         <div class="row my-4 border-bottom">
@@ -27,13 +30,19 @@
         </div>
 
         <form action="{{ $path }}" method="POST" id="form" enctype="multipart/form-data" required>
-          @csrf
+            @csrf
             <div class="row my-3  justify-content-center">
                 <div class="col-10 col-lg-3">
                     <label for="bundle_name">Bundle Title</label>
                     <input type="text" class="form-control" id="bundle_name" name="bundle_name">
                     <small id="bundle_name_alert" class="text-danger"></small>
                 </div>
+
+
+                <input type="hidden" name="supplierID" id="supplierID"
+                    value="{{ \Illuminate\Support\Facades\Auth::id() }}">
+
+
                 <div class="col-5 col-lg-2">
                     <label for="price">Price</label>
                     <div class="input-group">
@@ -51,26 +60,26 @@
                     <small id="bundle_stock_alert" class="text-danger"></small>
                 </div>
             </div>
-      
-
-        <!-- Description + Tags -->
-        @include('partials.description_and_tags')
 
 
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        @if (session()->has('message'))
-            <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
-                <!-- Position it -->
-                <div style="position: absolute; top: 0; right: 0;">
-                    <!-- Then put toasts within -->
-                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="toast-body">
-                            {{ session('message') }}
+            <!-- Description + Tags -->
+            @include('partials.description_and_tags')
+
+
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+            @if (session()->has('message'))
+                <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+                    <!-- Position it -->
+                    <div style="position: absolute; top: 0; right: 0;">
+                        <!-- Then put toasts within -->
+                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-body">
+                                {{ session('message') }}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @endif
+            @endif
 
     </div>
 
@@ -80,6 +89,6 @@
             {{-- <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i> Delete Bundle</button> --}}
         </span>
     </div>
-  </form>
+    </form>
 
 @endsection
