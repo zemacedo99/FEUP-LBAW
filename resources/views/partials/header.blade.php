@@ -26,6 +26,7 @@
 
     <!-- Self included style and scripts -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"/> --}}
 
     @yield('pagespecificfile')
 

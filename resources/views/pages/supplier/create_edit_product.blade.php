@@ -7,6 +7,8 @@
 
     <div class="container">
 
+        
+
         <div class="col order-1">
             <div class="row" style='border-bottom:2px solid black;'>
                 <div class="row mb-3"></div>
@@ -122,45 +124,48 @@
 
 
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+        @if (session()->has('message'))
         <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
             <!-- Position it -->
             <div style="position: absolute; top: 0; right: 0;">
-          
-              <!-- Then put toasts within -->
-              <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
-                <div class="toast-header">
-                  <img src="..." class="rounded mr-2" alt="...">
-                  <strong class="mr-auto">Bootstrap</strong>
-                  <small class="text-muted">just now</small>
-                  <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
+
+                <!-- Then put toasts within -->
+                <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                 
+                    <div class="toast-body">
+                        {{ session('message') }}
+                    </div>
                 </div>
-                <div class="toast-body">
-                  See? Just like this.
-                </div>
-              </div>
-          
-              <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
-                <div class="toast-header">
-                  <img src="..." class="rounded mr-2" alt="...">
-                  <strong class="mr-auto">Bootstrap</strong>
-                  <small class="text-muted">2 seconds ago</small>
-                  <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="toast-body">
-                  Heads up, toasts will stack automatically
-                </div>
-              </div>
+
+                {{-- <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+                    <div class="toast-header">
+                        <img src="..." class="rounded mr-2" alt="...">
+                        <strong class="mr-auto">Bootstrap</strong>
+                        <small class="text-muted">2 seconds ago</small>
+                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="toast-body">
+                        Heads up, toasts will stack automatically
+                    </div>
+                </div> --}}
             </div>
+        </div>
+        @endif
+       
+
+        {{-- @if (session()->has('message'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong><i class= "fa fa-check-circle mr-1"></i> {{ session('message') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
+        @endif --}}
+   
 
-
-
-
+        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> --}}
     </div>
     </form>
 

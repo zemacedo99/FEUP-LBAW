@@ -164,7 +164,7 @@ class ProductController extends Controller
 
         $product = Product::create([
             'id' => $item->id,
-            'type' => $request->product_type,
+            'unit' => $request->product_type,
         ]);
 
 
@@ -183,7 +183,7 @@ class ProductController extends Controller
                 $path = "storage/images/";
                 $path = $path . $filename;
 
-                dd($path);
+                // dd($path);
                 
                 $img = Image::create([
                     'path' => $path
@@ -192,6 +192,8 @@ class ProductController extends Controller
                 $img->products()->attach($product);
             }
         }
+
+        session()->flash('message','Product created successfully!');
 
 
         return redirect(route('create_product'  , ['id' => $request->supplierID]) ); //todo: change for the same pag, but add a buton so see all supplier products
