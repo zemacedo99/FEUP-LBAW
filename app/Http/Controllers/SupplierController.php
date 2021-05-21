@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coupon;
 use App\Models\Supplier;
 use App\Models\User;
 use App\Models\Image;
@@ -72,6 +73,41 @@ class SupplierController extends Controller
 
 
         return view('pages.supplier.all_products',$data);
+    }
+
+    public function bundles_and_coupons($id)
+    {
+        
+        //todo: policies
+
+        $items = Item::where('supplier_id', '=', $id)->get();
+        $coupons = Coupon::where('supplier_id', '=', $id)->get();
+
+
+        $bundles = [];
+
+        $i = 0;
+        foreach($items as $item)
+        {
+        
+            if($item->is_bundle)       // item is a bundle
+            {
+                $bundles[$i] = $item;
+            }
+            
+            
+            $i++;
+        }
+
+        $data = 
+        [
+            'bundles' => $bundles,
+            'coupons' => $coupons,
+        ];
+
+
+
+        return view('pages.supplier.bundles_and_coupons',$data);
     }
 
 

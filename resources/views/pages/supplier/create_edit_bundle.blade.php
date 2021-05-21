@@ -6,7 +6,7 @@
 <div class="container">
 
     <div class="row my-4 border-bottom">
-      <h2> Create Bundle<h2>
+      <h2>{{$title}}<h2>
     </div>
   
     <div class="row mb-5">
@@ -25,7 +25,7 @@
       </div>
     </div>
   
-    <form action="">
+    <form action="{{ $path }}" method="POST" id="form" enctype="multipart/form-data" required>
       <div class="row my-3  justify-content-center">
         <div class="col-10 col-lg-3">
           <label for="bundleName">Bundle Title</label>
@@ -46,16 +46,15 @@
         </div>
       </div>
     </form>
-  
-  
+
     <!-- Description + Tags -->
-    @include('partials.description_and_tags')
+    {{-- @include('partials.description_and_tags') --}}
     
   </div>
   
   <div class="row my-5">
       <span class="text-center">
-        <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i> Delete Bundle</button>
+        {{-- <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i> Delete Bundle</button> --}}
         <button type="button" class="btn btn-primary">Confirmar</button>
       </span>
     </div>

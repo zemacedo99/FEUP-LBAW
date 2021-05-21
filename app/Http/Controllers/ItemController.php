@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Supplier;
+use App\Models\Tag;
 use App\Models\Client;
 use App\Models\Coupon;
 use App\Models\CreditCard;
@@ -190,9 +192,17 @@ class ItemController extends Controller
      */
     public function create($id)
     {
+        $supplier = Supplier::find($id);
+        $this->authorize('create', $supplier);
 
+        $tags = Tag::get();
 
-        $data = [];
+        $data = [
+            'title' => 'Create Bundle',
+            'path' => '/api/bundle',
+            'tags' => $tags,
+        ];
+
         return view('pages.supplier.create_edit_bundle', $data);
     }
 

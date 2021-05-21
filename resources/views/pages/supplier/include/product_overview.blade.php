@@ -6,7 +6,7 @@
             <a href="{{ route('create_product'  , ['id' => \Illuminate\Support\Facades\Auth::id()]) }}"><button type="button" class="btn btn-primary"><i class="bi bi-plus"></i> Add a Product</button></a>
         </div>
         <div class="col-7 d-flex justify-content-center">
-            <a href="../supplier/bundles_and_cupons.php"><button type="button" class="btn btn-primary"> <i class="bi bi-bag-fill"></i> Bundles and <i class="bi bi-cash"></i> Cupons <i class="bi bi-caret-right"></i></button></a>
+            <a href="{{ route('supplier_bundles_and_coupons'  , ['id' => \Illuminate\Support\Facades\Auth::id()]) }}"><button type="button" class="btn btn-primary"> <i class="bi bi-bag-fill"></i> Bundles and <i class="bi bi-cash"></i> Cupons <i class="bi bi-caret-right"></i></button></a>
         </div>
     </div>
 
