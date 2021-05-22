@@ -1,8 +1,10 @@
 @extends('layouts.admin')
 
-@section('content')
-
+@section('pagespecificfile')
     <script src="{{ asset('js/admin_modal.js') }}" defer></script>
+@endsection
+
+@section('content')
 
     <div class="container-fluid">
         <div class="row">
@@ -76,7 +78,7 @@
                                                     data-bs-toggle="modal" data-bs-target="#deleteProdModal"
                                                     data-bs-whatever={{$item->id}} prodName={{$item->name}}><i class="bi bi-trash"></i></button>
 
-                                                <a href=/item/{{$item->id}} class="btn btn-primary btn-sm d-none d-md-inline"><i
+                                                <a href="/item/{{$item->id}}" class="btn btn-primary btn-sm d-none d-md-inline"><i
                                                         class="bi bi-info-circle" ></i></a>
                                             </div>
                                         </div>

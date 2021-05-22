@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS images             CASCADE;
 DROP TABLE IF EXISTS tags               CASCADE;
-DROP TABLE IF EXISTS "users"           CASCADE; -- previously user
+DROP TABLE IF EXISTS "users"            CASCADE; -- previously user
 DROP TABLE IF EXISTS clients            CASCADE;
 DROP TABLE IF EXISTS suppliers          CASCADE;
 DROP TABLE IF EXISTS purchases          CASCADE;
@@ -10,12 +10,13 @@ DROP TABLE IF EXISTS products           CASCADE;
 DROP TABLE IF EXISTS ship_details       CASCADE;
 DROP TABLE IF EXISTS credit_cards       CASCADE;
 DROP TABLE IF EXISTS reviews            CASCADE;
+DROP TABLE IF EXISTS temp_purchases     CASCADE;
 DROP TABLE IF EXISTS item_purchase      CASCADE;
 DROP TABLE IF EXISTS item_product       CASCADE;
 DROP TABLE IF EXISTS item_tag           CASCADE;
 DROP TABLE IF EXISTS image_product      CASCADE;
 DROP TABLE IF EXISTS client_item        CASCADE;
-DROP TABLE IF EXISTS carts               CASCADE;
+DROP TABLE IF EXISTS carts              CASCADE;
 
 DROP MATERIALIZED VIEW IF EXISTS fts_view_weights;
 
@@ -40,174 +41,190 @@ CREATE TYPE purchase_type   AS ENUM ('SingleBuy', 'Day', 'Week', 'Month');
 
 -- Tables
 CREATE TABLE images (
-    id          SERIAL      PRIMARY KEY,
-    path        TEXT        NOT NULL
+                        id          SERIAL      PRIMARY KEY,
+                        path        TEXT        NOT NULL
 );
 
 CREATE TABLE tags (
-    id              SERIAL      PRIMARY KEY,
-    value           text        UNIQUE NOT NULL,
-    search          tsvector    DEFAULT '' NOT NULL
+                      id              SERIAL      PRIMARY KEY,
+                      value           text        UNIQUE NOT NULL,
+                      search          tsvector    DEFAULT '' NOT NULL
 );
 
 CREATE TABLE "users" (
-     id              SERIAL      PRIMARY KEY,
-     email           TEXT        NOT NULL CONSTRAINT user_email_uk UNIQUE,
-     password        TEXT        NOT NULL,
-     is_admin        boolean     NOT NULL DEFAULT 'false'
+                         id              SERIAL      PRIMARY KEY,
+                         email           TEXT        NOT NULL CONSTRAINT user_email_uk UNIQUE,
+                         password        TEXT        NOT NULL,
+                         is_admin        boolean     NOT NULL DEFAULT 'false'
 );
 
 CREATE TABLE clients (
-    id              INTEGER     NOT NULL REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    name            TEXT        NOT NULL,
-    image_id        INTEGER     NOT NULL DEFAULT 1 REFERENCES images (id) ON UPDATE CASCADE ON DELETE SET DEFAULT,
-    PRIMARY KEY (id)
+                         id              INTEGER     NOT NULL REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE CASCADE,
+                         name            TEXT        NOT NULL,
+                         image_id        INTEGER     NOT NULL DEFAULT 1 REFERENCES images (id) ON UPDATE CASCADE ON DELETE SET DEFAULT,
+                         PRIMARY KEY (id)
 );
 
 CREATE TABLE suppliers (
-    id              INTEGER     NOT NULL REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE SET NULL ,
-    name            TEXT        NOT NULL,
-    address         TEXT        NOT NULL,
-    post_code       TEXT        NOT NULL,
-    city            TEXT        NOT NULL,
-    description     TEXT        NOT NULL,
-    accepted        BOOLEAN     NOT NULL DEFAULT 'false',
-    image_id        INTEGER     NOT NULL DEFAULT 1 REFERENCES images (id) ON UPDATE CASCADE ON DELETE SET DEFAULT ,
-    search          tsvector    DEFAULT '' NOT NULL,
-    PRIMARY KEY (id)
+                           id              INTEGER     NOT NULL REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE SET NULL,
+                           name            TEXT        NOT NULL,
+                           address         TEXT        NOT NULL,
+                           post_code       TEXT        NOT NULL,
+                           city            TEXT        NOT NULL,
+                           description     TEXT        NOT NULL,
+                           accepted        BOOLEAN     NOT NULL DEFAULT 'false',
+                           image_id        INTEGER     NOT NULL DEFAULT 1 REFERENCES images (id) ON UPDATE CASCADE ON DELETE SET DEFAULT,
+                           search          tsvector    DEFAULT '' NOT NULL,
+                           PRIMARY KEY (id)
 );
 
+CREATE TABLE ship_details (
+                              id              SERIAL      PRIMARY KEY,
+                              first_name      TEXT        NOT NULL,
+                              last_name       TEXT        NOT NULL,
+                              address         TEXT        NOT NULL,
+                              door_n          INTEGER     NOT NULL,
+                              post_code       TEXT        NOT NULL,
+                              district        TEXT        NOT NULL,
+                              city            TEXT        NOT NULL,
+                              country         TEXT        NOT NULL,
+                              phone_n         TEXT        NOT NULL,
+                              client_id       INTEGER     NOT NULL UNIQUE REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE,
+                              to_save         BOOLEAN     NOT NULL DEFAULT 'true'
+);
+
+CREATE TABLE credit_cards (
+                              id              SERIAL      PRIMARY KEY,
+                              card_n          text        NOT NULL,
+                              expiration      text        NOT NULL,
+                              cvv             INTEGER     NOT NULL,
+                              holder          TEXT        NOT NULL,
+                              client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE,
+                              to_save         BOOLEAN     NOT NULL DEFAULT 'true'
+
+);
+
+
 CREATE TABLE purchases (
-    id              SERIAL              PRIMARY KEY,
-    client_id       INTEGER             NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-    paid            DECIMAL             NOT NULL,
-    purchase_date   DATE                NOT NULL,
-    type            purchase_type       NOT NULL,
-    CONSTRAINT      amount_positive_ck  CHECK (paid > 0),
-    CONSTRAINT      old_date_ck         CHECK (purchase_date <= CURRENT_DATE)
+                           id              SERIAL              PRIMARY KEY,
+                           client_id       INTEGER             NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE,
+                           paid            DECIMAL             NOT NULL,
+                           created_at      DATE                NOT NULL,
+                           updated_at      DATE                DEFAULT NULL,
+                           sd_id           INTEGER             REFERENCES ship_details (id) ON UPDATE CASCADE ON DELETE SET NULL,
+                           cc_id           INTEGER             REFERENCES credit_cards (id) ON UPDATE CASCADE ON DELETE SET NULL,
+                           type            purchase_type       NOT NULL,
+                           CONSTRAINT      amount_positive_ck  CHECK (paid > 0)
+    -- CONSTRAINT      old_date_ck         CHECK (purchase_date <= CURRENT_DATE)
 );
 
 -- BusinessRule: Item either is a bundle, or a product, can't have is_bundle true and be referenced in product
 CREATE TABLE items (
-    id              SERIAL                  PRIMARY KEY,
-    supplier_id     INTEGER                 NOT NULL REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE SET NULL ,
-    name            TEXT                    NOT NULL,
-    price           DECIMAL                 NOT NULL,
-    stock           DECIMAL                 NOT NULL,
-    description     TEXT                    NOT NULL,
-    active          BOOLEAN                 NOT NULL,
-    rating          DECIMAL,
-    is_bundle       BOOLEAN                 NOT NULL DEFAULT 'false',
-    search          tsvector                DEFAULT '' NOT NULL,
-    CONSTRAINT      price_positive_ck       CHECK (price > 0),
-    CONSTRAINT      stock_not_negative_ck   CHECK (stock >= 0)
+                       id              SERIAL                  PRIMARY KEY,
+                       supplier_id     INTEGER                 NOT NULL REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE SET NULL ,
+                       name            TEXT                    NOT NULL,
+                       price           DECIMAL                 NOT NULL,
+                       stock           DECIMAL                 NOT NULL,
+                       description     TEXT                    NOT NULL,
+                       active          BOOLEAN                 NOT NULL,
+                       rating          DECIMAL,
+                       is_bundle       BOOLEAN                 NOT NULL DEFAULT 'false',
+                       search          tsvector                DEFAULT '' NOT NULL,
+                       CONSTRAINT      price_positive_ck       CHECK (price > 0),
+                       CONSTRAINT      stock_not_negative_ck   CHECK (stock >= 0)
 );
 
 CREATE TABLE coupons (
-    id              SERIAL          PRIMARY KEY,
-    code            TEXT            NOT NULL UNIQUE,
-    name            TEXT            NOT NULL,
-    description     TEXT            NOT NULL,
-    expiration      DATE            NOT NULL CHECK (expiration > now()),
-    type            coupon_type     NOT NULL,
-    amount          DECIMAL         NOT NULL CHECK (amount > 0),
-    supplier_id     INTEGER         NOT NULL REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE CASCADE
+                         id              SERIAL          PRIMARY KEY,
+                         code            TEXT            NOT NULL UNIQUE,
+                         name            TEXT            NOT NULL,
+                         description     TEXT            NOT NULL,
+                         expiration      DATE            NOT NULL CHECK (expiration > now()),
+                         type            coupon_type     NOT NULL,
+                         amount          DECIMAL         NOT NULL CHECK (amount > 0),
+                         supplier_id     INTEGER         NOT NULL REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE products (
-    id              INTEGER     PRIMARY KEY REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-    unit            unit_type   NOT NULL
+                          id              INTEGER     PRIMARY KEY REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+                          unit            unit_type   NOT NULL
 );
 
-CREATE TABLE ship_details (
-    id              SERIAL      PRIMARY KEY,
-    first_name      TEXT        NOT NULL,
-    last_name       TEXT        NOT NULL,
-    address         TEXT        NOT NULL,
-    door_n          INTEGER     NOT NULL,
-    post_code       TEXT        NOT NULL,
-    district        TEXT        NOT NULL,
-    city            TEXT        NOT NULL,
-    country         TEXT        NOT NULL,
-    phone_n         TEXT        NOT NULL,
-    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE credit_cards (
-    id              SERIAL      PRIMARY KEY,
-    card_n          text        NOT NULL,
-    expiration      DATE        NOT NULL,
-    cvv             INTEGER     NOT NULL,
-    holder          TEXT        NOT NULL,
-    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE
-);
 
 CREATE TABLE reviews (
-    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE SET NULL,
-    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE NO ACTION,
-    rating          INTEGER     NOT NULL,
-    description     TEXT        NOT NULL,
-    CONSTRAINT      rating_ck   CHECK (rating >= 1 AND rating <= 5),
-    PRIMARY KEY (client_id, item_id)
+                         client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE SET NULL,
+                         item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE NO ACTION,
+                         rating          INTEGER     NOT NULL,
+                         description     TEXT        NOT NULL,
+                         CONSTRAINT      rating_ck   CHECK (rating >= 1 AND rating <= 5),
+                         PRIMARY KEY (client_id, item_id)
 );
+
+CREATE TABLE temp_purchases(
+                               id              SERIAL              PRIMARY KEY,
+                               client_id       INTEGER             NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE SET NULL,
+                               total           DECIMAL             NOT NULL,
+                               type            purchase_type       NOT NULL
+);
+
 
 /**
   Information about each item in a purchase
  */
 CREATE TABLE item_purchase (
-    purchase_id     INTEGER     NOT NULL REFERENCES purchases (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-    price           DECIMAL     NOT NULL CHECK ( price > 0 ),
-    amount          DECIMAL     NOT NULL CHECK ( amount > 0 ),
-    PRIMARY KEY (purchase_id, item_id)
+                               purchase_id     INTEGER     NOT NULL REFERENCES purchases (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+                               item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+                               price           DECIMAL     NOT NULL CHECK ( price > 0 ),
+                               amount          DECIMAL     NOT NULL CHECK ( amount > 0 ),
+                               PRIMARY KEY (purchase_id, item_id)
 );
 
 /*
  Association between products and the item(only bundle) to which they belong
  */
 CREATE TABLE item_product (
-    item_id         INTEGER             NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    product_id      INTEGER             NOT NULL REFERENCES products (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    quantity        DECIMAL             NOT NULL CHECK ( quantity > 0 ),
-    constraint      quantity_positive   CHECK ( quantity >= 0),
-    PRIMARY KEY (item_id, product_id)
+                              item_id         INTEGER             NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE,
+                              product_id      INTEGER             NOT NULL REFERENCES products (id) ON UPDATE CASCADE ON DELETE CASCADE,
+                              quantity        DECIMAL             NOT NULL CHECK ( quantity > 0 ),
+                              constraint      quantity_positive   CHECK ( quantity >= 0),
+                              PRIMARY KEY (item_id, product_id)
 );
 
 /*
  Association between an item and its tags
  */
 CREATE TABLE item_tag (
-    tag_id          INTEGER     NOT NULL REFERENCES tags (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-    PRIMARY KEY (tag_id, item_id)
+                          tag_id          INTEGER     NOT NULL REFERENCES tags (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+                          item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+                          PRIMARY KEY (tag_id, item_id)
 );
 
 /*
  Association between a product and its images
  */
 CREATE TABLE image_product (
-    product_id      INTEGER     REFERENCES products (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-    image_id        INTEGER     REFERENCES images (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-    PRIMARY KEY (product_id, image_id)
+                               product_id      INTEGER     REFERENCES products (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+                               image_id        INTEGER     REFERENCES images (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+                               PRIMARY KEY (product_id, image_id)
 );
 
 /*
  favorite - Association between a client and their favorite items
  */
 CREATE TABLE client_item (
-    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE SET NULL ,
-    PRIMARY KEY (client_id, item_id)
+                             client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+                             item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE SET NULL ,
+                             PRIMARY KEY (client_id, item_id)
 );
 
 /*
  cart - Association between a client and their cart items
  */
 CREATE TABLE carts (
-    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-    item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE SET NULL ,
-    quantity        DECIMAL     NOT NULL,
-    PRIMARY KEY (client_id, item_id)
+                       client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE ,
+                       item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE SET NULL ,
+                       quantity        DECIMAL     NOT NULL,
+                       PRIMARY KEY (client_id, item_id)
 );
 
 
@@ -354,7 +371,7 @@ $BODY$
     LANGUAGE plpgsql;
 
 CREATE TRIGGER item_tag_search_update
-    BEFORE INSERT OR UPDATE ON item_tag
+    AFTER INSERT OR UPDATE ON item_tag
     FOR EACH ROW
 EXECUTE PROCEDURE search_update();
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Item;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\TempPurchase;
@@ -82,41 +83,30 @@ class ClientController extends Controller
         foreach ($client->purchases as $purchase){
             if ($purchase->type == 'SingleBuy'){
                 foreach ($purchase->items as $item){
-                    if($item->product()){
-                        array_push($history_items, array_merge($item->toArray(),
-                            $item->product()->toArray(),
-                            ["image" => $item->product()->images[0]->path]));
-                    } else {
-                        array_push($history_items, array_merge($item->toArray(), ["unit" => "Un",
-                            "image" => "storage/products/bundle.jpg"]));
-                    }
+                    $this->check_product($item, $history_items);
                 }
             } else {
                 foreach ($purchase->items as $item){
-                    if(!is_null($item->product())){
-                        array_push($periodic_items, array_merge($item->toArray(),
-                            $item->product()->toArray(),
-                            ["image" => $item->product()->images[0]->path, "type" => $purchase->type]));
+                    $product = $item->product();
+                    if($product){
+                        $item->unit = $product->unit;
+                        $item->image = $product->images[0]->path;
                     } else {
-                        array_push($periodic_items, array_merge($item->toArray(), ["unit" => "Un",
-                            "image" => "storage/products/bundle.jpg", "type" => $purchase->type]));
+                        $item->unit = "Un";
+                        $item->image = "storage/products/bundle.jpg";
                     }
+                    $item->purchase_type = $purchase->type;
+                    array_push($periodic_items, $item);
                 }
             }
-
         }
 
         // Retrieve Favorite items
         foreach ($client->item_favorites as $fav){
-            if(!is_null($fav->product())){
-                array_push($favorite_items, array_merge($fav->toArray(),
-                    $fav->product()->toArray(),
-                    ["image" => $fav->product()->images[0]->path]));
-            } else {
-                array_push($favorite_items, array_merge($fav->toArray(), ["unit" => "Un",
-                    "image" => "storage/products/bundle.jpg"]));
-            }
+            $this->check_product($fav, $favorite_items);
         }
+
+        // dd($client, $history_items, $favorite_items, $periodic_items);
 
         return view('pages.client.client_profile',
             ['client' => $client,
@@ -124,6 +114,18 @@ class ClientController extends Controller
              'favorites' => $favorite_items,
              'periodic' => $periodic_items
             ]);
+    }
+
+    private function check_product(Item $item, &$arr){
+        $product = $item->product();
+        if($product){
+            $item->unit = $product->unit;
+            $item->image = $product->images[0]->path;
+        } else {
+            $item->unit = "Un";
+            $item->image = "storage/products/bundle.jpg";
+        }
+        array_push($arr, $item);
     }
 
     public function get_info(Client $client)
@@ -151,52 +153,38 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {   // Testado!
+    public function update(Request $request, Client $client)
+    {
+        $this->authorize('view', $client);
 
-
+        // TODO quando isto falha tem de apresentar mensagem corretamente na página
         $request->validate([
-            'client.email' => 'string',
-            'client.password' => 'string',
-            'client.name' => 'string',
-            'client.image_id' => 'integer'
+            'email' => 'string|email|max:255',
+            'password' => 'string|min:8',
+            'name' => 'string',
+            'image_id' => 'nullable|integer'
         ]);
 
-        if(!is_numeric($id)){
-            return response('', 404)->header('description','The client was not found');
+        $user = User::find($client->id);
+
+        if($request->has('email')){
+            $user->email = $request->input('email');
         }
 
-        $client = Client::where('id', '=', $id)->get();
-        $this->authorize('viewAny', $client);
-
-        $user = User::where('id', '=', $id)->get();
-
-
-        if($client->isEmpty()){
-            return response('', 404)->header('description','The client was not found');
+        if($request->has('password')){
+            $user->password = $request->input('password');
         }
 
-        $client_data = $client->first();
-        $user_data = $user->first();
-
-        if($request->has('client.email')){
-            $user_data->email = $request->input('client.email');
+        if($request->has('name')){
+            $client->name = $request->input('name');
         }
 
-        if($request->has('client.password')){
-            $user_data->password = $request->input('client.password');
+        if($request->has('image_id')){
+            $client->image_id = $request->input('image_id');
         }
 
-        if($request->has('client.name')){
-            $client_data->name = $request->input('client.name');
-        }
-
-        if($request->has('client.image_id')){
-            $client_data->image_id = $request->input('client.image_id');
-        }
-
-        $user_data->save();
-        $client_data->save();
+        $user->save();
+        $client->save();
 
         return response('', 204,)->header('description', 'Successfully updated client information');
     }
@@ -207,21 +195,19 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {   //postgres não deixa apagar
-        $client = Client::where('id', '=', $id);
-        $this->authorize('viewAny', $client);
+    public function destroy(Client $client)
+    {
+        $this->authorize('view', $client);
 
-        $user = User::where('id', '=', $id);
+        $user = User::find($client->id);
 
-        if($client->get()->isEmpty() || $user->get()->isEmpty()){
+        if(is_null($client) || is_null($user)){
             return response('', 404,)->header('description', 'Client not found');
         }
-
         $client->delete();
         $user-> delete();
 
-        return response('', 204,)->header('description', 'Successfully deleted the client');
+        return redirect()->route('homepage');
     }
 
     

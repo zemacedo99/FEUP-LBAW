@@ -1,12 +1,26 @@
-@include('partials.modals.add_modal',
-            ['modalName'=>"DeleteAccount",
-            'title'=>"Confirmation",
-            'bodyText'=>"Are you sure you want to delete your account? You will lose all of your data, including your purchase History, Favorites and current Periodic Buys.",
-            'buttonPrimary'=>"Delete",
-            'buttonSecondary'=>"Cancel"
-            ]
-         )
-
+{{-- Delete Account Modal --}}
+<div class="modal fade" id="modalDeleteAccount" tabindex="-1" aria-labelledby="modalDeleteAccountLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDeleteAccountLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete your account? You will lose all of your data, including your purchase History, Favorites and current Periodic Buys.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form action="{{ route('client.delete', ['client' => $client->id]) }}" method="POST">
+                    @method('delete')
+                    @csrf
+                    <button type="submit" class="btn btn-primary">Delete Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- Edit CC Modal --}}
 <div class="modal fade" id="editCard" tabindex="-1" aria-labelledby="editCardLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -17,30 +31,30 @@
             <div class="modal-body">
                 <div class="col-12">
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="floatingInput" placeholder="**** **** **** ****">
-                        <label for="floatingInput">Card number</label>
+                        <input class="form-control" id="editCCNumber" placeholder="**** **** **** ****">
+                        <label for="editCCNumber">Card number</label>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col">
                         <div class="form-floating">
-                            <input type="month" class="form-control" id="floatingFirstName" placeholder="Valid until">
-                            <label for="floatingFirstName">Valid until</label>
+                            <input type="month" class="form-control" id="editCCDate" placeholder="Valid until">
+                            <label for="editCCDate">Valid until</label>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-floating">
-                            <input type="number" class="form-control" id="floatingLastName" placeholder="CVV">
-                            <label for="floatingLastName">CVV</label>
+                            <input type="number" class="form-control" id="editCCCvv" placeholder="CVV">
+                            <label for="editCCCvv">CVV</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-12">
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="floatingInput" placeholder="Your name and surname">
-                        <label for="floatingInput">Card holder</label>
+                        <input class="form-control" id="editCCName" placeholder="Your name and surname">
+                        <label for="editCCName">Card holder</label>
                     </div>
                 </div>
             </div>
@@ -51,7 +65,7 @@
         </div>
     </div>
 </div>
-
+{{-- Add CC Modal --}}
 <div class="modal fade" id="addCard" tabindex="-1" aria-labelledby="addCardLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -62,30 +76,30 @@
             <div class="modal-body">
                 <div class="col-12">
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="floatingInput" placeholder="**** **** **** ****">
-                        <label for="floatingInput">Card number</label>
+                        <input class="form-control" id="addCCNumber" placeholder="**** **** **** ****">
+                        <label for="addCCNumber">Card number</label>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col">
                         <div class="form-floating">
-                            <input type="month" class="form-control" id="floatingFirstName" placeholder="Valid until">
-                            <label for="floatingFirstName">Valid until</label>
+                            <input type="month" class="form-control" id="addCCDate" placeholder="Valid until">
+                            <label for="addCCDate">Valid until</label>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-floating">
-                            <input type="number" class="form-control" id="floatingLastName" placeholder="CVV">
-                            <label for="floatingLastName">CVV</label>
+                            <input type="number" class="form-control" id="addCCCvv" placeholder="CVV">
+                            <label for="addCCCvv">CVV</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-12">
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="floatingInput" placeholder="Your name and surname">
-                        <label for="floatingInput">Card holder</label>
+                        <input class="form-control" id="addCCName" placeholder="Your name and surname">
+                        <label for="addCCName">Card holder</label>
                     </div>
                 </div>
             </div>
@@ -104,25 +118,25 @@
         </div>
         <div class="row row-cols-1 row-cols-lg-2 d-flex justify-content-center mb-3">
             <div class="col" style="width: 150px;">
-                <img src="{{ asset($client->image->path) }}" class="rounded-circle img-fluid">
+                <img src="{{ asset($client->image->path) }}" class="rounded-circle img-fluid" alt="Profile Picture">
             </div>
             <div class="col mt-2 d-flex align-items-center justify-content-center justify-content-lg-start">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="ClientName" placeholder="Name" value="{{ $client->name }}">
+                    <input type="text" class="form-control" id="ClientName" placeholder="Name" value="{{ $client->name }}" data-id="{{ $client->id }}">
                     <label for="ClientName">Name</label>
                 </div>
             </div>
         </div>
         <div class="col-12">
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value="{{ $client->user()->email }}">
-                <label for="floatingInput">Email address</label>
+                <input type="email" class="form-control" id="clientEmail" placeholder="name@example.com" value="{{ $client->user()->email }}">
+                <label for="clientEmail">Email address</label>
             </div>
         </div>
         <div class="col-12 mb-5">
             <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" value="">
-                <label for="floatingPassword">Password</label>
+                <input type="password" class="form-control" id="clientPassword" placeholder="Password" value="">
+                <label for="clientPassword">Password</label>
             </div>
         </div>
 
@@ -131,6 +145,12 @@
                 Profile Pic
             </label>
             <input type="file" class="form-control d-none" id="sup_img" aria-describedby="sup_img_addon" aria-label="Upload">
+        </div>
+        <div class="col-12 col-lg-12 d-flex justify-content-center mb-4">
+            <label class="btn btn-primary" for="update_data">
+                Update Profile Info
+            </label>
+            <input type="button" class="form-control d-none" id="update_data">
         </div>
     </div>
 
