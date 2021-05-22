@@ -1,9 +1,7 @@
 let inputQuantity = document.querySelector('#quantity')
 let price = document.querySelector('#price')
 
-
 inputQuantity.addEventListener("input", changeTotal)
-
 
 function changeTotal(event) {
 

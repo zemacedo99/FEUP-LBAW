@@ -65,7 +65,7 @@ if (deleteProdModal != null) {
 
     });
 
-};
+}
 
 
 // Accept request Modal
@@ -100,9 +100,7 @@ if (acceptSupModal != null) {
 
         });
 
-};
-
-
+}
 
 // Decline request Modal
 var declineSupModal = document.getElementById('declineSupModal')
@@ -138,9 +136,8 @@ if (declineSupModal != null) {
         });
 }
 
-
 // Delete Review Modal
-var deleteModal = document.getElementById('deleteReviewModal')
+deleteModal = document.getElementById('deleteReviewModal')
 if (deleteModal != null) {
     yesButton=deleteModal.getElementsByClassName('btn btn-primary').item(0);
     noButton=deleteModal.getElementsByClassName('btn btn-secondary').item(0);
@@ -164,27 +161,5 @@ if (deleteModal != null) {
             //location.reload();
         })
 
-
     });
-}
-
-function encodeForAjax(data) {
-    if (data == null) return null;
-    return Object.keys(data).map(function(k) {
-        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
-    }).join('&');
-}
-function sendAjaxRequest(method, url, data, handler) {
-
-    let request = new XMLHttpRequest();
-
-    request.open(method, url, false);
-    if (method != 'get') {
-        request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    }
-    request.addEventListener('load', handler);
-    request.send(encodeForAjax(data));
-    console.log(request.response);
-
 }

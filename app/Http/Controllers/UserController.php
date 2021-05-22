@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use \Illuminate\Pagination\Paginator;
 use \Illuminate\Pagination\LengthAwarePaginator;
 
-
 class UserController extends Controller
 {
     public function paginate($items, $perPage = 8, $page = null, $options = [])
@@ -32,15 +31,12 @@ class UserController extends Controller
         }
         $users=User::all();
         $usersFinal=[];
-        
+
         foreach ($users as $user){
-            $temp;
-            
-            
-                // $temp=Client::where('id','=',$user->id)->get();
-                $temp=Client::find($user->id);
+            // $temp=Client::where('id','=',$user->id)->get();
+            $temp=Client::find($user->id);
             if ($temp===null){
-                
+
                 $temp=Supplier::find($user->id);
             }
             if ($temp===null){
@@ -49,15 +45,15 @@ class UserController extends Controller
             }
             array_push($usersFinal,$temp);
         }
-        
+
         $final=$this->paginate(collect($usersFinal));
         return view('pages.admin.users',['users'=>$final]);
-        
+
     }
 
     public function getProfile($id){
         $temp=Client::find($id);
-        
+
         if ($temp===null){
             return app('App\Http\Controllers\SupplierController')->show($id);
         }else{

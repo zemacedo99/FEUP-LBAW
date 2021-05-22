@@ -1,9 +1,10 @@
 @extends('layouts.admin')
 
-@section('content')
-
+@section('pagespecificfile')
     <script src="{{ asset('js/admin_modal.js') }}" defer></script>
+@endsection
 
+@section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-2 d-none d-md-block" style="border-right: 1px solid #53ca61; height: 750px">

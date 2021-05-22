@@ -145,52 +145,38 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {   // Testado!
+    public function update(Request $request, Client $client)
+    {
+        $this->authorize('view', $client);
 
-
+        // TODO quando isto falha tem de apresentar mensagem corretamente na página
         $request->validate([
-            'client.email' => 'string',
-            'client.password' => 'string',
-            'client.name' => 'string',
-            'client.image_id' => 'integer'
+            'email' => 'string|email|max:255',
+            'password' => 'string|min:8',
+            'name' => 'string',
+            'image_id' => 'nullable|integer'
         ]);
 
-        if(!is_numeric($id)){
-            return response('', 404)->header('description','The client was not found');
+        $user = User::find($client->id);
+
+        if($request->has('email')){
+            $user->email = $request->input('email');
         }
 
-        $client = Client::where('id', '=', $id)->get();
-        $this->authorize('viewAny', $client);
-
-        $user = User::where('id', '=', $id)->get();
-
-
-        if($client->isEmpty()){
-            return response('', 404)->header('description','The client was not found');
+        if($request->has('password')){
+            $user->password = $request->input('password');
         }
 
-        $client_data = $client->first();
-        $user_data = $user->first();
-
-        if($request->has('client.email')){
-            $user_data->email = $request->input('client.email');
+        if($request->has('name')){
+            $client->name = $request->input('name');
         }
 
-        if($request->has('client.password')){
-            $user_data->password = $request->input('client.password');
+        if($request->has('image_id')){
+            $client->image_id = $request->input('image_id');
         }
 
-        if($request->has('client.name')){
-            $client_data->name = $request->input('client.name');
-        }
-
-        if($request->has('client.image_id')){
-            $client_data->image_id = $request->input('client.image_id');
-        }
-
-        $user_data->save();
-        $client_data->save();
+        $user->save();
+        $client->save();
 
         return response('', 204,)->header('description', 'Successfully updated client information');
     }
@@ -202,7 +188,7 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Client $client)
-    {   // FIXME postgres não deixa apagar <- let's see se ainda está assim
+    {
         $this->authorize('view', $client);
 
         $user = User::find($client->id);
