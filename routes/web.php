@@ -35,7 +35,7 @@ Route::get('/users/{id}', 'UserController@getProfile');
 
 Route::get('/supplier/{id}/createBundle', 'ItemController@create');
 Route::get('/supplier/{id}/createProduct', 'ProductController@create')->name('create_product');
-Route::get('/supplier/{id}/createCoupon', 'CouponController@create');
+Route::get('/supplier/{id}/createCoupon', 'SupplierController@create_coupon');
 
 // Coupon
 
@@ -103,11 +103,12 @@ Route::delete('/api/tag/{tagName}','TagController@destroy');
 
 // Checkout
 
-Route::get('/client/{id}/checkoutInfo', 'ItemController@checkout')->name('checkout');
-Route::get('/client/{id}/checkoutPayment', 'ItemController@payment')->name('payment');
-Route::post('/api/checkout', 'ItemController@save_checkout');
-Route::post('/api/payment', 'ItemController@do_payment');
+Route::get('/client/{id}/checkoutInfo', 'ClientController@checkout')->name('checkout');
+Route::get('/client/{id}/checkoutPayment', 'ClientController@payment')->name('payment');
+Route::post('/api/checkout', 'ClientController@save_checkout');
+Route::post('/api/payment', 'ClientController@do_payment');
 
+Route::post('/api/cart', 'ClientController@add_to_cart');
 
 
 // // Authentication
@@ -117,6 +118,8 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 
+
+Route::view('/success', 'pages.misc.success')->name('sucess');
 
 // ANDRE - WORKING ON BELOW THIS
 

@@ -38,8 +38,8 @@
                     <div class="input-group">
                         <input type="number" name="coupon_amount" step="0.01" class="form-control" min=0 id="coupon_amount" @isset($amount) value="{{$amount}}" @endisset>
                         <select class="form-select" name="coupon_type" aria-label="Select type" id="coupon_type" >
-                            <option @isset($p) selected @endisset >%</option>
-                            <option @isset($e) selected @endisset value="2">€</option>
+                            <option @isset($p) selected @endisset value="%" >%</option>
+                            <option @isset($e) selected @endisset value="€">€</option>
                         </select>
                     </div>
                     <small id="coupon_amount_alert" class="text-danger"></small>
@@ -59,7 +59,7 @@
                     <div id="OtherInformationContainer" class="col-sm-6">
                         <div class="form-group row">
                             <b>
-                                <label for="date" class="col-2 col-form-label">Date</label>
+                                <label for="date" class="col-form-label">Expiration Date</label>
                             </b>
                             <div class="col-10">
                                 <input class="form-control" type="date" name="date" id="date"  @isset($expiration) value="{{$expiration}}" @endisset>

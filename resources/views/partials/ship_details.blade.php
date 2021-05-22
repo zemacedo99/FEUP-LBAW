@@ -1,3 +1,5 @@
+<input type="hidden" name="sd_id" id="sd_id">
+
 <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
     <div class="row mt-3"></div>
     <div class="row mt-3"></div>
@@ -97,7 +99,7 @@
             <div class="d-flex justify-content-center">
                 <div class="form-check form-switch">
                     <label class="form-check-label" for="save_ship_info">Save data for future purchases</label>
-                    <input class="form-check-input" type="checkbox" id="save_ship_info" name="save_ship_info">
+                    <input class="form-check-input" type="checkbox" id="save_ship_info" name="save_ship_info" checked>
                 </div>
             </div>
         </div>

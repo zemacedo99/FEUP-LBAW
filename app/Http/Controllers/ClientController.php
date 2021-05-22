@@ -5,6 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Item;
 use App\Models\User;
+use App\Models\Product;
+use App\Models\TempPurchase;
+use App\Models\Coupon;
+use App\Models\CreditCard;
+use App\Models\ShipDetail;
+use App\Models\Purchase;
+use App\Models\Item;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -200,5 +208,200 @@ class ClientController extends Controller
         $user-> delete();
 
         return redirect()->route('homepage');
+    }
+
+    
+    public function add_to_cart(Request $request){
+        $request->validate([
+            'client_id' => 'required|integer|exists:clients,id',
+            'quantity' => 'required|integer|gt:0',
+            'item_id' => 'required|integer|exists:items,id',
+            
+        ]);
+        
+        $client_id = $request->input('client_id');
+        $client = Client::find($client_id);
+
+        $this->authorize('view', $client);
+        
+        $client->item_carts()->detach($request->input('item_id'));
+        $client->item_carts()->attach($request->input('item_id'), ['quantity' => $request->input('quantity')]);
+    
+        
+        $client->save();
+        
+        return response('', 201);
+    }
+
+
+
+    public function save_checkout(Request $request){
+    
+        $client_id = Auth::id();
+
+        // $items = $client->item_carts;
+        
+        
+        $request->validate([
+            'n_items' => 'required|integer|gte:0',
+            'periodic' => 'required',
+        ]);
+       
+
+        $coupons_str = explode(' ', $request->input('all_coupons'));
+        $coupons = [];
+
+        if($request->input('all_coupons') !== null){
+            foreach($coupons_str as $coupon){
+                $ret_coupon = Coupon::find($coupon);
+               
+                array_push($coupons, $ret_coupon);
+            }
+        }
+   
+        
+        //Update quantities
+        $total = 0;
+
+        for($i = 0; $i < $request->input('n_items'); $i++){
+            $request->validate([
+                'item_' . $i => 'required|integer|exists:items,id',
+                'quantity_' . $i => 'required|integer|gte:0',
+            ]);
+
+            $id_item = $request->input('item_' . $i);
+            $quantity = $request->input('quantity_' . $i);
+
+            $item = Item::find($id_item);
+
+            $item_tot_price = $item->price * $quantity;
+            
+            $already = false;
+            foreach($coupons as $coupon){
+                if($coupon->supplier_id === $item->supplier_id){
+                    if($coupon->type === '%'){
+                        $total += (1 - $coupon->amount/100) * $item_tot_price;
+                    }else if($coupon->type === '€'){
+                        $total += max(0, $item_tot_price - $coupon->amount);
+                    }
+                    $already = true;
+                    break;
+                }
+            }
+
+            if(!$already){
+                $total += $item_tot_price;
+            }
+
+
+        }
+
+        TempPurchase::where('client_id', $client_id)->delete();
+
+        TempPurchase::create([
+            'client_id' => $client_id,
+            'total' => $total,
+            'type' => $request->input('periodic'),
+        ]);
+
+        return redirect('client/' . $client_id . '/checkoutPayment');
+    }
+
+
+    public function checkout($id){
+
+        $this->authorize('view', Client::find($id));
+
+        $client = Client::find($id);
+        
+        $items = $client->item_carts;
+        
+        if($items->isEmpty()){
+            return redirect()->route('items');
+        }
+
+        $total = 0;
+        foreach($items as $item){
+            $product = Product::find($item->id);
+            $total += $item->price * $item->pivot->quantity;
+
+            if($product == null) continue;
+
+
+            $images = $product->images;
+
+            $item['image'] = $images[0]->path;
+        }
+
+        $data = [
+
+            'items' => $items,
+            'total' => $total,
+        ];
+        return view('pages.checkout.cart_info', $data);
+    }
+
+
+    public function payment($id){
+        // Falta validação
+
+        $this->authorize('view', Client::find($id));
+        
+        $client = Client::find($id);
+        
+        $items = $client->item_carts;
+        
+        if($items->isEmpty()){
+            return redirect()->route('items');
+        }
+
+        $ccs = CreditCard::where('client_id', $id)
+                ->where('to_save', true)->get();
+
+        $ship_det = ShipDetail::where('client_id', $id)
+                ->where('to_save', true)->get();
+
+        $temp = TempPurchase::where('client_id', $id)->get()->first();
+
+        $data = [
+            'ccs' => $ccs,
+            'total' => round($temp->total, 2),
+        ];
+
+        if($ship_det != []){
+            $data['sd'] = $ship_det->first();
+        }
+
+        return view('pages.checkout.shipping_payment', $data);
+    }
+
+    public function do_payment(Request $request){
+        
+        $request->validate([
+            'cc_id' => 'required|integer|exists:credit_cards,id',
+            'sd_id' => 'required|integer|exists:ship_details,id',
+        ]);
+
+        
+        $client_id = Auth::id();
+
+        $temp_builder = TempPurchase::where('client_id', $client_id);
+
+        $temp = $temp_builder->get()->first();
+        
+        //Deleting carts
+        \DB::table('carts')->where("client_id", $client_id)->delete();
+
+
+        Purchase::create([
+            'client_id' => $client_id,
+            'paid' => $temp->total,
+            'sd_id' => $request->input('sd_id'),
+            'cc_id' => $request->input('cc_id'),
+            'type' => $temp->type,
+        ]);
+
+        $temp_builder->delete();
+        return redirect('success');
     }
 }

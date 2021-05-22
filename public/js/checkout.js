@@ -2,7 +2,7 @@ let plus = document.getElementsByClassName('plusQuantity')
 let minus = document.getElementsByClassName('minusQuantity')
 let periodic = document.getElementsByClassName('periodic')
 let addCouponBtn = document.getElementById('addCoupon')
-let form = document.getElementById('form')
+
 
 for(let i = 0; i < plus.length; i++){
     plus[i].addEventListener('click', addQuantity)
@@ -18,11 +18,6 @@ for(let i = 0; i < periodic.length; i++){
 
 addCouponBtn.addEventListener('click', addCoupon)
 
-form.addEventListener('submit', submitForm)
-
-function submitForm(event){
-    alert("submit")
-}
 
 function addQuantity(event){
 
@@ -65,11 +60,12 @@ function updatePrice(price){
 function updatePeriodic(event){
     let periodicInput = document.getElementById('periodic')
     console.log(event.target)
-    periodicInput.value = event.target.getAttribute('name')
+    periodicInput.value = event.target.getAttribute('id')
 }
 
 function addCoupon(event){
     let couponCode = document.getElementById('coupon_code')
+    if(couponCode.value == "") return
 
     sendAjaxRequest('get', '/api/coupon/' + couponCode.value, null, function(){
         if (this.status === 404){
@@ -91,7 +87,7 @@ function createCouponCard(coupon){
             <div class="card">
 
                 <div class="col">
-                    <img src="{{asset('storage/images/otap071yo9zJOzlhOLXJsgtvxAmlG0D5SkwfJzOJ.jpg')}}" class="img-fluid" alt="cupon" style="margin-left:auto; margin-right:auto;width:40em;height:10em;">
+                    <img src="https://i.ibb.co/Qn2cMvW/cupon.jpg" class="img-fluid" alt="cupon" style="margin-left:auto; margin-right:auto;width:40em;height:10em;">
                 </div>
 
 
@@ -113,3 +109,5 @@ function createCouponCard(coupon){
     </div>
 `
 }
+
+

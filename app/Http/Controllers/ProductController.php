@@ -24,7 +24,7 @@ class ProductController extends Controller
             'supplierID' => 'required|integer'
         ]);
 
-        return Product::where('supplier_id', '=', $request->input("supplierID"))->get();
+        return Product::where('supplier_id', $request->input("supplierID"))->get();
     }
 
 
@@ -164,7 +164,7 @@ class ProductController extends Controller
 
         $product = Product::create([
             'id' => $item->id,
-            'type' => $request->product_type,
+            'unit' => $request->product_type,
         ]);
 
 

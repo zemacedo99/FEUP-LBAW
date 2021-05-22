@@ -45,9 +45,16 @@
         <!-- navbar profile and cart buttons -->
         <div class="navbar-nav ms-auto">
             <div class="col align-items-end">
-                <button type="button" id="headericon" data-bs-toggle="modal"
+                @guest
+                    <button type="button" id="headericon" data-bs-toggle="modal"
                         data-bs-target="#loginModal">account_circle
                 </button>
+                @endguest
+                
+                @auth
+                <a href="{{ route('logout')}}"> <i class="bi bi-box-arrow-right"> </i> </a>
+                @endauth
+
                 <a href="
                 @auth
                 {{ route('checkout'  , ['id' => \Illuminate\Support\Facades\Auth::id()]) }}

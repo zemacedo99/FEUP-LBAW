@@ -24,6 +24,15 @@ function addAllListeners(){
 
 function validateForm(event) {
     try{
+
+        let cc_id =  document.getElementById('selected_id').value
+
+        if(cc_id  <= 0){
+            document.getElementById("cc_alert").innerHTML = "You must select a credit card"
+            event.preventDefault()
+        }else {
+            document.getElementById("cc_alert").innerHTML = ""
+        }
         let check_empty = ['first_name', 'last_name', 'address', 'door_n', 'post_code', 'district', 'city', 'country', 'phone_n']
         let correct = true
         let sd = {}
@@ -49,26 +58,19 @@ function validateForm(event) {
         let sp_id = -1
         sendAjaxRequest('post', '/api/shipdetails', sd, function(){
             if (this.status === 201){
-                sp_id = JSON.parse(this.responseText).id
+                document.getElementById('sd_id').value = JSON.parse(this.responseText).id
             }else{
                 event.preventDefault()
                 sp_id = -2
             }
         }, false)
 
-        while(sp_id == -1)
-            continue
         if(sp_id == -2){
             console.log("Error in shipdetail")
         }
 
-        let cc_id =  document.getElementById('selected_id').value
-
-        // event.preventDefault()
-        sendAjaxRequest('post', '/api/payment', {"cc_id": cc_id, "sp_id": sp_id}, function(){}, false)
-
     }catch(err){
-        alert(err.message)
+        console.log(err.message)
         event.preventDefault()
     }
 }
@@ -80,6 +82,8 @@ function selectCC(event){
     document.getElementById('selected_id').value = id
 }
 
+
+
 function addCC(event){
     try{
         let check_empty = ['card_number', 'valid_until', 'cvv', 'holder_name']
@@ -90,15 +94,30 @@ function addCC(event){
             let input = document.getElementById(check_empty[i]);
             if (input.value == "") {
                 document.getElementById(check_empty[i] + "_alert").innerHTML = "This field cannot be empty"
-                save = false;
+                save = false
             }else{
-                document.getElementById(check_empty[i] + "_alert").innerHTML = ""
-                cc[check_empty[i]] = input.value
+                if(check_empty[i] === 'cvv' && verifyIfNumber(input, 3)){
+                    document.getElementById(check_empty[i] + "_alert").innerHTML = "CVV is invalid"
+                    save = false
+
+                }else if(check_empty[i] === 'card_number' && verifyIfNumber(input, 16)){
+                    document.getElementById(check_empty[i] + "_alert").innerHTML = "Card number is invalid"
+                    save = false
+
+                }else{
+                    document.getElementById(check_empty[i] + "_alert").innerHTML = ""
+                    cc[check_empty[i]] = input.value
+                }
+
             }
 
 
         }
-        if(!save) return;
+        if(!save){
+            event.preventDefault()
+            return;
+        }
+
 
         cc['to_save'] = document.getElementById('save_cc').checked;
 
@@ -119,6 +138,10 @@ function addCC(event){
         event.preventDefault()
     }
 
+}
+
+function verifyIfNumber(input, desLength){
+    return !Number.isInteger(input) && input.toString().replace(" ", "").length !== desLength
 }
 
 function createCreditCard(cc){
@@ -243,12 +266,15 @@ function deleteCC(event){
 
 }
 
+
 function deleteCCPage(i){
     let card = document.getElementById("card:" + i)
     let editCard = document.getElementById("editCard_" + i)
     card.parentNode.removeChild(card)
     editCard.parentNode.removeChild(editCard)
 }
+
+
 
 function updateCV(i, cc){
     if(cc['card_n'] !== '')
