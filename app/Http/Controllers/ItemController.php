@@ -132,6 +132,7 @@ class ItemController extends Controller
 
         $data =
         [
+            'id' => $id,
             'name' => $item->name,
             'price' => $item->price,
             'stock' => $item->stock,

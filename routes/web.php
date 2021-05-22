@@ -114,6 +114,7 @@ Route::get('/client/{id}/checkoutPayment', 'ClientController@payment')->name('pa
 Route::post('/api/checkout', 'ClientController@save_checkout');
 Route::post('/api/payment', 'ClientController@do_payment');
 
+Route::post('/api/cart', 'ClientController@add_to_cart');
 
 
 // // Authentication

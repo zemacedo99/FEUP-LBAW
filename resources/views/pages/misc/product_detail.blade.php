@@ -29,7 +29,12 @@
                     <h6 class="text-muted">{{ $stock }} left!</h6>
                 @endif
 
-                <input type="hidden" id="price" value="{{ $price }}">
+                <input type="hidden" id="price" value="{{ $price }}" readonly>
+
+                <input type="hidden" id="item_id" value="{{ $id }}">
+
+                <input type="hidden" id="client_id" value="{{ Auth::id() }}" readonly>
+
 
                 <br>
                 <h4><b>{{ $price }}€@isset($unit)/{{ $unit }} @endisset</b></h4>
@@ -43,16 +48,18 @@
                         <label class="form-label" for="quantity">Quantity</label>
                         <div class="input-group">
                             <input type="number" class="form-control" id="quantity" min="0">
+                            
                             @isset($unit)
                                 <span class="input-group-text">{{ $unit }} </span>
                             @endisset
                         </div>
+                        <small class="text-danger" id="quantity_alert"></small>
                         <div class="text-muted" id="total">Total: 0€</div>
 
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-primary"><i>Buy </i><i class="bi bi-basket"></i></button>
+                @guest <a href="/register"> @endguest <button type="button"   id="add_cart" class="btn btn-primary"><i>Buy </i><i class="bi bi-basket"></i></button>@guest </a> @endguest
 
             </div>
         </div>
