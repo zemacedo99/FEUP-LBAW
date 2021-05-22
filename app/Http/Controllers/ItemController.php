@@ -197,10 +197,35 @@ class ItemController extends Controller
 
         $tags = Tag::get();
 
+        $items = Item::where('supplier_id', '=', $id)->get();
+
+
+        $products = [];
+
+        $i = 0;
+        foreach($items as $item)
+        {
+            $product = Product::find($item->id);
+        
+            if(is_null($product))       // item is a bundle
+            {
+                continue;
+            }
+            else
+            {
+                $products[$i] = [$item,$product->type,$product->images()->get()];
+            }
+            
+            
+            $i++;
+        }
+
+
         $data = [
             'title' => 'Create Bundle',
             'path' => '/api/bundle',
             'tags' => $tags,
+            'products' => $products,
         ];
 
         return view('pages.supplier.create_edit_bundle', $data);
@@ -267,6 +292,12 @@ class ItemController extends Controller
         
             }
         }
+
+
+        // foreach($request->$products as $product)
+        // {
+        //     $item->contains_products()->attach($product);
+        // }
 
         session()->flash('message','Bundle created successfully!');
 

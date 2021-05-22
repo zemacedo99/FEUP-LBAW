@@ -2,6 +2,9 @@
 
 @section('content')
 
+
+@include('partials.modals.supplier_products',$products)
+
     <script type="text/javascript" src={{ asset('js/create_bundle.js') }} defer> </script>
 
 
@@ -9,18 +12,34 @@
 
     <div class="container">
 
-        <div class="row my-4 border-bottom">
-            <h2>{{ $title }}<h2>
+        <div class="col order-1">
+            <div class="row">
+
+                <div class="row my-4 border-bottom">
+                    <div class="col-10">
+
+                        <h2>{{ $title }}<h2>
+
+                    </div>
+                    <div class="col-2">
+                        <a href="{{ route('supplier_bundles_and_coupons'  , ['id' => \Illuminate\Support\Facades\Auth::id()]) }}" class="link-dark" style='text-align:right;'>Back to bundles&coupons</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mb-3">
+            <div class="col-5"></div>
+            <div class="col-2"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSupplierProducts">Add Products</button></div>
+            <div class="col-5"></div>
+
         </div>
 
         <div class="row mb-5">
-
-
             <div class=" col-10 col-sm-6 col-md-4 col-lg-3">
                 @include('partials.cards.product_in_bundle')
             </div>
-
-
             {{-- <div class=" col-10 col-sm-6 col-md-4 col-lg-3">
                 <label for="file-input">
                     <img src="../images/genericAddImage.png" alt="Add Product" class="img-fluid" style="height: 134px">

@@ -7,17 +7,20 @@
 
     <div class="container">
 
-        
+
 
         <div class="col order-1">
-            <div class="row" style='border-bottom:2px solid black;'>
-                <div class="row mb-3"></div>
-                <div class="col-10">
-                    <h2 class="text-start"> {{ $title }}</h2>
-                </div>
-                <div class="col-2">
-                    <a href="{{ route('supplier_all_products', ['id' => \Illuminate\Support\Facades\Auth::id()]) }}"
-                        class="link-dark" style='text-align:right;'>See all Products</a>
+            <div class="row">
+                <div class="row my-4 border-bottom">
+                    <div class="col-10">
+
+                        <h2>{{ $title }}<h2>
+
+                    </div>
+                    <div class="col-2">
+                        <a href="{{ route('supplier_all_products', ['id' => \Illuminate\Support\Facades\Auth::id()]) }}"
+                            class="link-dark" style='text-align:right;'>See all Products</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -125,19 +128,19 @@
 
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         @if (session()->has('message'))
-        <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
-            <!-- Position it -->
-            <div style="position: absolute; top: 0; right: 0;">
+            <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+                <!-- Position it -->
+                <div style="position: absolute; top: 0; right: 0;">
 
-                <!-- Then put toasts within -->
-                <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                 
-                    <div class="toast-body">
-                        {{ session('message') }}
+                    <!-- Then put toasts within -->
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+
+                        <div class="toast-body">
+                            {{ session('message') }}
+                        </div>
                     </div>
-                </div>
 
-                {{-- <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+                    {{-- <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
                     <div class="toast-header">
                         <img src="..." class="rounded mr-2" alt="...">
                         <strong class="mr-auto">Bootstrap</strong>
@@ -150,10 +153,10 @@
                         Heads up, toasts will stack automatically
                     </div>
                 </div> --}}
+                </div>
             </div>
-        </div>
         @endif
-       
+
 
         {{-- @if (session()->has('message'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -163,7 +166,7 @@
             </button>
           </div>
         @endif --}}
-   
+
 
         {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> --}}
     </div>
