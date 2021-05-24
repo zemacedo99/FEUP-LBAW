@@ -91,13 +91,13 @@
                     <div class="row justify-content-center">
                         <div class="row mb-3 "></div>
                         <div class="col-12 col-lg-12 d-flex justify-content-center mb-4">
-                            <label class="btn btn-primary" for="sup_img">
-                                Add pictures
+
+                            <label class="custom-file-upload" for="sup_img">
+                                <i class="fa fa-cloud-upload"></i> Add pictures
                             </label>
                             {{-- para ter feedback tirar class="form-control d-none" --}}
-                            <input type="file" class="form-control d-none" id="sup_img" name="images[]"
-                                aria-describedby="sup_img_addon" aria-label="Upload" multiple
-                                accept="image/x-png,image/gif,image/jpeg">
+                            <input type="file" id="sup_img" name="images[]" aria-describedby="sup_img_addon"
+                                aria-label="Upload" multiple accept="image/x-png,image/gif,image/jpeg">
                         </div>
 
 
@@ -107,15 +107,17 @@
                         <input type="file" class="btn btn-primary" name="images[]" multiple /> --}}
                     </div>
 
-                    @include('partials.description_and_tags')
-
+                    
+                </div>
+                
+                
+                
+                <div class="row mb-3"></div>
+                {{-- <div class="col"> --}}
+                    @include('partials.description_and_tags') 
+                {{-- </div> --}}
             </div>
-
-
-
-            {{-- <div class="col"></div> --}}
-        </div>
-
+            
 
 
         <div class="row my-5">
@@ -133,11 +135,14 @@
                 <div style="position: absolute; top: 0; right: 0;">
 
                     <!-- Then put toasts within -->
-                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="true">
 
                         <div class="toast-body">
                             {{ session('message') }}
                         </div>
+                        {{-- <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button> --}}
                     </div>
 
                     {{-- <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">

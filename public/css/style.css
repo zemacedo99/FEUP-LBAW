@@ -325,30 +325,30 @@ a.customcard:hover {
 }
 
 .delete {
-  color: var(--red);
+  color: var(--grey);
 }
 
 .delete:hover {
-  color: var(--red);
+  color: var(--grey);
 }
 
 
 
 .add_form_field {
-  background-color: var(--main-color);
-  border-color: var(--main-color);
+  background-color: var(--sec-color);
+  border-color: var(--sec-color);
 }
 
 .add_form_field:hover {
-  background-color: var(--main-color);
-  border-color: var(--main-color);
+  background-color: var(--sec-color);
+  border-color: var(--sec-color);
 }
 
-.add_form_field:focus {
+/* .add_form_field:focus {
   background-color: var(--main-color);
   border-color: var(--main-color);
   box-shadow: 0 0 0 0.25rem var(--main-color-shadow);
-}
+} */
 
 
 .add_form_field {
@@ -363,10 +363,20 @@ a.customcard:hover {
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-    background-color: var(--main-color);
-    border: var(--main-color);
+    background-color: var(--sec-color);
+    border: var(--sec-color);
     padding: .375rem .75rem;
     font-size: 1rem;
     border-radius: .25rem;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
 }
