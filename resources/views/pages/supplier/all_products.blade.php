@@ -45,6 +45,7 @@
             @php
             $data = 
             [
+                'is_bundle' => $item[0]->is_bundle,
                 'name' => $item[0]->name,
                 'price' => $item[0]->price,
                 'description' => $item[0]->description,

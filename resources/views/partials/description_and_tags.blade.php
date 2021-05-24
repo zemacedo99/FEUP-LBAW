@@ -71,7 +71,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
-        var max_fields = 5;
+        var max_fields = 3;
         var wrapper = $(".container1");
         var add_button = $(".add_form_field");
 
@@ -85,7 +85,7 @@
                 // ); //add input box
                 $(wrapper).append('<div><input id="tags" name="tags[]" list="tag" size="13" maxlength="13" multiple><datalist id="tag">   @foreach ($tags as $tag)  <option value={{ $tag->value }}></option>@endforeach</datalist><a href="#" class="delete"> <i class="bi bi-trash"> </i></a></div>'); //add input box
             } else {
-                alert('You Reached the limits')
+                alert('You reached the max tags (3)')
             }
         });
 
