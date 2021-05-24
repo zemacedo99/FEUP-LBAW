@@ -26,11 +26,13 @@
         @isset($items)
             @foreach ( $items as $item)
                 @include('partials.cards.product_detail',[
-                    'name' => $item->name,
-                    'price' => $item->price,
-                    'description' => $item->description,
-                    'rating' => $item->rating,
-                    'supplier' => $item->supplier,
+                    'is_bundle' => $item[0]->is_bundle,
+                    'name' => $item[0]->name,
+                    'price' => $item[0]->price,
+                    'description' => $item[0]->description,
+                    'rating' => $item[0]->rating,
+                    'unit' => $item[1],
+                    'images' => $item[2],
                     ])
             @endforeach
         @endisset

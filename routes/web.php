@@ -18,7 +18,8 @@ Route::get('image/{filename}', 'ItemController@storage_link');
 Route::view('upload', 'upload');
 Route::post('upload',[UploadController::class,'index']);
 
-Route::get('/item/{id}', 'ItemController@show');
+Route::get('/suppliers/{id}', 'SupplierController@supplier_detail')->name('supplier_detail');
+Route::get('/items/{id}', 'ItemController@show');
 Route::get('/items', 'ItemController@list')->name('items');
 Route::get('/suppliers', 'SupplierController@list')->name('suppliers');
 

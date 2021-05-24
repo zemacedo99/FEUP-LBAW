@@ -132,6 +132,62 @@ class SupplierController extends Controller
         //
     }
 
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Item  $item
+     * @return \Illuminate\Http\Response
+     */
+    public function supplier_detail($id)
+    {
+
+        $supplier = Supplier::find($id);
+
+        $image = Image::find($supplier->image_id);
+        $items = Item::where('supplier_id', '=', $id)->get();
+
+        $all = [];
+        $stars = 0;
+
+        $i = 0;
+        foreach($items as $item)
+        {
+            $product = Product::find($item->id);
+        
+            if(is_null($product))       // item is a bundle
+            {
+                $all[$i] = [$item,null,null];
+            }
+            else
+            {
+                $all[$i] = [$item,$product->type,$product->images()->get()];
+            }
+            
+            $stars = $stars + $item->rating;
+            $i++;
+        }
+
+        $stars = $stars / $i;
+
+
+        $data =
+        [
+            'supplier' => $supplier,
+            'name' => $supplier->name,
+            'address' => $supplier->address,
+            'post_code' => $supplier->post_code,
+            'city' => $supplier->city,
+            'description' => $supplier->description,
+            'image' => $image,
+            'stars' => $stars,
+            'items' => $all,
+        ];
+
+        return view('pages.misc.supplier_detail', $data);
+    }
+
+
     /**
      * Display the specified resource.
      *

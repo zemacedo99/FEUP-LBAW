@@ -384,20 +384,42 @@ class ItemController extends Controller
 
     }
 
-    // nao pode ser feito assim, é suposto retornar a vista com todos os items
+
     public function list()
     {
         $items = Item::get();
 
-        // $data =
-        // [
-        //     'name' => $item->name,
-        //     'price' => $item->price,
-        //     'description' => $item->description,
-        //     'rating' => $item->rating,
-        // ];
+      
 
-        return view('pages.misc.products_list', ['items' => $items]);
+        $all = [];
+    
+
+        $i = 0;
+        foreach($items as $item)
+        {
+            $product = Product::find($item->id);
+            $supplier = Supplier::find($item->supplier_id);
+
+        
+            if(is_null($product))       // item is a bundle
+            {
+                $all[$i] = [$item,null,null];
+            }
+            else
+            {
+                $all[$i] = [$item,$product->type,$product->images()->get()];
+            }
+            
+            $i++;
+        }
+
+        $data =
+        [
+            'supplier' => $supplier,
+            'items' => $all,
+        ];
+
+        return view('pages.misc.products_list', $data);
 
     }
 
