@@ -390,7 +390,6 @@ class ItemController extends Controller
         $items = Item::get();
 
       
-
         $all = [];
     
 
@@ -403,11 +402,11 @@ class ItemController extends Controller
         
             if(is_null($product))       // item is a bundle
             {
-                $all[$i] = [$item,null,null];
+                $all[$i] = [$item,null,null,$supplier];
             }
             else
             {
-                $all[$i] = [$item,$product->type,$product->images()->get()];
+                $all[$i] = [$item,$product->type,$product->images()->get(),$supplier];
             }
             
             $i++;
@@ -415,7 +414,6 @@ class ItemController extends Controller
 
         $data =
         [
-            'supplier' => $supplier,
             'items' => $all,
         ];
 

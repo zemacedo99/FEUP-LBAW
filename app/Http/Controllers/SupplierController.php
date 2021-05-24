@@ -32,7 +32,26 @@ class SupplierController extends Controller
     public function list()
     {
         $suppliers = Supplier::get();
-        return view('pages.misc.products_list', ['suppliers' => $suppliers]);
+
+        $all = [];
+        $i = 0;
+        foreach($suppliers as $supplier)
+        {
+            
+            $image = Image::find($supplier->image_id);
+            $all[$i] = [$supplier,$image];
+            
+            
+            $i++;
+        }
+
+        $data =
+        [
+            'suppliers' => $all,
+
+        ];
+
+        return view('pages.misc.products_list',$data);
     }
 
 

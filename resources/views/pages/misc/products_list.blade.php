@@ -33,6 +33,7 @@
                     'rating' => $item[0]->rating,
                     'unit' => $item[1],
                     'images' => $item[2],
+                    'supplier' => $item[3],
                     ])
             @endforeach
         @endisset
@@ -40,9 +41,10 @@
         @isset($suppliers)
             @foreach ( $suppliers as $supplier)
             @include('partials.cards.supplier',[
-                'name' => $supplier->name,
-                'address' => $supplier->address,
-                'description' => $supplier->description
+                'name' => $supplier[0]->name,
+                'address' => $supplier[0]->address,
+                'description' => $supplier[0]->description,
+                'image' => $supplier[1],
                 ])
             @endforeach
         @endisset

@@ -1,7 +1,7 @@
 <div class="card mb-3">
     <div class="row g-0">
         <div class="col-4 col-md-3 col-lg-2 col-xl-2">
-            <img class="img-fluid" src="https://via.placeholder.com/150x150" alt="...">
+            <img class="img-fluid" src="{{ asset($image->path) }}" alt="...">
         </div>
         <div class="col-8 col-md-9 col-lg-10">
             <div class="card-body">
