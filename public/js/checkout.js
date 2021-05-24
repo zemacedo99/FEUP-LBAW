@@ -20,14 +20,14 @@ addCouponBtn.addEventListener('click', addCoupon)
 
 
 function addQuantity(event){
-    
+
     let btn = event.target
     let display = btn.parentNode.parentNode.childNodes[1].childNodes[1]
     let input = btn.parentNode.parentNode.childNodes[1].childNodes[3];
     let nr = input.id.split('_')[1]
-    
+
     let previousQuantity = display.innerHTML.split(' ')[1]
-     
+
     display.innerHTML = "Total: " + (parseInt(previousQuantity) + 1)
     input.value = parseInt(input.value) + 1
 
@@ -36,7 +36,7 @@ function addQuantity(event){
 }
 
 function removeQuantity(event){
-    
+
     let btn = event.target
     let display = btn.parentNode.parentNode.childNodes[1].childNodes[1]
     let input = btn.parentNode.parentNode.childNodes[1].childNodes[3];
@@ -70,7 +70,7 @@ function addCoupon(event){
     sendAjaxRequest('get', '/api/coupon/' + couponCode.value, null, function(){
         if (this.status === 404){
             document.getElementById("coupon_alert").innerHTML = "There are no coupons with that code"
-            
+
         }else{
             let couponsList = document.getElementById('coupons_list')
             let coupon = JSON.parse(this.responseText)
@@ -78,28 +78,6 @@ function addCoupon(event){
             document.getElementById('all_coupons').value += coupon[0].id + " "
         }
     })
-}
-
-
-function encodeForAjax(data) {
-    if (data == null) return null;
-    return Object.keys(data).map(function(k) {
-        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
-    }).join('&');
-}
-
-function sendAjaxRequest(method, url, data, handler) {
-
-    let request = new XMLHttpRequest();
-
-    request.open(method, url, true);
-    if (method != 'get') {
-        request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    }
-    request.addEventListener('load', handler);
-    request.send(encodeForAjax(data));
-
 }
 
 function createCouponCard(coupon){

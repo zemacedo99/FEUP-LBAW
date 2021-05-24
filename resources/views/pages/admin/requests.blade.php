@@ -1,8 +1,10 @@
 @extends('layouts.admin')
 
-@section('content')
-
+@section('pagespecificfile')
     <script src="{{ asset('js/admin_modal.js') }}" defer></script>
+@endsection
+
+@section('content')
 
     <div class="container-fluid">
         <div class="row">
@@ -61,7 +63,7 @@
 
                         @foreach ($suppliers as $supplier)
                             @php
-                             $i+=1;   
+                             $i+=1;
                             @endphp
                             <tr>
                             <th scope="row">#{{$i}}</th>
@@ -72,17 +74,17 @@
                                             <button class="btn btn-primary btn-sm d-inline d-md-none"><i class="bi bi-gear"></i></button>
                                             <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#acceptSupModal" request-id={{$i}} data-bs-whatever={{$supplier->id}}><i class="bi bi-check"></i></button>
                                             <button class="btn btn-primary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#declineSupModal" request-id={{$i}} data-bs-whatever={{$supplier->id}}><i class="bi bi-x"></i></button>
-                                            <a href=/supplier/{{$supplier->id}} class="btn btn-primary btn-sm d-none d-md-inline"><i
+                                            <a href="/supplier/{{$supplier->id}}" class="btn btn-primary btn-sm d-none d-md-inline"><i
                                                 class="bi bi-info-circle" ></i></a>
                                         </div>
                                     </div>
                                 </td>
 
                             </tr>
-                        
+
                         @endforeach
 
-                        
+
                         </tbody>
                     </table>
                 </div>
@@ -113,7 +115,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                     <button type="button" class="btn btn-primary">Yes</button>
-                    
+
                 </div>
             </div>
         </div>

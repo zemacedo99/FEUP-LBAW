@@ -18,7 +18,8 @@ Route::get('image/{filename}', 'ItemController@storage_link');
 Route::view('upload', 'upload');
 Route::post('upload',[UploadController::class,'index']);
 
-Route::get('/item/{id}', 'ItemController@show');
+Route::get('/suppliers/{id}', 'SupplierController@supplier_detail')->name('supplier_detail');
+Route::get('/items/{id}', 'ItemController@show');
 Route::get('/items', 'ItemController@list')->name('items');
 Route::get('/suppliers', 'SupplierController@list')->name('suppliers');
 
@@ -33,9 +34,9 @@ Route::get('/dashboard_clients', 'UserController@admin_index')->name('admin_user
 Route::get('/dashboard_requests', 'SupplierController@requests')->name('admin_requests');
 Route::get('/users/{id}', 'UserController@getProfile');
 
-Route::get('/supplier/{id}/createBundle', 'ItemController@create');
+Route::get('/supplier/{id}/createBundle', 'ItemController@create')->name('create_bundle');
 Route::get('/supplier/{id}/createProduct', 'ProductController@create')->name('create_product');
-Route::get('/supplier/{id}/createCoupon', 'SupplierController@create_coupon');
+Route::get('/supplier/{id}/createCoupon', 'CouponController@create')->name('create_coupon');
 
 // Coupon
 
@@ -58,6 +59,7 @@ Route::put('/api/review', 'ReviewController@update');
 // Product
 Route::get('/product/{id}', 'ProductController@edit');
 
+Route::post('/api/bundle', 'ItemController@store');
 Route::get('/api/product', 'ProductController@index');
 Route::post('/api/product', 'ProductController@store');
 Route::get('/api/product/{id}', 'ProductController@show');
@@ -82,16 +84,11 @@ Route::get('/api/supplier', 'SupplierController@index');
 Route::get('/supplier', 'SupplierController@index');
 Route::get('/supplier/{id}', 'SupplierController@show')->name('supplierProfile');
 Route::get('/supplier/{id}/allproducts', 'SupplierController@allProducts')->name('supplier_all_products');
+Route::get('/supplier/{id}/bundles&coupons', 'SupplierController@bundles_and_coupons')->name('supplier_bundles_and_coupons');
 Route::post('/supplier', 'SupplierController@requestHandling');
 
 // Client
 Route::get('/api/client', 'ClientController@index');
-//Route::post('/api/client', 'ClientController@store');
-Route::put('/api/client/{id}', 'ClientController@update');
-Route::delete('/api/client/{id}', 'ClientController@destroy');
-
-
-
 
 // Item
 
@@ -137,7 +134,9 @@ Route::get('client/{client:id}/profile', 'ClientController@show');
 
 Route::prefix('api/')->group(function(){
     Route::prefix('client/')->group(function(){
+        Route::delete('{client:id}','ClientController@destroy')->name('client.delete');
         Route::get('{client:id}','ClientController@get_info');
+        Route::put('{client:id}','ClientController@update');
     });
 
     Route::prefix('supplier/')->group(function(){

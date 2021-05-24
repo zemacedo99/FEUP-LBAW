@@ -26,7 +26,7 @@
 
     <!-- Self included style and scripts -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
+    <script src="{{ asset('js/ajax.js') }}" defer></script>
 
     @yield('pagespecificfile')
-
 </head>

@@ -55,7 +55,6 @@ CREATE TABLE "users" (
     id              SERIAL      PRIMARY KEY,
     email           TEXT        NOT NULL CONSTRAINT user_email_uk UNIQUE,
     password        TEXT        NOT NULL,
-    api_token       TEXT        UNIQUE DEFAULT NULL,
     is_admin        boolean     NOT NULL DEFAULT 'false'
 );
 
@@ -153,7 +152,7 @@ CREATE TABLE products (
 
 
 CREATE TABLE reviews (
-    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE SET NULL,
+    client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE,
     item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE NO ACTION,
     rating          INTEGER     NOT NULL,
     description     TEXT        NOT NULL,
@@ -465,8 +464,86 @@ CREATE TRIGGER tag_search_update
 EXECUTE PROCEDURE tag_search_update();
 
 
-insert into images (path) values ('mZDX2ocLoxUpvveqxpTUrbf0LhmTmZhW4v69FUwb.png');
-insert into images (path) values ('otap071yo9zJOzlhOLXJsgtvxAmlG0D5SkwfJzOJ.jpg');
+insert into images (path) values ('storage/users/avatar.png');
+insert into images (path) values ('storage/products/bundle.jpg');
+insert into images (path) values ('storage/products/apple_test.jpg');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/blueberry_test.jpg');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/kiwi_test.jpg');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/dragonfruit_test.jpg');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/fruit_test.png');
+-- Branch Ricardo
+-- insert into images (path) values ('mZDX2ocLoxUpvveqxpTUrbf0LhmTmZhW4v69FUwb.png');
+-- insert into images (path) values ('otap071yo9zJOzlhOLXJsgtvxAmlG0D5SkwfJzOJ.jpg');
 
 
 insert into tags (value) values ('strategy');
@@ -903,26 +980,26 @@ insert into products (id, unit) values (73, 'Un');
 insert into products (id, unit) values (74, 'Un');
 insert into products (id, unit) values (75, 'Kg');
 
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('volutpat', 'habitasse platea dictumst morbi', 'Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.', '2021-11-24 22:35:26', '%', 20, 55);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('ridiculus', 'eu nibh quisque', 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.', '2021-09-03 22:02:34', '%', 99, 75);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('congue', 'mattis nibh ligula nec', 'Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.', '2021-07-19 11:35:22', '%', 31, 53);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('tellus', 'hac habitasse platea', 'Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.', '2021-10-06 00:27:34', '€', 6.06, 68);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('volutpat', 'habitasse platea dictumst morbi', 'Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.', '2022-11-24 22:35:26', '%', 20, 55);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('ridiculus', 'eu nibh quisque', 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.', '2022-09-03 22:02:34', '%', 99, 75);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('congue', 'mattis nibh ligula nec', 'Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.', '2022-07-19 11:35:22', '%', 31, 53);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('tellus', 'hac habitasse platea', 'Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.', '2022-10-06 00:27:34', '€', 6.06, 68);
 insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('vulputate', 'justo nec condimentum neque', 'Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.', '2022-03-14 08:42:08', '%', 97, 52);
 insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('orci', 'justo nec condimentum', 'Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.', '2022-02-26 17:20:48', '%', 39, 66);
 insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('another', 'tristique in tempus sit', 'Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.', '2022-03-24 15:45:57', '€', 0.75, 59);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('pede', 'purus phasellus in', 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.', '2021-07-31 23:28:43', '%', 24, 59);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('cubilia', 'sapien sapien non', 'Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.', '2021-09-30 08:51:05', '€', 6.69, 51);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'lectus', 'vestibulum ac est', 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.', '2021-11-19 08:00:36', '€', 79.32, 75);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'non', 'quis orci nullam', 'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2021-08-03 16:36:02', '€', 7.02, 66);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'ipsum', 'magna ac consequat', 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', '2021-09-06 19:21:22', '€', 67.59, 63);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'nisl', 'non velit donec', 'Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.', '2021-12-02 14:47:47', '€', 15.42, 65);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'vestibulum', 'metus arcu adipiscing molestie', 'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.', '2021-10-05 23:53:54', '€', 66.03, 70);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'vel', 'molestie hendrerit at', 'Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.', '2021-09-06 16:36:33', '€', 9.87, 75);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'nibh', 'sed tristique in', 'Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.', '2021-08-01 23:45:44', '%', 79, 57);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'libero', 'eleifend quam a odio', 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.', '2021-05-22 23:14:31', '€', 10.42, 69);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('pede', 'purus phasellus in', 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.', '2022-07-31 23:28:43', '%', 24, 59);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('cubilia', 'sapien sapien non', 'Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.', '2022-09-30 08:51:05', '€', 6.69, 51);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'lectus', 'vestibulum ac est', 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.', '2022-11-19 08:00:36', '€', 79.32, 75);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'non', 'quis orci nullam', 'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-08-03 16:36:02', '€', 7.02, 66);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'ipsum', 'magna ac consequat', 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', '2022-09-06 19:21:22', '€', 67.59, 63);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'nisl', 'non velit donec', 'Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.', '2022-12-02 14:47:47', '€', 15.42, 65);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'vestibulum', 'metus arcu adipiscing molestie', 'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.', '2022-10-05 23:53:54', '€', 66.03, 70);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'vel', 'molestie hendrerit at', 'Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.', '2022-09-06 16:36:33', '€', 9.87, 75);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'nibh', 'sed tristique in', 'Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.', '2022-08-01 23:45:44', '%', 79, 57);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'libero', 'eleifend quam a odio', 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.', '2022-05-22 23:14:31', '€', 10.42, 69);
 insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'lorem', 'ante vel ipsum praesent', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.', '2022-02-09 22:18:37', '€', 46.56, 57);
 insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'tellas', 'tellus semper interdum', 'Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.', '2022-01-14 18:37:19', '€', 23.82, 68);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'erat', 'quis turpis eget elit', 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.', '2021-07-09 08:11:46', '€', 95.14, 68);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'erat', 'quis turpis eget elit', 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.', '2022-07-09 08:11:46', '€', 95.14, 68);
 
 insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ('Kayla', 'Wilden', '2 Thierer Park', '95879', '0657-937', 'Braga', 'Picoto', 'Portugal', '954062263', 1);
 insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ('Clair', 'Lacky', '0336 Russell Hill', '6', '5207-497', 'Lisboa', 'Aldeia de Juzo', 'Portugal', '984172568', 2);
@@ -1943,16 +2020,91 @@ insert into carts (client_id, item_id, quantity) values (49, 68, 1);
 insert into carts (client_id, item_id, quantity) values (50, 1, 1);
 insert into carts (client_id, item_id, quantity) values (50, 98, 1);
 
+insert into image_product (product_id, image_id) values (1, 3);
+insert into image_product (product_id, image_id) values (2, 4);
+insert into image_product (product_id, image_id) values (3, 5);
+insert into image_product (product_id, image_id) values (4, 6);
+insert into image_product (product_id, image_id) values (5, 7);
+insert into image_product (product_id, image_id) values (6, 8);
+insert into image_product (product_id, image_id) values (7, 9);
+insert into image_product (product_id, image_id) values (8, 10);
+insert into image_product (product_id, image_id) values (9, 11);
+insert into image_product (product_id, image_id) values (10, 12);
+insert into image_product (product_id, image_id) values (11, 13);
+insert into image_product (product_id, image_id) values (12, 14);
+insert into image_product (product_id, image_id) values (13, 15);
+insert into image_product (product_id, image_id) values (14, 16);
+insert into image_product (product_id, image_id) values (15, 17);
+insert into image_product (product_id, image_id) values (16, 18);
+insert into image_product (product_id, image_id) values (17, 19);
+insert into image_product (product_id, image_id) values (18, 20);
+insert into image_product (product_id, image_id) values (19, 21);
+insert into image_product (product_id, image_id) values (20, 22);
+insert into image_product (product_id, image_id) values (21, 23);
+insert into image_product (product_id, image_id) values (22, 24);
+insert into image_product (product_id, image_id) values (23, 25);
+insert into image_product (product_id, image_id) values (24, 26);
+insert into image_product (product_id, image_id) values (25, 27);
+insert into image_product (product_id, image_id) values (26, 28);
+insert into image_product (product_id, image_id) values (27, 29);
+insert into image_product (product_id, image_id) values (28, 30);
+insert into image_product (product_id, image_id) values (29, 31);
+insert into image_product (product_id, image_id) values (30, 32);
+insert into image_product (product_id, image_id) values (31, 33);
+insert into image_product (product_id, image_id) values (32, 34);
+insert into image_product (product_id, image_id) values (33, 35);
+insert into image_product (product_id, image_id) values (34, 36);
+insert into image_product (product_id, image_id) values (35, 37);
+insert into image_product (product_id, image_id) values (36, 38);
+insert into image_product (product_id, image_id) values (37, 39);
+insert into image_product (product_id, image_id) values (38, 40);
+insert into image_product (product_id, image_id) values (39, 41);
+insert into image_product (product_id, image_id) values (40, 42);
+insert into image_product (product_id, image_id) values (41, 43);
+insert into image_product (product_id, image_id) values (42, 44);
+insert into image_product (product_id, image_id) values (43, 45);
+insert into image_product (product_id, image_id) values (44, 46);
+insert into image_product (product_id, image_id) values (45, 47);
+insert into image_product (product_id, image_id) values (46, 48);
+insert into image_product (product_id, image_id) values (47, 49);
+insert into image_product (product_id, image_id) values (48, 50);
+insert into image_product (product_id, image_id) values (49, 51);
+insert into image_product (product_id, image_id) values (50, 52);
+insert into image_product (product_id, image_id) values (51, 53);
+insert into image_product (product_id, image_id) values (52, 54);
+insert into image_product (product_id, image_id) values (53, 55);
+insert into image_product (product_id, image_id) values (54, 56);
+insert into image_product (product_id, image_id) values (55, 57);
+insert into image_product (product_id, image_id) values (56, 58);
+insert into image_product (product_id, image_id) values (57, 59);
+insert into image_product (product_id, image_id) values (58, 60);
+insert into image_product (product_id, image_id) values (59, 61);
+insert into image_product (product_id, image_id) values (60, 62);
+insert into image_product (product_id, image_id) values (61, 63);
+insert into image_product (product_id, image_id) values (62, 64);
+insert into image_product (product_id, image_id) values (63, 65);
+insert into image_product (product_id, image_id) values (64, 66);
+insert into image_product (product_id, image_id) values (65, 67);
+insert into image_product (product_id, image_id) values (66, 68);
+insert into image_product (product_id, image_id) values (67, 69);
+insert into image_product (product_id, image_id) values (68, 70);
+insert into image_product (product_id, image_id) values (69, 71);
+insert into image_product (product_id, image_id) values (70, 72);
+insert into image_product (product_id, image_id) values (71, 73);
+insert into image_product (product_id, image_id) values (72, 74);
+insert into image_product (product_id, image_id) values (73, 75);
+insert into image_product (product_id, image_id) values (74, 76);
+insert into image_product (product_id, image_id) values (75, 77);
 
--- insert into temp_purchases (client_id, total, type) values (1, 100, 
--- insert into temp_purchases (client_id, total, type) values (2, 100, 
--- insert into temp_purchases (client_id, total, type) values (3, 100, 
--- insert into temp_purchases (client_id, total, type) values (4, 100, 
--- insert into temp_purchases (client_id, total, type) values (5, 100, 
--- insert into temp_purchases (client_id, total, type) values (6, 100, 
--- insert into temp_purchases (client_id, total, type) values (7, 100, 
--- insert into temp_purchases (client_id, total, type) values (8, 100, 
--- insert into temp_purchases (client_id, total, type) values (9, 100, 
+-- insert into temp_purchases (client_id, total, type) values (1, 100,
+-- insert into temp_purchases (client_id, total, type) values (2, 100,
+-- insert into temp_purchases (client_id, total, type) values (3, 100,
+-- insert into temp_purchases (client_id, total, type) values (4, 100,
+-- insert into temp_purchases (client_id, total, type) values (5, 100,
+-- insert into temp_purchases (client_id, total, type) values (6, 100,
+-- insert into temp_purchases (client_id, total, type) values (7, 100,
+-- insert into temp_purchases (client_id, total, type) values (8, 100,
+-- insert into temp_purchases (client_id, total, type) values (9, 100,
 -- insert into temp_purchases (client_id, total, type) values (10
 -- insert into temp_purchases (client_id, total, type) values (11
 -- insert into temp_purchases (client_id, total, type) values (12
@@ -1996,107 +2148,6 @@ insert into carts (client_id, item_id, quantity) values (50, 98, 1);
 -- insert into temp_purchases (client_id, total, type) values (48
 -- insert into temp_purchases (client_id, total, type) values (49
 -- insert into temp_purchases (client_id, total, type) values (50
-
-insert into image_product (product_id, image_id) values (1, 1);
-insert into image_product (product_id, image_id) values (2, 1);
-insert into image_product (product_id, image_id) values (3, 1);
-insert into image_product (product_id, image_id) values (4, 1);
-insert into image_product (product_id, image_id) values (5, 1);
-insert into image_product (product_id, image_id) values (6, 1);
-insert into image_product (product_id, image_id) values (7, 1);
-insert into image_product (product_id, image_id) values (8, 1);
-insert into image_product (product_id, image_id) values (9, 1);
-insert into image_product (product_id, image_id) values (10, 1);
-insert into image_product (product_id, image_id) values (11, 1);
-insert into image_product (product_id, image_id) values (12, 1);
-insert into image_product (product_id, image_id) values (13, 1);
-insert into image_product (product_id, image_id) values (14, 1);
-insert into image_product (product_id, image_id) values (15, 1);
-insert into image_product (product_id, image_id) values (16, 1);
-insert into image_product (product_id, image_id) values (17, 1);
-insert into image_product (product_id, image_id) values (18, 1);
-insert into image_product (product_id, image_id) values (19, 1);
-insert into image_product (product_id, image_id) values (20, 1);
-insert into image_product (product_id, image_id) values (21, 1);
-insert into image_product (product_id, image_id) values (22, 1);
-insert into image_product (product_id, image_id) values (23, 1);
-insert into image_product (product_id, image_id) values (24, 1);
-insert into image_product (product_id, image_id) values (25, 1);
-insert into image_product (product_id, image_id) values (26, 1);
-insert into image_product (product_id, image_id) values (27, 1);
-insert into image_product (product_id, image_id) values (28, 1);
-insert into image_product (product_id, image_id) values (29, 1);
-insert into image_product (product_id, image_id) values (30, 1);
-insert into image_product (product_id, image_id) values (31, 1);
-insert into image_product (product_id, image_id) values (32, 1);
-insert into image_product (product_id, image_id) values (33, 1);
-insert into image_product (product_id, image_id) values (34, 1);
-insert into image_product (product_id, image_id) values (35, 1);
-insert into image_product (product_id, image_id) values (36, 1);
-insert into image_product (product_id, image_id) values (37, 1);
-insert into image_product (product_id, image_id) values (38, 1);
-insert into image_product (product_id, image_id) values (39, 1);
-insert into image_product (product_id, image_id) values (40, 1);
-insert into image_product (product_id, image_id) values (41, 1);
-insert into image_product (product_id, image_id) values (42, 1);
-insert into image_product (product_id, image_id) values (43, 1);
-insert into image_product (product_id, image_id) values (44, 1);
-insert into image_product (product_id, image_id) values (45, 1);
-insert into image_product (product_id, image_id) values (46, 1);
-insert into image_product (product_id, image_id) values (47, 1);
-insert into image_product (product_id, image_id) values (48, 1);
-insert into image_product (product_id, image_id) values (49, 1);
-insert into image_product (product_id, image_id) values (50, 1);
-insert into image_product (product_id, image_id) values (51, 1);
-insert into image_product (product_id, image_id) values (52, 1);
-insert into image_product (product_id, image_id) values (53, 1);
-insert into image_product (product_id, image_id) values (54, 1);
-insert into image_product (product_id, image_id) values (55, 1);
-insert into image_product (product_id, image_id) values (56, 1);
-insert into image_product (product_id, image_id) values (57, 1);
-insert into image_product (product_id, image_id) values (58, 1);
-insert into image_product (product_id, image_id) values (59, 1);
-insert into image_product (product_id, image_id) values (60, 1);
-insert into image_product (product_id, image_id) values (61, 1);
-insert into image_product (product_id, image_id) values (62, 1);
-insert into image_product (product_id, image_id) values (63, 1);
-insert into image_product (product_id, image_id) values (64, 1);
-insert into image_product (product_id, image_id) values (65, 1);
-insert into image_product (product_id, image_id) values (66, 1);
-insert into image_product (product_id, image_id) values (67, 1);
-insert into image_product (product_id, image_id) values (68, 1);
-insert into image_product (product_id, image_id) values (69, 1);
-insert into image_product (product_id, image_id) values (70, 1);
-insert into image_product (product_id, image_id) values (71, 1);
-insert into image_product (product_id, image_id) values (72, 1);
-insert into image_product (product_id, image_id) values (73, 1);
-insert into image_product (product_id, image_id) values (74, 1);
-insert into image_product (product_id, image_id) values (75, 1);
--- insert into image_product (product_id, image_id) values (76, 1);
--- insert into image_product (product_id, image_id) values (77, 1);
--- insert into image_product (product_id, image_id) values (78, 1);
--- insert into image_product (product_id, image_id) values (79, 1);
--- insert into image_product (product_id, image_id) values (80, 1);
--- insert into image_product (product_id, image_id) values (81, 1);
--- insert into image_product (product_id, image_id) values (82, 1);
--- insert into image_product (product_id, image_id) values (83, 1);
--- insert into image_product (product_id, image_id) values (84, 1);
--- insert into image_product (product_id, image_id) values (85, 1);
--- insert into image_product (product_id, image_id) values (86, 1);
--- insert into image_product (product_id, image_id) values (87, 1);
--- insert into image_product (product_id, image_id) values (88, 1);
--- insert into image_product (product_id, image_id) values (89, 1);
--- insert into image_product (product_id, image_id) values (90, 1);
--- insert into image_product (product_id, image_id) values (91, 1);
--- insert into image_product (product_id, image_id) values (92, 1);
--- insert into image_product (product_id, image_id) values (93, 1);
--- insert into image_product (product_id, image_id) values (94, 1);
--- insert into image_product (product_id, image_id) values (95, 1);
--- insert into image_product (product_id, image_id) values (96, 1);
--- insert into image_product (product_id, image_id) values (97, 1);
--- insert into image_product (product_id, image_id) values (98, 1);
--- insert into image_product (product_id, image_id) values (99, 1);
--- insert into image_product (product_id, image_id) values (100, 1);
 
 
 insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (1, 21.4, '2020-08-14', 1, 1, 'SingleBuy');

@@ -1,9 +1,10 @@
 @extends('layouts.admin')
 
-@section('content')
-
+@section('pagespecificfile')
     <script src="{{ asset('js/admin_modal.js') }}" defer></script>
+@endsection
 
+@section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-2 d-none d-md-block" style="border-right: 1px solid #53ca61; height: 750px">
@@ -59,7 +60,7 @@
                             @endphp
 
                         @foreach ($users->items() as $user)
-                            
+
                             <tr>
                             <th scope="row">{{$user->id}}</th>
                             <td>
@@ -67,16 +68,16 @@
                                         <div class="col-7">{{$user->name}}</div>
                                         <div class="col-5">
                                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteUserModal" data-bs-whatever={{$user->id}} user-name={{$user->name}}><i class="bi bi-trash"></i></button>
-                                            <a href=/users/{{$user->id}} class="btn btn-primary btn-sm d-none d-md-inline"><i
+                                            <a href="/users/{{$user->id}}" class="btn btn-primary btn-sm d-none d-md-inline"><i
                                                 class="bi bi-info-circle" ></i></a>
                                         </div>
                                     </div>
                                 </td>
 
                             </tr>
-                        
+
                         @endforeach
-                        
+
                         </tbody>
                     </table>
                 </div>

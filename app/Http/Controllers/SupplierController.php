@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coupon;
 use App\Models\Supplier;
 use App\Models\User;
 use App\Models\Image;
@@ -31,7 +32,26 @@ class SupplierController extends Controller
     public function list()
     {
         $suppliers = Supplier::get();
-        return view('pages.misc.products_list', ['suppliers' => $suppliers]);
+
+        $all = [];
+        $i = 0;
+        foreach($suppliers as $supplier)
+        {
+            
+            $image = Image::find($supplier->image_id);
+            $all[$i] = [$supplier,$image];
+            
+            
+            $i++;
+        }
+
+        $data =
+        [
+            'suppliers' => $all,
+
+        ];
+
+        return view('pages.misc.products_list',$data);
     }
 
 
@@ -74,6 +94,41 @@ class SupplierController extends Controller
         return view('pages.supplier.all_products',$data);
     }
 
+    public function bundles_and_coupons($id)
+    {
+        
+        //todo: policies
+
+        $items = Item::where('supplier_id', '=', $id)->get();
+        $coupons = Coupon::where('supplier_id', '=', $id)->get();
+
+
+        $bundles = [];
+
+        $i = 0;
+        foreach($items as $item)
+        {
+        
+            if($item->is_bundle)       // item is a bundle
+            {
+                $bundles[$i] = $item;
+            }
+            
+            
+            $i++;
+        }
+
+        $data = 
+        [
+            'bundles' => $bundles,
+            'coupons' => $coupons,
+        ];
+
+
+
+        return view('pages.supplier.bundles_and_coupons',$data);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -95,6 +150,62 @@ class SupplierController extends Controller
     {
         //
     }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Item  $item
+     * @return \Illuminate\Http\Response
+     */
+    public function supplier_detail($id)
+    {
+
+        $supplier = Supplier::find($id);
+
+        $image = Image::find($supplier->image_id);
+        $items = Item::where('supplier_id', '=', $id)->get();
+
+        $all = [];
+        $stars = 0;
+
+        $i = 0;
+        foreach($items as $item)
+        {
+            $product = Product::find($item->id);
+        
+            if(is_null($product))       // item is a bundle
+            {
+                $all[$i] = [$item,null,null];
+            }
+            else
+            {
+                $all[$i] = [$item,$product->type,$product->images()->get()];
+            }
+            
+            $stars = $stars + $item->rating;
+            $i++;
+        }
+
+        $stars = $stars / $i;
+
+
+        $data =
+        [
+            'supplier' => $supplier,
+            'name' => $supplier->name,
+            'address' => $supplier->address,
+            'post_code' => $supplier->post_code,
+            'city' => $supplier->city,
+            'description' => $supplier->description,
+            'image' => $image,
+            'stars' => $stars,
+            'items' => $all,
+        ];
+
+        return view('pages.misc.supplier_detail', $data);
+    }
+
 
     /**
      * Display the specified resource.

@@ -1,6 +1,5 @@
 let hasCodeAlready = null
 
-
 let submit= document.getElementById('form')
 
 submit.addEventListener('submit',validateForm)
@@ -18,7 +17,7 @@ function validateForm(event) {
             }
 
         }
-        
+
     }catch(err){
         //alert(err.message)
         event.preventDefault()
@@ -45,3 +44,5 @@ function sendAjaxRequest(method, url, data, handler) {
     request.send(encodeForAjax(data));
 
 }
+
+$('.toast').toast('show')

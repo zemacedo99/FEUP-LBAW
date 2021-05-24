@@ -29,11 +29,11 @@
                 
                     @if ($count == 0)
                         <div class="carousel-item active">
-                            <img src="{{ asset('storage/images/' . $image->path) }}" class="d-block w-100" alt="...">
+                            <img src="{{ asset($image->path) }}" class="d-block w-100" alt="...">
                         </div>
                     @else
                         <div class="carousel-item ">
-                            <img src="{{ asset('storage/images/' . $image->path) }}" class="d-block w-100" alt="...">
+                            <img src="{{ asset($image->path) }}" class="d-block w-100" alt="...">
                         </div>
                     @endif
 

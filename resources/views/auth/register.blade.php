@@ -14,7 +14,6 @@
                 </figure>
 
                 @if ($errors->any())
-                    {{ old('type') }}
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -40,7 +39,6 @@
                     <input type="password" name="password_confirmation" class="form-control" id="floatingConfirmPassword" required placeholder="Confirm Password">
                     <label class="text-black-50" for="floatingConfirmPassword">Confirm Password</label>
                 </div>
-                <!-- TODO Check if password match-->
 
                 <div class="row mt-3 mb-3">
                     <div class="col d-flex justify-content-center">
@@ -99,7 +97,8 @@
                 <div class="d-grid gap-2 col-6 col-sm-5 col-md-7 mx-auto mb-5">
                     <button type="submit" class="btn btn-primary">Sign up</button>
                     <p class="text-muted mb-0 d-flex justify-content-center"> Already have an account? </p>
-                    <a href="{{ route('login') }}" class="link-secondary d-flex justify-content-center">Sign in</a>
+                    <a href="" data-bs-toggle="modal"
+                       data-bs-target="#loginModal" class="link-secondary d-flex justify-content-center">Sign in</a>
                 </div>
 
             </div>

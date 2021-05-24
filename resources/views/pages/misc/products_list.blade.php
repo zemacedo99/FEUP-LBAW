@@ -26,11 +26,14 @@
         @isset($items)
             @foreach ( $items as $item)
                 @include('partials.cards.product_detail',[
-                    'name' => $item->name,
-                    'price' => $item->price,
-                    'description' => $item->description,
-                    'rating' => $item->rating,
-                    'supplier' => $item->supplier,
+                    'is_bundle' => $item[0]->is_bundle,
+                    'name' => $item[0]->name,
+                    'price' => $item[0]->price,
+                    'description' => $item[0]->description,
+                    'rating' => $item[0]->rating,
+                    'unit' => $item[1],
+                    'images' => $item[2],
+                    'supplier' => $item[3],
                     ])
             @endforeach
         @endisset
@@ -38,9 +41,10 @@
         @isset($suppliers)
             @foreach ( $suppliers as $supplier)
             @include('partials.cards.supplier',[
-                'name' => $supplier->name,
-                'address' => $supplier->address,
-                'description' => $supplier->description
+                'name' => $supplier[0]->name,
+                'address' => $supplier[0]->address,
+                'description' => $supplier[0]->description,
+                'image' => $supplier[1],
                 ])
             @endforeach
         @endisset
