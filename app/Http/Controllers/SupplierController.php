@@ -335,8 +335,15 @@ class SupplierController extends Controller
 
 
     public function create_coupon($id){
+
+        if(!is_numeric($id)){
+            return response('Invalid ID', 404);
+        }
+
+        $supplier = Supplier::find($id);
     
-        $this->authorize('view', Supplier::find($id));
+        //$this->authorize('view', $supplier);
+
         $data = [
                     'title' => 'Create Coupon',
                     'path' => '/api/coupon'        
