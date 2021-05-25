@@ -1,5 +1,10 @@
 let last_i = 0
 
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+ 
 addAllListeners()
 
 function addAllListeners(){
@@ -43,6 +48,9 @@ function validateForm(event) {
                 document.getElementById(check_empty[i] + "_alert").innerHTML = "This field cannot be empty"
                 correct = false
 
+            }else if(check_empty[i] === 'door_n' && !verifyIfNumber(input.value)){
+                document.getElementById(check_empty[i] + "_alert").innerHTML = "Door nº must be a number"
+                correct = false
             }else{
                 document.getElementById(check_empty[i] + "_alert").innerHTML = ""
                 sd[check_empty[i]] = input.value
@@ -78,8 +86,17 @@ function validateForm(event) {
 function selectCC(event){
     let i = event.target.getAttribute('id').split(':')[1]
     let id = document.getElementById('cc_id:' + i).value
+    let lastI = document.getElementById('selected_i').value
+
+    if(lastI >= 0){
+        document.getElementById('card:' + lastI).style.borderWidth = "0px"
+        document.getElementById('card:' + lastI).style.borderColor = "green"
+    }
 
     document.getElementById('selected_id').value = id
+    document.getElementById('selected_i').value = i
+    document.getElementById('card:' + i).style.borderWidth = "thick"
+    document.getElementById('card:' + i).style.borderColor = "green"
 }
 
 
@@ -97,16 +114,20 @@ function addCC(event){
                 save = false
             }else{
                 if(check_empty[i] === 'cvv' && !verifyIfNumber(input.value, 3)){
-                    document.getElementById(check_empty[i] + "_alert").innerHTML = "CVV is invalid"
+                    document.getElementById(check_empty[i] + "_alert").innerHTML = "CVV must have 3 digit"
                     save = false
 
                 }else if(check_empty[i] === 'card_number' && !verifyIfNumber(input.value, 16)){
-                    document.getElementById(check_empty[i] + "_alert").innerHTML = "Card number is invalid"
+                    document.getElementById(check_empty[i] + "_alert").innerHTML = "Card number must have 16 digits"
                     save = false
 
                 }else{
+                    
                     document.getElementById(check_empty[i] + "_alert").innerHTML = ""
-                    cc[check_empty[i]] = input.value
+                    if(check_empty[i] !== 'card_number')
+                        cc[check_empty[i]] = input.value
+                    else
+                        cc[check_empty[i]] = deleteAllWhitespaces(input.value)
                 }
 
             }
@@ -127,7 +148,11 @@ function addCC(event){
             console.log(this.status)
             console.log(this.responseText)
             if (this.status === 201){
+                var myModal = new bootstrap.Modal(document.getElementById('addCard'), null)
+                console.log(myModal);
+                myModal.hide()
                 createCreditCard(JSON.parse(this.responseText))
+
             }
         }, true)
 
@@ -141,9 +166,15 @@ function addCC(event){
 }
 
 function verifyIfNumber(input, desLength){
-    let clean = input.replace(/\s+/g, '')
-    
-    return !isNaN(clean) && clean.length === desLength
+    let clean =  deleteAllWhitespaces(input)     
+    if(desLength != undefined)
+        return !isNaN(clean) && clean.length === desLength
+    else
+        return !isNaN(clean)
+}
+
+function deleteAllWhitespaces(input){
+    return input.replace(/\s+/g, '')
 }
 
 function createCreditCard(cc){
@@ -213,6 +244,7 @@ function createCreditCard(cc){
 
                 </div>
                 <div class="modal-footer">
+                    <button type="button" id="select:${i}" class="btn btn-primary select" data-bs-dismiss="modal">Select Card</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" id="edit:${i}" data-bs-dismiss="modal" class="btn btn-primary edit">Edit Card</button>
                 </div>

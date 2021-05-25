@@ -8,7 +8,8 @@
             <div class="modal-body">
                 <div class="col-12">
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="card_number" name="card_number" placeholder="Card Number">
+                        <input class="form-control" id="card_number" name="card_number" placeholder="Card Number"
+                        data-bs-toggle="tooltip" data-bs-placement="right" title="The 16 long number in the front of the card" >
                         <label for="card_number">Card number</label>
                         <small id="card_number_alert" class="text-danger"></small>
                     </div>
@@ -25,8 +26,11 @@
                     </div>
                     <div class="col">
                         <div class="form-floating">
-                            <input type="number" class="form-control" id="cvv" name="cvv" placeholder="CVV">
-                            <label for="cvv">CVV</label>
+                   
+                            <input type="number" class="form-control" id="cvv" name="cvv" placeholder="CVV" 
+                            data-bs-toggle="tooltip" data-bs-placement="right" title="The 3 digit number in the back of the card" > 
+                       
+                            <label for="cvv" >CVV</label>
                         </div>
                         <small id="cvv_alert" class="text-danger"></small>
                     </div>
@@ -54,4 +58,5 @@
             </div>
         </div>
     </div>
+
 </div>
