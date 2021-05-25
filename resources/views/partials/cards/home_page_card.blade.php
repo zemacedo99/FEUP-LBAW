@@ -8,17 +8,21 @@
             {{-- <div class="col-1"><i class="bi bi-suit-heart"></i></div> --}}
             @if (Auth::check() && app('App\Models\Client')::find(Auth::user()->id)!=null)
                 
-            @php
-                $buttonId="product".$item["id"];
-            @endphp
-            <button class="btn float-end text-end" id={{$buttonId}} onclick="favoriteAddRemove({{$item .','.$buttonId}});" >
-                                        @if ($item->favorite)
-                                            <i class="bi bi-suit-heart-fill"></i>    
-                                        @else
-                                            <i class="bi bi-suit-heart"></i>
-                                        @endif
-                                        
-            </button>
+                @php
+                    $buttonId="product".$item["id"];
+                @endphp
+                <button class="btn float-end text-end" id={{$buttonId}} onclick="favoriteAddRemove({{$item .','.$buttonId}});" >
+                                            @if ($item->favorite)
+                                                <i class="bi bi-suit-heart-fill"></i>    
+                                            @else
+                                                <i class="bi bi-suit-heart"></i>
+                                            @endif
+                                            
+                </button>
+                
+            @else
+            <div class="row my-3"></div>        
+            
             @endif
         
         </div>
