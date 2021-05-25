@@ -1,5 +1,6 @@
 let hasCodeAlready = null
 
+
 let submit= document.getElementById('form')
 
 submit.addEventListener('submit',validateForm)
@@ -7,7 +8,7 @@ submit.addEventListener('submit',validateForm)
 function validateForm(event) {
     try{
 
-        let check_empty = ['product_name', 'product_price' , 'product_stock', 'description']
+        let check_empty = ['bundle_name', 'bundle_price' , 'bundle_stock', 'description']
 
         for(let i = 0; i < check_empty.length; i++){
             let input = document.getElementById(check_empty[i]);
@@ -17,7 +18,7 @@ function validateForm(event) {
             }
 
         }
-
+        
     }catch(err){
         //alert(err.message)
         event.preventDefault()

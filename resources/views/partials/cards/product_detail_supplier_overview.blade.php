@@ -2,7 +2,7 @@
     <div class="row g-0">
         <div class="col-3 col-md-2 col-lg-3 col-xl-2">
             @isset($images[0])
-                <img src="{{ asset('storage/images/' .$images[0]->path) }}" alt="{{$name}}" style="margin-left:auto; margin-right:auto;width:8em;height:8em;">
+                <img src="{{ asset($images[0]->path) }}" alt="{{$name}}" style="margin-left:auto; margin-right:auto;width:8em;height:8em;">
             @endisset
             
         </div>

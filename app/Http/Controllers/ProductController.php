@@ -180,17 +180,23 @@ class ProductController extends Controller
 
                 $filename = $image->hashName();
 
+                $path = "storage/images/";
+                $path = $path . $filename;
+
+                // dd($path);
                 
                 $img = Image::create([
-                    'path' => $filename
+                    'path' => $path
                 ]);
 
                 $img->products()->attach($product);
             }
         }
 
+        session()->flash('message','Product created successfully!');
 
-        return redirect(route('create_product'  , ['id' => $request->supplierID]) ); //todo: change for the same pag, but add a buton so see all supplier products
+
+        return redirect(route('create_product'  , ['id' => $request->supplierID]) );
     }
 
     /**

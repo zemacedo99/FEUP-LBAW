@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Supplier;
+use App\Models\Tag;
 use App\Models\Client;
 use App\Models\Coupon;
 use App\Models\CreditCard;
@@ -52,9 +54,42 @@ class ItemController extends Controller
      */
     public function create($id)
     {
+        $supplier = Supplier::find($id);
+        $this->authorize('create', $supplier);
+
+        $tags = Tag::get();
+
+        $items = Item::where('supplier_id', '=', $id)->get();
 
 
-        $data = [];
+        $products = [];
+
+        $i = 0;
+        foreach($items as $item)
+        {
+            $product = Product::find($item->id);
+        
+            if(is_null($product))       // item is a bundle
+            {
+                continue;
+            }
+            else
+            {
+                $products[$i] = [$item,$product->type,$product->images()->get()];
+            }
+            
+            
+            $i++;
+        }
+
+
+        $data = [
+            'title' => 'Create Bundle',
+            'path' => '/api/bundle',
+            'tags' => $tags,
+            'products' => $products,
+        ];
+
         return view('pages.supplier.create_edit_bundle', $data);
     }
 
@@ -66,56 +101,69 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create');
+        
 
         $request->validate([
-            'item.supplier_id' => 'required|integer',
-            'item.name' => 'required|string',
-            'item.price' => 'required|numeric',
-            'item.quantityAvailable' => 'required|integer',
-            'item.description' => 'required|string',
-            'item.bundle' => 'required|boolean',
+            'bundle_name' => 'required|string',
+            'description' => 'required|string',
+            'bundle_stock' => 'required|numeric',
+            'bundle_price' => 'required|numeric',
+            'supplierID' => 'required|integer',
         ]);
 
         $item = Item::create([
-            'supplier_id' => $request->input('item.supplier_id'),
-            'name' => $request->input('item.name'),
-            'price' => $request->input('item.price'),
-            'stock' => $request->input('item.quantityAvailable'),
-            'description' => $request->input('item.description'),
-            'active' => 'true',
-            'is_bundle' => $request->input('item.bundle'),
+            'supplier_id' => $request->supplierID,
+            'name' => $request->bundle_name,
+            'price' => $request->bundle_price,
+            'stock' => $request->bundle_stock,
+            'description' => $request->description,
+            'active' => true,
+            'rating' => 0,
+            'is_bundle' => true,
         ]);
 
-        // Não sei se está certo
-        if($request->has('item.tags')){
-            $tags = $request->input('item.tags');
-            $item->tags = $tags;
+
+
+        if(is_null($request->tags))
+        {
+            dd("error here");
+            dd($request->tags);
         }
-
-        if($request->input('item.bundle') == false){
-
-            $product = Product::create([
-                'unit' => $request->input('item.type')
-            ]);
-
-
-            if($request->has('item.images')){
-                $paths = [];
-                foreach($request->file('imageFile') as $image)
+        else
+        {
+            foreach($request->tags as $tagsValue)
+            {
+                if( is_null($tagsValue))
                 {
-                    $path = $image->store('/public/images');
-                    array_push($paths, $path);
-
-                    Image::create([
-                        'path' => $path
-                    ]);
-
+                    break;
                 }
-                $product->images = $paths;
+                $tags = Tag::where('value', $tagsValue)->get();
+
+                if (count($tags) > 0) {                     //if the tagvalue exist 
+                    foreach ($tags as $tag) {
+                        $item->tags()->attach($tag);          // associate the tag to the item
+                    }
+                }
+                else                                        // if the tagvalue is new
+                {
+                    $tag = Tag::create([                //create new tag
+                        'value' => $tagsValue,   
+                    ]);
+                    $item->tags()->attach($tag);        // associate the tag to the item
+                }
+        
             }
         }
 
+
+        // foreach($request->$products as $product)
+        // {
+        //     $item->contains_products()->attach($product);
+        // }
+
+        session()->flash('message','Bundle created successfully!');
+
+        return redirect(route('create_bundle'  , ['id' => $request->supplierID]) );
     }
 
     /**
@@ -199,20 +247,40 @@ class ItemController extends Controller
 
     }
 
-    // nao pode ser feito assim, é suposto retornar a vista com todos os items
+
     public function list()
     {
         $items = Item::get();
 
-        // $data =
-        // [
-        //     'name' => $item->name,
-        //     'price' => $item->price,
-        //     'description' => $item->description,
-        //     'rating' => $item->rating,
-        // ];
+      
+        $all = [];
+    
 
-        return view('pages.misc.products_list', ['items' => $items]);
+        $i = 0;
+        foreach($items as $item)
+        {
+            $product = Product::find($item->id);
+            $supplier = Supplier::find($item->supplier_id);
+
+        
+            if(is_null($product))       // item is a bundle
+            {
+                $all[$i] = [$item,null,null,$supplier];
+            }
+            else
+            {
+                $all[$i] = [$item,$product->type,$product->images()->get(),$supplier];
+            }
+            
+            $i++;
+        }
+
+        $data =
+        [
+            'items' => $all,
+        ];
+
+        return view('pages.misc.products_list', $data);
 
     }
 

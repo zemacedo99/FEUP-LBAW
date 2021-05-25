@@ -6,7 +6,7 @@
 
                 @isset($images[0])
                  {{-- {{$images[0]->path}} --}}
-                <img src="{{ asset('storage/images/' .$images[0]->path) }}" class="card-img-top" alt= {{$name}} style="margin-left:auto; margin-right:auto;width:8em;height:8em;">
+                <img src="{{ asset($images[0]->path) }}" class="card-img-top" alt= {{$name}} style="margin-left:auto; margin-right:auto;width:8em;height:8em;">
                 @endisset
                 
 
