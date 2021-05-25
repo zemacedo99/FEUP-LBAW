@@ -1,11 +1,29 @@
-<a href="/item/{{$item->id}}" class="card customcard bg-white text-dark">
+<script type="text/javascript" src={{ asset('js/homepage.js') }} defer> </script>
+
+<div class="card customcard bg-white text-dark">
     <img src={{asset($item->image)}} class="card-img" alt={{$item->name}}>
     <div class="card-img-overlay">
         <div class="row mb-5 me-1">
-            <div class="col"></div>
-            <div class="col-1"><i class="bi bi-suit-heart"></i></div>
+            {{-- <div class="col float-end"></div> --}}
+            {{-- <div class="col-1"><i class="bi bi-suit-heart"></i></div> --}}
+            @if (Auth::check() && app('App\Models\Client')::find(Auth::user()->id)!=null)
+                
+            @php
+                $buttonId="product".$item["id"];
+            @endphp
+            <button class="btn float-end text-end" id={{$buttonId}} onclick="favoriteAddRemove({{$item .','.$buttonId}});" >
+                                        @if ($item->favorite)
+                                            <i class="bi bi-suit-heart-fill"></i>    
+                                        @else
+                                            <i class="bi bi-suit-heart"></i>
+                                        @endif
+                                        
+            </button>
+            @endif
+        
         </div>
-        <div class="row my-5"></div>
+        <a href="/item/{{$item->id}}" id="unformatedLink">
+        <div class="row my-4"></div>
         <div class="row my-2"></div>
         <div class="row my-3"></div>
         <div class="row mt-5">
@@ -38,4 +56,5 @@
     </div>
     <div class="card-footer text-muted">{{$item->price}}€/{{$item->unit}}</div>
 </a>
+</div>
 

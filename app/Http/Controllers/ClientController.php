@@ -11,7 +11,6 @@ use App\Models\Coupon;
 use App\Models\CreditCard;
 use App\Models\ShipDetail;
 use App\Models\Purchase;
-use App\Models\Item;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -65,6 +64,21 @@ class ClientController extends Controller
         ]);
 
         return response('', 204)->header('description', 'Successfully created the client');
+    }
+
+    public function addRemoveFavorite(Request $request){
+        $request->validate([
+            'item_id' => 'required|int',
+            'favorite' => 'required|int'
+        ]);
+        if ($request->favorite==1){
+            \DB::table('client_item')->insert([
+                'item_id' => $request->input('item_id'),
+                'client_id' => Auth::user()->id]);
+        }else{
+            \DB::table('client_item')->where('item_id', '=', $request->item_id)->where('client_id','=',Auth::user()->id)->delete();
+        }
+        return response('', 204)->header('description', 'Successfully managed favorite');;
     }
 
     /**

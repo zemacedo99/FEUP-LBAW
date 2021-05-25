@@ -327,6 +327,8 @@ class ItemController extends Controller
             'hot'=>Item::take(5)->get()
         ];
 
+        $Client = Client::find(Auth::id());
+
         foreach($items as $group){
             foreach($group as $item){
                 $product = $item->product();
@@ -336,6 +338,10 @@ class ItemController extends Controller
                 } else {
                     $item->unit = "Un";
                     $item->image = "storage/products/bundle.jpg";
+                }
+                
+                if ($Client!=null){
+                    $item->favorite=$Client->item_favorites->contains($item);
                 }
             }
         }

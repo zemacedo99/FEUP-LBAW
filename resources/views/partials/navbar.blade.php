@@ -22,6 +22,11 @@
                 <li class="nav-item">
                     <a class="nav-link" id="navLinks" href="{{ route('map') }}">SiteMap</a>
                 </li>
+                @if (Auth::check() && Auth::user()->is_admin)
+                <li class="nav-item">
+                    <a class="nav-link" id="navLinks" href="{{ route('dashboard') }}">Dashboard</a>
+                </li>
+                @endif
             </ul>
 
             @if (Auth::check())

@@ -121,6 +121,8 @@ Route::post('register', 'Auth\RegisterController@register');
 
 Route::view('/success', 'pages.misc.success')->name('sucess');
 
+
+Route::put('/favorite', 'ClientController@addRemoveFavorite');
 // ANDRE - WORKING ON BELOW THIS
 
 Route::get('client/{client:id}/profile', 'ClientController@show');

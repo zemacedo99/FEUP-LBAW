@@ -59,10 +59,10 @@
                     </div>
                 </div>
 
-                @if ($admin != true)
-                    <button type="button" class="btn btn-primary"><i>Buy </i><i class="bi bi-basket"></i></button>
+                @if ((Auth::check() && app('App\Models\Client')::find(Auth::user()->id)!=null)||!Auth::check()) {{--if not logged in, or if logged in must be a client--}}
+                    @guest <a href="/register"> @endguest <button type="button"   id="add_cart" class="btn btn-primary"><i>Buy </i><i class="bi bi-basket"></i></button>@guest </a> @endguest
                 @endif
-                @guest <a href="/register"> @endguest <button type="button"   id="add_cart" class="btn btn-primary"><i>Buy </i><i class="bi bi-basket"></i></button>@guest </a> @endguest
+                
 
             </div>
         </div>
