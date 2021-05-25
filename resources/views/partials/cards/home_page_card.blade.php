@@ -26,7 +26,7 @@
             @endif
         
         </div>
-        <a href="/item/{{$item->id}}" id="unformatedLink">
+        <a href="/items/{{$item->id}}" id="unformatedLink">
         <div class="row my-4"></div>
         <div class="row my-2"></div>
         <div class="row my-3"></div>

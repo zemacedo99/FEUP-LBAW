@@ -367,14 +367,15 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function deactivate(Request $id)
+    public function deactivate($id)
     {
+    
         if(!is_numeric($id)){
             return response('', 404)->header('description','The item was not found');
         }
 
         $item = Item::find($id);
-        $this->authorize('delete', $item);
+        //$this->authorize('delete', $item);
 
         if($item == null){
             return response('', 404)->header('description','The item was not found');

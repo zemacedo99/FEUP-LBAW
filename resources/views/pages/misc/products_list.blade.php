@@ -26,6 +26,7 @@
         @isset($items)
             @foreach ( $items as $item)
                 @include('partials.cards.product_detail',[
+                    'id' => $item[0]->id,
                     'is_bundle' => $item[0]->is_bundle,
                     'name' => $item[0]->name,
                     'price' => $item[0]->price,
