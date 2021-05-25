@@ -221,4 +221,16 @@ class SupplierController extends Controller
     {
         //
     }
+
+
+    public function create_coupon($id){
+    
+        $this->authorize('view', Supplier::find($id));
+        $data = [
+                    'title' => 'Create Coupon',
+                    'path' => '/api/coupon'        
+                ];
+
+        return view('pages.supplier.create_edit_coupon', $data);
+    }
 }

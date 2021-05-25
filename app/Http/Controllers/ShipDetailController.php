@@ -25,10 +25,10 @@ class ShipDetailController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
-    {   //Ainda não testado
+    {   
 
         ShipDetail::where('client_id', Auth::id())->delete();
-
+        
 
         $request->validate([
             'first_name' => 'required|string',
@@ -40,9 +40,9 @@ class ShipDetailController extends Controller
             'city' => 'required|string',
             'country' => 'required|string',
             'phone_n' => 'required|string',
-            'to_save' => 'required|boolean',
+            'to_save' => 'required',
         ]);
-
+        
 
         $shipDetail = ShipDetail::create([
             'client_id' => Auth::id(),

@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Item;
 use App\Models\Supplier;
 use App\Models\User;
+use App\Models\Client;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ItemPolicy
@@ -31,7 +32,12 @@ class ItemPolicy
      */
     public function view(User $user, Item $item)
     {
-        //
+        return true;
+    }
+
+    public function checkout(User $user, Client $client)
+    {
+        return false;
     }
 
     /**

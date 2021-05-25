@@ -1,3 +1,12 @@
+@include('partials.modals.add_modal',
+            ['modalName'=>"DeleteSupplierAccount",
+            'title'=>"Confirmation",
+            'bodyText'=>"Are you sure you want to delete your Store account? You will lose all of your data, including control off your products, Cupons and Bundles.",
+            'buttonPrimary'=>"Delete",
+            'buttonSecondary'=>"Cancel",
+            ]
+         )
+
 <div class="container-sm col-sm-10">
 
     <div class="col d-flex justify-content-center d-none d-lg-flex mt-3 fs-3">Profile</div>
@@ -5,7 +14,7 @@
     <div class="col-12 d-none d-lg-block mt-0">
         <div class="row row-cols-2 d-flex justify-content-center align-items-center" style="height: 150px;">
             <div class="col col-sm-1" style="width: 100px;">
-                <img src="../images/img_avatar.png" class="rounded-circle img-fluid">
+                <img src="{{ asset('storage/users/avatar.png') }}" class="rounded-circle img-fluid">
             </div>
             <div class="col fs-5">
                 <div class="form-floating">
@@ -36,7 +45,7 @@
             <label for="floatingDescription">Description</label>
         </div>
     </div>
-        
+
 
     <div class="col-12 mb-3">
         <div class="form-floating">

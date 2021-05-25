@@ -35,7 +35,7 @@ Route::get('/users/{id}', 'UserController@getProfile');
 
 Route::get('/supplier/{id}/createBundle', 'ItemController@create');
 Route::get('/supplier/{id}/createProduct', 'ProductController@create')->name('create_product');
-Route::get('/supplier/{id}/createCoupon', 'CouponController@create');
+Route::get('/supplier/{id}/createCoupon', 'SupplierController@create_coupon');
 
 // Coupon
 
@@ -86,12 +86,6 @@ Route::post('/supplier', 'SupplierController@requestHandling');
 
 // Client
 Route::get('/api/client', 'ClientController@index');
-//Route::post('/api/client', 'ClientController@store');
-Route::put('/api/client/{id}', 'ClientController@update');
-Route::delete('/api/client/{id}', 'ClientController@destroy');
-
-
-
 
 // Item
 
@@ -109,11 +103,12 @@ Route::delete('/api/tag/{tagName}','TagController@destroy');
 
 // Checkout
 
-Route::get('/client/{id}/checkoutInfo', 'ItemController@checkout')->name('checkout');
-Route::get('/client/{id}/checkoutPayment', 'ItemController@payment')->name('payment');
-Route::post('/api/checkout', 'ItemController@save_checkout');
-Route::post('/api/payment', 'ItemController@do_payment');
+Route::get('/client/{id}/checkoutInfo', 'ClientController@checkout')->name('checkout');
+Route::get('/client/{id}/checkoutPayment', 'ClientController@payment')->name('payment');
+Route::post('/api/checkout', 'ClientController@save_checkout');
+Route::post('/api/payment', 'ClientController@do_payment');
 
+Route::post('/api/cart', 'ClientController@add_to_cart');
 
 
 // // Authentication
@@ -123,6 +118,8 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 
+
+Route::view('/success', 'pages.misc.success')->name('sucess');
 
 // ANDRE - WORKING ON BELOW THIS
 
@@ -134,7 +131,9 @@ Route::get('client/{client:id}/profile', 'ClientController@show');
 
 Route::prefix('api/')->group(function(){
     Route::prefix('client/')->group(function(){
+        Route::delete('{client:id}','ClientController@destroy')->name('client.delete');
         Route::get('{client:id}','ClientController@get_info');
+        Route::put('{client:id}','ClientController@update');
     });
 
     Route::prefix('supplier/')->group(function(){

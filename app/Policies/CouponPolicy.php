@@ -42,7 +42,8 @@ class CouponPolicy
      */
     public function create(User $user)
     {
-        
+        $sup = Supplier::find($user->id);
+        return $sup->isNotEmpty();
     }
 
     public function viewCreate(User $user, Supplier $supplier)

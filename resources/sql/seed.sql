@@ -147,7 +147,7 @@ CREATE TABLE coupons (
 
 CREATE TABLE products (
     id              INTEGER     PRIMARY KEY REFERENCES items (id) ON UPDATE CASCADE ON DELETE CASCADE ,
-    type            unit_type   NOT NULL
+    unit            unit_type   NOT NULL
 );
 
 
@@ -162,7 +162,7 @@ CREATE TABLE reviews (
 
 CREATE TABLE temp_purchases(
     id              SERIAL              PRIMARY KEY,
-    client_id       INTEGER             NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE SET NULL,
+    client_id       INTEGER             NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE,
     total           DECIMAL             NOT NULL,
     type            purchase_type       NOT NULL
 );
@@ -466,6 +466,7 @@ EXECUTE PROCEDURE tag_search_update();
 
 insert into images (path) values ('storage/users/avatar.png');
 insert into images (path) values ('storage/products/bundle.jpg');
+insert into images (path) values ('storage/products/apple_test.jpg');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
@@ -485,6 +486,7 @@ insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/blueberry_test.jpg');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
@@ -494,6 +496,7 @@ insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/kiwi_test.jpg');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
@@ -503,10 +506,7 @@ insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
-insert into images (path) values ('storage/products/fruit_test.png');
-insert into images (path) values ('storage/products/fruit_test.png');
-insert into images (path) values ('storage/products/fruit_test.png');
-insert into images (path) values ('storage/products/fruit_test.png');
+insert into images (path) values ('storage/products/dragonfruit_test.jpg');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
 insert into images (path) values ('storage/products/fruit_test.png');
@@ -904,102 +904,102 @@ insert into items (supplier_id, name, price, stock, description, active, is_bund
 insert into items (supplier_id, name, price, stock, description, active, is_bundle) values (74, 'Wine - White, Riesling, Semi - Dry', 21.4, 56, 'Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', false, true);
 insert into items (supplier_id, name, price, stock, description, active, is_bundle) values (75, 'Pasta - Shells, Medium, Dry', 69.6, 73, 'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.', false, true);
 
-insert into products (id, type) values (1, 'Un');
-insert into products (id, type) values (2, 'Un');
-insert into products (id, type) values (3, 'Un');
-insert into products (id, type) values (4, 'Kg');
-insert into products (id, type) values (5, 'Un');
-insert into products (id, type) values (6, 'Un');
-insert into products (id, type) values (7, 'Un');
-insert into products (id, type) values (8, 'Kg');
-insert into products (id, type) values (9, 'Kg');
-insert into products (id, type) values (10, 'Un');
-insert into products (id, type) values (11, 'Kg');
-insert into products (id, type) values (12, 'Kg');
-insert into products (id, type) values (13, 'Un');
-insert into products (id, type) values (14, 'Un');
-insert into products (id, type) values (15, 'Un');
-insert into products (id, type) values (16, 'Kg');
-insert into products (id, type) values (17, 'Kg');
-insert into products (id, type) values (18, 'Un');
-insert into products (id, type) values (19, 'Un');
-insert into products (id, type) values (20, 'Kg');
-insert into products (id, type) values (21, 'Kg');
-insert into products (id, type) values (22, 'Kg');
-insert into products (id, type) values (23, 'Un');
-insert into products (id, type) values (24, 'Un');
-insert into products (id, type) values (25, 'Kg');
-insert into products (id, type) values (26, 'Kg');
-insert into products (id, type) values (27, 'Un');
-insert into products (id, type) values (28, 'Un');
-insert into products (id, type) values (29, 'Un');
-insert into products (id, type) values (30, 'Un');
-insert into products (id, type) values (31, 'Un');
-insert into products (id, type) values (32, 'Un');
-insert into products (id, type) values (33, 'Kg');
-insert into products (id, type) values (34, 'Kg');
-insert into products (id, type) values (35, 'Un');
-insert into products (id, type) values (36, 'Un');
-insert into products (id, type) values (37, 'Un');
-insert into products (id, type) values (38, 'Un');
-insert into products (id, type) values (39, 'Kg');
-insert into products (id, type) values (40, 'Kg');
-insert into products (id, type) values (41, 'Kg');
-insert into products (id, type) values (42, 'Kg');
-insert into products (id, type) values (43, 'Un');
-insert into products (id, type) values (44, 'Kg');
-insert into products (id, type) values (45, 'Kg');
-insert into products (id, type) values (46, 'Un');
-insert into products (id, type) values (47, 'Un');
-insert into products (id, type) values (48, 'Kg');
-insert into products (id, type) values (49, 'Kg');
-insert into products (id, type) values (50, 'Un');
-insert into products (id, type) values (51, 'Un');
-insert into products (id, type) values (52, 'Un');
-insert into products (id, type) values (53, 'Un');
-insert into products (id, type) values (54, 'Un');
-insert into products (id, type) values (55, 'Kg');
-insert into products (id, type) values (56, 'Kg');
-insert into products (id, type) values (57, 'Un');
-insert into products (id, type) values (58, 'Kg');
-insert into products (id, type) values (59, 'Kg');
-insert into products (id, type) values (60, 'Un');
-insert into products (id, type) values (61, 'Un');
-insert into products (id, type) values (62, 'Kg');
-insert into products (id, type) values (63, 'Kg');
-insert into products (id, type) values (64, 'Un');
-insert into products (id, type) values (65, 'Kg');
-insert into products (id, type) values (66, 'Un');
-insert into products (id, type) values (67, 'Un');
-insert into products (id, type) values (68, 'Kg');
-insert into products (id, type) values (69, 'Un');
-insert into products (id, type) values (70, 'Kg');
-insert into products (id, type) values (71, 'Kg');
-insert into products (id, type) values (72, 'Un');
-insert into products (id, type) values (73, 'Un');
-insert into products (id, type) values (74, 'Un');
-insert into products (id, type) values (75, 'Kg');
+insert into products (id, unit) values (1, 'Un');
+insert into products (id, unit) values (2, 'Un');
+insert into products (id, unit) values (3, 'Un');
+insert into products (id, unit) values (4, 'Kg');
+insert into products (id, unit) values (5, 'Un');
+insert into products (id, unit) values (6, 'Un');
+insert into products (id, unit) values (7, 'Un');
+insert into products (id, unit) values (8, 'Kg');
+insert into products (id, unit) values (9, 'Kg');
+insert into products (id, unit) values (10, 'Un');
+insert into products (id, unit) values (11, 'Kg');
+insert into products (id, unit) values (12, 'Kg');
+insert into products (id, unit) values (13, 'Un');
+insert into products (id, unit) values (14, 'Un');
+insert into products (id, unit) values (15, 'Un');
+insert into products (id, unit) values (16, 'Kg');
+insert into products (id, unit) values (17, 'Kg');
+insert into products (id, unit) values (18, 'Un');
+insert into products (id, unit) values (19, 'Un');
+insert into products (id, unit) values (20, 'Kg');
+insert into products (id, unit) values (21, 'Kg');
+insert into products (id, unit) values (22, 'Kg');
+insert into products (id, unit) values (23, 'Un');
+insert into products (id, unit) values (24, 'Un');
+insert into products (id, unit) values (25, 'Kg');
+insert into products (id, unit) values (26, 'Kg');
+insert into products (id, unit) values (27, 'Un');
+insert into products (id, unit) values (28, 'Un');
+insert into products (id, unit) values (29, 'Un');
+insert into products (id, unit) values (30, 'Un');
+insert into products (id, unit) values (31, 'Un');
+insert into products (id, unit) values (32, 'Un');
+insert into products (id, unit) values (33, 'Kg');
+insert into products (id, unit) values (34, 'Kg');
+insert into products (id, unit) values (35, 'Un');
+insert into products (id, unit) values (36, 'Un');
+insert into products (id, unit) values (37, 'Un');
+insert into products (id, unit) values (38, 'Un');
+insert into products (id, unit) values (39, 'Kg');
+insert into products (id, unit) values (40, 'Kg');
+insert into products (id, unit) values (41, 'Kg');
+insert into products (id, unit) values (42, 'Kg');
+insert into products (id, unit) values (43, 'Un');
+insert into products (id, unit) values (44, 'Kg');
+insert into products (id, unit) values (45, 'Kg');
+insert into products (id, unit) values (46, 'Un');
+insert into products (id, unit) values (47, 'Un');
+insert into products (id, unit) values (48, 'Kg');
+insert into products (id, unit) values (49, 'Kg');
+insert into products (id, unit) values (50, 'Un');
+insert into products (id, unit) values (51, 'Un');
+insert into products (id, unit) values (52, 'Un');
+insert into products (id, unit) values (53, 'Un');
+insert into products (id, unit) values (54, 'Un');
+insert into products (id, unit) values (55, 'Kg');
+insert into products (id, unit) values (56, 'Kg');
+insert into products (id, unit) values (57, 'Un');
+insert into products (id, unit) values (58, 'Kg');
+insert into products (id, unit) values (59, 'Kg');
+insert into products (id, unit) values (60, 'Un');
+insert into products (id, unit) values (61, 'Un');
+insert into products (id, unit) values (62, 'Kg');
+insert into products (id, unit) values (63, 'Kg');
+insert into products (id, unit) values (64, 'Un');
+insert into products (id, unit) values (65, 'Kg');
+insert into products (id, unit) values (66, 'Un');
+insert into products (id, unit) values (67, 'Un');
+insert into products (id, unit) values (68, 'Kg');
+insert into products (id, unit) values (69, 'Un');
+insert into products (id, unit) values (70, 'Kg');
+insert into products (id, unit) values (71, 'Kg');
+insert into products (id, unit) values (72, 'Un');
+insert into products (id, unit) values (73, 'Un');
+insert into products (id, unit) values (74, 'Un');
+insert into products (id, unit) values (75, 'Kg');
 
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('volutpat', 'habitasse platea dictumst morbi', 'Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.', '2021-11-24 22:35:26', '%', 20, 55);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('ridiculus', 'eu nibh quisque', 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.', '2021-09-03 22:02:34', '%', 99, 75);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('congue', 'mattis nibh ligula nec', 'Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.', '2021-07-19 11:35:22', '%', 31, 53);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('tellus', 'hac habitasse platea', 'Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.', '2021-10-06 00:27:34', '€', 6.06, 68);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('volutpat', 'habitasse platea dictumst morbi', 'Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.', '2022-11-24 22:35:26', '%', 20, 55);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('ridiculus', 'eu nibh quisque', 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.', '2022-09-03 22:02:34', '%', 99, 75);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('congue', 'mattis nibh ligula nec', 'Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.', '2022-07-19 11:35:22', '%', 31, 53);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('tellus', 'hac habitasse platea', 'Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.', '2022-10-06 00:27:34', '€', 6.06, 68);
 insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('vulputate', 'justo nec condimentum neque', 'Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.', '2022-03-14 08:42:08', '%', 97, 52);
 insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('orci', 'justo nec condimentum', 'Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.', '2022-02-26 17:20:48', '%', 39, 66);
 insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('another', 'tristique in tempus sit', 'Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.', '2022-03-24 15:45:57', '€', 0.75, 59);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('pede', 'purus phasellus in', 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.', '2021-07-31 23:28:43', '%', 24, 59);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('cubilia', 'sapien sapien non', 'Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.', '2021-09-30 08:51:05', '€', 6.69, 51);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'lectus', 'vestibulum ac est', 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.', '2021-11-19 08:00:36', '€', 79.32, 75);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'non', 'quis orci nullam', 'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2021-08-03 16:36:02', '€', 7.02, 66);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'ipsum', 'magna ac consequat', 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', '2021-09-06 19:21:22', '€', 67.59, 63);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'nisl', 'non velit donec', 'Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.', '2021-12-02 14:47:47', '€', 15.42, 65);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'vestibulum', 'metus arcu adipiscing molestie', 'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.', '2021-10-05 23:53:54', '€', 66.03, 70);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'vel', 'molestie hendrerit at', 'Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.', '2021-09-06 16:36:33', '€', 9.87, 75);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'nibh', 'sed tristique in', 'Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.', '2021-08-01 23:45:44', '%', 79, 57);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'libero', 'eleifend quam a odio', 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.', '2021-05-22 23:14:31', '€', 10.42, 69);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('pede', 'purus phasellus in', 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.', '2022-07-31 23:28:43', '%', 24, 59);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ('cubilia', 'sapien sapien non', 'Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.', '2022-09-30 08:51:05', '€', 6.69, 51);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'lectus', 'vestibulum ac est', 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.', '2022-11-19 08:00:36', '€', 79.32, 75);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'non', 'quis orci nullam', 'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-08-03 16:36:02', '€', 7.02, 66);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'ipsum', 'magna ac consequat', 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', '2022-09-06 19:21:22', '€', 67.59, 63);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'nisl', 'non velit donec', 'Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.', '2022-12-02 14:47:47', '€', 15.42, 65);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'vestibulum', 'metus arcu adipiscing molestie', 'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.', '2022-10-05 23:53:54', '€', 66.03, 70);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'vel', 'molestie hendrerit at', 'Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.', '2022-09-06 16:36:33', '€', 9.87, 75);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'nibh', 'sed tristique in', 'Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.', '2022-08-01 23:45:44', '%', 79, 57);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'libero', 'eleifend quam a odio', 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.', '2022-05-22 23:14:31', '€', 10.42, 69);
 insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'lorem', 'ante vel ipsum praesent', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.', '2022-02-09 22:18:37', '€', 46.56, 57);
 insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'tellas', 'tellus semper interdum', 'Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.', '2022-01-14 18:37:19', '€', 23.82, 68);
-insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'erat', 'quis turpis eget elit', 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.', '2021-07-09 08:11:46', '€', 95.14, 68);
+insert into coupons ( code, name, description, expiration, type, amount, supplier_id) values ( 'erat', 'quis turpis eget elit', 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.', '2022-07-09 08:11:46', '€', 95.14, 68);
 
 insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ('Kayla', 'Wilden', '2 Thierer Park', '95879', '0657-937', 'Braga', 'Picoto', 'Portugal', '954062263', 1);
 insert into ship_details (first_name, last_name, address, door_n, post_code, district, city, country, phone_n, client_id) values ('Clair', 'Lacky', '0336 Russell Hill', '6', '5207-497', 'Lisboa', 'Aldeia de Juzo', 'Portugal', '984172568', 2);
@@ -2096,15 +2096,15 @@ insert into image_product (product_id, image_id) values (73, 75);
 insert into image_product (product_id, image_id) values (74, 76);
 insert into image_product (product_id, image_id) values (75, 77);
 
--- insert into temp_purchases (client_id, total, type) values (1, 100, 
--- insert into temp_purchases (client_id, total, type) values (2, 100, 
--- insert into temp_purchases (client_id, total, type) values (3, 100, 
--- insert into temp_purchases (client_id, total, type) values (4, 100, 
--- insert into temp_purchases (client_id, total, type) values (5, 100, 
--- insert into temp_purchases (client_id, total, type) values (6, 100, 
--- insert into temp_purchases (client_id, total, type) values (7, 100, 
--- insert into temp_purchases (client_id, total, type) values (8, 100, 
--- insert into temp_purchases (client_id, total, type) values (9, 100, 
+-- insert into temp_purchases (client_id, total, type) values (1, 100,
+-- insert into temp_purchases (client_id, total, type) values (2, 100,
+-- insert into temp_purchases (client_id, total, type) values (3, 100,
+-- insert into temp_purchases (client_id, total, type) values (4, 100,
+-- insert into temp_purchases (client_id, total, type) values (5, 100,
+-- insert into temp_purchases (client_id, total, type) values (6, 100,
+-- insert into temp_purchases (client_id, total, type) values (7, 100,
+-- insert into temp_purchases (client_id, total, type) values (8, 100,
+-- insert into temp_purchases (client_id, total, type) values (9, 100,
 -- insert into temp_purchases (client_id, total, type) values (10
 -- insert into temp_purchases (client_id, total, type) values (11
 -- insert into temp_purchases (client_id, total, type) values (12

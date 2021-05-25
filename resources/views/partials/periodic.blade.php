@@ -17,25 +17,25 @@
 
                                 <ul class="nav nav-pills mb-3 d-flex justify-content-evenly" id="pills-tab" role="tablist">
                                     <li class="nav-item" role="presentation">
-                                        <label for="male" data-bs-toggle="pill" data-bs-target="#pills-once" name="SingleBuy" class="periodic" >Once</label>
+                                        <label data-bs-toggle="pill" data-bs-target="#pills-once"  class="periodic" id="SingleBuy" >Once</label>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <label for="male" data-bs-toggle="pill" data-bs-target="#pills-daily" name="Day" class="periodic" >Daily</label>
+                                        <label data-bs-toggle="pill" data-bs-target="#pills-daily" class="periodic" id="Day" >Daily</label>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <label for="female" data-bs-toggle="pill" data-bs-target="#pills-weekly" name="Week" class="periodic" >Weekly</label>
+                                        <label data-bs-toggle="pill" data-bs-target="#pills-weekly" class="periodic" id="Week" >Weekly</label>
                                     </li>
-                                    <li class="nav-item" role="presentation"> 
-                                        <label for="other" data-bs-toggle="pill" data-bs-target="#pills-monthly" name="Month" class="periodic" >Monthly</label>
+                                    <li class="nav-item" role="presentation">  
+                                        <label data-bs-toggle="pill" data-bs-target="#pills-monthly" class="periodic" id="Month" >Monthly</label>
                                     </li>
                                 </ul>
 
                                 <div class="row mb-3"></div>
 
                                 <div class="tab-content" id="pills-tabContent">
-                                    <div class="tab-pane fade text-center" id="pills-once" role="tabpanel" aria-labelledby="pills-once-tab">One time purchase</div>
-                                    <div class="tab-pane fade text-center" id="pills-daily" role="tabpanel" aria-labelledby="pills-daily-tab">Daily purchase the products in this cart</div>
-                                    <div class="tab-pane fade text-center" id="pills-weekly" role="tabpanel" aria-labelledby="pills-weekly-tab">
+                                    <div class="tab-pane fade text-center" id="pills-once" role="tabpanel" >One time purchase</div>
+                                    <div class="tab-pane fade text-center" id="pills-daily" role="tabpanel">Daily purchase the products in this cart</div>
+                                    <div class="tab-pane fade text-center" id="pills-weekly" role="tabpanel">
                                         <input type="radio" id="monday" name="gender" value="monday" class="d-none">
                                         <label for="monday">Monday</label><br>
                                         <input type="radio" id="tuesday" name="gender" value="tuesday" class="d-none">
@@ -51,12 +51,12 @@
                                         <input type="radio" id="sunday" name="gender" value="sunday" class="d-none">
                                         <label for="sunday">Sunday</label><br>
                                     </div>
-                                    <div class="tab-pane fade text-center" id="pills-monthly" role="tabpanel" aria-labelledby="pills-monthly-tab">
+                                    <div class="tab-pane fade text-center" id="pills-monthly" role="tabpanel">
                                         <label for="festa">Choose the day of the next delivery <br> All of the next deliveries will occur on the same day monthly</label>
                                         <div class="col-12 d-flex justify-content-center mt-2">
                                             <input type="date" id="festa" name="festa" min="<?= date('Y-m-d') ?>" max="<?php $dt2 = new DateTime("+1 month");
                                                                                                                         $date = $dt2->format("Y-m-d");
-                                                                                                                        echo $date ?>" required>
+                                                                                                                        echo $date ?>">
                                         </div>
                                     </div>
                                 </div>

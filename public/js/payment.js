@@ -8,11 +8,11 @@ function addAllListeners(){
     let editButtons = document.getElementsByClassName('edit')
     let deleteButtons = document.getElementsByClassName('delete')
     let selectButtons = document.getElementsByClassName('select')
-    
+
     submit.addEventListener('submit', validateForm)
-    
+
     add_cc.addEventListener('click', addCC)
-    
+
     for(let i = 0; i < editButtons.length; i++){
         editButtons[i].addEventListener('click', editCC)
         deleteButtons[i].addEventListener('click', deleteCC)
@@ -24,6 +24,15 @@ function addAllListeners(){
 
 function validateForm(event) {
     try{
+
+        let cc_id =  document.getElementById('selected_id').value
+
+        if(cc_id  <= 0){
+            document.getElementById("cc_alert").innerHTML = "You must select a credit card"
+            event.preventDefault()
+        }else {
+            document.getElementById("cc_alert").innerHTML = ""
+        }
         let check_empty = ['first_name', 'last_name', 'address', 'door_n', 'post_code', 'district', 'city', 'country', 'phone_n']
         let correct = true
         let sd = {}
@@ -33,7 +42,7 @@ function validateForm(event) {
             if (input.value == "") {
                 document.getElementById(check_empty[i] + "_alert").innerHTML = "This field cannot be empty"
                 correct = false
-                
+
             }else{
                 document.getElementById(check_empty[i] + "_alert").innerHTML = ""
                 sd[check_empty[i]] = input.value
@@ -44,39 +53,24 @@ function validateForm(event) {
             event.preventDefault()
             return
         }
-        if(document.getElementById('save_ship_info').checked){
-            sd['to_save'] = true
-        }else{
-            sd['to_save'] = false
-        }
+        sd['to_save'] = document.getElementById('save_ship_info').checked;
 
         let sp_id = -1
         sendAjaxRequest('post', '/api/shipdetails', sd, function(){
             if (this.status === 201){
-                sp_id = JSON.parse(this.responseText).id
+                document.getElementById('sd_id').value = JSON.parse(this.responseText).id
             }else{
                 event.preventDefault()
                 sp_id = -2
             }
         }, false)
 
-        while(sp_id == -1)
-            continue
         if(sp_id == -2){
             console.log("Error in shipdetail")
         }
 
-        let cc_id =  document.getElementById('selected_id').value
-        
-        
-        // event.preventDefault()
-        sendAjaxRequest('post', '/api/payment', {"cc_id": cc_id, "sp_id": sp_id}, function(){
-            
-            
-        }, false)
-
     }catch(err){
-        alert(err.message)
+        console.log(err.message)
         event.preventDefault()
     }
 }
@@ -100,25 +94,36 @@ function addCC(event){
             let input = document.getElementById(check_empty[i]);
             if (input.value == "") {
                 document.getElementById(check_empty[i] + "_alert").innerHTML = "This field cannot be empty"
-                save = false;
+                save = false
             }else{
-                document.getElementById(check_empty[i] + "_alert").innerHTML = ""
-                cc[check_empty[i]] = input.value
+                if(check_empty[i] === 'cvv' && verifyIfNumber(input, 3)){
+                    document.getElementById(check_empty[i] + "_alert").innerHTML = "CVV is invalid"
+                    save = false
+
+                }else if(check_empty[i] === 'card_number' && verifyIfNumber(input, 16)){
+                    document.getElementById(check_empty[i] + "_alert").innerHTML = "Card number is invalid"
+                    save = false
+
+                }else{
+                    document.getElementById(check_empty[i] + "_alert").innerHTML = ""
+                    cc[check_empty[i]] = input.value
+                }
+
             }
-           
+
 
         }
-        if(!save) return;
-
-        if(document.getElementById('save_cc').checked){
-            cc['to_save'] = true
-        }else{
-            cc['to_save'] = false
+        if(!save){
+            event.preventDefault()
+            return;
         }
+
+
+        cc['to_save'] = document.getElementById('save_cc').checked;
 
 
         sendAjaxRequest('post', '/api/creditcard/', cc, function(){
-            
+
             console.log(this.status)
             console.log(this.responseText)
             if (this.status === 201){
@@ -135,11 +140,15 @@ function addCC(event){
 
 }
 
+function verifyIfNumber(input, desLength){
+    return !Number.isInteger(input) && input.toString().replace(" ", "").length !== desLength
+}
+
 function createCreditCard(cc){
     let divCards = document.getElementById('all_credit_cards')
     let i = ++last_i
 
-    divCards.innerHTML += 
+    divCards.innerHTML +=
     `<div class="card mb-3" id="card:${i}">
         <div class="row g-0">
             <div class="col-2">
@@ -195,7 +204,7 @@ function createCreditCard(cc){
                             <label for="holder_name_e">Card holder</label>
                         </div>
                     </div>
-                    
+
                     <div class="d-flex justify-content-center">
                         <button type="button" id="delete:${i}" class="btn btn-danger btn-sm delete" data-bs-dismiss="modal"><i class="bi bi-trash"></i> Delete this card</button>
                     </div>
@@ -219,23 +228,23 @@ function editCC(event){
     let cvv = document.getElementById('cvv:' + i).value
     let holder = document.getElementById('holder_name:' + i).value
 
-    
+
     cc = {}
     cc['id'] = id
 
     if(card_n !== '')
         cc['card_n'] = card_n
-    
+
     if(expiration !== '')
         cc['expiration'] = expiration
 
     if(cvv !== '')
         cc['cvv'] = cvv
-    
+
     if(holder !== '')
         cc['holder'] = holder
 
-    
+
     sendAjaxRequest('put', '/api/creditcard/', cc, function(){
         if (this.status !== 200){
             alert(this.status)
@@ -270,30 +279,8 @@ function deleteCCPage(i){
 function updateCV(i, cc){
     if(cc['card_n'] !== '')
         document.getElementById('card_n_prev:' + i).innerHTML = "Visa car Ending in **" + cc['card_n'].substr(-2)
-    
+
     if(cc['holder'] !== '')
         document.getElementById('holder_prev:' + i).innerHTML = cc['holder']
-    
-}
-
-
-function encodeForAjax(data) {
-    if (data == null) return null;
-    return Object.keys(data).map(function(k) {
-        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
-    }).join('&');
-}
-
-function sendAjaxRequest(method, url, data, handler, async) {
-
-    let request = new XMLHttpRequest();
-
-    request.open(method, url, async);
-    if (method != 'get') {
-        request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    }
-    request.addEventListener('load', handler);
-    request.send(encodeForAjax(data));
 
 }

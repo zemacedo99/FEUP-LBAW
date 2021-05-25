@@ -1,7 +1,6 @@
 <a href="/item/{{$item->id}}" class="card customcard bg-white text-dark">
-    <img src={{asset($item->images[0]->path)}} class="card-img" alt={{$item->name}}>
+    <img src={{asset($item->image)}} class="card-img" alt={{$item->name}}>
     <div class="card-img-overlay">
-
         <div class="row mb-5 me-1">
             <div class="col"></div>
             <div class="col-1"><i class="bi bi-suit-heart"></i></div>
@@ -32,14 +31,11 @@
                     @else
                         <div class="col-1"><i class="bi bi-star" style="color: #d2d820;"></i></div>
                     @endif
-
                 @endfor
             @endif
 
-
-
         </div>
     </div>
-    <div class="card-footer text-muted">{{$item->price}}€/{{$item->unit->type}}</div>
+    <div class="card-footer text-muted">{{$item->price}}€/{{$item->unit}}</div>
 </a>
 
