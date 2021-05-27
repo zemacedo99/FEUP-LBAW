@@ -199,7 +199,7 @@ body {
     height: 230px;
 }
 
-.row .bi-suit-heart {
+.row .bi-suit-heart, .bi-suit-heart-fill{
     color: red;
 }
 
@@ -325,10 +325,18 @@ label.active {
 
 
 a.customcard,
-a.customcard:hover {
+a.customcard:hover, #unformatedLink {
     color: inherit;
     text-decoration: inherit;
 }
+
+/* .delete {
+  color: var(--red);
+}
+
+.delete:hover {
+  color: var(--red);
+} */
 
 .delete {
   color: var(--grey);

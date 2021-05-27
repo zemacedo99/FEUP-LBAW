@@ -367,14 +367,15 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function deactivate(Request $id)
+    public function deactivate($id)
     {
+    
         if(!is_numeric($id)){
             return response('', 404)->header('description','The item was not found');
         }
 
         $item = Item::find($id);
-        $this->authorize('delete', $item);
+        //$this->authorize('delete', $item);
 
         if($item == null){
             return response('', 404)->header('description','The item was not found');
@@ -395,6 +396,8 @@ class ItemController extends Controller
             'hot'=>Item::take(5)->get()
         ];
 
+        $Client = Client::find(Auth::id());
+
         foreach($items as $group){
             foreach($group as $item){
                 $product = $item->product();
@@ -404,6 +407,10 @@ class ItemController extends Controller
                 } else {
                     $item->unit = "Un";
                     $item->image = "storage/products/bundle.jpg";
+                }
+                
+                if ($Client!=null){
+                    $item->favorite=$Client->item_favorites->contains($item);
                 }
             }
         }

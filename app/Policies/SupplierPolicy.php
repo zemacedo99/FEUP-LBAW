@@ -45,7 +45,7 @@ class SupplierPolicy
     public function view(User $user, Supplier $supplier)
     {
         // TODO maybe será mudado, já que clients tbm podem ver info de suppliers
-        return $user->id == $supplier->id;
+        return $user->id === $supplier->id;
     }
 
     /**

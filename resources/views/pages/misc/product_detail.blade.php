@@ -37,7 +37,7 @@
 
 
                 <br>
-                <h4><b>{{ $price }}€@isset($unit)/{{ $unit }} @endisset</b></h4>
+                <h4><b>{{ number_format ( $price , 2) }}€@isset($unit)/{{ $unit }} @endisset</b></h4>
                 <br>
 
 
@@ -59,7 +59,10 @@
                     </div>
                 </div>
 
-                @guest <a href="/register"> @endguest <button type="button"   id="add_cart" class="btn btn-primary"><i>Buy </i><i class="bi bi-basket"></i></button>@guest </a> @endguest
+                @if ((Auth::check() && app('App\Models\Client')::find(Auth::user()->id)!=null)||!Auth::check()) {{--if not logged in, or if logged in must be a client--}}
+                    @guest <a href="/register"> @endguest <button type="button" id="add_cart" class="btn btn-primary"><i>Buy </i><i class="bi bi-basket"></i></button> @guest</a> @endguest
+                @endif
+                
 
             </div>
         </div>
@@ -179,5 +182,7 @@
             </div>
         </div>
     </div>
+
+    @include('partials.modals.success_add_cart')
 
 @endsection

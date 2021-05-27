@@ -27,7 +27,7 @@ class CreditCardController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'card_number' => 'required',
+            'card_number' => 'required|size:16',
             'valid_until' => 'required',
             'cvv' => 'required|integer',
             'holder_name' => 'required',

@@ -276,8 +276,8 @@ class SupplierController extends Controller
             Supplier::where('id','=',$request->supplier_id)->update(['accepted'=>"true"]);
         }else{
             //return Supplier::where('id','=',$request->supplier_id)->get();
-            Supplier::find('id','=',$request->supplier_id)->delete();//not working
-            //User::where('id','=',$request->supplier_id)->delete();//not working
+            //Supplier::where('id','=',$request->supplier_id)->delete();//not working
+            User::where('id','=',$request->supplier_id)->delete();//not working
         }
 
     }
@@ -335,8 +335,15 @@ class SupplierController extends Controller
 
 
     public function create_coupon($id){
+
+        if(!is_numeric($id)){
+            return response('Invalid ID', 404);
+        }
+
+        $supplier = Supplier::find($id);
     
-        $this->authorize('view', Supplier::find($id));
+        //$this->authorize('view', $supplier);
+
         $data = [
                     'title' => 'Create Coupon',
                     'path' => '/api/coupon'        
