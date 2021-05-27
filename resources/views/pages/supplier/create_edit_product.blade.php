@@ -35,6 +35,10 @@
 
             <div class="col-12 col-lg-4 justify-content-center">
                 <form action="{{ $path }}" method="POST" id="form" enctype="multipart/form-data" required>
+                    @isset($name)
+                        @method('PUT')
+                        <div style="display: none" id="edit"></div>
+                    @endisset
                     @csrf
                     <label class="text-black" for="product_name">Product Name</label>
 
@@ -107,17 +111,17 @@
                         <input type="file" class="btn btn-primary" name="images[]" multiple /> --}}
                     </div>
 
-                    
-                </div>
-                
-                
-                
-                <div class="row mb-3"></div>
-                {{-- <div class="col"> --}}
-                    @include('partials.description_and_tags') 
-                {{-- </div> --}}
+
             </div>
-            
+
+
+
+            <div class="row mb-3"></div>
+            {{-- <div class="col"> --}}
+            @include('partials.description_and_tags')
+            {{-- </div> --}}
+        </div>
+
 
 
         <div class="row my-5">
