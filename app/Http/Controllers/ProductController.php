@@ -221,29 +221,30 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit($productId)
+    public function edit($id)
     {
-        $product = Product::find($productId);
-
+        $item = Item::find($id);
+        $product = Product::find($id);
+        $tags = Tag::get();
         // $this->authorize('update', $product);
 
         $data = [
                     'title' => 'Edit Product',
-                    'path' => '/api/coupon/' . $product->id,
-                    'code' => $product->code,
-                    'description' => $product->description,
-                    'name' => $product->name,
-                    'expiration' => $product->expiration,
-                    'amount' => $product->amount,
-                    'type' => $product->type,
+                    'path' => '/api/product/' . $id,
+                    'tags' => $tags,
+                    'name' => $item->name,
+                    'price' => $item->price,
+                    'stock' => $item->stock,
+                    'description' => $item->description,
+                    'type' => $product->unit,
         ];
 
-        if($product->type === "%"){
-            $data['p'] = true;
+        if($product->type === "Kg"){
+            $data['k'] = true;
         }else{
-            $data['e'] = true;
+            $data['u'] = true;
         }
-        return view('pages.supplier.create_edit_coupon', $data);
+        return view('pages.supplier.create_edit_product', $data);
     }
 
     /**
@@ -253,43 +254,45 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
          
-        $collection_coupon = Coupon::where('code', $couponCode)->get();
+        $item = Item::find($id);
+        $product = Product::find($id);
         
-        $this->authorize('update', $collection_coupon->first());
+        // $this->authorize('update', $item);
+
+        $request->validate([
+            'product_name' => 'required|string',
+            'description' => 'required|string',
+            'product_stock' => 'required|numeric',
+            'product_price' => 'required|numeric',
+            'supplierID' => 'required|integer',
+        ]);
+
+
+        if($request->has('product_name')){
+            $item->name = $request->input('product_name'); 
+        }
         
-        if($collection_coupon->isEmpty()){
-            return response('', 404)->header('description','Coupon not found');
+        if($request->has('product_price')){
+            $item->price = $request->input('product_price'); 
         }
-
-       
-        $coupon = $collection_coupon->first();
-
-        if($request->has('coupon_name')){
-            $coupon->name = $request->input('coupon_name'); 
+        if($request->has('product_stock')){
+            $item->stock = $request->input('product_stock'); 
         }
-
-        if($request->has('coupon_amount')){
-            $coupon->amount = $request->input('coupon_amount'); 
-        }
-
-        if($request->has('coupon_type')){
-            $coupon->type = $request->input('coupon_type'); 
-        }
-
         if($request->has('description')){
-            $coupon->description = $request->input('description'); 
+            $item->description = $request->input('description'); 
         }
 
-        if($request->has('date')){
-            $coupon->expiration = $request->input('date'); 
+        if($request->has('product_type')){
+            $product->unit = $request->input('product_type'); 
         }
+
+        $item->save();
+        $product->save();
         
-        $coupon->save();
-        
-        return redirect('/');
+        return redirect(route('supplier_all_products'  , ['id' => $request->supplierID]) );
     }
 
     /**

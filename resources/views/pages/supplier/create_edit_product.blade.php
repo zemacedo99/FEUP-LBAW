@@ -61,8 +61,8 @@
                         <input type="number" step="0.01" class="form-control" min=0 id="product_price" name="product_price"
                             @isset($price) value="{{ $price }}" @endisset>
                         <select class="form-select" name="product_type" aria-label="Select type" id="product_type">
-                            <option @isset($kg) selected @endisset>Kg</option>
-                            <option @isset($unit) selected @endisset value='Un'>Unit</option>
+                            <option @isset($k) selected @endisset value="Kg">Kg</option>
+                            <option @isset($u) selected @endisset value="Un">Unit</option>
                         </select>
                     </div>
                     <div class="row" style="margin-left: 0.1em">
