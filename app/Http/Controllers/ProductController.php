@@ -123,13 +123,10 @@ class ProductController extends Controller
             'is_bundle' => false,
         ]);
 
-    
-        $tags = [];
-
 
         $string = $request->t;
-        $str_arr = explode("/", $string); 
-        dd($str_arr);
+        $rtags = explode("/", $string); 
+        // dd($rtags);
 
 
         if(is_null($request->tags))
@@ -139,12 +136,16 @@ class ProductController extends Controller
         }
         else
         {
-            foreach($request->tags as $tagsValue)
+            foreach($rtags as $tagsValue)
             {
                 // dd($tagsValue);
                 if( is_null($tagsValue))
                 {
-                    break;
+                    continue;
+                }
+                if($tagsValue === "")
+                {
+                    continue;
                 }
 
 
