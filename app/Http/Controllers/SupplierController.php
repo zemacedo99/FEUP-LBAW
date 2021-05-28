@@ -164,7 +164,7 @@ class SupplierController extends Controller
         $supplier = Supplier::find($id);
 
         $image = Image::find($supplier->image_id);
-        $items = Item::where('supplier_id', '=', $id)->get();
+        $items = Item::where('supplier_id', '=', $id)->where('active','=','true')->get();
 
         $all = [];
         $stars = 0;
@@ -221,7 +221,7 @@ class SupplierController extends Controller
         $email = auth()->user()->email;
         $password =  auth()->user()->password;
 
-        $items =  $supplier->items()->get();
+        $items =  $supplier->items()->where('active','=','true')->get();
         $all = [];
 
         $i = 0;
@@ -272,12 +272,13 @@ class SupplierController extends Controller
     }
 
     public function requestHandling(Request $request){
+        $supplier=Supplier::find($request->supplier_id);
         if ($request->accept=="1"){
-            Supplier::where('id','=',$request->supplier_id)->update(['accepted'=>"true"]);
+            return $supplier->update(['accepted'=>"true"]);
+        }else if ($request->accept=="0"){
+            return $this->delete($supplier);
         }else{
-            //return Supplier::where('id','=',$request->supplier_id)->get();
-            //Supplier::where('id','=',$request->supplier_id)->delete();//not working
-            User::where('id','=',$request->supplier_id)->delete();//not working
+            return response('', 500)->header('description','Invalid request parametrization');
         }
 
     }
@@ -328,8 +329,12 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Supplier $supplier)
+    public function delete(Supplier $supplier)
     {
+        //$this->authorize('delete',$supplier);
+        
+        $supplier->delete();//todo if on update cascade works this is unnecessary
+        return User::find($supplier->id)->delete();
         //
     }
 

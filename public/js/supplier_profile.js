@@ -46,3 +46,26 @@ function removeIfPresent(element, classe) {
         element.remove(classe)
     }
 }
+
+
+// Delete supplier profile Modal
+var deleteProfileModal = document.getElementById('modalDeleteSupplierAccount')
+if (deleteProfileModal != null) {
+    var yesButton=deleteProfileModal.getElementsByClassName('btn btn-primary').item(0);
+    var noButton=deleteProfileModal.getElementsByClassName('btn btn-secondary').item(0);
+    yesButton.addEventListener("click", function(event) {
+        // Yes Button
+        var button = event.relatedTarget;
+
+            // Extract info from data-bs-* attributes
+
+        var supplierId=window.location.pathname.split("/").slice(-1)[0];
+        
+        sendAjaxRequest('DELETE', '/supplier/'+supplierId, null, function(){
+            //location.reload();
+        })
+
+
+    });
+
+}

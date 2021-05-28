@@ -66,7 +66,7 @@ CREATE TABLE clients (
 );
 
 CREATE TABLE suppliers (
-    id              INTEGER     NOT NULL REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE SET NULL,
+    id              INTEGER     NOT NULL REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE CASCADE,
     name            TEXT        NOT NULL,
     address         TEXT        NOT NULL,
     post_code       TEXT        NOT NULL,
@@ -142,7 +142,7 @@ CREATE TABLE coupons (
     expiration      DATE            NOT NULL CHECK (expiration > now()),
     type            coupon_type     NOT NULL,
     amount          DECIMAL         NOT NULL CHECK (amount > 0),
-    supplier_id     INTEGER         NOT NULL REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE CASCADE
+    supplier_id     INTEGER         NOT NULL REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 CREATE TABLE products (

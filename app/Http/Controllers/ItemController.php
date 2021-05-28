@@ -33,7 +33,7 @@ class ItemController extends Controller
         if(auth()->user()==null||!auth()->user()->is_admin){
             return response('', 404)->header('description','Page does not exist');
         }
-        $products=Item::orderBy('id','asc')->paginate(8);
+        $products=Item::orderby('active','desc')->orderBy('id','asc')->paginate(8);
 
         return view('pages.admin.products',['items'=>$products->withPath('dashboard_products')]);
     }
@@ -373,7 +373,7 @@ class ItemController extends Controller
         if(!is_numeric($id)){
             return response('', 404)->header('description','The item was not found');
         }
-
+        
         $item = Item::find($id);
         //$this->authorize('delete', $item);
 

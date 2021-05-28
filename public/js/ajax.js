@@ -29,6 +29,7 @@ function sendAjaxRequest(method, url, data, handler, async = true) {
     }
     request.addEventListener('load', handler);
     request.send(encodeForAjax(data));
+    console.log(request.response);
 }
 
 
