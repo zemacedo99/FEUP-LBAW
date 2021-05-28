@@ -9,6 +9,7 @@ use App\Models\Supplier;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 
 class ProductController extends Controller
 {
@@ -48,7 +49,7 @@ class ProductController extends Controller
         $data = [
             'title' => 'Create Product',
             'path' => '/api/product',
-            'tags' => $tags,
+            'alltags' => $tags,
         ];
 
         return view('pages.supplier.create_edit_product', $data);
@@ -122,10 +123,18 @@ class ProductController extends Controller
             'is_bundle' => false,
         ]);
 
+    
+        $tags = [];
+
+
+        $string = $request->t;
+        $str_arr = explode("/", $string); 
+        dd($str_arr);
+
 
         if(is_null($request->tags))
         {
-            dd("error here");
+            dd("tags are emply");
             dd($request->tags);
         }
         else
@@ -225,13 +234,13 @@ class ProductController extends Controller
     {
         $item = Item::find($id);
         $product = Product::find($id);
-        $tags = Tag::get();
+        $alltags = $item->tags();
         // $this->authorize('update', $product);
 
         $data = [
                     'title' => 'Edit Product',
                     'path' => '/api/product/' . $id,
-                    'tags' => $tags,
+                    'alltags' => $alltags,
                     'name' => $item->name,
                     'price' => $item->price,
                     'stock' => $item->stock,
@@ -287,6 +296,12 @@ class ProductController extends Controller
 
         if($request->has('product_type')){
             $product->unit = $request->input('product_type'); 
+        }
+
+        $tags = $item->tags();
+
+        if($request->has('tags')){
+            $tags = $request->input('tags'); 
         }
 
         $item->save();

@@ -1,4 +1,6 @@
 <!-- Description + Tags -->
+<script type="text/javascript" src={{ asset('js/tags.js') }} defer> </script>
+
 <div class="row ">
     <label for="Description">Description</label>
 </div>
@@ -36,23 +38,34 @@
                 </datalist>
             </label> --}}
 
+            <p id="print"></p>
             
             <div class="container1">
-                <button class="add_form_field">Add tag &nbsp;
-                </button>
-                <div>
-                {{-- <input type="text" name="tags[]"> --}}
+                
+                <button type="button" onclick="addItem()" class="btn btn-primary btn-sm">Add tag + </button>
+                
                 <input id="tags" name="tags[]" list="tag" size="13" maxlength="13" multiple>
                 <datalist id="tag">
-                    @foreach ($tags as $tag)
-                        <option value={{ $tag->value }}></option>
+                    @foreach ($alltags as $tag)
+                    <option value={{ $tag->value }}></option>
                     @endforeach
                 </datalist>
-                <a href="#" class="delete"><i class="bi bi-trash"></i></a>
-                </div>
+                {{-- <a href="#" class="delete" onclick="removeItem()"><i class="bi bi-trash"></i></a> --}}
+                
+                
+                <div class="row mb-3"></div>
+                <div id="dynamic_tags"></div>
             </div>
 
+            <input type="hidden" name="t" id="t">
             
+            <div id="alltags"> </div>
+            <div class="row mb-1"></div>
+
+            <div id="dynamic_tags"></div>
+            
+
+
             {{-- <button class="btn btn-primary btn-sm">Add+</button>
 
             <button class="btn btn-secondary btn-sm">Organic X</button>
@@ -67,8 +80,8 @@
     </div>
 </div>
 
-{{-- credits to : https://stackoverflow.com/questions/14853779/adding-input-elements-dynamically-to-form--}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+{{-- credits to : https://stackoverflow.com/questions/14853779/adding-input-elements-dynamically-to-form --}}
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
         var max_fields = 3;
@@ -83,7 +96,9 @@
                 // $(wrapper).append(
                 //     '<div><input type="text" name="mytext[]"/><a href="#" class="delete">Delete</a></div>'
                 // ); //add input box
-                $(wrapper).append('<div><input id="tags" name="tags[]" list="tag" size="13" maxlength="13" multiple><datalist id="tag">   @foreach ($tags as $tag)  <option value={{ $tag->value }}></option>@endforeach</datalist><a href="#" class="delete"> <i class="bi bi-trash"> </i></a></div>'); //add input box
+                $(wrapper).append(
+                                    '<div><input id="tags" name="tags[]" list="tag" size="13" maxlength="13" multiple><datalist id="tag">@foreach ($alltags as $tag)<option value={{ $tag->value }}></option>@endforeach</datalist><a href="#" class="delete"><i class="bi bi-trash"></i></a></div>'
+                                ); //add input box
             } else {
                 alert('You reached the max tags (3)')
             }
@@ -96,4 +111,4 @@
         })
     });
 
-</script>
+</script> --}}

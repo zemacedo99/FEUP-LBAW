@@ -120,6 +120,7 @@
             {{-- <div class="col"> --}}
             @include('partials.description_and_tags')
             {{-- </div> --}}
+            
         </div>
 
 
