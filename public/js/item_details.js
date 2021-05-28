@@ -34,9 +34,8 @@ function addCart(event){
     sendAjaxRequest('post', '/api/cart', {'item_id':item_id, 'quantity':quantity, 'client_id': client_id}, function(){
         console.log(this.status)
         if(this.status === 201)
-            alert("Success")
-        else
-            alert("Fuck")
-
+            var myModal = new bootstrap.Modal(document.getElementById('success_add_cart'), null)
+            myModal.show()
     })
+    
 }

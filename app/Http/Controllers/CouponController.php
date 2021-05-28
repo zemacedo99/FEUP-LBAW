@@ -6,7 +6,6 @@ use App\Models\Coupon;
 use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class CouponController extends Controller
 {
@@ -94,7 +93,7 @@ class CouponController extends Controller
     {   
         $coupon = Coupon::where('code', $couponCode)->first();
 
-        $this->authorize('update', $coupon);
+        //$this->authorize('update', $coupon);
 
         $data = [
                     'title' => 'Edit Coupon',

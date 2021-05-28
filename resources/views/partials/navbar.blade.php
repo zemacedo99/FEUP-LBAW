@@ -22,11 +22,6 @@
                 <li class="nav-item">
                     <a class="nav-link" id="navLinks" href="{{ route('map') }}">SiteMap</a>
                 </li>
-                @if (Auth::check() && Auth::user()->is_admin)
-                <li class="nav-item">
-                    <a class="nav-link" id="navLinks" href="{{ route('dashboard') }}">Dashboard</a>
-                </li>
-                @endif
             </ul>
 
             @if (Auth::check())
@@ -50,14 +45,42 @@
         <!-- navbar profile and cart buttons -->
         <div class="navbar-nav ms-auto">
             <div class="col align-items-end">
-                @guest
+
+                <a  
+                    @auth
+                        @if (app('App\Models\Client')::find(Auth::user()->id) != null)
+
+                        href="{{ route('client_profile'  , ['client' => \Illuminate\Support\Facades\Auth::id()])}}"
+                        
+                        @elseif (Auth::check() && Auth::user()->is_admin) 
+
+                        href="{{ route('dashboard') }}"
+
+                        @else
+                            href="{{ route('supplierProfile'  , ['id' => \Illuminate\Support\Facades\Auth::id()])}}"
+                        @endif
+                        
+                    
+                    @endauth
+                    >
+                    <button type="button" id="headericon" 
+                            @guest
+                            data-bs-toggle="modal"
+                            data-bs-target="#loginModal"
+                            @endguest
+                            >account_circle
+                            
+                    </button>
+                </a>
+
+                {{-- @guest
                     <button type="button" id="headericon" data-bs-toggle="modal"
                         data-bs-target="#loginModal">account_circle
                 </button>
                 @endguest
-                
+                 --}}
                 @auth
-                <a href="{{ route('logout')}}"> <i class="bi bi-box-arrow-right"> </i> </a>
+                <a href="{{ route('logout')}}"> <button type="button" id="headericon" >logout</button> </a>
                 @endauth
 
                 <a href="
