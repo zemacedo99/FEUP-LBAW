@@ -126,7 +126,7 @@ class ProductController extends Controller
 
         $string = $request->t;
         $rtags = explode("/", $string); 
-        // dd($rtags);
+        dd($rtags);
 
 
         if(is_null($request->tags))

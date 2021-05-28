@@ -28,4 +28,7 @@ function removeOnBtn(element){
 	var div = document.getElementById("dynamic_tags");
     var item = document.getElementById(element);
     div.removeChild(item);
+    
+    var t = document.getElementById("t");
+    t.value.replace(item.value, "");
 }
