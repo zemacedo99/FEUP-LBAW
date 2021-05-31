@@ -15,8 +15,8 @@
                     </div>
 
                     <div class="col-xl-4">
-                        <button type="button" class="simpleicon plusQuantity">add_circle_outline</button>
                         <button type="button" class="simpleicon minusQuantity"> remove_circle_outline</button>
+                        <button type="button" class="simpleicon plusQuantity">add_circle_outline</button>
                     </div>
 
                     <div class="col-xl-4">
