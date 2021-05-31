@@ -3,7 +3,9 @@
 @section('content')
 
 
+    <script src={{ asset('dropzone-5.7.0/dist/dropzone.js') }} defer> </script>
     <script type="text/javascript" src={{ asset('js/create_product.js') }} defer> </script>
+    <link rel="stylesheet" type="text/css" href="{{asset('dropzone-5.7.0/dist/dropzone.css')}}">
 
     <div class="container">
 
@@ -29,12 +31,17 @@
         <div class="row mb-4">
 
             <div class="col-6">
+
             @if(isset($images))
                 @include('partials.carousel_img',$images)
             @else 
                 {{-- add a photo template --}}
                 {{-- @include('partials.carousel_img') --}}
             @endif
+            
+            <div class="dropzone" id="myDropzone"></div>
+
+
             </div>
 
 
@@ -105,7 +112,7 @@
                                 <i class="fa fa-cloud-upload"></i> Add pictures
                             </label>
                             {{-- para ter feedback tirar class="form-control d-none" --}}
-                            <input type="file" id="sup_img" name="images[]" aria-describedby="sup_img_addon"
+                            <input type="file" id="sup_img" name="images[]" aria-describedby="sup_img_addon" 
                                 aria-label="Upload" multiple accept="image/x-png,image/gif,image/jpeg"
                                 @isset($images) value="{{ $images }}" @endisset>
                         </div>
@@ -133,7 +140,7 @@
 
         <div class="row my-5">
             <span class="text-center">
-                <input type="submit" class="btn btn-primary" value="Confirmar">
+                <input type="submit" class="btn btn-primary" value="Confirmar" > 
                 @isset($name)
                     <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i> Delete Product</button>
                 @endisset
@@ -190,4 +197,6 @@
     </div>
     </form>
 
+
+   
 @endsection
