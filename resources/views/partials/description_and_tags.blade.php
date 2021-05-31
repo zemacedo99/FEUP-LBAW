@@ -38,7 +38,6 @@
                 </datalist>
             </label> --}}
 
-            <p id="print"></p>
             
             <div class="container1">
                 

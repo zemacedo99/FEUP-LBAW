@@ -29,6 +29,15 @@ function removeOnBtn(element){
     var item = document.getElementById(element);
     div.removeChild(item);
     
-    var t = document.getElementById("t");
-    t.value.replace(item.value, "");
+
+    var t = document.getElementById("t").value;
+    // console.log("t:  " + t);
+    // console.log("element:  " + element + "/");
+
+    let newt = t.replace(element + "/", "");
+    
+    // console.log("t after replace element:  " +  newt);
+
+    document.getElementById("t").setAttribute('value',newt);
+    
 }
