@@ -121,7 +121,7 @@ CREATE TABLE purchases (
 -- BusinessRule: Item either is a bundle, or a product, can't have is_bundle true and be referenced in product
 CREATE TABLE items (
     id              SERIAL                  PRIMARY KEY,
-    supplier_id     INTEGER                 REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE SET NULL ,
+    supplier_id     INTEGER                 DEFAULT 0 REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE SET DEFAULT ,--0 is the deleted supplier
     name            TEXT                    NOT NULL,
     price           DECIMAL                 NOT NULL,
     stock           DECIMAL                 NOT NULL,
@@ -142,7 +142,7 @@ CREATE TABLE coupons (
     expiration      DATE            NOT NULL CHECK (expiration > now()),
     type            coupon_type     NOT NULL,
     amount          DECIMAL         NOT NULL CHECK (amount > 0),
-    supplier_id     INTEGER         REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE SET NULL
+    supplier_id     INTEGER         DEFAULT 0 REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE SET DEFAULT
 );
 
 CREATE TABLE products (
@@ -292,22 +292,17 @@ EXECUTE PROCEDURE expired_coupon();
 
 
 CREATE OR REPLACE FUNCTION inactive_item() RETURNS TRIGGER AS
-$BODY$
+$inactive_item$
 BEGIN
 
-    IF EXISTS
-        (SELECT *
-         FROM items, suppliers
-         WHERE items.supplier_id = suppliers.id)
-    THEN
         UPDATE items
         SET active = FALSE
-        WHERE id = OLD.id;
-    END IF;
+        WHERE supplier_id = 0;
+    
     RETURN NEW;
 
 END
-$BODY$
+$inactive_item$
     LANGUAGE plpgsql;
 
 CREATE TRIGGER inactive_item
@@ -648,6 +643,7 @@ insert into tags (value) values ('ability');
 insert into tags (value) values ('Graphical');
 
 -- password is "1234" for everyone
+insert into "users" (id, email, password, is_admin) values (0,'DELETEDCOSTUMER', 'DELETEDCOSTUMER', 'false');
 insert into "users" (email, password, is_admin) values ('bshovelbottom0@storify.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
 insert into "users" (email, password, is_admin) values ('rwhitley1@vistaprint.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
 insert into "users" (email, password, is_admin) values ('kcantle2@answers.com', '$2a$10$S2oxDuxIi60Xcq5fj/S7g.vyaE29mWlqnp6.F43kVNXUTuoT5wmiW', 'false');
@@ -777,6 +773,7 @@ insert into clients (id, name, image_id) values (48, 'Rolland Whitbread', 1);
 insert into clients (id, name, image_id) values (49, 'Samantha Woolaghan', 1);
 insert into clients (id, name, image_id) values (50, 'Scott Sansbury', 1);
 
+insert into suppliers (id, name, address, post_code, city, description, accepted, image_id) values (0, 'Deleted Supplier', 'Deleted supplier', '0000-000', 'Deleted', 'Deleted supplier', false, 1);
 insert into suppliers (id, name, address, post_code, city, description, accepted, image_id) values (51, 'BlackBerry Limited', '9428 Manley Hill', '7396-768', 'Veiga', 'Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus. Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', false, 2);
 insert into suppliers (id, name, address, post_code, city, description, accepted, image_id) values (52, 'Cantel Medical Corp.', '5 Tomscot Road', '7377-528', 'Segodim', 'Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.', false, 2);
 insert into suppliers (id, name, address, post_code, city, description, accepted, image_id) values (53, 'Bob Evans Farms, Inc.', '9802 Summer Ridge Place', '9764-707', 'Valada', 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui. Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti. Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.', false, 2);

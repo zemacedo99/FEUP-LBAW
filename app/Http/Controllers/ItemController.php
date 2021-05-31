@@ -250,8 +250,9 @@ class ItemController extends Controller
 
     public function list()
     {
-        $items = Item::get();
-
+        $items = Item::where('active','=','true')->get();
+        $l=Item::find('1');
+        
       
         $all = [];
     
