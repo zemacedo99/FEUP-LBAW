@@ -9,8 +9,8 @@
         @csrf
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
-                <figure class="figure d-flex justify-content-center mt-3 mb-5">
-                    <img class="figure-img img-fluid rounded" src="https://via.placeholder.com/300x200" alt="">
+                <figure class="figure d-flex justify-content-center mt-5 mb-5">
+                    <img class="figure-img img-fluid rounded" src="{{asset('images/logo_register.png')}}" alt="">
                 </figure>
 
                 @if ($errors->any())
