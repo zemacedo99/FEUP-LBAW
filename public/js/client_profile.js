@@ -65,7 +65,7 @@ function updateProfile(){
 function updateProfileHandler(){
     console.log("Não imprime o de baixo...")
     let response = JSON.parse(this.responseText);
-    console.log("Response:", response)
+    console.log("Response:", this.responseText)
 }
 
 setupClientProfile()

@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\PasswordReset;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -129,6 +132,20 @@ Route::put('/favorite', 'ClientController@addRemoveFavorite');
 // ANDRE - WORKING ON BELOW THIS
 
 Route::get('client/{client:id}/profile', 'ClientController@show');
+
+
+
+Route::get('/forgot-password', 'Auth\RecoverController@showPasswordRecovery')
+    ->middleware('guest')->name('password.request');
+
+Route::post('/forgot-password', 'Auth\RecoverController@sendEmail')
+    ->middleware('guest')->name('password.email');
+
+Route::get('/reset-password/{token}', 'Auth\RecoverController@showResetPassword')
+    ->middleware('guest')->name('password.reset');
+
+Route::post('/reset-password', 'Auth\RecoverController@resetPassword')
+    ->middleware('guest')->name('password.update');
 
 /*
 * API Calls

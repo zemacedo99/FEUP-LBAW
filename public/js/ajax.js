@@ -23,25 +23,37 @@ function sendAjaxRequest(method, url, data, handler, async = true) {
     let request = new XMLHttpRequest();
 
     request.open(method, url, async);
-    if (method != 'get') {
-        request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    }
+    request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.addEventListener('load', handler);
+    request.responseType="text";
     request.send(encodeForAjax(data));
+
+    console.log("request :", request)
+    setTimeout(function () {
+        console.log("request :", request)
+    }, 5000);
+
 }
 
 
 /*
 Original AJAX function
 
-function sendAjaxRequest(method, url, data, handler) {
-    let request = new XMLHttpRequest();
+function encodeForAjax(data) {
+  if (data == null) return null;
+  return Object.keys(data).map(function(k){
+    return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+  }).join('&');
+}
 
-    request.open(method, url, true);
-    request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    request.addEventListener('load', handler);
-    request.send(encodeForAjax(data));
+function sendAjaxRequest(method, url, data, handler) {
+  let request = new XMLHttpRequest();
+
+  request.open(method, url, true);
+  request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
+  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  request.addEventListener('load', handler);
+  request.send(encodeForAjax(data));
 }
 */

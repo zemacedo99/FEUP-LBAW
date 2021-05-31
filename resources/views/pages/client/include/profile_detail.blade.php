@@ -152,6 +152,16 @@
             </label>
             <input type="button" class="form-control d-none" id="update_data">
         </div>
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </div>
 
     <div class="col d-none d-lg-block col-lg-1"></div>

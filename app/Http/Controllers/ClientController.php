@@ -13,6 +13,7 @@ use App\Models\ShipDetail;
 use App\Models\Purchase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
@@ -171,13 +172,16 @@ class ClientController extends Controller
     {
         $this->authorize('view', $client);
 
-        // TODO quando isto falha tem de apresentar mensagem corretamente na página
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'string|email|max:255',
             'password' => 'string|min:8',
             'name' => 'string',
             'image_id' => 'nullable|integer'
         ]);
+
+        if ($validator->fails()) {
+            return response('', 400);
+        }
 
         $user = User::find($client->id);
 
@@ -224,43 +228,43 @@ class ClientController extends Controller
         return redirect()->route('homepage');
     }
 
-    
+
     public function add_to_cart(Request $request){
         $request->validate([
             'client_id' => 'required|integer|exists:clients,id',
             'quantity' => 'required|integer|gt:0',
             'item_id' => 'required|integer|exists:items,id',
-            
+
         ]);
-        
+
         $client_id = $request->input('client_id');
         $client = Client::find($client_id);
 
         $this->authorize('view', $client);
-        
+
         $client->item_carts()->detach($request->input('item_id'));
         $client->item_carts()->attach($request->input('item_id'), ['quantity' => $request->input('quantity')]);
-    
-        
+
+
         $client->save();
-        
+
         return response('', 201);
     }
 
 
 
     public function save_checkout(Request $request){
-    
+
         $client_id = Auth::id();
 
         // $items = $client->item_carts;
-        
-        
+
+
         $request->validate([
             'n_items' => 'required|integer|gte:0',
             'periodic' => 'required',
         ]);
-       
+
 
         $coupons_str = explode(' ', $request->input('all_coupons'));
         $coupons = [];
@@ -268,12 +272,12 @@ class ClientController extends Controller
         if($request->input('all_coupons') !== null){
             foreach($coupons_str as $coupon){
                 $ret_coupon = Coupon::find($coupon);
-               
+
                 array_push($coupons, $ret_coupon);
             }
         }
-   
-        
+
+
         //Update quantities
         $total = 0;
 
@@ -289,7 +293,7 @@ class ClientController extends Controller
             $item = Item::find($id_item);
 
             $item_tot_price = $item->price * $quantity;
-            
+
             $already = false;
             foreach($coupons as $coupon){
                 if($coupon->supplier_id === $item->supplier_id){
@@ -327,9 +331,9 @@ class ClientController extends Controller
         $this->authorize('view', Client::find($id));
 
         $client = Client::find($id);
-        
+
         $items = $client->item_carts;
-        
+
         if($items->isEmpty()){
             return redirect()->route('items');
         }
@@ -360,11 +364,11 @@ class ClientController extends Controller
         // Falta validação
 
         $this->authorize('view', Client::find($id));
-        
+
         $client = Client::find($id);
-        
+
         $items = $client->item_carts;
-        
+
         if($items->isEmpty()){
             return redirect()->route('items');
         }
@@ -390,19 +394,19 @@ class ClientController extends Controller
     }
 
     public function do_payment(Request $request){
-        
+
         $request->validate([
             'cc_id' => 'required|integer|exists:credit_cards,id',
             'sd_id' => 'required|integer|exists:ship_details,id',
         ]);
 
-        
+
         $client_id = Auth::id();
 
         $temp_builder = TempPurchase::where('client_id', $client_id);
 
         $temp = $temp_builder->get()->first();
-        
+
         //Deleting carts
         \DB::table('carts')->where("client_id", $client_id)->delete();
 
