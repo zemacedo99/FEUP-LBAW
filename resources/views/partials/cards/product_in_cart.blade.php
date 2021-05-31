@@ -1,7 +1,9 @@
+
+
 <div class="card m-3">
     <div class="row">
         <div class="col-lg-4">
-            <img src="{{asset('storage/images/' . $image)}}" class="rounded mx-auto d-block" alt=bananas style="margin-left:auto; margin-right:auto;width:8em;height:8em;">
+            <img src="{{asset($image)}}" class="rounded mx-auto d-block" alt=bananas style="margin-left:auto; margin-right:auto;width:8em;height:8em;">
         </div>
         <div class="col-lg-8">
             <div class="card-body">

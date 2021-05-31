@@ -324,6 +324,10 @@ class ClientController extends Controller
 
     public function checkout($id){
 
+        if(!is_numeric($id)){
+            return response('', 404);
+        }
+
         $this->authorize('view', Client::find($id));
 
         $client = Client::find($id);
@@ -341,7 +345,6 @@ class ClientController extends Controller
 
             if($product == null) continue;
 
-
             $images = $product->images;
 
             $item['image'] = $images[0]->path;
@@ -352,12 +355,16 @@ class ClientController extends Controller
             'items' => $items,
             'total' => $total,
         ];
+
         return view('pages.checkout.cart_info', $data);
     }
 
 
     public function payment($id){
-        // Falta validação
+        
+        if(!is_numeric($id)){
+            return response('', 404);
+        }
 
         $this->authorize('view', Client::find($id));
         
