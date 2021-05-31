@@ -266,13 +266,13 @@ class ItemController extends Controller
 
     public function list()
     {
-        $items = Item::get();
+        $items = Item::paginate(6);
 
       
-        $all = [];
+        // $all = [];
     
 
-        $i = 0;
+        // $i = 0;
         foreach($items as $item)
         {
             $product = Product::find($item->id);
@@ -281,22 +281,33 @@ class ItemController extends Controller
         
             if(is_null($product))       // item is a bundle
             {
-                $all[$i] = [$item,null,null,$supplier];
+                $item->unit = null;
+                $item->image = null;
+                $item->supplier = $supplier;
+                // $all[$i] = [$item,null,null,$supplier];
             }
             else
             {
-                $all[$i] = [$item,$product->type,$product->images()->get(),$supplier];
+                $item->unit = $product->unit;
+                $item->image = $product->images()->get();
+                $item->supplier = $supplier;
+
+                // dd($item);
+                // $all[$i] = [$item,$product->type,$product->images()->get(),$supplier];
             }
             
-            $i++;
+            // $i++;
         }
 
-        $data =
-        [
-            'items' => $all,
-        ];
+        // $data =
+        // [
+        //     'items' => $all,
+        // ];
 
-        return view('pages.misc.products_list', $data);
+        // dd($items[101]);
+        // $test = $items->paginate(6);
+
+        return view('pages.misc.products_list', ["items" => $items]);
 
     }
 
