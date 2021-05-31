@@ -180,7 +180,7 @@ class ClientController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response('', 400);
+            return back()->withErrors();
         }
 
         $user = User::find($client->id);

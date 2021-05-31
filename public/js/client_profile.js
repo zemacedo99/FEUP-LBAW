@@ -63,6 +63,7 @@ function updateProfile(){
 }
 
 function updateProfileHandler(){
+    // this.status -> código retorno
     console.log("Não imprime o de baixo...")
     let response = JSON.parse(this.responseText);
     console.log("Response:", this.responseText)
