@@ -121,7 +121,7 @@ CREATE TABLE purchases (
 -- BusinessRule: Item either is a bundle, or a product, can't have is_bundle true and be referenced in product
 CREATE TABLE items (
     id              SERIAL                  PRIMARY KEY,
-    supplier_id     INTEGER                 NOT NULL REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE SET NULL ,
+    supplier_id     INTEGER                 REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE SET NULL ,
     name            TEXT                    NOT NULL,
     price           DECIMAL                 NOT NULL,
     stock           DECIMAL                 NOT NULL,
@@ -142,7 +142,7 @@ CREATE TABLE coupons (
     expiration      DATE            NOT NULL CHECK (expiration > now()),
     type            coupon_type     NOT NULL,
     amount          DECIMAL         NOT NULL CHECK (amount > 0),
-    supplier_id     INTEGER         NOT NULL REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE SET NULL
+    supplier_id     INTEGER         REFERENCES suppliers (id) ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 CREATE TABLE products (
@@ -311,7 +311,7 @@ $BODY$
     LANGUAGE plpgsql;
 
 CREATE TRIGGER inactive_item
-    BEFORE DELETE ON suppliers
+    AFTER DELETE ON suppliers
     FOR EACH ROW
 EXECUTE PROCEDURE inactive_item();
 
