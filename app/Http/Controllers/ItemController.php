@@ -374,8 +374,11 @@ class ItemController extends Controller
             return response('', 404)->header('description','The item was not found');
         }
 
+
         $item = Item::find($id);
-        //$this->authorize('delete', $item);
+        
+        $this->authorize('delete', $item);
+
 
         if($item == null){
             return response('', 404)->header('description','The item was not found');
