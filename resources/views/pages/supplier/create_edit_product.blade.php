@@ -28,9 +28,14 @@
         <div class="row mb-5"></div>
         <div class="row mb-4">
 
-            {{-- @include('partials.carousel_img') --}}
-
-            <div class="col-4"></div>
+            <div class="col-6">
+            @if(isset($images))
+                @include('partials.carousel_img',$images)
+            @else 
+                {{-- add a photo template --}}
+                {{-- @include('partials.carousel_img') --}}
+            @endif
+            </div>
 
 
             <div class="col-12 col-lg-4 justify-content-center">
@@ -128,7 +133,9 @@
         <div class="row my-5">
             <span class="text-center">
                 <input type="submit" class="btn btn-primary" value="Confirmar">
-                {{-- <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i> Delete Product</button> --}}
+                @isset($name)
+                    <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i> Delete Product</button>
+                @endisset
             </span>
         </div>
 

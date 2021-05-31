@@ -126,7 +126,7 @@ class ProductController extends Controller
 
         $string = $request->t;
         $rtags = explode("/", $string); 
-        dd($rtags);
+        // dd($rtags);
 
 
         if(is_null($request->tags))
@@ -154,6 +154,7 @@ class ProductController extends Controller
 
 
                 if (count($tags) > 0) {                     //if the tagvalue exist 
+                    
                     foreach ($tags as $tag) {
                         $item->tags()->attach($tag);          // associate the tag to the item
                     }
@@ -235,18 +236,21 @@ class ProductController extends Controller
     {
         $item = Item::find($id);
         $product = Product::find($id);
-        $alltags = $item->tags();
+        $alltags = Tag::get();
+        $itemtags = $item->tags();
         // $this->authorize('update', $product);
 
         $data = [
                     'title' => 'Edit Product',
                     'path' => '/api/product/' . $id,
                     'alltags' => $alltags,
+                    'tags' => $itemtags,
                     'name' => $item->name,
                     'price' => $item->price,
                     'stock' => $item->stock,
                     'description' => $item->description,
                     'type' => $product->unit,
+                    'images' => $product->images()->get(),
         ];
 
         if($product->type === "Kg"){
