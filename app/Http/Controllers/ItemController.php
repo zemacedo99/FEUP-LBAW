@@ -187,6 +187,7 @@ class ItemController extends Controller
             'description' => $item->description,
             'rating' => $item->rating,
             'is_bundle' => $item->is_bundle,
+            'active'=>$item->active
         ];
 
         if(!$item->is_bundle){
