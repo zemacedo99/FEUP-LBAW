@@ -86,7 +86,7 @@ class ItemController extends Controller
         $data = [
             'title' => 'Create Bundle',
             'path' => '/api/bundle',
-            'tags' => $tags,
+            'alltags' => $tags,
             'products' => $products,
         ];
 
@@ -124,22 +124,38 @@ class ItemController extends Controller
 
 
 
+    
+        $string = $request->t;
+        $rtags = explode("/", $string); 
+        // dd($rtags);
+
+
         if(is_null($request->tags))
         {
-            dd("error here");
+            dd("tags are emply");
             dd($request->tags);
         }
         else
         {
-            foreach($request->tags as $tagsValue)
+            foreach($rtags as $tagsValue)
             {
+                // dd($tagsValue);
                 if( is_null($tagsValue))
                 {
-                    break;
+                    continue;
                 }
+                if($tagsValue === "")
+                {
+                    continue;
+                }
+
+
                 $tags = Tag::where('value', $tagsValue)->get();
+                // dd($tags);
+
 
                 if (count($tags) > 0) {                     //if the tagvalue exist 
+                    
                     foreach ($tags as $tag) {
                         $item->tags()->attach($tag);          // associate the tag to the item
                     }

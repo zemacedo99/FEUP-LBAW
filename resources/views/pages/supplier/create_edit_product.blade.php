@@ -106,7 +106,8 @@
                             </label>
                             {{-- para ter feedback tirar class="form-control d-none" --}}
                             <input type="file" id="sup_img" name="images[]" aria-describedby="sup_img_addon"
-                                aria-label="Upload" multiple accept="image/x-png,image/gif,image/jpeg">
+                                aria-label="Upload" multiple accept="image/x-png,image/gif,image/jpeg"
+                                @isset($images) value="{{ $images }}" @endisset>
                         </div>
 
 
