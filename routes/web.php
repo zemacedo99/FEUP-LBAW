@@ -64,7 +64,7 @@ Route::get('/api/product', 'ProductController@index');
 Route::post('/api/product', 'ProductController@store');
 Route::get('/api/product/{id}', 'ProductController@show');
 Route::put('/api/product/{id}', 'ProductController@update');
-Route::delete('/api/product/{id}', 'ProductController@destroy');
+Route::delete('/api/product/{id}', 'ItemController@deactivate');
 
 Route::get('/api/client/{id}/history', 'PurchaseController@index');
 Route::get('/api/client/{id}/periodic', 'PurchaseController@index');//reevaluate
