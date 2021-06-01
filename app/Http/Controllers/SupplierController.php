@@ -163,30 +163,37 @@ class SupplierController extends Controller
         $supplier = Supplier::find($id);
 
         $image = Image::find($supplier->image_id);
-        $items = Item::where('supplier_id', '=', $id)->get();
+        $items = Item::where('supplier_id', '=', $id)->paginate(4);
+        $alltems = Item::where('supplier_id', '=', $id)->get();
 
-        $all = [];
         $stars = 0;
-
         $i = 0;
-        foreach($items as $item)
+        foreach($alltems as $item)  // probably there is a better way to do this
         {
-            $product = Product::find($item->id);
-        
-            if(is_null($product))       // item is a bundle
-            {
-                $all[$i] = [$item,null,null];
-            }
-            else
-            {
-                $all[$i] = [$item,$product->type,$product->images()->get()];
-            }
-            
             $stars = $stars + $item->rating;
             $i++;
         }
 
         $stars = $stars / $i;
+
+
+       
+        foreach($items as $item)
+        {
+            $product = Product::find($item->id);
+    
+            if(is_null($product))       // item is a bundle
+            {
+                $item->unit = null;
+                $item->image = null;
+                $item->supplier = $supplier;
+            }
+            else
+            {
+                $item->unit = $product->unit;
+                $item->images = $product->images()->get();
+            }
+        }
 
 
         $data =
@@ -199,7 +206,7 @@ class SupplierController extends Controller
             'description' => $supplier->description,
             'image' => $image,
             'stars' => $stars,
-            'items' => $all,
+            'items' => $items,
         ];
 
         return view('pages.misc.supplier_detail', $data);
