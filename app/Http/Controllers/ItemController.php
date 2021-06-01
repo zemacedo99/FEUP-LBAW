@@ -118,7 +118,7 @@ class ItemController extends Controller
             'stock' => $request->bundle_stock,
             'description' => $request->description,
             'active' => true,
-            'rating' => 0,
+            'rating' => null,
             'is_bundle' => true,
         ]);
 
@@ -289,7 +289,7 @@ class ItemController extends Controller
             else
             {
                 $item->unit = $product->unit;
-                $item->image = $product->images()->get();
+                $item->images = $product->images()->get();
                 $item->supplier = $supplier;
 
                 // dd($item);

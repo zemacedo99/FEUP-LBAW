@@ -119,7 +119,7 @@ class ProductController extends Controller
             'stock' => $request->product_stock,
             'description' => $request->description,
             'active' => true,
-            'rating' => 0,
+            'rating' => null,
             'is_bundle' => false,
         ]);
 
