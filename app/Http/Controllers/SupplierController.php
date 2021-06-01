@@ -59,33 +59,29 @@ class SupplierController extends Controller
         $supplier = Supplier::find($id);
 
         $image = Image::find($supplier->image_id);
-        $items = Item::where('supplier_id', '=', $id)->get();
+        $items = Item::where('supplier_id', '=', $id)->paginate(6);
 
-
-        $all = [];
-
-        $i = 0;
         foreach($items as $item)
         {
             $product = Product::find($item->id);
-        
+    
             if(is_null($product))       // item is a bundle
             {
-                $all[$i] = [$item,null,null];
+                $item->unit = null;
+                $item->image = null;
+                $item->supplier = $supplier;
             }
             else
             {
-                $all[$i] = [$item,$product->type,$product->images()->get()];
+                $item->unit = $product->unit;
+                $item->images = $product->images()->get();
             }
-            
-            
-            $i++;
         }
 
         $data = 
         [
             'name' => $supplier->name,
-            'items' => $all,
+            'items' => $items,
             'image' =>$image,
         ];
 
