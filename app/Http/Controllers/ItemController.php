@@ -217,7 +217,19 @@ class ItemController extends Controller
 
             $data['images'] = $images;
         }
+        else{
+            $productsInBundle = $item->contains_products()->get();
 
+            foreach($productsInBundle as $product)
+            {
+                $item = Item::find($product->id);
+                $product->name = $item->name;
+                $product->images = $product->images()->first();
+                $product->quantity = $product->pivot->quantity;
+            }
+
+            $data['productsInBundle'] = $productsInBundle;
+        }
 
 
         if(count($item->reviews)>0){

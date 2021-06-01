@@ -535,3 +535,8 @@ input[type="file"] {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.bundle_products_box {
+    height: 300px;
+    overflow-y: scroll;
+}
