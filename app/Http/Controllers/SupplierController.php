@@ -276,7 +276,7 @@ class SupplierController extends Controller
         if ($request->accept=="1"){
             return $supplier->update(['accepted'=>"true"]);
         }else if ($request->accept=="0"){
-            return $this->delete($supplier);
+            return $this->delete($supplier->id);
         }else{
             return response('', 500)->header('description','Invalid request parametrization');
         }
@@ -329,13 +329,10 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function delete(Supplier $supplier)
+    public function delete($id)
     {
-        //$this->authorize('delete',$supplier);
+        return User::find($id)->delete();
         
-        $supplier->delete();//todo if on update cascade works this is unnecessary
-        return User::find($supplier->id)->delete();
-        //
     }
 
 

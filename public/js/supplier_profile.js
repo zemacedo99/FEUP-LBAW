@@ -62,7 +62,7 @@ if (deleteProfileModal != null) {
         var supplierId=window.location.pathname.split("/").slice(-1)[0];
         
         sendAjaxRequest('DELETE', '/supplier/'+supplierId, null, function(){
-            //location.reload();window.location.replace("homepage");
+            window.location.replace("/");
         })
 
 
