@@ -11,12 +11,18 @@
 |
 */
 // Home
+
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UploadController;
 
 Route::get('image/{filename}', 'ItemController@storage_link');
 Route::view('upload', 'upload');
 Route::post('upload',[UploadController::class,'index']);
+
+Route::post('/search', 'SearchController@show');
+Route::get('/api/search/{page}/filter', 'SearchController@filter');
+
 
 Route::get('/suppliers/{id}', 'SupplierController@supplier_detail')->name('supplier_detail');
 Route::get('/items/{id}', 'ItemController@show')->name('item_detail');
