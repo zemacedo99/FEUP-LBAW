@@ -19,7 +19,7 @@ Route::view('upload', 'upload');
 Route::post('upload',[UploadController::class,'index']);
 
 Route::get('/suppliers/{id}', 'SupplierController@supplier_detail')->name('supplier_detail');
-Route::get('/items/{id}', 'ItemController@show');
+Route::get('/items/{id}', 'ItemController@show')->name('item_detail');
 Route::get('/items', 'ItemController@list')->name('items');
 Route::get('/suppliers', 'SupplierController@list')->name('suppliers');
 
@@ -57,7 +57,7 @@ Route::put('/api/review', 'ReviewController@update');
 
 
 // Product
-Route::get('/product/{id}', 'ProductController@edit');
+Route::get('/product/{id}', 'ProductController@edit')->name('edit_product');
 
 Route::post('/api/bundle', 'ItemController@store');
 Route::get('/api/product', 'ProductController@index');
