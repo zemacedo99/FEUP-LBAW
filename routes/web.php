@@ -91,7 +91,7 @@ Route::post('/supplier', 'SupplierController@requestHandling');
 Route::get('/api/client', 'ClientController@index');
 
 // Item
-
+Route::get('/bundle/{id}', 'ItemController@edit')->name('edit_bundle');
 Route::get('/api/item', 'ItemController@index');
 Route::post('/api/item', 'ClientController@store');
 Route::get('/api/item/{id}', 'ItemController@view');

@@ -54,6 +54,7 @@
 
                                     @php
                                         $bundle_data = [
+                                            'id'  => $bundle->id,
                                             'name' => $bundle->name,
                                             'price' => $bundle->price,
                                             'stock' => $bundle->stock,

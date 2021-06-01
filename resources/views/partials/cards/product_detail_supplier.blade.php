@@ -19,7 +19,13 @@
                     
                     <ul class="social">
                         <li><a href="{{ route('item_detail', ['id' => $id])}}" data-tip="View"><i class="bi bi-eye"></i></a></li>
-                        <li><a href="{{ route('edit_product', ['id' => $id])}}" data-tip="Edit"><i class="bi bi-pencil"></i></a></li>
+                        @if ($is_bundle)
+                            
+                        @else
+                            <li><a href="{{ route('edit_product', ['id' => $id])}}" data-tip="Edit"><i class="bi bi-pencil"></i></a></li>
+                        @endif
+                            
+                       
                     </ul>
                 </div>
             </div>

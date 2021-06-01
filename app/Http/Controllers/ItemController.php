@@ -333,9 +333,50 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function edit(Item $item)
+    public function edit($id)
     {
-        //
+        $item = Item::find($id);
+        $supplier = Supplier::find($item->supplier_id);
+        $alltags = Tag::get();
+        $itemtags = $item->tags();
+
+        // $this->authorize('update', $item);
+
+        $supplierItems = $supplier->items()->get();
+
+        foreach($supplierItems as $item)
+        {
+            $product = Product::find($item->id);
+        
+            if(is_null($product))       // item is a bundle
+            {
+                continue;
+            }
+            else
+            {
+                $item->unit = $product->type;
+                $item->images = $product->images()->get();
+            }
+            
+            
+   
+        }
+
+
+        $data = [
+                    'title' => 'Edit Bundle',
+                    'path' => '/api/item/' . $id,
+                    'alltags' => $alltags,
+                    'tags' => $itemtags,
+                    'name' => $item->name,
+                    'price' => $item->price,
+                    'stock' => $item->stock,
+                    'description' => $item->description,
+                    'products' => $supplierItems,
+        ];
+
+
+        return view('pages.supplier.create_edit_bundle', $data);
     }
 
     /**
