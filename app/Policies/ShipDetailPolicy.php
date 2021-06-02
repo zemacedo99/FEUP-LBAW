@@ -30,9 +30,9 @@ class ShipDetailPolicy
      */
     public function view(User $user, ShipDetail $shipDetail)
     {
-        FALTA deixar o vendedor tmb ver
-        //
-        return $user->id==shipDetail->Client()->id;
+        //FALTA deixar o vendedor tmb ver
+
+        return $user->id==$shipDetail->client->id;
     }
 
     /**

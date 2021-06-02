@@ -174,13 +174,13 @@ class ClientController extends Controller
 
         $validator = Validator::make($request->all(), [
             'email' => 'string|email|max:255',
-            'password' => 'string|min:8',
+            'password' => 'nullable|string|min:8',
             'name' => 'string',
             'image_id' => 'nullable|integer'
         ]);
 
         if ($validator->fails()) {
-            return back()->withErrors();
+            return new \Illuminate\Http\JsonResponse($validator->errors()->all(), 400);
         }
 
         $user = User::find($client->id);
@@ -189,7 +189,7 @@ class ClientController extends Controller
             $user->email = $request->input('email');
         }
 
-        if($request->has('password')){
+        if($request->has('password') && !is_null($request->input('password'))){
             $user->password = $request->input('password');
         }
 
@@ -205,6 +205,32 @@ class ClientController extends Controller
         $client->save();
 
         return response('', 204,)->header('description', 'Successfully updated client information');
+    }
+
+    public function updateShipping(Request $request, Client $client){
+        $this->authorize('view', $client);
+
+        $ship_details = $client->ship_detail;
+
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'address' => 'required|string',
+            'door_n' => 'required|integer',
+            'post_code' => 'required|string',
+            'district' => 'required|string',
+            'city' => 'required|string',
+            'country' => 'required|string',
+            'phone_n' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return new \Illuminate\Http\JsonResponse($validator->errors()->all(), 400);
+        }
+
+        $ship_details->update($request->all());
+
+        return response('', 204,)->header('description', 'Successfully updated shipping information');
     }
 
     /**
@@ -228,7 +254,6 @@ class ClientController extends Controller
         return redirect()->route('homepage');
     }
 
-
     public function add_to_cart(Request $request){
         $request->validate([
             'client_id' => 'required|integer|exists:clients,id',
@@ -250,8 +275,6 @@ class ClientController extends Controller
 
         return response('', 201);
     }
-
-
 
     public function save_checkout(Request $request){
 
@@ -325,7 +348,6 @@ class ClientController extends Controller
         return redirect('client/' . $client_id . '/checkoutPayment');
     }
 
-
     public function checkout($id){
 
         $this->authorize('view', Client::find($id));
@@ -358,7 +380,6 @@ class ClientController extends Controller
         ];
         return view('pages.checkout.cart_info', $data);
     }
-
 
     public function payment($id){
         // Falta validação

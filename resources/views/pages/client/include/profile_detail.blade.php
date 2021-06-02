@@ -146,22 +146,28 @@
             </label>
             <input type="file" class="form-control d-none" id="sup_img" aria-describedby="sup_img_addon" aria-label="Upload">
         </div>
-        <div class="col-12 col-lg-12 d-flex justify-content-center mb-4">
-            <label class="btn btn-primary" for="update_data">
-                Update Profile Info
-            </label>
-            <input type="button" class="form-control d-none" id="update_data">
+        <div class="col-12 col-lg-12 d-flex justify-content-around mb-4">
+            <div class="row-6 d-flex justify-content-center">
+                <label class="btn btn-primary" for="update_data">
+                    Update Profile Info
+                </label>
+                <input type="button" class="form-control d-none" id="update_data">
+            </div>
+            <div class="row-6 d-flex justify-content-center">
+                <label class="btn btn-primary" for="update_shipping">
+                    Update Shipping Details
+                </label>
+                <input type="button" class="form-control d-none" id="update_shipping">
+            </div>
+
         </div>
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        <div id="error-message" class="alert alert-danger" hidden>
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+
     </div>
 
     <div class="col d-none d-lg-block col-lg-1"></div>
@@ -245,8 +251,8 @@
 
             <div class="card mb-3">
                 <div class="row g-0">
-                    <div class="col-2 col-md-2">
-                        <img src="https://via.placeholder.com/80x80" alt="...">
+                    <div class="col-2 col-md-2" style="max-height:83px; max-width:83px;">
+                        <img src="{{ asset('images/VISA-logo-square.png') }}" alt="..." style="height:100%; width:100%">
                     </div>
                     <div class="col-8 col-md-9">
                         <div class="card-body">

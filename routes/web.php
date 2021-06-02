@@ -156,6 +156,7 @@ Route::prefix('api/')->group(function(){
         Route::delete('{client:id}','ClientController@destroy')->name('client.delete');
         Route::get('{client:id}','ClientController@get_info');
         Route::put('{client:id}','ClientController@update');
+        Route::put('{client:id}/shipping','ClientController@updateShipping');
     });
 
     Route::prefix('supplier/')->group(function(){

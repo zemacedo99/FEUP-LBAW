@@ -26,14 +26,7 @@ function sendAjaxRequest(method, url, data, handler, async = true) {
     request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.addEventListener('load', handler);
-    request.responseType="text";
     request.send(encodeForAjax(data));
-
-    console.log("request :", request)
-    setTimeout(function () {
-        console.log("request :", request)
-    }, 5000);
-
 }
 
 
