@@ -51,6 +51,7 @@ class SearchController extends Controller
         {
             $suppliers = Supplier::whereRaw('search @@ to_tsquery(\'english\', ?)', [$search])
             ->orderByRaw('ts_rank(search, to_tsquery(\'english\', ?)) DESC', [$search])->paginate(6);
+            $suppliers->appends(['search' => $search])->links();
 
             return $suppliers;
         }
@@ -59,7 +60,9 @@ class SearchController extends Controller
             $items = Item::whereRaw('search @@ to_tsquery(\'simple\', ?)', [$search])
             ->orderByRaw('ts_rank(search, to_tsquery(\'simple\', ?)) DESC', [$search])->paginate(6);
 
-            // dd($items);
+            $items->appends(['search' => $search])->links();
+
+
             return $items;
         }
 

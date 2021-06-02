@@ -36,8 +36,8 @@
                 @endif
             @endif
 
-            <form class="d-flex" method="POST" action="/search">
-                @csrf
+            <form class="d-flex" method="GET" action="/search">
+                {{-- @csrf --}}
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search" name="search">
                 <button type="button" id="headericon">search</button>
             </form>

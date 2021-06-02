@@ -20,7 +20,7 @@ Route::get('image/{filename}', 'ItemController@storage_link');
 Route::view('upload', 'upload');
 Route::post('upload',[UploadController::class,'index']);
 
-Route::post('/search', 'SearchController@show');
+Route::get('/search', 'SearchController@show');
 Route::get('/api/search/{page}/filter', 'SearchController@filter');
 
 
