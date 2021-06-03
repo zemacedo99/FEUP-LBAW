@@ -100,7 +100,7 @@ class CreditCardController extends Controller
         
         
         if($collection_cc->isEmpty()){
-            return response('', 404)->header('description','Coupon not found');
+            return abort(404,'Coupon not found');
         }
 
        

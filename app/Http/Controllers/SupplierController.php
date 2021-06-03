@@ -267,7 +267,7 @@ class SupplierController extends Controller
 
     public function requests(){
         if(auth()->user()==null||!auth()->user()->is_admin){
-            return response('', 404)->header('description','Page does not exist');
+            return abort(404, 'Page does not exist');
         }
 
         $suppliers=Supplier::where('accepted', 'false')->paginate(8);

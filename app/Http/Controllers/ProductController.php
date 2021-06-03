@@ -221,7 +221,7 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if ($product->isEmpty()) {
-            return response('', 404)->header('description', 'Product not found');
+            return abort(404, 'Product not found');
         }
         return $product;
     }
@@ -235,7 +235,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $item = Item::find($id);
-        if($item->active == false) return response('Product doesn\'t exists', 404);
+        if($item->active == false) return abort(404);
         $product = Product::find($id);
         $alltags = Tag::get();
         $itemtags = $item->tags();

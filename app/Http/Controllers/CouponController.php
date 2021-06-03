@@ -83,7 +83,7 @@ class CouponController extends Controller
         $coupon = Coupon::where('code', $couponCode)->get();
 
         if($coupon->isEmpty()){
-            return response('', 404)->header('description', 'Coupon not found');
+            return abort(404,'Coupon not found')
         }
         return $coupon;
     }
@@ -135,7 +135,7 @@ class CouponController extends Controller
         $this->authorize('update', $collection_coupon->first());
         
         if($collection_coupon->isEmpty()){
-            return response('', 404)->header('description','Coupon not found');
+            return abort(404,'Coupon not found');
         }
 
        
@@ -179,7 +179,7 @@ class CouponController extends Controller
         $this->authorize('delete', $coupon_builder->first());
         
         if($coupon_builder->get()->isEmpty()){
-            return response('', 404,)->header('description', 'Coupon not found');
+            return abort(404,'Coupon not found');
         }
 
         $coupon_builder->delete();

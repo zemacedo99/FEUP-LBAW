@@ -31,7 +31,7 @@ class ItemController extends Controller
     public function admin_list()
     {
         if(auth()->user()==null||!auth()->user()->is_admin){
-            return response('', 404)->header('description','Page does not exist');
+            return abort(404);
         }
         $products=Item::orderBy('id','asc')->paginate(8);
 
@@ -262,7 +262,7 @@ class ItemController extends Controller
         $path = storage_path('public/' . $filename);
 
         if (!Image::exists($path)) {
-            abort(404);
+            return abort(404);
         }
 
         $image = Image::get($path);
@@ -315,7 +315,7 @@ class ItemController extends Controller
     public function view($id)
     {
         if(!is_numeric($id)){
-            return response('', 404)->header('description','The item was not found');
+            return abort(404, 'The item was not found');
         }
         return Item::find($id);
     }
@@ -383,7 +383,7 @@ class ItemController extends Controller
     public function update(Request $request, $id)
     {
         if(!is_numeric($id)){
-            return response('', 404)->header('description','The item was not found');
+            return abort(404, 'The item was not found');
         }
 
         $request->validate([
@@ -399,7 +399,7 @@ class ItemController extends Controller
         $this->authorize('update', $item);
 
         if($item == null){
-            return response('', 404)->header('description','The item was not found');
+            return abort(404, 'The item was not found');
         }
 
         if($request->has('item.name')){
@@ -433,7 +433,7 @@ class ItemController extends Controller
     {
     
         if(!is_numeric($id)){
-            return response('', 404)->header('description','The item was not found');
+            return abort(404, 'The item was not found');
         }
 
 
@@ -443,7 +443,7 @@ class ItemController extends Controller
 
 
         if($item == null){
-            return response('', 404)->header('description','The item was not found');
+            return abort(404, 'The item was not found');
         }
 
         $item->active = 'false';

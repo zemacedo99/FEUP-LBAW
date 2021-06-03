@@ -257,7 +257,7 @@ class ClientController extends Controller
         $user = User::find($client->id);
 
         if(is_null($client) || is_null($user)){
-            return response('', 404,)->header('description', 'Client not found');
+            return abort(404)
         }
         $client->delete();
         $user-> delete();
@@ -363,7 +363,7 @@ class ClientController extends Controller
     public function checkout($id){
 
         if(!is_numeric($id)){
-            return response('', 404);
+            return abort(404);
         }
 
         $this->authorize('view', Client::find($id));
@@ -400,7 +400,7 @@ class ClientController extends Controller
     public function payment($id){
         
         if(!is_numeric($id)){
-            return response('', 404);
+            return abort(404);
         }
 
         $this->authorize('view', Client::find($id));
@@ -488,6 +488,6 @@ class ClientController extends Controller
 
         }
 
-        return response('Couldn\'t cancel order', 404);
+        return abort(404);
     }
 }

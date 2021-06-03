@@ -45,7 +45,7 @@ class ReviewController extends Controller
             
         
         //Authorization
-        if(!$this->boughtItem($client->purchases, $item_id)) return response('You need to buy the item first', 403);
+        if(!$this->boughtItem($client->purchases, $item_id)) return abort(403, 'You need to buy the item first' );
 
 
         
@@ -129,7 +129,7 @@ class ReviewController extends Controller
         $this->authorize('update', $review_collection);
         
         if($review_collection->isEmpty()){
-            return response('', 404)->header('description','Review not found');
+            return abort(404, 'Review not found');
         }
 
         $review=$review_collection->first();

@@ -110,7 +110,7 @@ class ShipDetailController extends Controller
         $this->authorize('update', $shipDetail);
         
         if($shipDetail->isEmpty()){
-            return response('', 404)->header('description','shipDetail not found');
+            return abort(404, 'shipDetail not found');
         }
 
         if($request->has('first_name')){
