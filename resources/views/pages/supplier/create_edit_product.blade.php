@@ -128,7 +128,6 @@
             </div>
 
 
-
             <div class="row mb-3"></div>
             {{-- <div class="col"> --}}
             @include('partials.description_and_tags')

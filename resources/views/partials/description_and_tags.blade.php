@@ -58,7 +58,16 @@
 
             <input type="hidden" name="t" id="t">
             
+            @isset($itemtags)
+                @foreach ($itemtags as $tag)
+                    <script>
+                        addTag($tag);
+                    </script>
+                @endforeach
+            @endisset
+
             <div id="alltags"> </div>
+
             <div class="row mb-1"></div>
 
             <div id="dynamic_tags"></div>
