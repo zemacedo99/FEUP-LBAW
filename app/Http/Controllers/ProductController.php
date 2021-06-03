@@ -99,7 +99,6 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-        //return $request;
         $request->validate([
             'product_name' => 'required|string',
             'description' => 'required|string',
@@ -132,11 +131,11 @@ class ProductController extends Controller
         // dd($rtags);
 
 
-        if(is_null($request->tags))
+        if(is_null($request->t))
         {
             //TODO:
             dd("tags are emply");
-            dd($request->tags);
+            dd($request->t);
         }
         else
         {
@@ -168,11 +167,13 @@ class ProductController extends Controller
                     $tag = Tag::create([                //create new tag
                         'value' => $tagsValue,   
                     ]);
+           
                     $item->tags()->attach($tag);        // associate the tag to the item
                 }
         
             }
         }
+
 
 
 
