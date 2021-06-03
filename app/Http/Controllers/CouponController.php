@@ -126,6 +126,9 @@ class CouponController extends Controller
     public function update(Request $request, $couponCode)
     {   
         
+        $request->validate([
+            'coupon_amount' => 'numeric'            
+        ]);
         
         $collection_coupon = Coupon::where('code', $couponCode)->get();
         
@@ -181,6 +184,6 @@ class CouponController extends Controller
 
         $coupon_builder->delete();
 
-        return response('', 204,)->header('description', 'Successfully removed coupon');
+        return response('', 204)->header('description', 'Successfully removed coupon');
     }
 }
