@@ -244,7 +244,7 @@ class ProductController extends Controller
         $item = Item::find($id);
         $product = Product::find($id);
         $alltags = Tag::get();
-        $itemtags = $item->tags();
+        $itemtags = $item->tags()->get();
         // $this->authorize('update', $product);
 
         $data = [
@@ -310,11 +310,59 @@ class ProductController extends Controller
             $product->unit = $request->input('product_type'); 
         }
 
-        $tags = $item->tags();
+       
+        $string = $request->t;
+        $rtags = explode("/", $string); 
 
-        if($request->has('tags')){
-            $tags = $request->input('tags'); 
+        if(is_null($request->tags))
+        {
+            //TODO:
+            dd("tags are emply");
+            dd($request->tags);
         }
+        else
+        {
+            foreach($rtags as $tagsValue)
+            {
+                // dd($tagsValue);
+                if( is_null($tagsValue))
+                {
+                    continue;
+                }
+                if($tagsValue === "")
+                {
+                    continue;
+                }
+
+
+                $tags = Tag::where('value', $tagsValue)->get();
+                // dd($tags);
+
+
+                if (count($tags) > 0) {                     //if the tagvalue exist 
+                    
+                    foreach ($tags as $tag) {
+                        $item->tags()->attach($tag);          // associate the tag to the item
+                    }
+                }
+                else                                        // if the tagvalue is new
+                {
+                    $tag = Tag::create([                //create new tag
+                        'value' => $tagsValue,   
+                    ]);
+                    $item->tags()->attach($tag);        // associate the tag to the item
+                }
+        
+            }
+        }
+
+        dd($item->tags()->get());
+        
+        if($request->has('t')){
+            $tags = $rtags; 
+        }
+        
+
 
         $item->save();
         $product->save();

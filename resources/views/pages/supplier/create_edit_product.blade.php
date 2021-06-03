@@ -37,9 +37,10 @@
             @else 
                 {{-- add a photo template --}}
                 {{-- @include('partials.carousel_img') --}}
+                <div class="dropzone" id="myDropzone"></div>
             @endif
             
-            <div class="dropzone" id="myDropzone"></div>
+            
 
 
             </div>

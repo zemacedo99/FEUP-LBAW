@@ -42,7 +42,19 @@ function removeOnBtn(element) {
 
 }
 
-function addTag($tag) {
-    console.log($tag);
+function addTag(tag) {
+
+    var div = document.getElementById("dynamic_tags");
+    var tags = document.getElementById("tags");
+
+    var btn = document.createElement("button");
+    btn.type = 'button';
+    btn.innerHTML = tag;
+    btn.className = 'btn btn-secondary btn-sm me-2 mb-1';
+    btn.setAttribute('id', tag);
+    btn.setAttribute('onclick', 'removeOnBtn( "' + tag + '" )');
+    div.appendChild(btn);
+    var t = document.getElementById("t");
+    t.value += tags.value + "/";
 
 }
