@@ -30,7 +30,7 @@ class ReviewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request, Client $client)
     {
         $request->validate([
             'item_id' => 'required|integer|exists:items,id',
@@ -43,7 +43,6 @@ class ReviewController extends Controller
         $rating = $request->input('rating');
         $description = $request->input('description');
             
-        $client = Client::find($client_id);
         
         //Authorization
         if(!$this->boughtItem($client->purchases, $item_id)) return response('You need to buy the item first', 403);
@@ -88,21 +87,25 @@ class ReviewController extends Controller
      * @param  \App\Models\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request)
+    public function delete(Request $request, Client $client)
     {
 
-        // return Auth::check();
-        // return ($this->authorize('delete'));
-
         $request->validate([
-            'client_id' => 'required|integer',
-            'item_id' => 'required|integer'
+            'item_id' => 'required|integer|exists:items,id',
         ]);
 
-        $review = Review::where('client_id','=',$request->input('client_id'))->where('item_id','=',$request->input('item_id'))->delete();
+        $client_id = Auth::id();
+        $item_id = $request->input('item_id');
 
+        $builder = Review::where('client_id', $client_id)->where('item_id', $item_id);
         
-        return $review;//this returns 0 or 1 true or false
+        //Authorization
+        $this->authorize('delete', $builder->first());
+        
+        $builder->delete();
+        
+
+        return response('Review deleted', 204);
         
     }
 

@@ -168,12 +168,14 @@ function historyModals(){
 
 document.getElementById('YesButtonModal').addEventListener('click', cancelOrder)
 document.getElementById('ConfirmReviewBtn').addEventListener('click', addReview)
+document.getElementById('deleteReview').addEventListener('click', removeReview)
+
 
 function cancelOrder(event){
     let product_id = document.getElementById('product_id_modal').value
     let client_id = document.getElementById('client_id').value
     
-    sendAjaxRequest('put', '/api/client/' + client_id + '/purchases',
+    sendAjaxRequest('put', '/api/client/'  + '/purchases',
     {'product_id': product_id}, function(){
         location.reload()
     })
@@ -188,12 +190,22 @@ function addReview(event){
 
 
 
-    sendAjaxRequest('post', '/api/review/' + client_id,
+    sendAjaxRequest('post', '/api/' + client_id + '/review' ,
     {'item_id': product_id, 'rating': rating, 'description': comment}, function(){
+        if(this.status == 204) alert("Deleted review")
+        else alert("Something went wrong when deleting the review")
+    })
+}
+
+
+function removeReview(){
+    let product_id = document.getElementById('product_id_review').value
+    let client_id = document.getElementById('client_id').value
+
+    sendAjaxRequest('delete', '/api/' + client_id + '/review' ,
+    {'item_id': product_id}, function(){
         alert(this.status)
         alert(this.responseText)
         
     })
 }
-
-

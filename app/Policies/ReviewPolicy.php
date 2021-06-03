@@ -10,6 +10,19 @@ class ReviewPolicy
 {
     use HandlesAuthorization;
 
+    /**
+     * Perform pre-authorization checks.
+     *
+     * @param  \App\Models\User  $user
+     * @param  string  $ability
+     * @return void|bool
+    */
+    public function before(User $user, $ability)
+    {
+        if ($user->is_admin === true) {
+            return true;
+        }
+    }
     
     /**
      * Determine whether the user can view the model.
@@ -76,9 +89,9 @@ class ReviewPolicy
      */
     public function delete(User $user, Review $review)
     {
-        return $user;
+
         //only author and administrator can remove //TODO check if is proper way of user id
-        return $user->isAdministrator||$user->id === $review->user_id;
+        return $user->id === $review->client_id;
     }
 
     /**
