@@ -86,7 +86,7 @@ class ItemController extends Controller
         $data = [
             'title' => 'Create Bundle',
             'path' => '/api/bundle',
-            'tags' => $tags,
+            'alltags' => $tags,
             'products' => $products,
         ];
 
@@ -118,28 +118,44 @@ class ItemController extends Controller
             'stock' => $request->bundle_stock,
             'description' => $request->description,
             'active' => true,
-            'rating' => 0,
+            'rating' => null,
             'is_bundle' => true,
         ]);
 
 
 
+    
+        $string = $request->t;
+        $rtags = explode("/", $string); 
+        // dd($rtags);
+
+
         if(is_null($request->tags))
         {
-            dd("error here");
+            dd("tags are emply");
             dd($request->tags);
         }
         else
         {
-            foreach($request->tags as $tagsValue)
+            foreach($rtags as $tagsValue)
             {
+                // dd($tagsValue);
                 if( is_null($tagsValue))
                 {
-                    break;
+                    continue;
                 }
+                if($tagsValue === "")
+                {
+                    continue;
+                }
+
+
                 $tags = Tag::where('value', $tagsValue)->get();
+                // dd($tags);
+
 
                 if (count($tags) > 0) {                     //if the tagvalue exist 
+                    
                     foreach ($tags as $tag) {
                         $item->tags()->attach($tag);          // associate the tag to the item
                     }
@@ -201,7 +217,19 @@ class ItemController extends Controller
 
             $data['images'] = $images;
         }
+        else{
+            $productsInBundle = $item->contains_products()->get();
 
+            foreach($productsInBundle as $product)
+            {
+                $item = Item::find($product->id);
+                $product->name = $item->name;
+                $product->images = $product->images()->first();
+                $product->quantity = $product->pivot->quantity;
+            }
+
+            $data['productsInBundle'] = $productsInBundle;
+        }
 
 
         if(count($item->reviews)>0){
@@ -250,13 +278,8 @@ class ItemController extends Controller
 
     public function list()
     {
-        $items = Item::get();
+        $items = Item::paginate(6);
 
-      
-        $all = [];
-    
-
-        $i = 0;
         foreach($items as $item)
         {
             $product = Product::find($item->id);
@@ -265,23 +288,21 @@ class ItemController extends Controller
         
             if(is_null($product))       // item is a bundle
             {
-                $all[$i] = [$item,null,null,$supplier];
+                $item->unit = null;
+                $item->image = null;
+                $item->supplier = $supplier;
             }
             else
             {
-                $all[$i] = [$item,$product->type,$product->images()->get(),$supplier];
+                $item->unit = $product->unit;
+                $item->images = $product->images()->get();
+                $item->supplier = $supplier;
             }
-            
-            $i++;
+
         }
 
-        $data =
-        [
-            'items' => $all,
-        ];
 
-        return view('pages.misc.products_list', $data);
-
+        return view('pages.misc.products_list', ["items" => $items]);
     }
 
 
@@ -306,9 +327,50 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function edit(Item $item)
+    public function edit($id)
     {
-        //
+        $item = Item::find($id);
+        $supplier = Supplier::find($item->supplier_id);
+        $alltags = Tag::get();
+        $itemtags = $item->tags();
+
+        // $this->authorize('update', $item);
+
+        $supplierItems = $supplier->items()->get();
+
+        foreach($supplierItems as $item)
+        {
+            $product = Product::find($item->id);
+        
+            if(is_null($product))       // item is a bundle
+            {
+                continue;
+            }
+            else
+            {
+                $item->unit = $product->type;
+                $item->images = $product->images()->get();
+            }
+            
+            
+   
+        }
+
+
+        $data = [
+                    'title' => 'Edit Bundle',
+                    'path' => '/api/item/' . $id,
+                    'alltags' => $alltags,
+                    'tags' => $itemtags,
+                    'name' => $item->name,
+                    'price' => $item->price,
+                    'stock' => $item->stock,
+                    'description' => $item->description,
+                    'products' => $supplierItems,
+        ];
+
+
+        return view('pages.supplier.create_edit_bundle', $data);
     }
 
     /**
@@ -374,8 +436,11 @@ class ItemController extends Controller
             return response('', 404)->header('description','The item was not found');
         }
 
+
         $item = Item::find($id);
-        //$this->authorize('delete', $item);
+        
+        $this->authorize('delete', $item);
+
 
         if($item == null){
             return response('', 404)->header('description','The item was not found');

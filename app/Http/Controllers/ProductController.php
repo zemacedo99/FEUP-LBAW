@@ -9,6 +9,7 @@ use App\Models\Supplier;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 
 class ProductController extends Controller
 {
@@ -48,7 +49,7 @@ class ProductController extends Controller
         $data = [
             'title' => 'Create Product',
             'path' => '/api/product',
-            'tags' => $tags,
+            'alltags' => $tags,
         ];
 
         return view('pages.supplier.create_edit_product', $data);
@@ -118,24 +119,33 @@ class ProductController extends Controller
             'stock' => $request->product_stock,
             'description' => $request->description,
             'active' => true,
-            'rating' => 0,
+            'rating' => null,
             'is_bundle' => false,
         ]);
 
 
+        $string = $request->t;
+        $rtags = explode("/", $string); 
+        // dd($rtags);
+
+
         if(is_null($request->tags))
         {
-            dd("error here");
+            dd("tags are emply");
             dd($request->tags);
         }
         else
         {
-            foreach($request->tags as $tagsValue)
+            foreach($rtags as $tagsValue)
             {
                 // dd($tagsValue);
                 if( is_null($tagsValue))
                 {
-                    break;
+                    continue;
+                }
+                if($tagsValue === "")
+                {
+                    continue;
                 }
 
 
@@ -144,6 +154,7 @@ class ProductController extends Controller
 
 
                 if (count($tags) > 0) {                     //if the tagvalue exist 
+                    
                     foreach ($tags as $tag) {
                         $item->tags()->attach($tag);          // associate the tag to the item
                     }
@@ -221,9 +232,33 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        $item = Item::find($id);
+        $product = Product::find($id);
+        $alltags = Tag::get();
+        $itemtags = $item->tags();
+        // $this->authorize('update', $product);
+
+        $data = [
+                    'title' => 'Edit Product',
+                    'path' => '/api/product/' . $id,
+                    'alltags' => $alltags,
+                    'tags' => $itemtags,
+                    'name' => $item->name,
+                    'price' => $item->price,
+                    'stock' => $item->stock,
+                    'description' => $item->description,
+                    'type' => $product->unit,
+                    'images' => $product->images()->get(),
+        ];
+
+        if($product->type === "Kg"){
+            $data['k'] = true;
+        }else{
+            $data['u'] = true;
+        }
+        return view('pages.supplier.create_edit_product', $data);
     }
 
     /**
@@ -233,9 +268,51 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        //
+         
+        $item = Item::find($id);
+        $product = Product::find($id);
+        
+        // $this->authorize('update', $item);
+
+        $request->validate([
+            'product_name' => 'required|string',
+            'description' => 'required|string',
+            'product_stock' => 'required|numeric',
+            'product_price' => 'required|numeric',
+            'supplierID' => 'required|integer',
+        ]);
+
+
+        if($request->has('product_name')){
+            $item->name = $request->input('product_name'); 
+        }
+        
+        if($request->has('product_price')){
+            $item->price = $request->input('product_price'); 
+        }
+        if($request->has('product_stock')){
+            $item->stock = $request->input('product_stock'); 
+        }
+        if($request->has('description')){
+            $item->description = $request->input('description'); 
+        }
+
+        if($request->has('product_type')){
+            $product->unit = $request->input('product_type'); 
+        }
+
+        $tags = $item->tags();
+
+        if($request->has('tags')){
+            $tags = $request->input('tags'); 
+        }
+
+        $item->save();
+        $product->save();
+        
+        return redirect(route('supplier_all_products'  , ['id' => $request->supplierID]) );
     }
 
     /**

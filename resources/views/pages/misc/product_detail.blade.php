@@ -11,7 +11,7 @@
             <div class="col-12 col-lg-7" id="mainContainer">
 
                 @if ($is_bundle)
-                    @include('partials.bundle')
+                    @include('partials.bundle',$productsInBundle)
 
                 @else
 

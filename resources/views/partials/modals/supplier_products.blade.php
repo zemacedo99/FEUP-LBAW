@@ -12,11 +12,11 @@
                     @php
                     $data = 
                     [
-                        'name' => $product[0]->name,
-                        'price' => $product[0]->price,
-                        'description' => $product[0]->description,
-                        'unit' => $product[1],
-                        'images' => $product[2],
+                        'name' => $product->name,
+                        'price' => $product->price,
+                        'description' => $product->description,
+                        'unit' => $product->unit,
+                        'images' => $product->images,
                     ];
                     @endphp
                     {{-- todo: find a way to select the card and get the value  --}}
