@@ -9,7 +9,7 @@
 
     <div class="container">
 
-
+        <input type="hidden" id="product_id" value="{{$id}}" disabled>
 
         <div class="col order-1">
             <div class="row">
@@ -142,7 +142,7 @@
             <span class="text-center">
                 <input type="submit" class="btn btn-primary" value="Confirmar" > 
                 @isset($name)
-                    <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i> Delete Product</button>
+                    <button type="button" class="btn btn-danger" id="deleteProduct"><i class="bi bi-trash" ></i> Delete Product</button>
                 @endisset
             </span>
         </div>

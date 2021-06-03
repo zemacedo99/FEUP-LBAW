@@ -235,16 +235,19 @@ class ProductController extends Controller
     public function edit($id)
     {
         $item = Item::find($id);
+        if($item->active == false) return response('Product doesn\'t exists', 404);
         $product = Product::find($id);
         $alltags = Tag::get();
         $itemtags = $item->tags();
         // $this->authorize('update', $product);
+
 
         $data = [
                     'title' => 'Edit Product',
                     'path' => '/api/product/' . $id,
                     'alltags' => $alltags,
                     'tags' => $itemtags,
+                    'id'    => $item->id,
                     'name' => $item->name,
                     'price' => $item->price,
                     'stock' => $item->stock,

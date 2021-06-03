@@ -67,8 +67,8 @@ Dropzone.options.myDropzone= {
     init: function() {
         dzClosure = this; // Makes sure that 'this' is understood inside the functions below.
 
-        // for Dropzone to process the queue (instead of default form behavior):
-        document.getElementById("submit").addEventListener("click", function(e) {
+        // for Dropzone to process the queue (instead of default form behavior):    
+        document.getElementById("myDropzone").addEventListener("click", function(e) {
             // Make sure that the form isn't actually being sent.
             e.preventDefault();
             e.stopPropagation();
@@ -81,4 +81,17 @@ Dropzone.options.myDropzone= {
             formData.append("lastname", jQuery("#lastname").val());
         });
     }
+}
+
+// --------------------------- Delete Product -----------------------------------------//
+
+document.getElementById("deleteProduct").addEventListener("click", deleteProduct);
+
+function deleteProduct(event){
+    let product_id = document.getElementById('product_id').value
+
+    sendAjaxRequest('delete', '/api/product/' + product_id, null, function(){
+        if(this.status == 204) window.history.go(-1)
+        else alert("Something went wrong when deleting the product")
+    })
 }

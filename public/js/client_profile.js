@@ -193,7 +193,7 @@ function addReview(event){
     sendAjaxRequest('post', '/api/' + client_id + '/review' ,
     {'item_id': product_id, 'rating': rating, 'description': comment}, function(){
         if(this.status == 204) alert("Deleted review")
-        else alert("Something went wrong when deleting the review")
+        else alert("Something went wrong when deleting the review") 
     })
 }
 
