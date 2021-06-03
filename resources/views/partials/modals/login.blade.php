@@ -7,8 +7,7 @@
             </div>
             <div class="modal-body">
                 <form method="POST" action="{{ route('login') }}">
-                    {{ csrf_field() }}
-
+                    @csrf
                     <div class="row  d-flex justify-content-center">
                         <div class="col-9">
                             <div class="form-floating mb-3">
@@ -27,6 +26,7 @@
                         <button type="submit" class="btn btn-primary">Sign in</button>
                         <p class="text-muted mb-0 d-flex justify-content-center"> Don't have an account? </p>
                         <a href="{{ route('register') }}" class="link-secondary d-flex justify-content-center">Sign up</a>
+                        <a href="{{ route('password.request') }}" class="link-secondary d-flex justify-content-center">Forgot my password</a>
                     </div>
                 </form>
             </div>

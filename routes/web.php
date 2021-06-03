@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\PasswordReset;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -130,6 +133,20 @@ Route::put('/favorite', 'ClientController@addRemoveFavorite');
 
 Route::get('client/{client:id}/profile', 'ClientController@show')->name('client_profile');
 
+
+
+Route::get('/forgot-password', 'Auth\RecoverController@showPasswordRecovery')
+    ->middleware('guest')->name('password.request');
+
+Route::post('/forgot-password', 'Auth\RecoverController@sendEmail')
+    ->middleware('guest')->name('password.email');
+
+Route::get('/reset-password/{token}', 'Auth\RecoverController@showResetPassword')
+    ->middleware('guest')->name('password.reset');
+
+Route::post('/reset-password', 'Auth\RecoverController@resetPassword')
+    ->middleware('guest')->name('password.update');
+
 /*
 * API Calls
 */
@@ -139,6 +156,7 @@ Route::prefix('api/')->group(function(){
         Route::delete('{client:id}','ClientController@destroy')->name('client.delete');
         Route::get('{client:id}','ClientController@get_info');
         Route::put('{client:id}','ClientController@update');
+        Route::put('{client:id}/shipping','ClientController@updateShipping');
     });
 
     Route::prefix('supplier/')->group(function(){
