@@ -45,16 +45,21 @@
             @php
             $data = 
             [
-                'is_bundle' => $item[0]->is_bundle,
-                'name' => $item[0]->name,
-                'price' => $item[0]->price,
-                'description' => $item[0]->description,
-                'unit' => $item[1],
-                'images' => $item[2],
+                'is_bundle' => $item->is_bundle,
+                'id' => $item->id,
+                'name' => $item->name,
+                'price' => $item->price,
+                'description' => $item->description,
+                'unit' => $item->unit,
+                'images' => $item->images,
             ];
             @endphp
             @include('partials.cards.product_detail_supplier',$data)
         @endforeach
+
+        <div class="row mt-3"></div>
+        <div class="row mt-3"></div>
+        @include('partials.pages',['link'=>"supplier_all_products",'paginator'=>$items])
 
     </div>
 
