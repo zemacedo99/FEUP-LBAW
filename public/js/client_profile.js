@@ -44,6 +44,13 @@ function updateProfile(){
     let email = document.querySelector('#clientEmail')
     let password = document.querySelector('#clientPassword')
 
+    document.querySelector('#update_data').addEventListener("click", () => {
+        sendAjaxRequest('put', '/api/client/' + id, {email: email.value, password: password.value, name: profile_name.value}, updateProfileHandler)
+    })
+}
+
+function updateShipping(){
+    let id = document.querySelector('#ClientName').getAttribute('data-id');
     let first_name = document.querySelector('#floatingFirstName')
     let last_name = document.querySelector('#floatingLastName')
     let address = document.querySelector('#floatingAddress')
@@ -54,19 +61,71 @@ function updateProfile(){
     let country = document.querySelector('#floatingCountry')
     let phone = document.querySelector('#floatingPhone')
 
-    document.querySelector('#update_data').addEventListener("click", () => {
-        console.log(`Id: ${id}\nName: ${profile_name.value}\nEmail: ${email.value}\nPassword: ${password.value}\nFirst Name: ${first_name.value}\nLast Name: ${last_name.value}
-        \nAddress: ${address.value}\nDoor: ${door.value}\nZip Code: ${zip_code.value}\nDistrict: ${district.value}\nCity: ${city.value}\nCountry: ${country.value}\nPhone: ${phone.value}`)
-
-        sendAjaxRequest('put', '/api/client/' + id, {email: email.value, password: password.value, name: profile_name.value}, updateProfileHandler)
+    document.querySelector('#update_shipping').addEventListener("click", () => {
+        sendAjaxRequest('put', '/api/client/' + id + '/shipping',
+            {first_name: first_name.value,
+                last_name: last_name.value,
+                address: address.value,
+                door_n: door.value,
+                post_code: zip_code.value,
+                district: district.value,
+                city: city.value,
+                country: country.value,
+                phone_n: phone.value,
+            }, updateShippingHandler)
     })
 }
 
 function updateProfileHandler(){
-    console.log("Não imprime o de baixo...")
-    let response = JSON.parse(this.responseText);
-    console.log("Response:", response)
+    let list_div = document.querySelector('#error-message')
+    let list = list_div.children[0]
+
+    if(this.status === 400){
+        list_div.removeAttribute("hidden")
+        list_div.className = "alert alert-danger"
+        let response = JSON.parse(this.responseText)
+        list.innerHTML = ""
+
+        for (index in response){
+            let list_item = document.createElement('li')
+            list_item.appendChild(document.createTextNode(response[index]))
+            list.appendChild(list_item)
+        }
+    } else if (this.status === 204) {
+        list_div.removeAttribute("hidden")
+        list_div.className = "alert alert-success"
+        list.innerHTML = ""
+        let list_item = document.createElement('li')
+        list_item.appendChild(document.createTextNode("Client changes made successfully"))
+        list.appendChild(list_item)
+    }
+}
+
+function updateShippingHandler(){
+    let list_div = document.querySelector('#error-message')
+    let list = list_div.children[0]
+
+    if(this.status === 400){
+        list_div.removeAttribute("hidden")
+        list_div.className = "alert alert-danger"
+        let response = JSON.parse(this.responseText)
+        list.innerHTML = ""
+
+        for (index in response){
+            let list_item = document.createElement('li')
+            list_item.appendChild(document.createTextNode(response[index]))
+            list.appendChild(list_item)
+        }
+    } else if (this.status === 204) {
+        list_div.removeAttribute("hidden")
+        list_div.className = "alert alert-success"
+        list.innerHTML = ""
+        let list_item = document.createElement('li')
+        list_item.appendChild(document.createTextNode("Shipping changes made successfully"))
+        list.appendChild(list_item)
+    }
 }
 
 setupClientProfile()
 updateProfile()
+updateShipping()

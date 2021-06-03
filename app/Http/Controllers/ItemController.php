@@ -118,7 +118,7 @@ class ItemController extends Controller
             'stock' => $request->bundle_stock,
             'description' => $request->description,
             'active' => true,
-            'rating' => 0,
+            'rating' => null,
             'is_bundle' => true,
         ]);
 
@@ -217,7 +217,19 @@ class ItemController extends Controller
 
             $data['images'] = $images;
         }
+        else{
+            $productsInBundle = $item->contains_products()->get();
 
+            foreach($productsInBundle as $product)
+            {
+                $item = Item::find($product->id);
+                $product->name = $item->name;
+                $product->images = $product->images()->first();
+                $product->quantity = $product->pivot->quantity;
+            }
+
+            $data['productsInBundle'] = $productsInBundle;
+        }
 
 
         if(count($item->reviews)>0){
@@ -268,11 +280,6 @@ class ItemController extends Controller
     {
         $items = Item::paginate(6);
 
-      
-        // $all = [];
-    
-
-        // $i = 0;
         foreach($items as $item)
         {
             $product = Product::find($item->id);
@@ -284,31 +291,18 @@ class ItemController extends Controller
                 $item->unit = null;
                 $item->image = null;
                 $item->supplier = $supplier;
-                // $all[$i] = [$item,null,null,$supplier];
             }
             else
             {
                 $item->unit = $product->unit;
-                $item->image = $product->images()->get();
+                $item->images = $product->images()->get();
                 $item->supplier = $supplier;
-
-                // dd($item);
-                // $all[$i] = [$item,$product->type,$product->images()->get(),$supplier];
             }
-            
-            // $i++;
+
         }
 
-        // $data =
-        // [
-        //     'items' => $all,
-        // ];
-
-        // dd($items[101]);
-        // $test = $items->paginate(6);
 
         return view('pages.misc.products_list', ["items" => $items]);
-
     }
 
 
@@ -333,9 +327,50 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function edit(Item $item)
+    public function edit($id)
     {
-        //
+        $item = Item::find($id);
+        $supplier = Supplier::find($item->supplier_id);
+        $alltags = Tag::get();
+        $itemtags = $item->tags();
+
+        // $this->authorize('update', $item);
+
+        $supplierItems = $supplier->items()->get();
+
+        foreach($supplierItems as $item)
+        {
+            $product = Product::find($item->id);
+        
+            if(is_null($product))       // item is a bundle
+            {
+                continue;
+            }
+            else
+            {
+                $item->unit = $product->type;
+                $item->images = $product->images()->get();
+            }
+            
+            
+   
+        }
+
+
+        $data = [
+                    'title' => 'Edit Bundle',
+                    'path' => '/api/item/' . $id,
+                    'alltags' => $alltags,
+                    'tags' => $itemtags,
+                    'name' => $item->name,
+                    'price' => $item->price,
+                    'stock' => $item->stock,
+                    'description' => $item->description,
+                    'products' => $supplierItems,
+        ];
+
+
+        return view('pages.supplier.create_edit_bundle', $data);
     }
 
     /**

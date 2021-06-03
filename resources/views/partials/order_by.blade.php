@@ -1,6 +1,6 @@
 <div class="col-md-1 ms-sm-auto col-lg-2 px-md-1">
-    <select class="form-select" aria-label="Relevance">
-        <option selected>Order by:</option>
+    <select class="form-select" aria-label="Relevance" name="orderby[]">
+        <option value ="none" selected>Order by:</option>
         <option value="Price Up">Price Up</option>
         <option value="Price Down">Price Down</option>
         <option value="Review Up">Review Up</option>

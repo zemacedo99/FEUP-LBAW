@@ -5,7 +5,6 @@
     --background: #f3f2f4;
     --grey: #4d5057;
     --red: #ff1818d3;
-
     --logo-color: rgb(25, 135, 84);
     --logo-color-shadow: rgb(25 135 84 / 50%);
     --logo-accent: #157347;
@@ -53,13 +52,18 @@ body {
     border-color: var(--main-color);
 }
 
-.btn-check:active + .btn-primary, .btn-check:checked + .btn-primary, .btn-primary.active, .btn-primary:active, .show > .btn-primary.dropdown-toggle {
+.btn-check:active+.btn-primary,
+.btn-check:checked+.btn-primary,
+.btn-primary.active,
+.btn-primary:active,
+.show>.btn-primary.dropdown-toggle {
     background-color: var(--logo-color);
     border-color: var(--logo-color-shadow);
     box-shadow: 0 0 0 0.25rem var(--logo-color-shadow);
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
     background-color: var(--logo-color);
     border-color: var(--logo-color);
 }
@@ -136,7 +140,6 @@ body {
     border: 0px solid transparent;
 }
 
-
 #simple-btt:focus {
     font-weight: bold;
     background-color: transparent;
@@ -156,6 +159,7 @@ body {
     background-color: black;
 }
 
+
 /* https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 
 .rating {
@@ -163,11 +167,11 @@ body {
     flex-direction: row-reverse;
 }
 
-.rating > input {
+.rating>input {
     display: none;
 }
 
-.rating > label {
+.rating>label {
     position: relative;
     width: 1em;
     font-size: 1.5rem;
@@ -175,33 +179,34 @@ body {
     cursor: pointer;
 }
 
-.rating > label::before {
+.rating>label::before {
     content: "\2605";
     position: absolute;
     opacity: 0;
 }
 
-.rating > label:hover:before,
-.rating > label:hover ~ label:before {
+.rating>label:hover:before,
+.rating>label:hover~label:before {
     opacity: 1 !important;
 }
 
-.rating > input:checked ~ label:before {
+.rating>input:checked~label:before {
     opacity: 1;
 }
 
-.rating:hover > input:checked ~ label:before {
+.rating:hover>input:checked~label:before {
     opacity: 0.4;
 }
-
 
 .customcard img {
     height: 230px;
 }
 
-.row .bi-suit-heart, .bi-suit-heart-fill{
+.row .bi-suit-heart,
+.bi-suit-heart-fill {
     color: red;
 }
+
 
 /* Favorite Toggle */
 
@@ -234,7 +239,7 @@ label.favorite-checkbox input[type="checkbox"] {
     opacity: 0.5;
 }
 
-.favorite-checkbox input[type="checkbox"]:checked ~ .bi-heart-fill {
+.favorite-checkbox input[type="checkbox"]:checked~.bi-heart-fill {
     opacity: 1;
 }
 
@@ -242,7 +247,7 @@ label.active {
     font-weight: bold;
 }
 
-#pills-weekly input[type="radio"]:checked + label {
+#pills-weekly input[type="radio"]:checked+label {
     font-weight: bold;
 }
 
@@ -250,9 +255,7 @@ label.active {
     border-radius: 1px;
     background: #fff;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
-    transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
-    0.3s box-shadow,
-    0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
+    transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12), 0.3s box-shadow, 0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
     cursor: pointer;
 }
 
@@ -267,8 +270,9 @@ label.active {
 
 
 /* BEGIN SIDEBAR */
-/* sidebar is collapsed by default on small screen */
 
+
+/* sidebar is collapsed by default on small screen */
 
 #sidebar {
     position: fixed;
@@ -276,15 +280,17 @@ label.active {
     /* full screen size excluding navbar */
     transition: all 0.5s;
     z-index: 999;
-
     /* scrollbar */
     overflow-x: hidden;
     overflow-y: auto;
-
 }
 
+
 /* hide scrollbar for Chrome, Safari and Opera */
+
+
 /* source: https://www.w3schools.com/howto/howto_css_hide_scrollbars.asp */
+
 .example::-webkit-scrollbar {
     display: none;
 }
@@ -295,17 +301,17 @@ label.active {
     bottom: 0;
 }
 
-
 #sidebar li:hover,
 #sidebar li.active {
-    margin-left: 0.5em; /* extra margin on selected element */
+    margin-left: 0.5em;
+    /* extra margin on selected element */
 }
 
 .sticky {
     position: absolute;
     top: 0;
-
 }
+
 
 /* END SIDEBAR */
 
@@ -317,18 +323,18 @@ label.active {
     text-align: left;
 }
 
-
 .alert {
     height: fit-content;
     font-weight: 80;
 }
 
-
 a.customcard,
-a.customcard:hover, #unformatedLink {
+a.customcard:hover,
+#unformatedLink {
     color: inherit;
     text-decoration: inherit;
 }
+
 
 /* .delete {
   color: var(--red);
@@ -339,30 +345,29 @@ a.customcard:hover, #unformatedLink {
 } */
 
 .delete {
-  color: var(--grey);
+    color: var(--grey);
 }
 
 .delete:hover {
-  color: var(--grey);
+    color: var(--grey);
 }
 
-
 .add_form_field {
-  background-color: var(--sec-color);
-  border-color: var(--sec-color);
+    background-color: var(--sec-color);
+    border-color: var(--sec-color);
 }
 
 .add_form_field:hover {
-  background-color: var(--sec-color);
-  border-color: var(--sec-color);
+    background-color: var(--sec-color);
+    border-color: var(--sec-color);
 }
+
 
 /* .add_form_field:focus {
   background-color: var(--main-color);
   border-color: var(--main-color);
   box-shadow: 0 0 0 0.25rem var(--main-color-shadow);
 } */
-
 
 .add_form_field {
     display: inline-block;
@@ -381,15 +386,157 @@ a.customcard:hover, #unformatedLink {
     padding: .375rem .75rem;
     font-size: 1rem;
     border-radius: .25rem;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 input[type="file"] {
-  display: none;
+    display: none;
 }
+
 .custom-file-upload {
-  border: 1px solid #ccc;
-  display: inline-block;
-  padding: 6px 12px;
-  cursor: pointer;
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.product-grid8 .social {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: absolute;
+    bottom: 13px;
+    right: 13px;
+    z-index: 1
+}
+
+.product-grid8 .social li {
+    opacity: 0;
+    transform: translateY(3px);
+    transition: all .5s ease 0s
+}
+
+.product-grid8:hover .social li {
+    margin: 0 0 10px;
+    opacity: 1;
+    transform: translateY(0)
+}
+
+.product-grid8:hover .social li:nth-child(1) {
+    transition-delay: .1s
+}
+
+.product-grid8:hover .social li:nth-child(2) {
+    transition-delay: .2s
+}
+
+.product-grid8:hover .social li:nth-child(3) {
+    transition-delay: .3s
+}
+
+.product-grid8 .social li a {
+    color: var(--sec-color);
+    font-size: 17px;
+    line-height: 40px;
+    text-align: center;
+    height: 40px;
+    width: 40px;
+    border: 1px solid var(--sec-color);
+    display: block;
+    transition: all .5s ease-in-out
+}
+
+.product-grid8 .social li a:hover {
+    color: var(--sec-color);
+    border-color: var(--sec-color);
+}
+
+.product-grid6 .social {
+    background-color: #fff;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    opacity: 0;
+    transform: translateX(-50%);
+    position: absolute;
+    bottom: -50%;
+    left: 50%;
+    z-index: 1;
+    transition: all .5s ease 0s
+}
+
+.product-grid6:hover .social {
+    opacity: 1;
+    bottom: 20px
+}
+
+.product-grid6 .social li {
+    display: inline-block
+}
+
+.product-grid6 .social li a {
+    color: var(--sec-color);
+    font-size: 16px;
+    line-height: 45px;
+    text-align: center;
+    height: 45px;
+    width: 45px;
+    margin: 0 7px;
+    border: 1px solid var(--sec-color);
+    border-radius: 50px;
+    display: block;
+    position: relative;
+    transition: all .3s ease-in-out
+}
+
+.product-grid6 .social li a:hover {
+    color: #fff;
+    background-color: var(--sec-color);
+    width: 80px
+}
+
+.product-grid6 .social li a:after,
+.product-grid6 .social li a:before {
+    content: attr(data-tip);
+    color: #fff;
+    background-color: var(--sec-color);
+    font-size: 12px;
+    letter-spacing: 1px;
+    line-height: 20px;
+    padding: 1px 5px;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-50%);
+    position: absolute;
+    left: 50%;
+    top: -30px
+}
+
+.product-grid6 .social li a:after {
+    content: '';
+    height: 15px;
+    width: 15px;
+    border-radius: 0;
+    transform: translateX(-50%) rotate(45deg);
+    top: -20px;
+    z-index: -1
+}
+
+.product-grid6 .social li a:hover:after,
+.product-grid6 .social li a:hover:before {
+    opacity: 1
+}
+
+.card-text {
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bundle_products_box {
+    height: 300px;
+    overflow-y: scroll;
 }

@@ -20,7 +20,7 @@
                         <small class="text-muted"> Stock left: {{$stock}}<br></small>
                     </div>
                     <div class="col-6 d-flex justify-content-end">
-                        <a href="createEditBundle.php" class="stretched-link"  > <button type="button" class="simpleicon" >edit</button></a>
+                        <a href="{{ route('edit_bundle', ['id' => $id]) }}" class="stretched-link"  > <button type="button" class="simpleicon" >edit</button></a>
                     </div>
                 </div>
             </div>
