@@ -1,15 +1,15 @@
 let hasCodeAlready = null
 
-let submit= document.getElementById('form')
+let submit = document.getElementById('form')
 
-submit.addEventListener('submit',validateForm)
+submit.addEventListener('submit', validateForm)
 
 function validateForm(event) {
-    try{
+    try {
 
-        let check_empty = ['product_name', 'product_price' , 'product_stock', 'description']
+        let check_empty = ['product_name', 'product_price', 'product_stock', 'description']
 
-        for(let i = 0; i < check_empty.length; i++){
+        for (let i = 0; i < check_empty.length; i++) {
             let input = document.getElementById(check_empty[i]);
             if (input.value == "") {
                 document.getElementById(check_empty[i] + "_alert").innerHTML = "This field cannot be empty"
@@ -18,7 +18,7 @@ function validateForm(event) {
 
         }
 
-    }catch(err){
+    } catch (err) {
         //alert(err.message)
         event.preventDefault()
     }
@@ -45,17 +45,16 @@ function validateForm(event) {
 //     console.log(request.response);
 // }
 
-function toastshow()
-{
+function toastshow() {
     var toastElList = [].slice.call(document.querySelectorAll('.toast'))
-    var toastList = toastElList.map(function (toastEl) {
-      return new bootstrap.Toast(toastEl, option)
+    var toastList = toastElList.map(function(toastEl) {
+        return new bootstrap.Toast(toastEl, option)
     })
-    
+
     toast.show()
 }
 
-Dropzone.options.myDropzone= {
+Dropzone.options.myDropzone = {
     url: document.getElementById("form").action,
     autoProcessQueue: false,
     uploadMultiple: true,
@@ -117,8 +116,8 @@ Dropzone.options.myDropzone= {
             formData.append("product_type", document.getElementById("product_type").value);
             formData.append("product_stock", document.getElementById("product_stock").value);
             formData.append("description", document.getElementById("description").value);
-            formData.append("tags", document.getElementById("tags").value);        
-            
+            formData.append("t", document.getElementById("t").value);
+
         });
 
         

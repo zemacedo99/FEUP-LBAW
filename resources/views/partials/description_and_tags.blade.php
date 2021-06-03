@@ -1,5 +1,5 @@
 <!-- Description + Tags -->
-<script type="text/javascript" src={{ asset('js/tags.js') }} defer> </script>
+<script type="text/javascript" src={{ asset('js/tags.js') }} > </script>
 
 <div class="row ">
     <label for="Description">Description</label>
@@ -58,7 +58,18 @@
 
             <input type="hidden" name="t" id="t">
             
+            @isset($itemtags)
+            
+                @foreach ($itemtags as $tag)
+                    {{-- <button class="btn btn-secondary btn-sm me-2 mb-1" id="{{$tag->value}}" onclick="removeOnBtn({{$tag->value}})">{{$tag->value}}</button> --}}
+                    <script>
+                        addTag('{{$tag->value}}');
+                    </script>
+                @endforeach
+            @endisset
+
             <div id="alltags"> </div>
+
             <div class="row mb-1"></div>
 
             <div id="dynamic_tags"></div>
