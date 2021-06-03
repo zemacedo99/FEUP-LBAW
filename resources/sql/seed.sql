@@ -167,12 +167,12 @@ CREATE TABLE products (
 
 
 CREATE TABLE reviews (
+    id              SERIAL      PRIMARY KEY,
     client_id       INTEGER     NOT NULL REFERENCES clients (id) ON UPDATE CASCADE ON DELETE CASCADE,
     item_id         INTEGER     NOT NULL REFERENCES items (id) ON UPDATE CASCADE ON DELETE NO ACTION,
     rating          INTEGER     NOT NULL,
     description     TEXT        NOT NULL,
-    CONSTRAINT      rating_ck   CHECK (rating >= 1 AND rating <= 5),
-    PRIMARY KEY (client_id, item_id)
+    CONSTRAINT      rating_ck   CHECK (rating >= 1 AND rating <= 5)
 );
 
 CREATE TABLE temp_purchases(
