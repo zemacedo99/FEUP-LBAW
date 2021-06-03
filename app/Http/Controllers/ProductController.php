@@ -9,6 +9,7 @@ use App\Models\Supplier;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 
 class ProductController extends Controller
@@ -97,17 +98,19 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
+        // dd($request);
+        //return $request;
         $request->validate([
             'product_name' => 'required|string',
             'description' => 'required|string',
             'product_stock' => 'required|numeric',
             'product_price' => 'required|numeric',
             'supplierID' => 'required|integer',
+            'product_type' => 'required'
             // 'images' => 'required',            // 'sup_img' => '' 
         ]);
         // $request->file('image')->store('public/images');
-
+        
 
         // $supplier = Supplier::find($request->supplierID);
         // $this->authorize('create', $supplier);
@@ -131,6 +134,7 @@ class ProductController extends Controller
 
         if(is_null($request->tags))
         {
+            //TODO:
             dd("tags are emply");
             dd($request->tags);
         }
@@ -178,23 +182,26 @@ class ProductController extends Controller
             'unit' => $request->product_type,
         ]);
 
-
-        if ($request->has('images')) {
-
+        //dd($request->has('file'));
+        if ($request->has('file')) {
             // dd($request->file('images'));
-            foreach ($request->file('images') as $image) {
-
+            foreach ($request->file('file') as $image) {
+                
                 // dd($filename);
                 // dd($image);
                 //$upload_success = $image->move(storage_path('app/public/banners'), $image->getClientOriginalName());
-                $image->store('public/images');
 
-                $filename = $image->hashName();
+                // $image->move(public_path('images'),$imageName);
+                // dd($request->file('file'));
 
-                $path = "storage/images/";
-                $path = $path . $filename;
+                $imageName = substr(Hash::make($image->getClientOriginalName()), 0, 30); 
+                
+                $image->move(public_path('images'),$imageName);
 
-                // dd($path);
+
+                $path = "images/";
+                $path = $path . $imageName;
+
                 
                 $img = Image::create([
                     'path' => $path

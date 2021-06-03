@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+<form action="{{ $path }}" method="POST" id="form" enctype="multipart/form-data" required>
 
     <script src={{ asset('dropzone-5.7.0/dist/dropzone.js') }} defer> </script>
     <script type="text/javascript" src={{ asset('js/create_product.js') }} defer> </script>
@@ -46,7 +46,7 @@
 
 
             <div class="col-12 col-lg-4 justify-content-center">
-                <form action="{{ $path }}" method="POST" id="form" enctype="multipart/form-data" required>
+                
                     @isset($name)
                         @method('PUT')
                         <div style="display: none" id="edit"></div>
@@ -106,16 +106,7 @@
 
                     <div class="row justify-content-center">
                         <div class="row mb-3 "></div>
-                        <div class="col-12 col-lg-12 d-flex justify-content-center mb-4">
-
-                            <label class="custom-file-upload" for="sup_img">
-                                <i class="fa fa-cloud-upload"></i> Add pictures
-                            </label>
-                            {{-- para ter feedback tirar class="form-control d-none" --}}
-                            <input type="file" id="sup_img" name="images[]" aria-describedby="sup_img_addon" 
-                                aria-label="Upload" multiple accept="image/x-png,image/gif,image/jpeg"
-                                @isset($images) value="{{ $images }}" @endisset>
-                        </div>
+                        
 
 
                         {{-- <div class="row mb-1 "></div>
@@ -140,7 +131,7 @@
 
         <div class="row my-5">
             <span class="text-center">
-                <input type="submit" class="btn btn-primary" value="Confirmar" > 
+                <input type="submit" class="btn btn-primary" value="Confirmar" id="submit"> 
                 @isset($name)
                     <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i> Delete Product</button>
                 @endisset
