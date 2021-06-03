@@ -89,6 +89,7 @@ Route::post('/api/shipdetails', 'ShipDetailController@create');
 Route::get('/api/supplier', 'SupplierController@index');
 Route::get('/supplier', 'SupplierController@index');
 Route::get('/supplier/{id}', 'SupplierController@show')->name('supplierProfile');
+Route::put('/api/supplier/{id}', 'SupplierController@update');
 Route::get('/supplier/{id}/allproducts', 'SupplierController@allProducts')->name('supplier_all_products');
 Route::get('/supplier/{id}/bundles&coupons', 'SupplierController@bundles_and_coupons')->name('supplier_bundles_and_coupons');
 Route::post('/supplier', 'SupplierController@requestHandling');

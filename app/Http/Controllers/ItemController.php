@@ -280,11 +280,6 @@ class ItemController extends Controller
     {
         $items = Item::paginate(6);
 
-      
-        // $all = [];
-    
-
-        // $i = 0;
         foreach($items as $item)
         {
             $product = Product::find($item->id);
@@ -296,31 +291,18 @@ class ItemController extends Controller
                 $item->unit = null;
                 $item->image = null;
                 $item->supplier = $supplier;
-                // $all[$i] = [$item,null,null,$supplier];
             }
             else
             {
                 $item->unit = $product->unit;
                 $item->images = $product->images()->get();
                 $item->supplier = $supplier;
-
-                // dd($item);
-                // $all[$i] = [$item,$product->type,$product->images()->get(),$supplier];
             }
-            
-            // $i++;
+
         }
 
-        // $data =
-        // [
-        //     'items' => $all,
-        // ];
-
-        // dd($items[101]);
-        // $test = $items->paginate(6);
 
         return view('pages.misc.products_list', ["items" => $items]);
-
     }
 
 

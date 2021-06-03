@@ -247,6 +247,8 @@ class SupplierController extends Controller
 
         $data = 
         [
+            'path' => '/api/supplier/' . $id,
+            'id' => $supplier->id,
             'name' => $supplier->name,
             'email' => $email,
             'password' =>$password,
@@ -318,10 +320,59 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Supplier $supplier)
+    public function update(Request $request, $id)
     {
         // TODO - pedido PUT de /api/supplier/{id}
-        abort(501);
+
+        $supplier = Supplier::find($id);
+        
+    
+        $request->validate([
+            'supplier_name' => 'required|string',
+            'supplier_email' => 'required|string',
+            'description' => 'required|string',
+            'supplier_address' => 'required|string',
+            'supplier_post_code' => 'required|string',
+            'supplier_city' => 'required|string',
+        ]);
+
+
+
+
+        if($request->has('supplier_name')){
+            $supplier->name = $request->input('supplier_name'); 
+        }
+        
+        if($request->has('supplier_address')){
+            $supplier->address = $request->input('supplier_address'); 
+        }
+
+        if($request->has('supplier_post_code')){
+            $supplier->post_code = $request->input('supplier_post_code'); 
+        }
+
+        if($request->has('supplier_city')){
+            $supplier->city = $request->input('supplier_city'); 
+        }
+
+
+        if($request->has('description')){
+            $supplier->description = $request->input('description'); 
+        }
+        
+        $user = User::find($id);
+
+        if($request->has('supplier_email')){
+            $user->email = $request->input('supplier_email'); 
+        }
+        if($request->has('supplier_password')){
+            $user->password = $request->input('supplier_password'); 
+        }
+        
+        $supplier->save();
+        $user->save();
+        
+        return redirect(route('supplierProfile'  , ['id' => $id]) );
     }
 
     /**
