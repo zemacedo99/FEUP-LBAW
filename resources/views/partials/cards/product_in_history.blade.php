@@ -20,8 +20,8 @@
                                     data-bs-target="#modalCancelOrder"><i class="bi bi-x"></i> Cancel Order</button>
                             @break
                             @case('Paid')
-                            <button type="button" class="btn btn-success text-truncate"><i
-                                    class="bi bi-plus"></i> Leave/Edit a Review</button>
+                            <button type="button" class="btn btn-success text-truncate" data-bs-toggle="modal" data-bs-whatever="{{$item->id}}"
+                                data-bs-target="#modalReview"><i class="bi bi-plus"></i> Leave/Edit a Review</button>
                             @break
                             @case('Canceled')
                             <button disabled type="button" class="btn btn-secondary text-truncate">

@@ -130,12 +130,13 @@ setupClientProfile()
 updateProfile()
 updateShipping()
 
+// ---------------------- History ----------------------------------------------//
 
-historyModal()
+historyModals()
 
-function historyModal(){
-    let exampleModal = document.getElementById('modalCancelOrder')
-    exampleModal.addEventListener('show.bs.modal', function (event) {
+function historyModals(){
+    let cancelOrderModal = document.getElementById('modalCancelOrder')
+    cancelOrderModal.addEventListener('show.bs.modal', function (event) {
         // Button that triggered the modal
         let button = event.relatedTarget
         // Extract info from data-bs-* attributes
@@ -144,13 +145,29 @@ function historyModal(){
         // and then do the updating in a callback.
 
         // Update the modal's content.
-        let modalBodyInput = exampleModal.querySelector('#product_id_modal')
+        let modalBodyInput = cancelOrderModal.querySelector('#product_id_modal')
 
         modalBodyInput.value = recipient
     })
+    let reviewModal = document.getElementById('modalReview')
+    reviewModal.addEventListener('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        let button = event.relatedTarget
+        // Extract info from data-bs-* attributes
+        let recipient = button.getAttribute('data-bs-whatever')
+        // If necessary, you could initiate an AJAX request here
+        // and then do the updating in a callback.
+
+        // Update the modal's content.
+        let modalBodyInput = reviewModal.querySelector('#product_id_review')
+
+        modalBodyInput.value = recipient
+    })
+
 }
 
 document.getElementById('YesButtonModal').addEventListener('click', cancelOrder)
+document.getElementById('ConfirmReviewBtn').addEventListener('click', addReview)
 
 function cancelOrder(event){
     let product_id = document.getElementById('product_id_modal').value
@@ -161,4 +178,22 @@ function cancelOrder(event){
         location.reload()
     })
 }
+
+function addReview(event){
+    let product_id = document.getElementById('product_id_review').value
+    let client_id = document.getElementById('client_id').value
+    let rating = document.getElementById('rating').value
+    let comment = document.getElementById('comment').value
+    
+
+
+
+    sendAjaxRequest('post', '/api/review/' + client_id,
+    {'item_id': product_id, 'rating': rating, 'description': comment}, function(){
+        alert(this.status)
+        alert(this.responseText)
+        
+    })
+}
+
 

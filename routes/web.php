@@ -59,7 +59,7 @@ Route::delete('/api/coupon/{couponCode}', 'CouponController@destroy');
 
 // review
 Route::get('/api/review', 'ReviewController@index');
-Route::post('/api/review', 'ReviewController@create');
+Route::post('/api/review/{client:id}', 'ReviewController@create');
 Route::delete('/api/review', 'ReviewController@delete');
 Route::put('/api/review', 'ReviewController@update');
 

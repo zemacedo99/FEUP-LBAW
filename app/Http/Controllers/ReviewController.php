@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -30,28 +32,55 @@ class ReviewController extends Controller
      */
     public function create(Request $request)
     {
-
-     
         $request->validate([
-            'client_id' => 'required|integer',
-            'item_id' => 'required|integer',
-            'rating' => 'required|integer',
+            'item_id' => 'required|integer|exists:items,id',
+            'rating' => 'required|integer|gte:1|lte:5',
             'description' => 'required|string'
         ]);
 
+        $client_id = Auth::id();
+        $item_id = $request->input('item_id');
+        $rating = $request->input('rating');
+        $description = $request->input('description');
+            
+        $client = Client::find($client_id);
+        
+        //Authorization
+        if(!$this->boughtItem($client->purchases, $item_id)) return response('You need to buy the item first', 403);
 
-        $this->authorize('create', $item_id);
-   
 
+        
+        Review::where('client_id', $client_id)->where('item_id', $item_id)->delete();
+        
         $review = Review::create([
-            'client_id' => $request->input('client_id'),
-            'item_id' => $request->input('item_id'),
-            'rating' => $request->input('rating'),
-            'description' => $request->input('description'),
+            'client_id' => $client_id,
+            'item_id' => $item_id,
+            'rating' => $rating,
+            'description' => $description,
         ]);
-
+            
         return $review;
     }
+
+
+    /**
+     * Verifies if the client bought the item
+     */
+    private function boughtItem($purchases, $item_id){
+        foreach ($purchases as $purchase){
+            foreach ($purchase->items as $item){
+                if($item->id == $item_id){
+                    if($purchase->status == 'Paid'){
+                        return true;
+                    }else{
+                        return false;
+                    }       
+                }
+            }
+        }
+        return false;
+    }
+
 
     /**
      * Remove the specified resource from storage.
