@@ -67,6 +67,7 @@ Route::put('/api/review', 'ReviewController@update');
 
 // Product
 Route::get('/product/{id}', 'ProductController@edit')->name('edit_product');
+Route::get('/product/images/{id}', 'ProductController@images');
 
 Route::post('/api/bundle', 'ItemController@store');
 Route::get('/api/product', 'ProductController@index');

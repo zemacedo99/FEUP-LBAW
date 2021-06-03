@@ -67,6 +67,38 @@ Dropzone.options.myDropzone= {
     init: function() {
         dzClosure = this; // Makes sure that 'this' is understood inside the functions below.
 
+        
+        myDropzone = this;
+        let prodId=window.location.href.split("/").slice(-1)[0];
+        sendAjaxRequest('get',"/product/images/"+prodId,null,function(response){
+            console.log(response);
+            response=JSON.parse(response.currentTarget.response);
+            console.log(response);
+            console.log(typeof(response));
+
+            var mockFile;
+            for (let i=0; i<response.length; i++){
+                mockFile = { name: response[i].id, size: response[i].size, dataURL: "http://localhost:8000"+response[i].path };
+
+                myDropzone.emit("addedfile", mockFile);
+                myDropzone.emit("thumbnail", mockFile, response[i].path);
+                myDropzone.createThumbnailFromUrl(mockFile,
+                    myDropzone.options.thumbnailWidth, 
+                    myDropzone.options.thumbnailHeight,
+                    myDropzone.options.thumbnailMethod, true, function (thumbnail) 
+                        {
+                            myDropzone.emit('thumbnail', mockFile, thumbnail);
+                        });
+
+                myDropzone.emit("complete", mockFile);
+            }
+            
+            
+    
+        });
+            
+            
+
         // for Dropzone to process the queue (instead of default form behavior):
         document.getElementById("submit").addEventListener("click", function(e) {
             // Make sure that the form isn't actually being sent.
@@ -88,5 +120,7 @@ Dropzone.options.myDropzone= {
             formData.append("tags", document.getElementById("tags").value);        
             
         });
+
+        
     }
 }

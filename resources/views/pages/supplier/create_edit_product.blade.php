@@ -33,7 +33,7 @@
             <div class="col-6">
 
             @if(isset($images))
-                @include('partials.carousel_img',$images)
+                {{-- @include('partials.carousel_img',$images) --}}
             @else 
                 {{-- add a photo template --}}
                 {{-- @include('partials.carousel_img') --}}

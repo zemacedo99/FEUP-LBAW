@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
+use File;
 
 class ProductController extends Controller
 {
@@ -331,5 +332,21 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+    public function images(Product $id)
+    {
+        //
+        $images=$id->images()->get();
+        foreach($images as $im){
+            $im->size=File::size($im->path);
+            $im->path="/".$im->path;
+            //$size = File::size("public/".$im->path);
+            
+            //$im->size=$im->getSize();
+        }
+        
+        return $images;
+
     }
 }
