@@ -71,7 +71,7 @@
                     <label for="price">Price</label>
                     <div class="input-group">
                         <span class="input-group-text">€</span>
-                        <input type="number" step="1" class="form-control" min=0 id="bundle_price" name="bundle_price"
+                        <input type="number" step="0.01" class="form-control" min=0 id="bundle_price" name="bundle_price"
                             @isset($price) value="{{ $price }}" @endisset>
                         <div class="row" style="margin-left: 0.1em">
                             <small id="bundle_price_alert" class="text-danger"></small>

@@ -45,7 +45,6 @@ function removeOnBtn(element) {
 function addTag(tag) {
 
     var div = document.getElementById("dynamic_tags");
-    var tags = document.getElementById("tags");
 
     var btn = document.createElement("button");
     btn.type = 'button';
@@ -55,6 +54,6 @@ function addTag(tag) {
     btn.setAttribute('onclick', 'removeOnBtn( "' + tag + '" )');
     div.appendChild(btn);
     var t = document.getElementById("t");
-    t.value += tags.value + "/";
+    t.value += tag + "/";
 
 }

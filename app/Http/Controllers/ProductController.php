@@ -282,6 +282,9 @@ class ProductController extends Controller
          
         $item = Item::find($id);
         $product = Product::find($id);
+        $item->tags()->detach();
+
+        
         
         // $this->authorize('update', $item);
 
@@ -319,7 +322,7 @@ class ProductController extends Controller
         if(is_null($request->tags))
         {
             //TODO:
-            dd("tags are emply");
+            dd("tags are empty");
             dd($request->tags);
         }
         else
@@ -357,14 +360,6 @@ class ProductController extends Controller
         
             }
         }
-
-        dd($item->tags()->get());
-        
-        if($request->has('t')){
-            $tags = $rtags; 
-        }
-        
-
 
         $item->save();
         $product->save();

@@ -71,7 +71,7 @@
 
                     <div class="input-group">
                         <span class="input-group-text">€</span>
-                        <input type="number" step="1" class="form-control" min=0 id="product_price" name="product_price"
+                        <input type="number" step="0.01" class="form-control" min=0 id="product_price" name="product_price"
                             @isset($price) value="{{ $price }}" @endisset>
                         <select class="form-select" name="product_type" aria-label="Select type" id="product_type">
                             <option @isset($k) selected @endisset value="Kg">Kg</option>
