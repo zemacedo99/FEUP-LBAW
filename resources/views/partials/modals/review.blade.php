@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row ms-1">Maças Verdes</div>
+                <div class="row ms-1" id="product_name"></div>
                 <div class="row mb-1">
                     <div class="rating d-flex justify-content-end mb-2">
                         <input type="hidden" id="rating">

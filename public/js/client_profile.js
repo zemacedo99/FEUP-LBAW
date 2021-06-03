@@ -155,12 +155,14 @@ function historyModals(){
         let button = event.relatedTarget
         // Extract info from data-bs-* attributes
         let recipient = button.getAttribute('data-bs-whatever')
+        let productName = button.getAttribute('data-bs-product_name')
+        
         // If necessary, you could initiate an AJAX request here
         // and then do the updating in a callback.
 
         // Update the modal's content.
         let modalBodyInput = reviewModal.querySelector('#product_id_review')
-
+        reviewModal.querySelector('#product_name').innerHTML = productName
         modalBodyInput.value = recipient
     })
 
@@ -175,7 +177,7 @@ function cancelOrder(event){
     let product_id = document.getElementById('product_id_modal').value
     let client_id = document.getElementById('client_id').value
     
-    sendAjaxRequest('put', '/api/client/'  + '/purchases',
+    sendAjaxRequest('put', '/api/client/' + client_id + '/purchases',
     {'product_id': product_id}, function(){
         location.reload()
     })
