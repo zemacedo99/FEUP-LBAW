@@ -24,26 +24,26 @@ function validateForm(event) {
     }
 }
 
-function encodeForAjax(data) {
-    if (data == null) return null;
-    return Object.keys(data).map(function(k) {
-        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
-    }).join('&');
-}
+// function encodeForAjax(data) {
+//     if (data == null) return null;
+//     return Object.keys(data).map(function(k) {
+//         return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+//     }).join('&');
+// }
 
-function sendAjaxRequest(method, url, data, handler) {
+// function sendAjaxRequest(method, url, data, handler) {
 
-    let request = new XMLHttpRequest();
+//     let request = new XMLHttpRequest();
 
-    request.open(method, url, false);
-    if (method != 'get') {
-        request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    }
-    request.addEventListener('load', handler);
-    request.send(encodeForAjax(data));
-
-}
+//     request.open(method, url, false);
+//     if (method != 'get') {
+//         request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
+//         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+//     }
+//     request.addEventListener('load', handler);
+//     request.send(encodeForAjax(data));
+//     console.log(request.response);
+// }
 
 function toastshow()
 {
@@ -56,12 +56,12 @@ function toastshow()
 }
 
 Dropzone.options.myDropzone= {
-    url: 'upload.php',
+    url: document.getElementById("form").action,
     autoProcessQueue: false,
     uploadMultiple: true,
     parallelUploads: 5,
     maxFiles: 5,
-    maxFilesize: 1,
+    maxFilesize: 5,
     acceptedFiles: 'image/*',
     addRemoveLinks: true,
     init: function() {
@@ -77,8 +77,16 @@ Dropzone.options.myDropzone= {
 
         //send all the form data along with the files:
         this.on("sendingmultiple", function(data, xhr, formData) {
-            formData.append("firstname", jQuery("#firstname").val());
-            formData.append("lastname", jQuery("#lastname").val());
+            let csrf = document.querySelector('meta[name="csrf-token"]').content;
+            formData.append("_token", csrf);
+            formData.append("product_name", document.getElementById("product_name").value);
+            formData.append("supplierID", document.getElementById("supplierID").value);
+            formData.append("product_price", document.getElementById("product_price").value);
+            formData.append("product_type", document.getElementById("product_type").value);
+            formData.append("product_stock", document.getElementById("product_stock").value);
+            formData.append("description", document.getElementById("description").value);
+            formData.append("tags", document.getElementById("tags").value);        
+            
         });
     }
 }
