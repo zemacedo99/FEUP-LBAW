@@ -5,7 +5,7 @@
             'buttonPrimary'=>"Cancel",
             'buttonSecondary'=>"Dismiss",
             ]
-         )
+)
 
 @include('partials.modals.review')
 
@@ -15,7 +15,6 @@
         @include('partials.cards.product_in_history',
                 [
                     'item' => $item,
-                    'type' => 'cancel'
                 ])
     @endforeach
 @else

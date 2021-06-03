@@ -98,8 +98,19 @@ class ClientController extends Controller
         foreach ($client->purchases as $purchase){
             if ($purchase->type == 'SingleBuy'){
                 foreach ($purchase->items as $item){
-                    $this->check_product($item, $history_items);
+                    $product = $item->product();
+                    if($product){
+                        $item->unit = $product->unit;
+                        $item->image = $product->images[0]->path;
+                    } else {
+                        $item->unit = "Un";
+                        $item->image = "storage/products/bundle.jpg";
+                    }
+                    $item->status = $purchase->status;
+                    array_push($history_items, $item);
+                    
                 }
+                
             } else {
                 foreach ($purchase->items as $item){
                     $product = $item->product();
@@ -285,6 +296,7 @@ class ClientController extends Controller
 
         $request->validate([
             'n_items' => 'required|integer|gte:0',
+
             'periodic' => 'required',
         ]);
 
@@ -442,5 +454,33 @@ class ClientController extends Controller
 
         $temp_builder->delete();
         return redirect('success');
+    }
+
+    public function updatePurchase(Request $request, Client $client){
+
+        
+        $this->authorize('view', $client);
+
+        $request->validate([
+            'product_id' => 'required|integer|exists:items,id'
+        ]);
+
+        $product_id = $request->input('product_id');
+        
+
+        foreach ($client->purchases as $purchase){
+            foreach ($purchase->items as $item){
+                
+                if($item->id == $product_id){
+                    
+                    $purchase->status = 'Canceled';
+                    $purchase->save();
+                    return response('Canceled order', 204);
+                }
+            }
+
+        }
+
+        return response('Couldn\'t cancel order', 404);
     }
 }

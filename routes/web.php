@@ -157,6 +157,7 @@ Route::prefix('api/')->group(function(){
         Route::get('{client:id}','ClientController@get_info');
         Route::put('{client:id}','ClientController@update');
         Route::put('{client:id}/shipping','ClientController@updateShipping');
+        Route::put('{client:id}/purchases','ClientController@updatePurchase');
     });
 
     Route::prefix('supplier/')->group(function(){

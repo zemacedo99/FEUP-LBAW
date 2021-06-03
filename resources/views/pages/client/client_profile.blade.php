@@ -7,6 +7,7 @@
 @section('content')
 
 <div class="container">
+    <input type="hidden" id="client_id" value="{{Auth::id()}}">
 
     <div class="collapse show" id="profileHeader">
         <div class="row row-cols-1 row-cols-lg-3 mt-3 d-flex justify-content-center align-items-center" style="height: 200px;">

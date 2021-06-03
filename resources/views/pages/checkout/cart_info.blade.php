@@ -40,7 +40,7 @@ $user_id = \Illuminate\Support\Facades\Auth::id();
                         <h3 style='text-align:right;'> {{sizeof($items)}} items in your cart</h3>
                         <input type="hidden" value="{{sizeof($items)}}" name="n_items">
                     </div>
-                </div>  
+                </div>
             </div>
 
             <div class="col order-6">

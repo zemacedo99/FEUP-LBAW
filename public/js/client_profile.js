@@ -129,3 +129,36 @@ function updateShippingHandler(){
 setupClientProfile()
 updateProfile()
 updateShipping()
+
+
+historyModal()
+
+function historyModal(){
+    let exampleModal = document.getElementById('modalCancelOrder')
+    exampleModal.addEventListener('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        let button = event.relatedTarget
+        // Extract info from data-bs-* attributes
+        let recipient = button.getAttribute('data-bs-whatever')
+        // If necessary, you could initiate an AJAX request here
+        // and then do the updating in a callback.
+
+        // Update the modal's content.
+        let modalBodyInput = exampleModal.querySelector('#product_id_modal')
+
+        modalBodyInput.value = recipient
+    })
+}
+
+document.getElementById('YesButtonModal').addEventListener('click', cancelOrder)
+
+function cancelOrder(event){
+    let product_id = document.getElementById('product_id_modal').value
+    let client_id = document.getElementById('client_id').value
+    
+    sendAjaxRequest('put', '/api/client/' + client_id + '/purchases',
+    {'product_id': product_id}, function(){
+        location.reload()
+    })
+}
+

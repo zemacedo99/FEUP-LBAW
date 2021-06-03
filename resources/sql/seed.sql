@@ -24,6 +24,8 @@ DROP MATERIALIZED VIEW IF EXISTS fts_view_weights;
 DROP TYPE IF EXISTS unit_type           CASCADE;
 DROP TYPE IF EXISTS coupon_type         CASCADE;
 DROP TYPE IF EXISTS purchase_type       CASCADE;
+DROP TYPE IF EXISTS purchase_status     CASCADE;
+
 
 DROP INDEX IF EXISTS favorite_client                CASCADE;
 DROP INDEX IF EXISTS credit_card_client             CASCADE;
@@ -45,9 +47,10 @@ DROP FUNCTION IF EXISTS tag_search_update       CASCADE;
 
 
 -- Types
-CREATE TYPE unit_type       AS ENUM ('Kg', 'Un');
-CREATE TYPE coupon_type     AS ENUM ('%', '€');
-CREATE TYPE purchase_type   AS ENUM ('SingleBuy', 'Day', 'Week', 'Month');
+CREATE TYPE unit_type           AS ENUM ('Kg', 'Un');
+CREATE TYPE coupon_type         AS ENUM ('%', '€');
+CREATE TYPE purchase_type       AS ENUM ('SingleBuy', 'Day', 'Week', 'Month');
+CREATE TYPE purchase_status     AS ENUM ('InProgress', 'Canceled', 'Paid');
 
 -- Tables
 CREATE TABLE images (
@@ -125,7 +128,8 @@ CREATE TABLE purchases (
     sd_id           INTEGER             REFERENCES ship_details (id) ON UPDATE CASCADE ON DELETE SET NULL,
     cc_id           INTEGER             REFERENCES credit_cards (id) ON UPDATE CASCADE ON DELETE SET NULL,
     type            purchase_type       NOT NULL,
-    CONSTRAINT      amount_positive_ck  CHECK (paid > 0)
+    CONSTRAINT      amount_positive_ck  CHECK (paid > 0),
+    status          purchase_status     NOT NULL DEFAULT 'Paid'
     -- CONSTRAINT      old_date_ck         CHECK (purchase_date <= CURRENT_DATE)
 );
 
@@ -2116,82 +2120,29 @@ insert into image_product (product_id, image_id) values (73, 75);
 insert into image_product (product_id, image_id) values (74, 76);
 insert into image_product (product_id, image_id) values (75, 77);
 
--- insert into temp_purchases (client_id, total, type) values (1, 100,
--- insert into temp_purchases (client_id, total, type) values (2, 100,
--- insert into temp_purchases (client_id, total, type) values (3, 100,
--- insert into temp_purchases (client_id, total, type) values (4, 100,
--- insert into temp_purchases (client_id, total, type) values (5, 100,
--- insert into temp_purchases (client_id, total, type) values (6, 100,
--- insert into temp_purchases (client_id, total, type) values (7, 100,
--- insert into temp_purchases (client_id, total, type) values (8, 100,
--- insert into temp_purchases (client_id, total, type) values (9, 100,
--- insert into temp_purchases (client_id, total, type) values (10
--- insert into temp_purchases (client_id, total, type) values (11
--- insert into temp_purchases (client_id, total, type) values (12
--- insert into temp_purchases (client_id, total, type) values (13
--- insert into temp_purchases (client_id, total, type) values (14
--- insert into temp_purchases (client_id, total, type) values (15
--- insert into temp_purchases (client_id, total, type) values (16
--- insert into temp_purchases (client_id, total, type) values (17
--- insert into temp_purchases (client_id, total, type) values (18
--- insert into temp_purchases (client_id, total, type) values (19
--- insert into temp_purchases (client_id, total, type) values (20
--- insert into temp_purchases (client_id, total, type) values (21
--- insert into temp_purchases (client_id, total, type) values (22
--- insert into temp_purchases (client_id, total, type) values (23
--- insert into temp_purchases (client_id, total, type) values (24
--- insert into temp_purchases (client_id, total, type) values (25
--- insert into temp_purchases (client_id, total, type) values (27
--- insert into temp_purchases (client_id, total, type) values (28
--- insert into temp_purchases (client_id, total, type) values (29
--- insert into temp_purchases (client_id, total, type) values (30
--- insert into temp_purchases (client_id, total, type) values (31
--- insert into temp_purchases (client_id, total, type) values (32
--- insert into temp_purchases (client_id, total, type) values (33
--- insert into temp_purchases (client_id, total, type) values (34
--- insert into temp_purchases (client_id, total, type) values (35
--- insert into temp_purchases (client_id, total, type) values (36
--- insert into temp_purchases (client_id, total, type) values (37
--- insert into temp_purchases (client_id, total, type) values (38
--- insert into temp_purchases (client_id, total, type) values (39
--- insert into temp_purchases (client_id, total, type) values (39
--- insert into temp_purchases (client_id, total, type) values (40
--- insert into temp_purchases (client_id, total, type) values (40
--- insert into temp_purchases (client_id, total, type) values (41
--- insert into temp_purchases (client_id, total, type) values (42
--- insert into temp_purchases (client_id, total, type) values (43
--- insert into temp_purchases (client_id, total, type) values (44
--- insert into temp_purchases (client_id, total, type) values (45
--- insert into temp_purchases (client_id, total, type) values (46
--- insert into temp_purchases (client_id, total, type) values (461
--- insert into temp_purchases (client_id, total, type) values (47
--- insert into temp_purchases (client_id, total, type) values (48
--- insert into temp_purchases (client_id, total, type) values (49
--- insert into temp_purchases (client_id, total, type) values (50
 
-
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (1, 21.4, '2020-08-14', 1, 1, 'SingleBuy');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (2, 39.2, '2020-08-02', 2, 2, 'Month');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (3, 47.4, '2020-07-26', 3, 3, 'Week');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (4, 27.3, '2020-09-24', 4, 4, 'Month');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (5, 38.9, '2020-09-17', 5, 5, 'Week');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (6, 46.1, '2020-05-31', 6, 6, 'Day');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (7, 15.1, '2020-08-16', 7, 7, 'Day');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (8, 14.9, '2020-04-26', 8, 8, 'Week');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (9, 8.1, '2020-05-10', 9, 9, 'SingleBuy');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (10, 5.6, '2020-04-06', 10, 10, 'Week');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (11, 25.7, '2021-02-15', 11, 11, 'Month');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (12, 32.2, '2020-11-13', 12, 12, 'Day');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (13, 17.8, '2020-07-16', 13, 13, 'Month');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (14, 21.3, '2020-07-10', 14, 14, 'Day');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (15, 39.4, '2020-11-26', 15, 15, 'Month');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (16, 6.8, '2020-06-04', 16, 16, 'Week');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (17, 50.0, '2020-10-16', 17, 17, 'Week');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (18, 22.4, '2020-09-05', 8, 8, 'Day');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (19, 17.2, '2021-01-10', 8, 8, 'Month');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (20, 28.0, '2020-04-14', 8, 8, 'Month');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (21, 41.6, '2020-06-13', 8, 8, 'Week');
-insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (22, 13.6, '2020-08-05', 8, 8, 'Day');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (1, 21.4, '2020-08-14', 1, 1, 'SingleBuy', 'InProgress');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (2, 39.2, '2020-08-02', 2, 2, 'Month', 'InProgress');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (3, 47.4, '2020-07-26', 3, 3, 'Week', 'InProgress');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (4, 27.3, '2020-09-24', 4, 4, 'Month', 'Canceled');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (5, 38.9, '2020-09-17', 5, 5, 'Week', 'InProgress');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (6, 46.1, '2020-05-31', 6, 6, 'Day', 'InProgress');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (7, 15.1, '2020-08-16', 7, 7, 'Day', 'Canceled');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (8, 14.9, '2020-04-26', 8, 8, 'Week', 'InProgress');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (9, 8.1, '2020-05-10', 9, 9, 'SingleBuy', 'Canceled');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (10, 5.6, '2020-04-06', 10, 10, 'Week', 'InProgress');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (11, 25.7, '2021-02-15', 11, 11, 'Month', 'InProgress');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (12, 32.2, '2020-11-13', 12, 12, 'Day', 'Canceled');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (13, 17.8, '2020-07-16', 13, 13, 'Month', 'InProgress');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (14, 21.3, '2020-07-10', 14, 14, 'Day', 'Canceled');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (15, 39.4, '2020-11-26', 15, 15, 'Month', 'InProgress');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (16, 6.8, '2020-06-04', 16, 16, 'Week', 'InProgress');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (17, 50.0, '2020-10-16', 17, 17, 'Week', 'Canceled');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (18, 22.4, '2020-09-05', 8, 8, 'Day', 'InProgress');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (19, 17.2, '2021-01-10', 8, 8, 'Month', 'Canceled');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (20, 28.0, '2020-04-14', 8, 8, 'Month', 'InProgress');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (21, 41.6, '2020-06-13', 8, 8, 'Week', 'Canceled');
+insert into purchases (client_id, paid, created_at, sd_id, cc_id, type, status) values (22, 13.6, '2020-08-05', 8, 8, 'Day', 'InProgress');
 insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (23, 33.5, '2021-03-07', 8, 8, 'Month');
 insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (24, 23.0, '2020-10-07', 8, 8, 'Week');
 insert into purchases (client_id, paid, created_at, sd_id, cc_id, type) values (25, 29.1, '2020-08-12', 8, 8, 'Month');
