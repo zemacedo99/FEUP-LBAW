@@ -1,5 +1,5 @@
 @isset($images)
-    <div id="mainContainer" class="col-12 col-lg-6 mb-5 mb-lg-0">
+    <div id="mainContainer" class="col-12 col-lg-6 mb-5 mb-lg-0 " >
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
             <div class="carousel-indicators">
                 @php
@@ -27,12 +27,12 @@
                 @endphp
                 @foreach ($images as $image)
                     @if ($count == 0)
-                        <div class="carousel-item active">
-                            <img src="{{ asset($image->path) }}" class="d-block w-100" alt="...">
+                        <div class="carousel-item active" style="height: 275px; max-height: 275px;">
+                            <img src="{{ asset($image->path) }}" class="d-block w-100" alt="product image" style="height:100%; width:100%">
                         </div>
                     @else
-                        <div class="carousel-item ">
-                            <img src="{{ asset($image->path) }}" class="d-block w-100" alt="...">
+                        <div class="carousel-item " style="height: 275px; max-height: 275px;">
+                            <img src="{{ asset($image->path) }}" class="d-block w-100" alt="product image" style="height:100%; width:100%">
                         </div>
                     @endif
 
