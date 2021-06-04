@@ -363,14 +363,21 @@ class ProductController extends Controller
 
 
         //dd($request->has('file'));
-        dd($request->file);
+        
         if ($request->has('file')) {
-            $product->images()->detach();
+            
+            $oldphotos=explode(' ,',$request->oldPhotos);
+            foreach($product->images()->get() as $image){
+                if(!in_array(strval($image->id), $oldphotos)){
+                    $product->images()->detach($image);
+                }
+            }
+            //$product->images()->detach();
             
             foreach ($request->file('file') as $image) {
                 
                
-                $imageName = substr(Hash::make($image->getClientOriginalName()), 0, 30); 
+                $imageName = md5($image->getClientOriginalName() . time()); 
                 
                 $image->move(public_path('images'),$imageName);
 

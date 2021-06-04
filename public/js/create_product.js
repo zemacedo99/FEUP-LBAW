@@ -121,6 +121,12 @@ Dropzone.options.myDropzone = {
             formData.append("product_stock", document.getElementById("product_stock").value);
             formData.append("description", document.getElementById("description").value);
             formData.append("t", document.getElementById("t").value);
+            let s="";
+            for (let i=0;i<myDropzone.files.length;i++){
+                s+=myDropzone.files[i].name+" ,";
+            }
+            formData.append("oldPhotos", s);
+            console.log(myDropzone.files);
 
         });
 
