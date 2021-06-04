@@ -43,12 +43,13 @@
 
         @isset($suppliers)
             @foreach ( $suppliers as $supplier)
-            @include('partials.cards.supplier',[
-                'name' => $supplier->name,
-                'address' => $supplier->address,
-                'description' => $supplier->description,
-                'image' => $supplier->image,
-                ])
+                @include('partials.cards.supplier',[
+                    'id' => $supplier->id,
+                    'name' => $supplier->name,
+                    'address' => $supplier->address,
+                    'description' => $supplier->description,
+                    'image' => $supplier->image,
+                    ])
             @endforeach
             @include('partials.pages',['link'=>"suppliers",'paginator'=>$suppliers])
         @endisset
