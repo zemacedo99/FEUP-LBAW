@@ -365,9 +365,10 @@ class SupplierController extends Controller
         if($request->has('supplier_email')){
             $user->email = $request->input('supplier_email'); 
         }
-        if($request->has('supplier_password')){
-            $user->password = $request->input('supplier_password'); 
-        }
+
+        // if($request->has('supplier_password')){
+        //     $user->password = $request->input('supplier_password'); 
+        // }
         
         $supplier->save();
         $user->save();

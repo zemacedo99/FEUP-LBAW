@@ -61,10 +61,6 @@ class ItemController extends Controller
 
         $items = Item::where('supplier_id', '=', $id)->get();
 
-
-        $products = [];
-
-        $i = 0;
         foreach($items as $item)
         {
             $product = Product::find($item->id);
@@ -75,19 +71,17 @@ class ItemController extends Controller
             }
             else
             {
-                $products[$i] = [$item,$product->type,$product->images()->get()];
+                $item->unit = $product->type;
+                $item->images = $product->images()->get();
             }
             
-            
-            $i++;
         }
-
 
         $data = [
             'title' => 'Create Bundle',
             'path' => '/api/bundle',
             'alltags' => $tags,
-            'products' => $products,
+            'products' => $items,
         ];
 
         return view('pages.supplier.create_edit_bundle', $data);
