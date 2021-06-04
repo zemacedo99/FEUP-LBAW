@@ -1,11 +1,4 @@
-@include('partials.modals.add_modal',
-            ['modalName'=>"CancelOrder",
-            'title'=>"Cancelation Confirmation",
-            'bodyText'=>"Are you sure you want to cancel this order?",
-            'buttonPrimary'=>"Cancel",
-            'buttonSecondary'=>"Dismiss",
-            ]
-)
+@include('partials.modals.cancel_modal')
 
 @include('partials.modals.review')
 

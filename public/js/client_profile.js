@@ -145,7 +145,7 @@ function historyModals(){
         // and then do the updating in a callback.
 
         // Update the modal's content.
-        let modalBodyInput = cancelOrderModal.querySelector('#product_id_modal')
+        let modalBodyInput = cancelOrderModal.querySelector('.product_id_modal')
 
         modalBodyInput.value = recipient
     })
@@ -174,7 +174,9 @@ document.getElementById('deleteReview').addEventListener('click', removeReview)
 
 
 function cancelOrder(event){
-    let product_id = document.getElementById('product_id_modal').value
+    console.log(event)
+
+    let product_id = event.target.parentNode.parentNode.parentNode.querySelector('.product_id_modal').value
     let client_id = document.getElementById('client_id').value
     
     sendAjaxRequest('put', '/api/client/' + client_id + '/purchases',

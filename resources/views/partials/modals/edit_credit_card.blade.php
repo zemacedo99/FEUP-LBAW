@@ -17,7 +17,7 @@
                 <div class="row mb-3">
                     <div class="col">
                         <div class="form-floating">
-                            <input type="month" class="form-control" id="valid_until:{{$i}}" name="valid_until" placeholder="Valid until" value ="{{$cc->expiration}}">
+                            <input type="month" class="form-control" id="valid_until:{{$i}}" name="valid_until" value ="{{$cc->expiration}}">
                             <label for="valid_until">Valid until</label>
                         </div>
                     </div>

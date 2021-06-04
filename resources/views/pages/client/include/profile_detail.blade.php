@@ -39,7 +39,7 @@
                 <div class="row mb-3">
                     <div class="col">
                         <div class="form-floating">
-                            <input type="month" class="form-control" id="editCCDate" placeholder="Valid until">
+                            <input type="month" class="form-control" id="editCCDate">
                             <label for="editCCDate">Valid until</label>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                 <div class="row mb-3">
                     <div class="col">
                         <div class="form-floating">
-                            <input type="month" class="form-control" id="addCCDate" placeholder="Valid until">
+                            <input type="month" class="form-control" id="addCCDate" >
                             <label for="addCCDate">Valid until</label>
                         </div>
                     </div>
@@ -144,20 +144,20 @@
             <label class="btn btn-primary" for="sup_img">
                 Profile Pic
             </label>
-            <input type="file" class="form-control d-none" id="sup_img" aria-describedby="sup_img_addon" aria-label="Upload">
+            <input type="file" class="form-control d-none" id="sup_img" aria-label="Upload">
         </div>
         <div class="col-12 col-lg-12 d-flex justify-content-around mb-4">
             <div class="row-6 d-flex justify-content-center">
                 <label class="btn btn-primary" for="update_data">
                     Update Profile Info
                 </label>
-                <input type="button" class="form-control d-none" id="update_data">
+                <button  class="btn btn-primary form-control d-none" id="update_data"></button>
             </div>
             <div class="row-6 d-flex justify-content-center">
                 <label class="btn btn-primary" for="update_shipping">
                     Update Shipping Details
                 </label>
-                <input type="button" class="form-control d-none" id="update_shipping">
+                <button  class="btn btn-primary form-control d-none" id="update_shipping"></button>
             </div>
 
         </div>
