@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row mt-5 justify-content-center">
             <div class="col-12 col-md-10">
-                <img class="img-fluid" src="{{ asset('storage/garden_remake.jpg') }}" alt="Photo of a garden" height="400px">
+                <img class="img-fluid" src="{{ asset('storage/garden_remake.jpg') }}" alt="Photo of a garden" height="400">
             </div>
         </div>
 

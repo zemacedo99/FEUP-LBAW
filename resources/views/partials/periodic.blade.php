@@ -15,7 +15,7 @@
 
                             <div class="row">
 
-                                <ul class="nav nav-pills mb-3 d-flex justify-content-evenly" id="pills-tab" role="tablist">
+                                <ul class="nav nav-pills mb-3 d-flex justify-content-evenly" role="tablist">
                                     <li class="nav-item" role="presentation">
                                         <label data-bs-toggle="pill" data-bs-target="#pills-once"  class="periodic" id="SingleBuy" >Once</label>
                                     </li>
@@ -32,7 +32,7 @@
 
                                 <div class="row mb-3"></div>
 
-                                <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-content" >
                                     <div class="tab-pane fade text-center" id="pills-once" role="tabpanel" >One time purchase</div>
                                     <div class="tab-pane fade text-center" id="pills-daily" role="tabpanel">Daily purchase the products in this cart</div>
                                     <div class="tab-pane fade text-center" id="pills-weekly" role="tabpanel">

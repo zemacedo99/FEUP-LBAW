@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="form-floating">
                             <textarea class="form-control" placeholder="Leave a comment here" id="comment" style="height: 100px"></textarea>
-                            <label for="floatingTextarea2" class="ps-4 pt-2">Comment</label>
+                            <label for="comment" class="ps-4 pt-2">Comment</label>
                         </div>
                     </div>
                 </div>

@@ -258,7 +258,7 @@ class ClientController extends Controller
         $user = User::find($client->id);
 
         if(is_null($client) || is_null($user)){
-            return abort(404)
+            return abort(404);
         }
         $client->delete();
         $user-> delete();

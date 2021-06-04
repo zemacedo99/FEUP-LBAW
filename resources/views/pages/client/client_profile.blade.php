@@ -12,7 +12,7 @@
     <div class="collapse show" id="profileHeader">
         <div class="row row-cols-1 row-cols-lg-3 mt-3 d-flex justify-content-center align-items-center" style="height: 200px;">
             <div class="col col-sm-1" style="width: 200px;">
-                <img src="{{ asset($client->image->path) }}" class="rounded-circle img-fluid">
+                <img src="{{ asset($client->image->path) }}" class="rounded-circle img-fluid" alt="Profile image">
             </div>
             <div class="col col-sm-3 col-md-8 col-lg-9 col-xl-9 col-xxl-10 d-flex justify-content-center justify-content-sm-start ps-3 fs-2">{{ $client->name }}</div>
         </div>
@@ -22,7 +22,7 @@
             data-bs-target="#profileHeader" aria-expanded="true" aria-controls="profileHeader"></button>
 
     <div class="row mt-4 ps-0 ps-sm-4">
-        <ul class="nav nav-pills mb-3 d-flex justify-content-center justify-content-sm-start" id="pills-tab" role="tablist">
+        <ul class="nav nav-pills mb-3 d-flex justify-content-center justify-content-sm-start" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="pills-purchase-history-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-purchase-history" type="button" role="tab"
@@ -46,7 +46,7 @@
         </ul>
     </div>
 
-    <div class="tab-content ps-3" id="pills-tabContent">
+    <div class="tab-content ps-3" >
         <div class="tab-pane fade show active" id="pills-purchase-history" role="tabpanel"
              aria-labelledby="pills-purchase-history-tab">@include('pages.client.include.history')</div>
         <div class="tab-pane fade" id="pills-favorites" role="tabpanel"

@@ -19,7 +19,7 @@
                 <div class="row mb-3">
                     <div class="col">
                         <div class="form-floating">
-                            <input type="month" class="form-control" id="valid_until" name="valid_until" placeholder="Valid until">
+                            <input type="month" class="form-control" id="valid_until" name="valid_until" >
                             <label for="valid_until">Valid until</label>
                         </div>
                         <small id="valid_until_alert" class="text-danger"></small>
