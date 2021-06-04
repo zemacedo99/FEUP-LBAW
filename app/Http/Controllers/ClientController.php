@@ -13,6 +13,7 @@ use App\Models\ShipDetail;
 use App\Models\Purchase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
@@ -201,7 +202,7 @@ class ClientController extends Controller
         }
 
         if($request->has('password') && !is_null($request->input('password'))){
-            $user->password = $request->input('password');
+            $user->password = Hash::make($request->input('password'));
         }
 
         if($request->has('name')){
@@ -398,7 +399,7 @@ class ClientController extends Controller
     }
 
     public function payment($id){
-        
+
         if(!is_numeric($id)){
             return abort(404);
         }
