@@ -30,9 +30,8 @@ class ItemController extends Controller
 
     public function admin_list(Request $request)
     {
-        if(auth()->user()==null||!auth()->user()->is_admin){
-            return response('', 404)->header('description','Page does not exist');
-        }
+      
+        $this->authorize('update',Item::class);
         
         $products=Item::orderby('active','desc')->orderBy('id','asc');
 
@@ -135,8 +134,8 @@ class ItemController extends Controller
 
         if(is_null($request->tags))
         {
-            dd("tags are emply");
-            dd($request->tags);
+        //     dd("tags are emply");
+        //     dd($request->tags);
         }
         else
         {
@@ -338,7 +337,7 @@ class ItemController extends Controller
         $alltags = Tag::get();
         $itemtags = $item->tags();
 
-        // $this->authorize('update', $item);
+        $this->authorize('update', $item);
 
         $supplierItems = $supplier->items()->get();
 
@@ -442,7 +441,7 @@ class ItemController extends Controller
         
         $item = Item::find($id);
         
-        //$this->authorize('delete', $item);
+        $this->authorize('delete', $item);
 
 
         if($item == null){

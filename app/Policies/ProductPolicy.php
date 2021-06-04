@@ -5,12 +5,27 @@ namespace App\Policies;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Supplier;
+use App\Models\Item;
 use Faker\Provider\ar_JO\Person;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProductPolicy
 {
     use HandlesAuthorization;
+
+    /**
+     * Perform pre-authorization checks.
+     *
+     * @param  \App\Models\User  $user
+     * @param  string  $ability
+     * @return void|bool
+     */
+    public function before(User $user)
+    {
+        if ($user->is_admin === true) {
+            return true;
+        }
+    }
 
     /**
      * Determine whether the user can view any models.
@@ -56,7 +71,8 @@ class ProductPolicy
      */
     public function update(User $user, Product $product)
     {
-        //
+        $item = Item::find($product->id);
+        return $user->id === $item->supplier_id;
     }
 
     /**

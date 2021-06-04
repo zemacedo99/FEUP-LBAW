@@ -271,6 +271,7 @@ class SupplierController extends Controller
         if(auth()->user()==null||!auth()->user()->is_admin){
             return response('', 404)->header('description','Page does not exist');
         }
+        $this->authorize('update',Supplier::class);
 
         $suppliers=Supplier::where('accepted', 'false');
        

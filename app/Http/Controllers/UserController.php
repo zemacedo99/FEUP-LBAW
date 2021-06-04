@@ -29,6 +29,7 @@ class UserController extends Controller
         if(auth()->user()==null||!auth()->user()->is_admin){
             return response('', 404)->header('description','Page does not exist');
         }
+        
         $users=User::all();
         $search=$request->search;
         if($search!=null){        
