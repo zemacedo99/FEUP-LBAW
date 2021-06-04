@@ -83,7 +83,7 @@ class CouponController extends Controller
         $coupon = Coupon::where('code', $couponCode)->get();
 
         if($coupon->isEmpty()){
-            return abort(404,'Coupon not found')
+            return abort(404,'Coupon not found');
         }
         return $coupon;
     }

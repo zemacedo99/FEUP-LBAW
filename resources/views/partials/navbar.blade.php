@@ -46,48 +46,36 @@
         <!-- navbar profile and cart buttons -->
         <div class="navbar-nav ms-auto">
             <div class="col align-items-end">
-
-                <a  
+                
+                <button type="button" class="headericon" 
+                    @guest
+                    data-bs-toggle="modal"
+                    data-bs-target="#loginModal"
+                    @endguest
                     @auth
-                        @if (app('App\Models\Client')::find(Auth::user()->id) != null)
 
-                        href="{{ route('client_profile'  , ['client' => \Illuminate\Support\Facades\Auth::id()])}}"
+                        @if (app('App\Models\Client')::find(Auth::user()->id) != null)
+                            onclick="window.location.href=' {{ route('client_profile'  , ['client' => \Illuminate\Support\Facades\Auth::id()])}}';"
                         
                         @elseif (Auth::check() && Auth::user()->is_admin) 
-
-                        href="{{ route('dashboard') }}"
+                            onclick="window.location.href='{{ route('dashboard') }}';"
 
                         @else
-                            href="{{ route('supplierProfile'  , ['id' => \Illuminate\Support\Facades\Auth::id()])}}"
+                            onclick="window.location.href=' {{ route('supplierProfile'  , ['id' => \Illuminate\Support\Facades\Auth::id()])}}';"   
                         @endif
-                        
-                    
                     @endauth
-                    >
-                    <button type="button" class="headericon" 
-                            @guest
-                            data-bs-toggle="modal"
-                            data-bs-target="#loginModal"
-                            @endguest
-                            >account_circle
+
+                    >account_circle
                             
-                    </button>
-                </a>
+                </button>
 
                 @auth
                 <a href="{{ route('logout')}}"> <button type="button" class="headericon" >logout</button> </a>
                 @endauth
-
-                <a href="
-                @auth
-                {{ route('checkout'  , ['id' => \Illuminate\Support\Facades\Auth::id()]) }}
-                @endauth
-                @guest
-                {{ route('register') }}
-                @endguest
-                ">
-                    <button type="button" class="headericon">shopping_cart</button>
-                </a>
+                <button type="button" class="headericon" 
+                    onclick="window.location.href='@auth {{ route('checkout'  , ['id' => \Illuminate\Support\Facades\Auth::id()]) }} @endauth @guest {{ route('register') }} @endguest'">
+                    shopping_cart
+                </button>
             </div>
         </div>
     </div>
