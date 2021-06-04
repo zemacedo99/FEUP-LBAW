@@ -368,7 +368,7 @@ class SupplierController extends Controller
         }
 
         if($request->has('supplier_password') && !is_null($request->input('supplier_password'))){
-            // $user->password = Hash::make($request->input('supplier_password'));
+            $user->password = Hash::make($request->input('supplier_password'));
         }
 
         

@@ -19,7 +19,11 @@
                 Filters
             </button>
         </div>
-        @include('partials.order_by')
+        @isset($items)
+            <form class="d-flex" method="GET" action="/items">
+                @include('partials.order_by')
+            </form>
+        @endisset
     </div>
 
     <div class="row">

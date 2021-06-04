@@ -16,6 +16,8 @@ use App\Models\TempPurchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function PHPUnit\Framework\isNull;
+
 class ItemController extends Controller
 {
     /**
@@ -272,8 +274,31 @@ class ItemController extends Controller
 
     public function list(Request $request)
     {
-        // dd($request->order_by);
+
         $items = Item::paginate(6);
+        if($request->orderby != null)
+        {
+            switch (strval($request->orderby[0])) 
+            {
+                case "none":
+                    break;
+                case "Price Up":
+                    $items = Item::orderBy('price', 'desc')->paginate(6);
+                    break;
+                case "Price Down":
+                    $items = Item::orderBy('price', 'asc')->paginate(6);
+                    break;
+                case "Stock Up":
+                    $items = Item::orderBy('stock', 'desc')->paginate(6);
+                    break;
+                case "Stock Down":
+                    $items = Item::orderBy('stock', 'asc')->paginate(6);
+                    break;
+            }
+        }
+
+
+      
 
         foreach($items as $item)
         {
