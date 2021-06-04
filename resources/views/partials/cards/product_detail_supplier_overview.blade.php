@@ -23,8 +23,11 @@
                 </div>
                 <div class="row">
                     <div class="col"></div>
+
                     <div class="col-3">
-                        <button class="btn btn-primary prod_ovrw">Add</button>
+                        @isset($add)
+                            <button class="btn btn-primary prod_ovrw">Add</button>
+                        @endisset    
                     </div>
                 </div>
             </div>

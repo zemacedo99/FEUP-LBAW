@@ -18,7 +18,10 @@
                         'description' => $product->description,
                         'unit' => $product->unit,
                         'images' => $product->images,
+                        'add' => true    
                     ];
+                    
+
                     @endphp
                     {{-- todo: find a way to select the card and get the value  --}}
                     @include('partials.cards.product_detail_supplier_overview',$data)
