@@ -130,6 +130,9 @@ Dropzone.options.myDropzone = {
 
         });
 
+        myDropzone.on("success", function(file, responseText) {
+            window.location.href = "/items/"+responseText;
+          });
       
     }
 }
