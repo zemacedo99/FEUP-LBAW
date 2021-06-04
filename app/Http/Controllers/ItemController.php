@@ -28,12 +28,20 @@ class ItemController extends Controller
         return Item::all();
     }
 
-    public function admin_list()
+    public function admin_list(Request $request)
     {
-        if(auth()->user()==null||!auth()->user()->is_admin){
-            return abort(404);
+      
+        $this->authorize('update',Item::class);
+        
+        $products=Item::orderby('active','desc')->orderBy('id','asc');
+
+        $search=$request->search;
+        if($search!=null){        
+            $products=$products->whereRaw('search @@ to_tsquery(\'english\', ?)', [$search])
+            ->orderByRaw('ts_rank(search, to_tsquery(\'english\', ?)) DESC', [$search]);
         }
-        $products=Item::orderBy('id','asc')->paginate(8);
+
+        $products=$products->paginate(8);
 
         return view('pages.admin.products',['items'=>$products->withPath('dashboard_products')]);
     }
@@ -126,8 +134,8 @@ class ItemController extends Controller
 
         if(is_null($request->tags))
         {
-            dd("tags are emply");
-            dd($request->tags);
+        //     dd("tags are emply");
+        //     dd($request->tags);
         }
         else
         {
@@ -197,6 +205,7 @@ class ItemController extends Controller
             'description' => $item->description,
             'rating' => $item->rating,
             'is_bundle' => $item->is_bundle,
+            'active'=>$item->active
         ];
 
         if(!$item->is_bundle){
@@ -272,7 +281,7 @@ class ItemController extends Controller
 
     public function list()
     {
-        $items = Item::paginate(6);
+        $items = Item::where('active','=','true')->paginate(6);
 
         foreach($items as $item)
         {
@@ -328,7 +337,7 @@ class ItemController extends Controller
         $alltags = Tag::get();
         $itemtags = $item->tags();
 
-        // $this->authorize('update', $item);
+        $this->authorize('update', $item);
 
         $supplierItems = $supplier->items()->get();
 
@@ -429,8 +438,7 @@ class ItemController extends Controller
         if(!is_numeric($id)){
             return abort(404, 'The item was not found');
         }
-
-
+        
         $item = Item::find($id);
         
         $this->authorize('delete', $item);

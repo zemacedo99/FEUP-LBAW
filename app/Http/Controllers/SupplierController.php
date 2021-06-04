@@ -31,7 +31,7 @@ class SupplierController extends Controller
 
     public function list()
     {
-        $suppliers = Supplier::paginate(6);
+        $suppliers = Supplier::where('accepted','=','true')->paginate(6);
 
         // $all = [];
         // $i = 0;
@@ -159,7 +159,7 @@ class SupplierController extends Controller
         $supplier = Supplier::find($id);
 
         $image = Image::find($supplier->image_id);
-        $items = Item::where('supplier_id', '=', $id)->paginate(4);
+        $items = Item::where('supplier_id', '=', $id)->where('active','=','true')->paginate(4);
         $alltems = Item::where('supplier_id', '=', $id)->get();
 
         $stars = 0;
@@ -191,6 +191,7 @@ class SupplierController extends Controller
             }
         }
 
+        
 
         $data =
         [
@@ -203,6 +204,7 @@ class SupplierController extends Controller
             'image' => $image,
             'stars' => $stars,
             'items' => $items,
+            'email' => User::find($id)->email
         ];
 
         return view('pages.misc.supplier_detail', $data);
@@ -223,7 +225,7 @@ class SupplierController extends Controller
         $email = auth()->user()->email;
         $password =  auth()->user()->password;
 
-        $items =  $supplier->items()->get();
+        $items =  $supplier->items()->where('active','=','true')->get();
         $all = [];
 
         $i = 0;
@@ -265,23 +267,32 @@ class SupplierController extends Controller
         return view('pages.supplier.supplier_profile',$data);
     }
 
-    public function requests(){
+    public function requests(Request $request){
         if(auth()->user()==null||!auth()->user()->is_admin){
             return abort(404, 'Page does not exist');
         }
+        $this->authorize('update',Supplier::class);
 
-        $suppliers=Supplier::where('accepted', 'false')->paginate(8);
+        $suppliers=Supplier::where('accepted', 'false');
+       
+        $search=$request->search;
+        if($search!=null){        
+            $suppliers=$suppliers->whereRaw('search @@ to_tsquery(\'english\', ?)', [$search])
+            ->orderByRaw('ts_rank(search, to_tsquery(\'english\', ?)) DESC', [$search]);
+        }
 
+        $suppliers=$suppliers->paginate(8);
         return view('pages.admin.requests',['suppliers'=>$suppliers]);
     }
 
     public function requestHandling(Request $request){
+        $supplier=Supplier::find($request->supplier_id);
         if ($request->accept=="1"){
-            Supplier::where('id','=',$request->supplier_id)->update(['accepted'=>"true"]);
+            return $supplier->update(['accepted'=>"true"]);
+        }else if ($request->accept=="0"){
+            return $this->delete($supplier->id);
         }else{
-            //return Supplier::where('id','=',$request->supplier_id)->get();
-            //Supplier::where('id','=',$request->supplier_id)->delete();//not working
-            User::where('id','=',$request->supplier_id)->delete();//not working
+            return response('', 500)->header('description','Invalid request parametrization');
         }
 
     }
@@ -382,9 +393,10 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Supplier $supplier)
+    public function delete($id)
     {
-        //
+        return User::find($id)->delete();
+        
     }
 
 

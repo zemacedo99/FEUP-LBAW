@@ -253,14 +253,14 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        $this->authorize('view', $client);
+        $this->authorize('delete', $client);
 
         $user = User::find($client->id);
 
         if(is_null($client) || is_null($user)){
             return abort(404);
         }
-        $client->delete();
+        //$client->delete();
         $user-> delete();
 
         return redirect()->route('homepage');

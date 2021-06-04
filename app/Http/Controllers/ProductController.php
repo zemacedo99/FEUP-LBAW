@@ -216,7 +216,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         $alltags = Tag::get();
         $itemtags = $item->tags()->get();
-        // $this->authorize('update', $product);
+        $this->authorize('update', $product);
 
 
         $data = [

@@ -12,6 +12,21 @@ class ItemPolicy
 {
     use HandlesAuthorization;
 
+
+    /**
+     * Perform pre-authorization checks.
+     *
+     * @param  \App\Models\User  $user
+     * @param  string  $ability
+     * @return void|bool
+     */
+    public function before(User $user)
+    {
+        if ($user->is_admin === true) {
+            return true;
+        }
+    }
+
     /**
      * Determine whether the user can view any models.
      *
@@ -20,7 +35,7 @@ class ItemPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return false;
     }
 
     /**
@@ -73,7 +88,7 @@ class ItemPolicy
      */
     public function delete(User $user, Item $item)
     {
-        return $user->id === $item->supplier_id;
+        return $user->id === $item->supplier_id||$user->is_admin;
     }
 
     /**
@@ -99,4 +114,6 @@ class ItemPolicy
     {
         //
     }
+
+    
 }

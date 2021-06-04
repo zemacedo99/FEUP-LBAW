@@ -24,6 +24,9 @@ Route::view('upload', 'upload');
 Route::post('upload',[UploadController::class,'index']);
 
 Route::get('/search', 'SearchController@show');
+Route::get('dashboard_requests/search', 'SupplierController@requests');
+Route::get('dashboard_products/search', 'ItemController@admin_list');
+Route::get('dashboard_clients/search', 'UserController@admin_index');
 Route::get('/api/search/{page}/filter', 'SearchController@filter');
 
 
@@ -31,6 +34,7 @@ Route::get('/suppliers/{id}', 'SupplierController@supplier_detail')->name('suppl
 Route::get('/items/{id}', 'ItemController@show')->name('item_detail');
 Route::get('/items', 'ItemController@list')->name('items');
 Route::get('/suppliers', 'SupplierController@list')->name('suppliers');
+
 
 Route::view('/about_us', 'pages.misc.about_us')->name('about_us');
 Route::view('/bundle_detail', 'pages.misc.bundleDetail');
@@ -97,6 +101,7 @@ Route::put('/api/supplier/{id}', 'SupplierController@update');
 Route::get('/supplier/{id}/allproducts', 'SupplierController@allProducts')->name('supplier_all_products');
 Route::get('/supplier/{id}/bundles&coupons', 'SupplierController@bundles_and_coupons')->name('supplier_bundles_and_coupons');
 Route::post('/supplier', 'SupplierController@requestHandling');
+Route::delete('/supplier/{id}', 'SupplierController@delete');
 
 // Client
 Route::get('/api/client', 'ClientController@index');
