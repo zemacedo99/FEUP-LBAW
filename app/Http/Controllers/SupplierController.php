@@ -9,6 +9,7 @@ use App\Models\Image;
 use App\Models\Item;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class SupplierController extends Controller
 {
@@ -366,9 +367,10 @@ class SupplierController extends Controller
             $user->email = $request->input('supplier_email'); 
         }
 
-        // if($request->has('supplier_password')){
-        //     $user->password = $request->input('supplier_password'); 
-        // }
+        if($request->has('supplier_password') && !is_null($request->input('supplier_password'))){
+            // $user->password = Hash::make($request->input('supplier_password'));
+        }
+
         
         $supplier->save();
         $user->save();
