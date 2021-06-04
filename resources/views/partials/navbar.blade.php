@@ -11,16 +11,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" id="navLinks" href="{{ route('items') }}">Products</a>
+                    <a class="nav-link navLinks"  href="{{ route('items') }}">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="navLinks" href="{{ route('suppliers') }}">Stores</a>
+                    <a class="nav-link navLinks"  href="{{ route('suppliers') }}">Stores</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="navLinks" href="{{ route('about_us') }}">About Us</a>
+                    <a class="nav-link navLinks"  href="{{ route('about_us') }}">About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="navLinks" href="{{ route('map') }}">SiteMap</a>
+                    <a class="nav-link navLinks"  href="{{ route('map') }}">SiteMap</a>
                 </li>
             </ul>
 
@@ -39,7 +39,7 @@
             <form class="d-flex" method="GET" action="/search">
                 {{-- @csrf --}}
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search" name="search">
-                <button type="button" id="headericon">search</button>
+                <button type="button" class="headericon">search</button>
             </form>
         </div>
 
@@ -64,7 +64,7 @@
                     
                     @endauth
                     >
-                    <button type="button" id="headericon" 
+                    <button type="button" class="headericon" 
                             @guest
                             data-bs-toggle="modal"
                             data-bs-target="#loginModal"
@@ -74,14 +74,8 @@
                     </button>
                 </a>
 
-                {{-- @guest
-                    <button type="button" id="headericon" data-bs-toggle="modal"
-                        data-bs-target="#loginModal">account_circle
-                </button>
-                @endguest
-                 --}}
                 @auth
-                <a href="{{ route('logout')}}"> <button type="button" id="headericon" >logout</button> </a>
+                <a href="{{ route('logout')}}"> <button type="button" class="headericon" >logout</button> </a>
                 @endauth
 
                 <a href="
@@ -92,7 +86,7 @@
                 {{ route('register') }}
                 @endguest
                 ">
-                    <button type="button" id="headericon">shopping_cart</button>
+                    <button type="button" class="headericon">shopping_cart</button>
                 </a>
             </div>
         </div>

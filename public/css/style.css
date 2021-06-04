@@ -82,7 +82,7 @@ body {
     border-color: var(--main-color);
 }
 
-#headericon {
+.headericon {
     font-family: "Material Icons";
     background-color: var(--logo-color);
     color: var(--sec-color);
@@ -91,11 +91,11 @@ body {
     border-radius: 1.5rem;
 }
 
-#headericon:hover {
+.headericon:hover {
     background-color: var(--logo-accent);
 }
 
-#navLinks {
+.navLinks {
     color: var(--sec-color);
     text-decoration: none;
 }
