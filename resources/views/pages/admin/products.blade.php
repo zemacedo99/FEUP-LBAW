@@ -41,7 +41,11 @@
                 <div class="row ">
                     <form action="">
                         <div class="col-8 col-md-4">
-                            <input class="form-control" placeholder="Search">
+                            <form class="d-flex" method="GET" action="dashboard_products/search">
+                                @csrf
+                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search" name="search">
+                                
+                            </form>
                         </div>
                     </form>
                 </div>

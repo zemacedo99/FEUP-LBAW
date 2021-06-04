@@ -24,6 +24,9 @@ Route::view('upload', 'upload');
 Route::post('upload',[UploadController::class,'index']);
 
 Route::get('/search', 'SearchController@show');
+Route::get('dashboard_requests/search', 'SupplierController@requests');
+Route::get('dashboard_products/search', 'ItemController@admin_list');
+Route::get('dashboard_clients/search', 'UserController@admin_index');
 Route::get('/api/search/{page}/filter', 'SearchController@filter');
 
 

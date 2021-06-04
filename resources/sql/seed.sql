@@ -42,6 +42,7 @@ DROP FUNCTION IF EXISTS search_update           CASCADE;
 DROP FUNCTION IF EXISTS supplier_search_update  CASCADE;
 DROP FUNCTION IF EXISTS item_search_update      CASCADE;
 DROP FUNCTION IF EXISTS tag_search_update       CASCADE;
+DROP FUNCTION IF EXISTS client_search_update    CASCADE;
 
 
 -- Types
@@ -73,6 +74,7 @@ CREATE TABLE clients (
     id              INTEGER     NOT NULL REFERENCES "users" (id) ON UPDATE CASCADE ON DELETE CASCADE,
     name            TEXT        NOT NULL,
     image_id        INTEGER     NOT NULL DEFAULT 1 REFERENCES images (id) ON UPDATE CASCADE ON DELETE SET DEFAULT,
+    search          tsvector    DEFAULT '' NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -461,6 +463,30 @@ END
 $BODY$
     LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION client_search_update() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF TG_OP = 'INSERT'
+    THEN
+        NEW.search = setweight(to_tsvector('english', NEW.name), 'B');
+        -- || setweight(to_tsvector('english', NEW.description), 'C');
+    END IF;
+
+    IF TG_OP = 'UPDATE'
+    THEN
+        IF NEW.name <> OLD.name
+        THEN
+            NEW.search = setweight(to_tsvector('english', NEW.name), 'B');
+            -- || setweight(to_tsvector('english', NEW.description), 'C');
+        END IF;
+    END IF;
+    REFRESH MATERIALIZED VIEW fts_view_weights;
+    RETURN NEW;
+
+END
+$BODY$
+    LANGUAGE plpgsql;
+
 
 
 CREATE TRIGGER supplier_search_update
@@ -478,6 +504,10 @@ CREATE TRIGGER tag_search_update
     FOR EACH ROW
 EXECUTE PROCEDURE tag_search_update();
 
+CREATE TRIGGER client_search_update
+    BEFORE INSERT OR UPDATE ON clients
+    FOR EACH ROW
+EXECUTE PROCEDURE client_search_update();
 
 insert into images (path) values ('storage/users/avatar.png');
 insert into images (path) values ('storage/products/bundle.jpg');

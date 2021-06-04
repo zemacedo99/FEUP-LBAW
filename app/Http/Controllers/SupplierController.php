@@ -267,13 +267,20 @@ class SupplierController extends Controller
         return view('pages.supplier.supplier_profile',$data);
     }
 
-    public function requests(){
+    public function requests(Request $request){
         if(auth()->user()==null||!auth()->user()->is_admin){
             return response('', 404)->header('description','Page does not exist');
         }
 
-        $suppliers=Supplier::where('accepted', 'false')->paginate(8);
+        $suppliers=Supplier::where('accepted', 'false');
+       
+        $search=$request->search;
+        if($search!=null){        
+            $suppliers=$suppliers->whereRaw('search @@ to_tsquery(\'english\', ?)', [$search])
+            ->orderByRaw('ts_rank(search, to_tsquery(\'english\', ?)) DESC', [$search]);
+        }
 
+        $suppliers=$suppliers->paginate(8);
         return view('pages.admin.requests',['suppliers'=>$suppliers]);
     }
 

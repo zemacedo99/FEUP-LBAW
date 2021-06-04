@@ -24,12 +24,17 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function admin_index()
+    public function admin_index(Request $request)
     {
         if(auth()->user()==null||!auth()->user()->is_admin){
             return response('', 404)->header('description','Page does not exist');
         }
         $users=User::all();
+        $search=$request->search;
+        if($search!=null){        
+            $users=$users->whereRaw('search @@ to_tsquery(\'english\', ?)', [$search])
+            ->orderByRaw('ts_rank(search, to_tsquery(\'english\', ?)) DESC', [$search]);
+        }
         $usersFinal=[];
 
         foreach ($users as $user){

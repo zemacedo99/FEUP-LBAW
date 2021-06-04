@@ -28,12 +28,21 @@ class ItemController extends Controller
         return Item::all();
     }
 
-    public function admin_list()
+    public function admin_list(Request $request)
     {
         if(auth()->user()==null||!auth()->user()->is_admin){
             return response('', 404)->header('description','Page does not exist');
         }
-        $products=Item::orderby('active','desc')->orderBy('id','asc')->paginate(8);
+        
+        $products=Item::orderby('active','desc')->orderBy('id','asc');
+
+        $search=$request->search;
+        if($search!=null){        
+            $products=$products->whereRaw('search @@ to_tsquery(\'english\', ?)', [$search])
+            ->orderByRaw('ts_rank(search, to_tsquery(\'english\', ?)) DESC', [$search]);
+        }
+
+        $products=$products->paginate(8);
 
         return view('pages.admin.products',['items'=>$products->withPath('dashboard_products')]);
     }
