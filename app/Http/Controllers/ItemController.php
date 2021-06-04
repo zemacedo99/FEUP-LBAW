@@ -442,7 +442,7 @@ class ItemController extends Controller
         
         $item = Item::find($id);
         
-        $this->authorize('delete', $item);
+        //$this->authorize('delete', $item);
 
 
         if($item == null){
