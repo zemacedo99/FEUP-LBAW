@@ -1,12 +1,20 @@
+<script src={{ asset('dropzone-5.7.0/dist/dropzone.js') }} defer> </script>
+<script type="text/javascript" src={{ asset('js/create_product.js') }} defer> </script>
+<link rel="stylesheet" type="text/css" href="{{asset('dropzone-5.7.0/dist/dropzone.css')}}">
+
 @extends('layouts.app')
 
 @section('content')
+
+
+
 <form action="{{ $path }}" method="POST" id="form" enctype="multipart/form-data" required>
-
-    <script src={{ asset('dropzone-5.7.0/dist/dropzone.js') }} defer> </script>
-    <script type="text/javascript" src={{ asset('js/create_product.js') }} defer> </script>
-    <link rel="stylesheet" type="text/css" href="{{asset('dropzone-5.7.0/dist/dropzone.css')}}">
-
+    @isset($name)
+    @method('PUT')
+    <div style="display: none" id="edit"></div>
+@endisset
+{{-- @csrf --}}
+    
     <div class="container">
 
 
@@ -32,13 +40,7 @@
 
             <div class="col-6">
 
-            @if(isset($images))
-                {{-- @include('partials.carousel_img',$images) --}}
-            @else 
-                {{-- add a photo template --}}
-                {{-- @include('partials.carousel_img') --}}
-                <div class="dropzone" id="myDropzone"></div>
-            @endif
+            <div class="dropzone" id="myDropzone"></div>
             
             
 
@@ -47,12 +49,7 @@
 
 
             <div class="col-12 col-lg-4 justify-content-center">
-                
-                    @isset($name)
-                        @method('PUT')
-                        <div style="display: none" id="edit"></div>
-                    @endisset
-                    @csrf
+    
                     <label class="text-black" for="product_name">Product Name</label>
 
                     <div class="row" style="margin-left: 0.1em">

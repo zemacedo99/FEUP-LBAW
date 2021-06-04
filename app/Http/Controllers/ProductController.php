@@ -196,7 +196,7 @@ class ProductController extends Controller
                 // $image->move(public_path('images'),$imageName);
                 // dd($request->file('file'));
 
-                $imageName = substr(Hash::make($image->getClientOriginalName()), 0, 30); 
+                $imageName = md5($image->getClientOriginalName() . time()); 
                 
                 $image->move(public_path('images'),$imageName);
 
@@ -251,7 +251,7 @@ class ProductController extends Controller
 
         $data = [
                     'title' => 'Edit Product',
-                    'path' => '/api/product/' . $id,
+                    'path' => '/api/product/' . $id."/update",
                     'alltags' => $alltags,
                     'itemtags' => $itemtags,
                     'name' => $item->name,
@@ -279,11 +279,11 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+
          
         $item = Item::find($id);
         $product = Product::find($id);
-        $item->tags()->detach();
-
+        $item->tags()->detach();    
         
         
         // $this->authorize('update', $item);
@@ -318,8 +318,8 @@ class ProductController extends Controller
        
         $string = $request->t;
         $rtags = explode("/", $string); 
-
-        if(is_null($request->tags))
+ 
+        if(is_null($request->t))
         {
             //TODO:
             dd("tags are empty");
@@ -360,6 +360,36 @@ class ProductController extends Controller
         
             }
         }
+
+
+        //dd($request->has('file'));
+        dd($request->file);
+        if ($request->has('file')) {
+            $product->images()->detach();
+            
+            foreach ($request->file('file') as $image) {
+                
+               
+                $imageName = substr(Hash::make($image->getClientOriginalName()), 0, 30); 
+                
+                $image->move(public_path('images'),$imageName);
+
+
+                $path = "images/";
+                $path = $path . $imageName;
+
+                
+                $img = Image::create([
+                    'path' => $path
+                ]);
+
+                $img->products()->attach($product);
+            }
+        }
+
+
+
+
 
         $item->save();
         $product->save();

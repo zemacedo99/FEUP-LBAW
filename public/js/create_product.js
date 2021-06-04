@@ -54,6 +54,7 @@ function toastshow() {
     toast.show()
 }
 
+
 Dropzone.options.myDropzone = {
     url: document.getElementById("form").action,
     autoProcessQueue: false,
@@ -63,11 +64,15 @@ Dropzone.options.myDropzone = {
     maxFilesize: 5,
     acceptedFiles: 'image/*',
     addRemoveLinks: true,
+    headers: {
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+    },
     init: function() {
         dzClosure = this; // Makes sure that 'this' is understood inside the functions below.
 
-        
         myDropzone = this;
+        
+        if(document.getElementById("product_name").value!=""){
         let prodId=window.location.href.split("/").slice(-1)[0];
         sendAjaxRequest('get',"/product/images/"+prodId,null,function(response){
             console.log(response);
@@ -77,24 +82,25 @@ Dropzone.options.myDropzone = {
 
             var mockFile;
             for (let i=0; i<response.length; i++){
-                mockFile = { name: response[i].id, size: response[i].size, dataURL: "http://localhost:8000"+response[i].path };
+                mockFile = { name: response[i].id, size: response[i].size};
 
-                myDropzone.emit("addedfile", mockFile);
-                myDropzone.emit("thumbnail", mockFile, response[i].path);
-                myDropzone.createThumbnailFromUrl(mockFile,
-                    myDropzone.options.thumbnailWidth, 
-                    myDropzone.options.thumbnailHeight,
-                    myDropzone.options.thumbnailMethod, true, function (thumbnail) 
-                        {
-                            myDropzone.emit('thumbnail', mockFile, thumbnail);
-                        });
+                // myDropzone.emit("addedfile", mockFile);
+                // myDropzone.emit("thumbnail", mockFile, response[i].path);
+                // myDropzone.createThumbnailFromUrl(mockFile,
+                //     myDropzone.options.thumbnailWidth, 
+                //     myDropzone.options.thumbnailHeight,
+                //     myDropzone.options.thumbnailMethod, true, function (thumbnail) 
+                //         {
+                //             myDropzone.emit('thumbnail', mockFile, thumbnail);
+                //         });
 
-                myDropzone.emit("complete", mockFile);
+                // myDropzone.emit("complete", mockFile);
+                myDropzone.displayExistingFile(mockFile, response[i].path);
+                myDropzone.files.push(mockFile);
             }
             
-            
-    
         });
+        }
             
             
 
@@ -108,8 +114,6 @@ Dropzone.options.myDropzone = {
 
         //send all the form data along with the files:
         this.on("sendingmultiple", function(data, xhr, formData) {
-            let csrf = document.querySelector('meta[name="csrf-token"]').content;
-            formData.append("_token", csrf);
             formData.append("product_name", document.getElementById("product_name").value);
             formData.append("supplierID", document.getElementById("supplierID").value);
             formData.append("product_price", document.getElementById("product_price").value);
@@ -120,6 +124,6 @@ Dropzone.options.myDropzone = {
 
         });
 
-        
+      
     }
 }
