@@ -25,9 +25,13 @@
                     @endfor
                 </div>
             </div>
-            <div class="col-1 mt-3">
-                <i class="bi bi-envelope"></i>
-            </div>
+            
+                <div class="col-1 mt-3">
+                    <a id="unformatedLink" href={{"mailto:".$email}}>
+                    <i class="bi bi-envelope"></i>
+                </a>
+                </div>
+            
         </div>
 
         <div class="row mt-5 mb-5">
