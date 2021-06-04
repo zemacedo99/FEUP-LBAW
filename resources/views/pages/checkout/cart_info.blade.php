@@ -82,7 +82,7 @@ $user_id = \Illuminate\Support\Facades\Auth::id();
 
 
             <div class="col-12">
-                <h4 style='text-align:center;' id ="total_price">Total: {{$total}}€</h4>
+                <h4 style='text-align:center;' id ="total_price">Total: {{number_format($total,2)}}€</h4>
                 <div class="row mb-3"></div>
             </div>
 
