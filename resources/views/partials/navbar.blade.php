@@ -12,13 +12,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link navLinks" href="{{ route('items') }}">Products</a>
+                    <a class="nav-link" id="navLinks1" href="{{ route('items') }}">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link navLinks" href="{{ route('suppliers') }}">Stores</a>
+                    <a class="nav-link" id="navLinks2" href="{{ route('suppliers') }}">Stores</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link navLinks" href="{{ route('about_us') }}">About Us</a>
+                    <a class="nav-link" id="navLinks3" href="{{ route('about_us') }}">About Us</a>
                 </li>
                 {{-- <li class="nav-item">
                     <a class="nav-link navLinks" href="{{ route('map') }}">SiteMap</a>

@@ -95,7 +95,7 @@ body {
     background-color: var(--logo-accent);
 }
 
-.navLinks {
+#navLinks1,#navLinks2,#navLinks3,#navLinks4 {
     color: var(--sec-color);
     text-decoration: none;
 }
@@ -330,7 +330,8 @@ label.active {
 
 a.customcard,
 a.customcard:hover,
-#unformatedLink {
+#unformatedLink,
+.unformatedLink {
     color: inherit;
     text-decoration: inherit;
 }
