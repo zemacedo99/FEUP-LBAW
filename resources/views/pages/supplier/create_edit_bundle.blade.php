@@ -3,7 +3,7 @@
 @section('content')
 
 
-    @include('partials.modals.supplier_products',$products)
+    @include('partials.modals.supplier_products', $products)
 
     <script type="text/javascript" src={{ asset('js/create_bundle.js') }} defer> </script>
 
@@ -37,15 +37,8 @@
         </div>
 
         <div class="row mb-5">
-            <div class=" col-10 col-sm-6 col-md-4 col-lg-3">
-                @include('partials.cards.product_in_bundle')
-            </div>
-            {{-- <div class=" col-10 col-sm-6 col-md-4 col-lg-3">
-                <label for="file-input">
-                    <img src="../images/genericAddImage.png" alt="Add Product" class="img-fluid" style="height: 134px">
-                </label>
-                <input id="file-input" type="file" class="invisible">
-            </div> --}}
+            <div class=" col-10 col-sm-6 col-md-4 col-lg-3" id="divCardProds"></div>
+ 
         </div>
 
         <form action="{{ $path }}" method="POST" id="form" enctype="multipart/form-data" required>

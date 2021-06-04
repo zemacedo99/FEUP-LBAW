@@ -46,4 +46,37 @@ function sendAjaxRequest(method, url, data, handler) {
 
 }
 
-$('.toast').toast('show')
+let card_prods = document.querySelectorAll('.prod_ovrw')
+for(let i = 0; i < card_prods.length; i++){
+    card_prods[i].addEventListener('click', addProduct)
+}
+
+function addProduct(event){
+    let searchNode = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
+    let name = searchNode.querySelector('.name').value
+    let image = searchNode.querySelector('.imgProd').value
+
+    addToCardDiv(name, image)
+}
+
+function addToCardDiv(name, image){
+    document.getElementById('divCardProds').innerHTML += `
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="${image}" class="img-fluid" alt="${name}" style="max-height: 200px">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">${name}</h5>
+                    <p class="card-text">Total: 1</p>
+                    <span>
+                        <button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-plus-circle"></i></button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-dash-circle"></i></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    `
+}
