@@ -26,7 +26,6 @@
                     $count = 0;
                 @endphp
                 @foreach ($images as $image)
-                
                     @if ($count == 0)
                         <div class="carousel-item active">
                             <img src="{{ asset($image->path) }}" class="d-block w-100" alt="...">

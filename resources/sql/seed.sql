@@ -17,12 +17,22 @@ DROP TABLE IF EXISTS item_tag           CASCADE;
 DROP TABLE IF EXISTS image_product      CASCADE;
 DROP TABLE IF EXISTS client_item        CASCADE;
 DROP TABLE IF EXISTS carts              CASCADE;
+DROP TABLE IF EXISTS password_resets    CASCADE;
 
 DROP MATERIALIZED VIEW IF EXISTS fts_view_weights;
 
 DROP TYPE IF EXISTS unit_type           CASCADE;
 DROP TYPE IF EXISTS coupon_type         CASCADE;
 DROP TYPE IF EXISTS purchase_type       CASCADE;
+
+DROP INDEX IF EXISTS favorite_client                CASCADE;
+DROP INDEX IF EXISTS credit_card_client             CASCADE;
+DROP INDEX IF EXISTS search_weight_idx              CASCADE;
+DROP INDEX IF EXISTS search_product_idx             CASCADE;
+DROP INDEX IF EXISTS search_supplier_idx            CASCADE;
+DROP INDEX IF EXISTS search_tag_idx                 CASCADE;
+DROP INDEX IF EXISTS password_resets_email_index    CASCADE;
+DROP INDEX IF EXISTS password_resets_token_index    CASCADE;
 
 DROP FUNCTION IF EXISTS expired_coupon          CASCADE;
 DROP FUNCTION IF EXISTS inactive_item           CASCADE;
@@ -55,7 +65,8 @@ CREATE TABLE "users" (
     id              SERIAL      PRIMARY KEY,
     email           TEXT        NOT NULL CONSTRAINT user_email_uk UNIQUE,
     password        TEXT        NOT NULL,
-    is_admin        boolean     NOT NULL DEFAULT 'false'
+    is_admin        boolean     NOT NULL DEFAULT 'false',
+    remember_token  VARCHAR     DEFAULT NULL
 );
 
 CREATE TABLE clients (
@@ -227,6 +238,12 @@ CREATE TABLE carts (
     PRIMARY KEY (client_id, item_id)
 );
 
+CREATE TABLE password_resets
+(
+    email      VARCHAR NOT NULL,
+    token      VARCHAR NOT NULL,
+    created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL
+);
 
 -----------------------------------------
 -- MATERIALIZED VIEWS
@@ -252,18 +269,21 @@ ORDER BY items_id;
 -- INDEXES
 -----------------------------------------
 
-CREATE INDEX favorite_client        ON client_item      USING hash (client_id);
+CREATE INDEX favorite_client                ON client_item      USING hash (client_id);
 
-CREATE INDEX credit_card_client     ON credit_cards     USING hash (client_id);
+CREATE INDEX credit_card_client             ON credit_cards     USING hash (client_id);
 
-CREATE INDEX search_weight_idx      ON fts_view_weights USING GIST (text_search);
+CREATE INDEX search_weight_idx              ON fts_view_weights USING GIST (text_search);
 
-CREATE INDEX search_product_idx     ON items            USING GIST (search);
+CREATE INDEX search_product_idx             ON items            USING GIST (search);
 
-CREATE INDEX search_supplier_idx    ON suppliers        USING GIST (search);
+CREATE INDEX search_supplier_idx            ON suppliers        USING GIST (search);
 
-CREATE INDEX search_tag_idx         ON tags             USING GIST (search);
+CREATE INDEX search_tag_idx                 ON tags             USING GIST (search);
 
+CREATE INDEX password_resets_email_index    ON password_resets (email);
+
+CREATE index password_resets_token_index    ON password_resets (token);
 -----------------------------------------
 -- TRIGGERS and UDFs
 -----------------------------------------

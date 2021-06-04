@@ -9,6 +9,8 @@ use App\Models\Supplier;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 
 class ProductController extends Controller
 {
@@ -48,7 +50,7 @@ class ProductController extends Controller
         $data = [
             'title' => 'Create Product',
             'path' => '/api/product',
-            'tags' => $tags,
+            'alltags' => $tags,
         ];
 
         return view('pages.supplier.create_edit_product', $data);
@@ -96,17 +98,18 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
+        // dd($request);
         $request->validate([
             'product_name' => 'required|string',
             'description' => 'required|string',
             'product_stock' => 'required|numeric',
             'product_price' => 'required|numeric',
             'supplierID' => 'required|integer',
+            'product_type' => 'required'
             // 'images' => 'required',            // 'sup_img' => '' 
         ]);
         // $request->file('image')->store('public/images');
-
+        
 
         // $supplier = Supplier::find($request->supplierID);
         // $this->authorize('create', $supplier);
@@ -118,24 +121,34 @@ class ProductController extends Controller
             'stock' => $request->product_stock,
             'description' => $request->description,
             'active' => true,
-            'rating' => 0,
+            'rating' => null,
             'is_bundle' => false,
         ]);
 
 
-        if(is_null($request->tags))
+        $string = $request->t;
+        $rtags = explode("/", $string); 
+        // dd($rtags);
+
+
+        if(is_null($request->t))
         {
-            dd("error here");
-            dd($request->tags);
+            //TODO:
+            dd("tags are emply");
+            dd($request->t);
         }
         else
         {
-            foreach($request->tags as $tagsValue)
+            foreach($rtags as $tagsValue)
             {
                 // dd($tagsValue);
                 if( is_null($tagsValue))
                 {
-                    break;
+                    continue;
+                }
+                if($tagsValue === "")
+                {
+                    continue;
                 }
 
 
@@ -144,6 +157,7 @@ class ProductController extends Controller
 
 
                 if (count($tags) > 0) {                     //if the tagvalue exist 
+                    
                     foreach ($tags as $tag) {
                         $item->tags()->attach($tag);          // associate the tag to the item
                     }
@@ -153,6 +167,7 @@ class ProductController extends Controller
                     $tag = Tag::create([                //create new tag
                         'value' => $tagsValue,   
                     ]);
+           
                     $item->tags()->attach($tag);        // associate the tag to the item
                 }
         
@@ -162,28 +177,32 @@ class ProductController extends Controller
 
 
 
+
         $product = Product::create([
             'id' => $item->id,
             'unit' => $request->product_type,
         ]);
 
-
-        if ($request->has('images')) {
-
+        //dd($request->has('file'));
+        if ($request->has('file')) {
             // dd($request->file('images'));
-            foreach ($request->file('images') as $image) {
-
+            foreach ($request->file('file') as $image) {
+                
                 // dd($filename);
                 // dd($image);
                 //$upload_success = $image->move(storage_path('app/public/banners'), $image->getClientOriginalName());
-                $image->store('public/images');
 
-                $filename = $image->hashName();
+                // $image->move(public_path('images'),$imageName);
+                // dd($request->file('file'));
 
-                $path = "storage/images/";
-                $path = $path . $filename;
+                $imageName = substr(Hash::make($image->getClientOriginalName()), 0, 30); 
+                
+                $image->move(public_path('images'),$imageName);
 
-                // dd($path);
+
+                $path = "images/";
+                $path = $path . $imageName;
+
                 
                 $img = Image::create([
                     'path' => $path
@@ -221,9 +240,33 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        $item = Item::find($id);
+        $product = Product::find($id);
+        $alltags = Tag::get();
+        $itemtags = $item->tags()->get();
+        // $this->authorize('update', $product);
+
+        $data = [
+                    'title' => 'Edit Product',
+                    'path' => '/api/product/' . $id,
+                    'alltags' => $alltags,
+                    'itemtags' => $itemtags,
+                    'name' => $item->name,
+                    'price' => $item->price,
+                    'stock' => $item->stock,
+                    'description' => $item->description,
+                    'type' => $product->unit,
+                    'images' => $product->images()->get(),
+        ];
+
+        if($product->type === "Kg"){
+            $data['k'] = true;
+        }else{
+            $data['u'] = true;
+        }
+        return view('pages.supplier.create_edit_product', $data);
     }
 
     /**
@@ -233,9 +276,94 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        //
+         
+        $item = Item::find($id);
+        $product = Product::find($id);
+        $item->tags()->detach();
+
+        
+        
+        // $this->authorize('update', $item);
+
+        $request->validate([
+            'product_name' => 'required|string',
+            'description' => 'required|string',
+            'product_stock' => 'required|numeric',
+            'product_price' => 'required|numeric',
+            'supplierID' => 'required|integer',
+        ]);
+
+
+        if($request->has('product_name')){
+            $item->name = $request->input('product_name'); 
+        }
+        
+        if($request->has('product_price')){
+            $item->price = $request->input('product_price'); 
+        }
+        if($request->has('product_stock')){
+            $item->stock = $request->input('product_stock'); 
+        }
+        if($request->has('description')){
+            $item->description = $request->input('description'); 
+        }
+
+        if($request->has('product_type')){
+            $product->unit = $request->input('product_type'); 
+        }
+
+       
+        $string = $request->t;
+        $rtags = explode("/", $string); 
+
+        if(is_null($request->tags))
+        {
+            //TODO:
+            dd("tags are empty");
+            dd($request->tags);
+        }
+        else
+        {
+            foreach($rtags as $tagsValue)
+            {
+                // dd($tagsValue);
+                if( is_null($tagsValue))
+                {
+                    continue;
+                }
+                if($tagsValue === "")
+                {
+                    continue;
+                }
+
+
+                $tags = Tag::where('value', $tagsValue)->get();
+                // dd($tags);
+
+
+                if (count($tags) > 0) {                     //if the tagvalue exist 
+                    
+                    foreach ($tags as $tag) {
+                        $item->tags()->attach($tag);          // associate the tag to the item
+                    }
+                }
+                else                                        // if the tagvalue is new
+                {
+                    $tag = Tag::create([                //create new tag
+                        'value' => $tagsValue,   
+                    ]);
+                    $item->tags()->attach($tag);        // associate the tag to the item
+                }
+        
+            }
+        }
+
+        $item->save();
+        $product->save();
+        
+        return redirect(route('supplier_all_products'  , ['id' => $request->supplierID]) );
     }
 
     /**
