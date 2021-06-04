@@ -1,3 +1,4 @@
+<a href="/suppliers/{{$id}}" id="unformatedLink">
 <div class="card mb-3">
     <div class="row g-0">
         <div class="col-4 col-md-3 col-lg-2 col-xl-2">
@@ -24,3 +25,4 @@
         </div>
     </div>
 </div>
+</a>

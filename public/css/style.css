@@ -331,7 +331,9 @@ label.active {
 a.customcard,
 a.customcard:hover,
 #unformatedLink,
-.unformatedLink {
+#unformatedLink:hover,
+.unformatedLink,
+.unformatedLink:hover {
     color: inherit;
     text-decoration: inherit;
 }

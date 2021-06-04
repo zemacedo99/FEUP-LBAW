@@ -14,8 +14,7 @@
                     @include('partials.bundle',$productsInBundle)
 
                 @else
-
-                    @include('partials.carousel_img',$images)
+                     @include('partials.carousel_img',$images)
                 @endif
             </div>
 

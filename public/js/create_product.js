@@ -142,10 +142,10 @@ Dropzone.options.myDropzone = {
 document.getElementById("deleteProduct").addEventListener("click", deleteProduct);
 
 function deleteProduct(event){
-    let product_id = document.getElementById('product_id').value
-
+    let product_id = window.location.href.split("/").slice(-1)[0];
+    
     sendAjaxRequest('delete', '/api/product/' + product_id, null, function(){
-        if(this.status == 204) window.history.go(-1)
+        if(this.status == 204){ window.location.href=document.referrer}
         else alert("Something went wrong when deleting the product")
     })
 }

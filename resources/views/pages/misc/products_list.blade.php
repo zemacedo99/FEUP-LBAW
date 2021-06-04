@@ -2,6 +2,7 @@
 
 @section('content')
 
+<script type="text/javascript" src={{ asset('js/order_by.js') }} defer> </script>
 
 @include('partials.filters')
 
@@ -18,7 +19,11 @@
                 Filters
             </button>
         </div>
-        @include('partials.order_by')
+        @isset($items)
+            <form class="d-flex" method="GET" action="/items">
+                @include('partials.order_by')
+            </form>
+        @endisset
     </div>
 
     <div class="row">
@@ -42,12 +47,13 @@
 
         @isset($suppliers)
             @foreach ( $suppliers as $supplier)
-            @include('partials.cards.supplier',[
-                'name' => $supplier->name,
-                'address' => $supplier->address,
-                'description' => $supplier->description,
-                'image' => $supplier->image,
-                ])
+                @include('partials.cards.supplier',[
+                    'id' => $supplier->id,
+                    'name' => $supplier->name,
+                    'address' => $supplier->address,
+                    'description' => $supplier->description,
+                    'image' => $supplier->image,
+                    ])
             @endforeach
             @include('partials.pages',['link'=>"suppliers",'paginator'=>$suppliers])
         @endisset
