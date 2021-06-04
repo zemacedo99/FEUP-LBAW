@@ -20,12 +20,12 @@
                 <li class="nav-item">
                     <a class="nav-link navLinks" href="{{ route('about_us') }}">About Us</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link navLinks" href="{{ route('map') }}">SiteMap</a>
-                </li>
+                </li> --}}
             </ul>
 
-            @if (Auth::check())
+            {{-- @if (Auth::check())
                 <a class="button" href="{{ url('/logout') }}"> Logout </a>
                 <span>| email: {{ Auth::user()->email }}</span>
                 <span>| id: {{ \Illuminate\Support\Facades\Auth::id() }}</span>
@@ -37,7 +37,7 @@
                     <span>| Supplier:
                         {{ \App\Models\Supplier::where('id', \Illuminate\Support\Facades\Auth::id())->get()[0]->name }}</span>
                 @endif
-            @endif
+            @endif --}}
 
             <form class="d-flex" method="GET" action="/search">
                 {{-- @csrf --}}

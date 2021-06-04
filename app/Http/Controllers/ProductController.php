@@ -223,7 +223,7 @@ class ProductController extends Controller
                     'title' => 'Edit Product',
                     'path' => '/api/product/' . $id."/update",
                     'alltags' => $alltags,
-                    'tags' => $itemtags,
+                    'itemtags' => $itemtags,
                     'id'    => $item->id,
                     'name' => $item->name,
                     'price' => $item->price,

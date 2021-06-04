@@ -17,7 +17,7 @@
     
     <div class="container">
 
-        <input type="hidden" id="product_id" value="{{$id}}" disabled>
+        {{-- <input type="hidden" id="product_id" value="{{$id}}" disabled> --}}
 
         <div class="col order-1">
             <div class="row">
