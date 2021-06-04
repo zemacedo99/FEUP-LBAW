@@ -270,8 +270,9 @@ class ItemController extends Controller
     }
 
 
-    public function list()
+    public function list(Request $request)
     {
+        dd($request->order_by);
         $items = Item::paginate(6);
 
         foreach($items as $item)

@@ -2,6 +2,7 @@
 
 @section('content')
 
+<script type="text/javascript" src={{ asset('js/order_by.js') }} defer> </script>
 
 @include('partials.filters')
 

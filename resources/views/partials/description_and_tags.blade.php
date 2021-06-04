@@ -89,36 +89,3 @@
 
     </div>
 </div>
-
-{{-- credits to : https://stackoverflow.com/questions/14853779/adding-input-elements-dynamically-to-form --}}
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function() {
-        var max_fields = 3;
-        var wrapper = $(".container1");
-        var add_button = $(".add_form_field");
-
-        var x = 1;
-        $(add_button).click(function(e) {
-            e.preventDefault();
-            if (x < max_fields) {
-                x++;
-                // $(wrapper).append(
-                //     '<div><input type="text" name="mytext[]"/><a href="#" class="delete">Delete</a></div>'
-                // ); //add input box
-                $(wrapper).append(
-                                    '<div><input id="tags" name="tags[]" list="tag" size="13" maxlength="13" multiple><datalist id="tag">@foreach ($alltags as $tag)<option value={{ $tag->value }}></option>@endforeach</datalist><a href="#" class="delete"><i class="bi bi-trash"></i></a></div>'
-                                ); //add input box
-            } else {
-                alert('You reached the max tags (3)')
-            }
-        });
-
-        $(wrapper).on("click", ".delete", function(e) {
-            e.preventDefault();
-            $(this).parent('div').remove();
-            x--;
-        })
-    });
-
-</script> --}}
