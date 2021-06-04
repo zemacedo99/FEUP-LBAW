@@ -55,7 +55,7 @@
 @endphp
 
 
-@include('partials.modals.add_modal',$modal_data)
+@include('partials.modals.add_modal', $modal_data)
 
 <div class="tab-content" id="SupplierTabContent">
     <div class="tab-pane fade col-lg-6 show active" id="supplierProfile" role="tabpanel" aria-labelledby="supplierProfile-tab">@include('pages.supplier.include.edit_profile',$data)</div>
