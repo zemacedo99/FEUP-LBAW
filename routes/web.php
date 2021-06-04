@@ -67,12 +67,13 @@ Route::put('/api/review', 'ReviewController@update');
 
 // Product
 Route::get('/product/{id}', 'ProductController@edit')->name('edit_product');
+Route::get('/product/images/{id}', 'ProductController@images');
 
 Route::post('/api/bundle', 'ItemController@store');
 Route::get('/api/product', 'ProductController@index');
 Route::post('/api/product', 'ProductController@store');
 Route::get('/api/product/{id}', 'ProductController@show');
-Route::put('/api/product/{id}', 'ProductController@update');
+Route::post('/api/product/{id}/update', 'ProductController@update');
 Route::delete('/api/product/{id}', 'ItemController@deactivate');
 
 Route::get('/api/client/{id}/history', 'PurchaseController@index');
